@@ -8,42 +8,50 @@
               /></span>
             </div>
             <!-- Form -->
-            <form class="form-horizontal mt-3" action="index.html">
+            <form class="form-horizontal mt-3" [formGroup]="form" (ngSubmit)="saveForm()">
                 <div class="row pb-4">
-                    <div class="col-12">
+                    <div class="col-md-auto">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-success text-white h-100" id="basic-addon1"><i class="mdi mdi-account fs-4"></i></span>
                             </div>
-                            <input type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required />
+                            <input type="text" class="form-control form-control-lg" formControlName="name" placeholder="Tu Nombre" aria-label="Username" aria-describedby="basic-addon1" required />
                         </div>
-                        <!-- email -->
+                        <div class="col text-danger">
+                            <p *ngIf="invalidInput('name') || invalidForm()">* El nombre es obligatorio, mínimo 4 carácteres</p>
+                        </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-danger text-white h-100" id="basic-addon1"><i class="mdi mdi-email fs-4"></i></span>
                             </div>
-                            <input type="text" class="form-control form-control-lg" placeholder="Email Address" aria-label="Username" aria-describedby="basic-addon1" required />
+                            <input type="text" class="form-control form-control-lg" formControlName="email" placeholder="Tu Email" aria-label="Username" aria-describedby="basic-addon1" required />
+                        </div>
+                        <div class="col text-danger">
+                            <p *ngIf="invalidInput('email') || invalidForm()">* El email es obligatorio y tiene que ser válido</p>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-warning text-white h-100" id="basic-addon2"><i class="mdi mdi-lock fs-4"></i></span>
                             </div>
-                            <input type="text" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required />
+                            <input type="text" class="form-control form-control-lg" formControlName="password" placeholder="Tu Contraseña" aria-label="Password" aria-describedby="basic-addon1" required />
+                        </div>
+                        <div class="col text-danger">
+                            <p *ngIf="invalidInput('password') || invalidForm()">* La contraseña es obligatoria</p>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text bg-info text-white h-100" id="basic-addon2"><i class="mdi mdi-lock fs-4"></i></span>
+                                <span class="input-group-text bg-info text-white h-100" id="basic-addon2"><i class="mdi mdi-brightness-6 fs-4"></i></span>
                             </div>
-                            <input type="text" class="form-control form-control-lg" placeholder="Birth" aria-label="Password" aria-describedby="basic-addon1" required />
+                            <p-calendar placeholder="Tu Fecha de Nacimiento" [maxDate]="today" formControlName="date_of_birth" dateFormat="dd/mm/yy" [yearNavigator]="true" yearRange="1930:2021" [readonlyInput]="true" inputId="monthpicker"></p-calendar>
                         </div>
                     </div>
                 </div>
-                <div class="row border-top border-secondary">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <div class="pt-3 d-grid">
-                                <button class="btn btn-block btn-lg btn-info" type="submit">
-                                    Sign Up
+                <div class="row border-top border-secondary ">
+                    <div class="col-12 ">
+                        <div class="form-group ">
+                            <div class="pt-3 d-grid ">
+                                <button class="btn btn-block btn-lg btn-info " type="submit ">
+                                    Registrarse
                                 </button>
                             </div>
                         </div>
@@ -53,5 +61,6 @@
         </div>
     </div>
 </div>
+
 <!-- ============================================================== -->
 <!-- Login box.scss -->
