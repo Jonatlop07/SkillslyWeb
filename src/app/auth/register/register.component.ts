@@ -36,10 +36,19 @@ export class RegisterComponent{
     this.registerForm = this.form.value;
     const selectedDate: Date = this.form.get('date_of_birth').value;
     if (selectedDate.getMonth() < 9) {
-      this.registerForm.date_of_birth = `${selectedDate.getDate()}/0${selectedDate.getMonth()+1}/${selectedDate.getFullYear()}`;
+      if (selectedDate.getDate() < 9) {
+        this.registerForm.date_of_birth = `0${selectedDate.getDate()}/0${selectedDate.getMonth()+1}/${selectedDate.getFullYear()}`;
+      } else {
+        this.registerForm.date_of_birth = `${selectedDate.getDate()}/0${selectedDate.getMonth()+1}/${selectedDate.getFullYear()}`;
+      }
     } else {
-      this.registerForm.date_of_birth = `${selectedDate.getDate()}/${selectedDate.getMonth()+1}/${selectedDate.getFullYear()}`;
+      if (selectedDate.getDate() < 9) {
+        this.registerForm.date_of_birth = `0${selectedDate.getDate()}/${selectedDate.getMonth()+1}/${selectedDate.getFullYear()}`;
+      } else {
+        this.registerForm.date_of_birth = `${selectedDate.getDate()}/${selectedDate.getMonth()+1}/${selectedDate.getFullYear()}`;
+      }
     }
+    console.log(this.registerForm);
     this.authService.registerUser(this.registerForm); 
   }
 

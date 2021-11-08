@@ -33,16 +33,22 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-warning text-white h-100" id="basic-addon2"><i class="mdi mdi-lock fs-4"></i></span>
                             </div>
-                            <input type="text" class="form-control form-control-lg" formControlName="password" placeholder="Tu Contraseña" aria-label="Password" aria-describedby="basic-addon1" required />
+                            <input type="password" class="form-control form-control-lg" formControlName="password" [feedback]="false" placeholder="Tu Contraseña" aria-label="Password" aria-describedby="basic-addon1" required pPassword/>
                         </div>
                         <div class="col text-danger">
-                            <p *ngIf="invalidInput('password') || invalidForm()">* La contraseña es obligatoria</p>
+                            <p *ngIf="invalidInput('password') || invalidForm()">* La contraseña es obligatoria y debe contener:</p>
+                            <ul _ngcontent-cmx-c54="" *ngIf="invalidInput('password') || invalidForm()">
+                                <li _ngcontent-cmx-c54="">Al menos una minúscula</li>
+                                <li _ngcontent-cmx-c54="">Al menos una mayúscula</li>
+                                <li _ngcontent-cmx-c54="">Al menos un número</li>
+                                <li _ngcontent-cmx-c54="">Mínimo 8 carácteres</li>
+                            </ul>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-info text-white h-100" id="basic-addon2"><i class="mdi mdi-brightness-6 fs-4"></i></span>
                             </div>
-                            <p-calendar placeholder="Tu Fecha de Nacimiento" [maxDate]="today" formControlName="date_of_birth" dateFormat="dd/mm/yy" [yearNavigator]="true" yearRange="1930:2021" [readonlyInput]="true" inputId="monthpicker"></p-calendar>
+                            <p-calendar placeholder="Tu Fecha de Nacimiento" [maxDate]="today" formControlName="date_of_birth" dateFormat="dd/mm/yy" [yearNavigator]="true" yearRange="1930:2021" [readonlyInput]="true" inputId="monthpicker" [showIcon]="true"></p-calendar>
                         </div>
                     </div>
                 </div>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import {CalendarModule} from 'primeng/calendar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {PasswordModule} from 'primeng/password';
 
 import { RegisterComponent } from '../auth/register/register.component';
 
@@ -15,6 +16,7 @@ import { RegisterComponent } from '../auth/register/register.component';
     ReactiveFormsModule,
     BrowserAnimationsModule, 
     CalendarModule,
+    PasswordModule
   ],
   exports:[RegisterComponent]
 })
