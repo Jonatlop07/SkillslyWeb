@@ -1,0 +1,109 @@
+<mat-card style="margin: 1em">
+  <form [formGroup]="form" (ngSubmit)="saveProfile($event)">
+    <mat-card-title>Completa tu perfil</mat-card-title>
+    <mat-card-subtitle
+      >Puedes crear tu perfil añadiendo conocimientos, talentos, ocupaciones e
+      intereses
+    </mat-card-subtitle>
+
+    <mat-form-field class="chip-list" appearance="outline">
+      <mat-label>Tus conocimientos</mat-label>
+      <mat-chip-list #chipList1 aria-label="Seleccion de conocimientos">
+        <mat-chip
+          *ngFor="let element of knowledge"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(element, knowledge)"
+        >
+          {{ element }}
+          <button matChipRemove *ngIf="removable">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input
+          placeholder="Agrega más conocimientos"
+          [matChipInputFor]="chipList1"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event, knowledge)"
+        />
+      </mat-chip-list>
+    </mat-form-field>
+    <mat-form-field class="chip-list" appearance="outline">
+      <mat-label>Tus talentos</mat-label>
+      <mat-chip-list #chipList2 aria-label="Seleccion de talentos">
+        <mat-chip
+          *ngFor="let element of talents"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(element, talents)"
+        >
+          {{ element }}
+          <button matChipRemove *ngIf="removable">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input
+          placeholder="Agrega más talentos"
+          [matChipInputFor]="chipList2"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event, talents)"
+        />
+      </mat-chip-list>
+    </mat-form-field>
+    <mat-form-field class="chip-list" appearance="outline">
+      <mat-label>Tus ocupaciones</mat-label>
+      <mat-chip-list #chipList3 aria-label="Seleccion de ocupaciones">
+        <mat-chip
+          *ngFor="let element of activities"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(element, activities)"
+        >
+          {{ element }}
+          <button matChipRemove *ngIf="removable">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input
+          placeholder="Agrega más ocupaciones"
+          [matChipInputFor]="chipList3"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event, activities)"
+        />
+      </mat-chip-list>
+    </mat-form-field>
+    <mat-form-field class="chip-list" appearance="outline">
+      <mat-label>Tus intereses</mat-label>
+      <mat-chip-list #chipList4 aria-label="Seleccion de intereses">
+        <mat-chip
+          *ngFor="let element of interests"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(element, interests)"
+        >
+          {{ element }}
+          <button matChipRemove *ngIf="removable">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input
+          placeholder="Agrega más intereses"
+          [matChipInputFor]="chipList4"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event, interests)"
+        />
+      </mat-chip-list>
+    </mat-form-field>
+    <mat-form-field class="resume" appearance="outline">
+      <mat-label>Resumen</mat-label>
+      <textarea matInput type="text" formControlName="resume"></textarea>
+    </mat-form-field>
+    <button mat-stroked-button color="primary" type="submit" class="btn-send">
+      Crear perfil
+    </button>
+  </form>
+</mat-card>
