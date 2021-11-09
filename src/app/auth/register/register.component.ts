@@ -53,7 +53,7 @@ export class RegisterComponent{
       }
     }
     const registerResponse =  this.authService.registerUser(this.registerForm);
-    registerResponse.subscribe((resp:any) => { 
+    registerResponse.subscribe(() => { 
       this.router.navigate(['/login']); 
     }, (err) => {
       Swal.fire('Error', err.error.error, 'error' );

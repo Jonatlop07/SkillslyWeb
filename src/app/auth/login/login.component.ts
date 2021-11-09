@@ -38,7 +38,7 @@ export class LoginComponent {
     const loginResponse = this.authService.loginUser(this.loginForm); 
     loginResponse.subscribe((resp:any) => {
       localStorage.setItem('token', resp.access_token);
-      let now = new Date(); 
+      const now = new Date(); 
       now.setSeconds(7200); 
       localStorage.setItem('expires', now.getTime().toString()); 
       this.router.navigate(['/main']);
