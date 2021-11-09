@@ -6,17 +6,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {PasswordModule} from 'primeng/password';
 
 import { RegisterComponent } from '../auth/register/register.component';
+import { LoginComponent } from './login/login.component';
+import { RouterModule } from '@angular/router';
 
 
 
 @NgModule({
-  declarations: [RegisterComponent],
+  declarations: [RegisterComponent, LoginComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     BrowserAnimationsModule, 
     CalendarModule,
-    PasswordModule
+    PasswordModule, 
+    RouterModule
   ],
   exports:[RegisterComponent]
 })
