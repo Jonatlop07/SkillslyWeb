@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
 import { RegisterForm } from '../../interfaces/register_form.interface';
+
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -15,7 +19,7 @@ export class RegisterComponent{
   public today = new Date();
   public formSubmitted = false; 
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
     this.initForm();
   }
 
@@ -48,8 +52,12 @@ export class RegisterComponent{
         this.registerForm.date_of_birth = `${selectedDate.getDate()}/${selectedDate.getMonth()+1}/${selectedDate.getFullYear()}`;
       }
     }
-    console.log(this.registerForm);
-    this.authService.registerUser(this.registerForm); 
+    const registerResponse =  this.authService.registerUser(this.registerForm);
+    registerResponse.subscribe((resp:any) => { 
+      this.router.navigate(['/login']); 
+    }, (err) => {
+      Swal.fire('Error', err.error.error, 'error' );
+    }); 
   }
 
   invalidInput( input: string ): boolean {
