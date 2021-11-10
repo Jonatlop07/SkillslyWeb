@@ -30,10 +30,11 @@ export class AuthService {
   }
 
   userIsAuthenticaded(){
-    if (!localStorage.getItem('token')) {
+    const token = localStorage.getItem('token') || ''; 
+    if (token == '') {
       return false;
     }
-    const expires = Number(localStorage.getItem('expires'));
+    const expires = Number(localStorage.getItem('expires')) || 0;
     const expiresDate = new Date();
     expiresDate.setTime(expires);
     if ( expiresDate > new Date() ) {
@@ -41,5 +42,10 @@ export class AuthService {
     } else {
       return false;
     }
+  }
+
+  logout(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('expires'); 
   }
 }
