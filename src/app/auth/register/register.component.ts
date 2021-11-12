@@ -14,10 +14,10 @@ import { AuthService } from '../../services/auth.service';
 })
 export class RegisterComponent{
 
-  public form: FormGroup; 
+  public form: FormGroup;
   public registerForm: RegisterForm;
   public today = new Date();
-  public formSubmitted = false; 
+  public formSubmitted = false;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
     this.initForm();
@@ -53,27 +53,19 @@ export class RegisterComponent{
       }
     }
     const registerResponse =  this.authService.registerUser(this.registerForm);
-    registerResponse.subscribe(() => { 
-      this.router.navigate(['/login']); 
+    registerResponse.subscribe(() => {
+      this.router.navigate(['/login']);
     }, (err) => {
       Swal.fire('Error', err.error.error, 'error' );
-    }); 
+    });
   }
 
   invalidInput( input: string ): boolean {
-    if ( this.form.get(input).invalid && this.form.get(input).touched) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.form.get(input).invalid && this.form.get(input).touched;
   }
 
   invalidForm(): boolean {
-    if ( this.form.invalid && this.formSubmitted ) {
-      return true;
-    } else {
-      return false; 
-    }
+    return this.form.invalid && this.formSubmitted;
   }
 
 }
