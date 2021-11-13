@@ -1,51 +1,50 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
 import { RegisterForm } from '../interfaces/register_form.interface';
 import { environment } from 'src/environments/environment';
 import { LoginForm } from '../interfaces/login_form.inteface';
+import { JwtService } from './jwt.service'
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthService {
+  private readonly API_URL: string = environment.API_URL;
 
-  API_URL = environment.API_URL;
+  constructor(
+    private readonly http: HttpClient,
+    private readonly jwt_service: JwtService
+  ) {}
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json'
-    })
-  };
-
-  constructor(private http:HttpClient) {}
-
-  registerUser(registerForm:RegisterForm){
-    return this.http.post(`${this.API_URL}/users/account`, registerForm, this.httpOptions); 
+  public registerUser(registerForm: RegisterForm){
+    return this.http.post(`${this.API_URL}/users/account`, registerForm, this.jwt_service.http_options);
   }
 
-  loginUser(loginForm:LoginForm){
-    return this.http.post(`${this.API_URL}/auth/login`, loginForm, this.httpOptions); 
+  public loginUser(loginForm: LoginForm) {
+    const response = this.http.post(`${this.API_URL}/auth/login`, loginForm, this.jwt_service.http_options);
+    response.subscribe(
+      (result: any) => {
+        this.jwt_service.saveToken(result.access_token);
+        const now = new Date();
+        now.setSeconds(7200);
+        this.jwt_service.setExpiresDate(now.getTime().toString());
+        localStorage.setItem('id', result.id);
+      },
+      (err) => {
+        if (err) {
+          throw err;
+        }
+      }
+    );
   }
 
-  userIsAuthenticaded(){
-    const token = localStorage.getItem('token') || ''; 
-    if (token == '') {
-      return false;
-    }
-    const expires = Number(localStorage.getItem('expires')) || 0;
-    const expiresDate = new Date();
-    expiresDate.setTime(expires);
-    if ( expiresDate > new Date() ) {
-      return true;
-    } else {
-      return false;
-    }
+  public logout(){
+    this.jwt_service.destroyToken();
+    this.jwt_service.expireToken();
+    localStorage.delete('id');
   }
 
-  logout(){
-    localStorage.removeItem('token');
-    localStorage.removeItem('expires'); 
+  public isUserAuthenticated() {
+    return this.jwt_service.isUserAuthenticated();
   }
 }

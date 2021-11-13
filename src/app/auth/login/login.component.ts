@@ -29,38 +29,25 @@ export class LoginComponent {
     });
   }
 
-  saveForm():void {
+  async saveForm(): Promise<void> {
     this.formSubmitted = true;
     if (this.form.invalid) {
       return;
     }
     this.loginForm = this.form.value;
-    const loginResponse = this.authService.loginUser(this.loginForm); 
-    loginResponse.subscribe((resp:any) => {
-      localStorage.setItem('token', resp.access_token);
-      const now = new Date(); 
-      now.setSeconds(7200); 
-      localStorage.setItem('expires', now.getTime().toString()); 
-      this.router.navigate(['/main']);
-    }, (err) => {
-      Swal.fire('Error', err.error.error, 'error' );
-    });
+    try {
+      this.authService.loginUser(this.loginForm);
+      this.router.navigate(['/account']);
+    } catch (e) {
+      Swal.fire('Error', e.error.error, 'error' );
+    }
   }
 
   invalidInput( input: string ): boolean {
-    if ( this.form.get(input).invalid && this.form.get(input).touched) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.form.get(input).invalid && this.form.get(input).touched;
   }
 
   invalidForm(): boolean {
-    if ( this.form.invalid && this.formSubmitted ) {
-      return true;
-    } else {
-      return false; 
-    }
+    return this.form.invalid && this.formSubmitted;
   }
-
 }
