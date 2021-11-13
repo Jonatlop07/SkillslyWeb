@@ -15,7 +15,7 @@ import { LoginForm } from '../../interfaces/login_form.inteface';
 export class LoginComponent {
 
   public form: FormGroup;
-  public loginForm : LoginForm;
+  public loginForm: LoginForm;
   public formSubmitted = false;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
@@ -35,15 +35,26 @@ export class LoginComponent {
       return;
     }
     this.loginForm = this.form.value;
-    try {
-      this.authService.loginUser(this.loginForm);
-      this.router.navigate(['/account']);
-    } catch (e) {
-      Swal.fire('Error', e.error.error, 'error' );
-    }
+    this.authService
+      .loginUser(this.loginForm)
+      .subscribe(
+        (result: any) => {
+          this.authService.saveToken(result.access_token);
+          const now = new Date();
+          now.setSeconds(7200);
+          this.authService.setExpiresDate(now.getTime().toString());
+          localStorage.setItem('id', result.id);
+          localStorage.setItem('email', result.email);
+          console.log(result);
+          this.router.navigate(['/main']);
+        },
+        (err) => {
+          Swal.fire('Error', err.error.error, 'error');
+        }
+      );
   }
 
-  invalidInput( input: string ): boolean {
+  invalidInput(input: string): boolean {
     return this.form.get(input).invalid && this.form.get(input).touched;
   }
 

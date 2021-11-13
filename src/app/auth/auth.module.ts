@@ -8,12 +8,11 @@ import { PasswordModule } from 'primeng/password';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
-import { AccountComponent } from './account/account.component';
 import { AccountService } from '../services/account.service'
 
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent, AccountComponent],
+  declarations: [RegisterComponent, LoginComponent],
   providers: [
     AccountService
   ],

@@ -2,14 +2,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { PagesComponent } from './pages.component';
+import { AccountComponent } from './account/account.component'
+import { ReactiveFormsModule } from '@angular/forms'
+import { CalendarModule } from 'primeng/calendar'
+import { RouterModule } from '@angular/router'
 
 @NgModule({
   declarations: [
-    PagesComponent
+    PagesComponent,
+    AccountComponent
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule,
+    CalendarModule,
+    RouterModule
   ]
 })
 export class PagesModule { }

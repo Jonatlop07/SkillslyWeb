@@ -4,7 +4,12 @@ import { PagesComponent } from './pages.component';
 import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
-    { path: 'main', component: PagesComponent, canActivate: [ AuthGuard ]}
+    {
+      path: 'main',
+      component: PagesComponent,
+      canActivate: [ AuthGuard ],
+      loadChildren: () => import('./child_routes.module').then(m => m.ChildRoutesModule)
+    }
 ];
 
 @NgModule({
