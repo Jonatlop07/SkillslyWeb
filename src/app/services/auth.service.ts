@@ -27,7 +27,8 @@ export class AuthService {
   public logout(){
     this.jwt_service.destroyToken();
     this.jwt_service.expireToken();
-    localStorage.delete('id');
+    localStorage.removeItem('id');
+    localStorage.removeItem('email');
   }
 
   public isUserAuthenticated() {

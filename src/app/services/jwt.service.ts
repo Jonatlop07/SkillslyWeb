@@ -53,6 +53,6 @@ export class JwtService {
   }
 
   expireToken() {
-    localStorage.removeItem('expireDate');
+    localStorage.removeItem('expiresDate');
   }
 }

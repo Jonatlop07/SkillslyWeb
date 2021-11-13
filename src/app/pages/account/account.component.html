@@ -19,7 +19,9 @@
                 formControlName="name"
               />
               <div class="col text-danger">
-                <p *ngIf="invalidInput('name')">* El nombre es obligatorio, mínimo 4 carácteres</p>
+                <p *ngIf="invalidInput('name')">
+                  * El nombre es obligatorio, mínimo 4 carácteres
+                </p>
               </div>
             </div>
           </div>
@@ -39,7 +41,9 @@
                 formControlName="email"
               />
               <div class="col text-danger">
-                <p *ngIf="invalidInput('email')">* El email es obligatorio y tiene que ser válido</p>
+                <p *ngIf="invalidInput('email')">
+                  * El email es obligatorio y tiene que ser válido
+                </p>
               </div>
             </div>
           </div>
@@ -91,8 +95,10 @@
                 formControlName="password"
               />
               <div class="col text-danger mt-2">
-                <p *ngIf="invalidInput('password')">* La constraseña debe contener:</p>
-                <ul _ngcontent-cmx-c54="" *ngIf="invalidInput('password')">
+                <p *ngIf="invalidInput('password')">
+                  * La constraseña debe contener:
+                </p>
+                <ul _ngcontent-cmx-c54="" *ngIf="invalidInput('password') || invalidForm()">
                   <li _ngcontent-cmx-c54="">Al menos una minúscula</li>
                   <li _ngcontent-cmx-c54="">Al menos una mayúscula</li>
                   <li _ngcontent-cmx-c54="">Al menos un número</li>

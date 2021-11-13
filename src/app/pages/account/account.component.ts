@@ -24,6 +24,10 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAccountData();
+  }
+
+  getAccountData() {
     this.account_service
       .getUserAccountData()
       .subscribe((account_data: GetAccountDataPresenter) => {
@@ -34,7 +38,10 @@ export class AccountComponent implements OnInit {
   submitUserAccountData() {
     this.account_form = this.form.value;
     if (this.invalidForm()) {
-      return;
+      return this.getAccountData();
+    }
+    if (!this.account_form.password) {
+      delete this.account_form.password;
     }
     this.account_form.date_of_birth = moment(
       this.form.get('date_of_birth').value
