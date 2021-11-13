@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
-
 import { RegisterForm } from '../../interfaces/register_form.interface';
-
 import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-register',
@@ -14,20 +13,20 @@ import { AuthService } from '../../services/auth.service';
 })
 export class RegisterComponent {
   public form: FormGroup;
-  public registerForm: RegisterForm;
+  public register_form: RegisterForm;
   public today = new Date();
-  public formSubmitted = false;
+  public form_submitted = false;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private form_builder: FormBuilder,
+    private auth_service: AuthService,
     private router: Router
   ) {
     this.initForm();
   }
 
   initForm(): void {
-    this.form = this.formBuilder.group({
+    this.form = this.form_builder.group({
       name: [
         '',
         [
@@ -48,45 +47,33 @@ export class RegisterComponent {
       password: [
         '',
         [
-          Validators.required,
           Validators.pattern(
             /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
           ),
         ],
       ],
-      date_of_birth: ['', [Validators.required]],
+      date_of_birth: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/
+          ),
+        ],
+      ],
     });
   }
 
   saveForm() {
-    this.formSubmitted = true;
+    this.form_submitted = true;
     if (this.form.invalid) {
       return;
     }
-    this.registerForm = this.form.value;
-    const selectedDate: Date = this.form.get('date_of_birth').value;
-    if (selectedDate.getMonth() < 9) {
-      if (selectedDate.getDate() < 9) {
-        this.registerForm.date_of_birth = `0${selectedDate.getDate()}/0${
-          selectedDate.getMonth() + 1
-        }/${selectedDate.getFullYear()}`;
-      } else {
-        this.registerForm.date_of_birth = `${selectedDate.getDate()}/0${
-          selectedDate.getMonth() + 1
-        }/${selectedDate.getFullYear()}`;
-      }
-    } else {
-      if (selectedDate.getDate() < 9) {
-        this.registerForm.date_of_birth = `0${selectedDate.getDate()}/${
-          selectedDate.getMonth() + 1
-        }/${selectedDate.getFullYear()}`;
-      } else {
-        this.registerForm.date_of_birth = `${selectedDate.getDate()}/${
-          selectedDate.getMonth() + 1
-        }/${selectedDate.getFullYear()}`;
-      }
-    }
-    const registerResponse = this.authService.registerUser(this.registerForm);
+    this.register_form = this.form.value;
+    this.register_form.date_of_birth = moment(
+      this.form.get('date_of_birth').value
+    ).format('DD/MM/YYYY');
+    const registerResponse = this.auth_service.registerUser(this.register_form);
     registerResponse.subscribe(
       () => {
         this.router.navigate(['/login']);
@@ -98,18 +85,10 @@ export class RegisterComponent {
   }
 
   invalidInput(input: string): boolean {
-    if (!this.form.get(input).valid && this.form.get(input).touched) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.form.get(input).invalid && this.form.get(input).touched;
   }
 
   invalidForm(): boolean {
-    if (this.form.invalid && this.formSubmitted) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.form.invalid && this.form_submitted;
   }
 }

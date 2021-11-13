@@ -74,6 +74,7 @@ export class PostsCreateComponent implements OnInit {
       this.referenceIncomplete = false;
       this.requireOne = false;
       console.log('submited!');
+
       return true;
     } else {
       return false;

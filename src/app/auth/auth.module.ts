@@ -5,12 +5,14 @@ import { CalendarModule } from 'primeng/calendar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PasswordModule } from 'primeng/password';
 
-import { RegisterComponent } from '../auth/register/register.component';
+import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
+import { AccountService } from '../services/account.service';
 
 @NgModule({
   declarations: [RegisterComponent, LoginComponent],
+  providers: [AccountService],
   imports: [
     CommonModule,
     ReactiveFormsModule,

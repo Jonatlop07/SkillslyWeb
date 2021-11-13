@@ -48,19 +48,21 @@ export class LoginComponent {
     });
   }
 
-  saveForm(): void {
+  async saveForm(): Promise<void> {
     this.formSubmitted = true;
     if (this.form.invalid) {
       return;
     }
     this.loginForm = this.form.value;
-    const loginResponse = this.authService.loginUser(this.loginForm);
-    loginResponse.subscribe(
-      (resp: any) => {
-        localStorage.setItem('token', resp.access_token);
+    this.authService.loginUser(this.loginForm).subscribe(
+      (result: any) => {
+        this.authService.saveToken(result.access_token);
         const now = new Date();
         now.setSeconds(7200);
-        localStorage.setItem('expires', now.getTime().toString());
+        this.authService.setExpiresDate(now.getTime().toString());
+        localStorage.setItem('id', result.id);
+        localStorage.setItem('email', result.email);
+        console.log(result);
         this.router.navigate(['/main']);
       },
       (err) => {
@@ -70,18 +72,10 @@ export class LoginComponent {
   }
 
   invalidInput(input: string): boolean {
-    if (this.form.get(input).invalid && this.form.get(input).touched) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.form.get(input).invalid && this.form.get(input).touched;
   }
 
   invalidForm(): boolean {
-    if (this.form.invalid && this.formSubmitted) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.form.invalid && this.formSubmitted;
   }
 }
