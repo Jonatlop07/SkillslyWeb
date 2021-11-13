@@ -5,11 +5,13 @@ import { HttpHeaders } from '@angular/common/http'
   providedIn: 'root'
 })
 export class JwtService {
-  readonly http_options = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.getToken()}`
-    })
+  public getHttpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.getToken()}`
+      })
+    }
   };
 
   public isUserAuthenticated() {

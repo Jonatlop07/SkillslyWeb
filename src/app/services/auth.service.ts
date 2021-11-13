@@ -17,25 +17,11 @@ export class AuthService {
   ) {}
 
   public registerUser(registerForm: RegisterForm){
-    return this.http.post(`${this.API_URL}/users/account`, registerForm, this.jwt_service.http_options);
+    return this.http.post(`${this.API_URL}/users/account`, registerForm, this.jwt_service.getHttpOptions());
   }
 
   public loginUser(loginForm: LoginForm) {
-    const response = this.http.post(`${this.API_URL}/auth/login`, loginForm, this.jwt_service.http_options);
-    response.subscribe(
-      (result: any) => {
-        this.jwt_service.saveToken(result.access_token);
-        const now = new Date();
-        now.setSeconds(7200);
-        this.jwt_service.setExpiresDate(now.getTime().toString());
-        localStorage.setItem('id', result.id);
-      },
-      (err) => {
-        if (err) {
-          throw err;
-        }
-      }
-    );
+    return this.http.post(`${this.API_URL}/auth/login`, loginForm, this.jwt_service.getHttpOptions());
   }
 
   public logout(){
@@ -46,5 +32,13 @@ export class AuthService {
 
   public isUserAuthenticated() {
     return this.jwt_service.isUserAuthenticated();
+  }
+
+  public saveToken(token: string) {
+    this.jwt_service.saveToken(token);
+  }
+
+  public setExpiresDate(expires_date: string) {
+    this.jwt_service.setExpiresDate(expires_date);
   }
 }
