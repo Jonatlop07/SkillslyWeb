@@ -1,0 +1,104 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="card">
+      <form
+        [formGroup]="postForm"
+        (ngSubmit)="onSubmit()"
+        class="form-horizontal"
+      >
+        <div class="card-body">
+          <h3 class="card-title">Publicación</h3>
+          <div class="row">
+            <div class="col-xs-12">
+              <button
+                type="submit"
+                class="btn btn-success"
+                [disabled]="postForm.invalid || !postForm.touched"
+              >
+                Guardar publicacion
+              </button>
+              <button type="button" class="btn btn-danger" (click)="onCancel()">
+                Cancelar
+              </button>
+            </div>
+          </div>
+          <hr />
+          <div class="form-group-row">
+            <div class="col-xs-2" formArrayName="content">
+              <div
+                class="row"
+                *ngFor="let contentCtrl of controls; let i = index"
+                [formGroupName]="i"
+                style="margin-bottom: 10px"
+              >
+                <div class="col-xs-2">
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    formControlName="description"
+                    placeholder="Describe tu post!"
+                    rows="6"
+                  >
+                  </textarea>
+                </div>
+                <div formGroupName="reference">
+                  <div class="col-xs-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="reference_url"
+                      placeholder="Agrega enlaces a imagenes o videos"
+                    />
+                  </div>
+                  <div class="col-xs-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Ingresa el tipo de multimedia"
+                      formControlName="reference_type"
+                    />
+                  </div>
+                  <span
+                    class="text-danger"
+                    *ngIf="!contentCtrl.get('reference.reference_type').valid"
+                    >Los tipos aceptados son: imagen o video
+                  </span>
+                  <hr />
+                </div>
+                <div class="text-end">
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    *ngIf="i !== 0"
+                    (click)="onDeleteContent(i)"
+                  >
+                    X
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="requireOne" class="text-danger">
+                No puedes crear publicaciones sin contenido!
+              </div>
+              <div *ngIf="referenceIncomplete" class="text-danger">
+                Si quieres poner una imagen o video, debes poner el enlace y el
+                tipo
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-xs-12 text-end">
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    (click)="onAddContent()"
+                  >
+                    Agregar contenido
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

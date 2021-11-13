@@ -7,21 +7,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { PagesModule } from './pages/pages.module';
-
+// import { PostCreateComponent } from './user/post/post-create/post-create/post-create.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NopagefoundComponent,
-  ],
+  declarations: [AppComponent, NopagefoundComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule, 
+    AppRoutingModule,
     AuthModule,
-    PagesModule
+    PagesModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
