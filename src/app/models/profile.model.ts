@@ -4,4 +4,6 @@ export default interface Profile {
   talents: Array<string>;
   activities: Array<string>;
   interests: Array<string>;
+  userEmail: string;
+  // eslint-disable-next-line semi
 }

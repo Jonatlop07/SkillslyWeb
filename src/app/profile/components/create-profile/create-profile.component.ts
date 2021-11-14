@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { COMMA, SPACE } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { ProfileService } from 'src/app/core/services/profile/profile.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { ProfileService } from 'src/app/services/profile.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-profile',
@@ -10,63 +8,89 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
   styleUrls: ['./create-profile.component.css'],
 })
 export class CreateProfileComponent implements OnInit {
-  selectable = true;
-  removable = true;
-  addOnBlur = true;
-  readonly separatorKeysCodes = [SPACE, COMMA] as const;
   knowledge: Array<string> = [];
-  activities: Array<string> = [];
   talents: Array<string> = [];
+  activities: Array<string> = [];
   interests: Array<string> = [];
+  resume: string;
+  profileExists = false;
 
-  form!: FormGroup;
-
-  add(event: MatChipInputEvent, array: Array<string>): void {
-    const value = (event.value || '').trim();
-    if (value) {
-      array.push(value);
-    }
-    event.chipInput!.clear();
-  }
-
-  remove(text: string, array: Array<string>): void {
-    const index = array.indexOf(text);
-    if (index >= 0) {
-      array.splice(index, 1);
+  getProfile() {
+    const email = localStorage.getItem('email');
+    if (email) {
+      this.profileService.getProfile(email).subscribe(
+        (response: any) => {
+          this.profileExists = true;
+          this.resume = response['resume'];
+          this.knowledge = response['knowledge'];
+          this.activities = response['activities'];
+          this.talents = response['talents'];
+          this.interests = response['interests'];
+        },
+        (err: any) => {
+          console.log(err);
+        }
+      );
     }
   }
 
   saveProfile(e: Event) {
     e.preventDefault();
-    if (this.form.valid) {
-      const profileSend = {
-        resume: this.form.get('resume')!.value,
-        knowledge: this.knowledge,
-        activities: this.activities,
-        talents: this.talents,
-        interests: this.interests,
-      };
-      console.log(profileSend);
-      this.profileService
-        .createProfile(profileSend)
-        .subscribe((response: any) => {
-          console.log(response);
-        });
+    const email = localStorage.getItem('email');
+
+    const profileSend = {
+      resume: this.resume,
+      knowledge: this.knowledge,
+      activities: this.activities,
+      talents: this.talents,
+      interests: this.interests,
+      userEmail: email,
+    };
+
+    const showError = Swal.fire(
+      'Error',
+      'Ocurrió un error inesperado, intenta más tarde',
+      'error'
+    );
+
+    if (!this.profileExists) {
+      this.profileService.createProfile(profileSend).subscribe(
+        () => {
+          Swal.fire(
+            'Exito',
+            'Tu perfil ha sido creado existosamente',
+            'success'
+          );
+        },
+        (err: any) => {
+          console.log(err);
+          showError;
+        }
+      );
+    } else {
+      this.profileService.updateProfile(profileSend).subscribe(
+        () => {
+          Swal.fire(
+            'Exito',
+            'Tu perfil ha sido actualizado existosamente',
+            'success'
+          ).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload();
+            }
+          });
+        },
+        (err: any) => {
+          console.log(err);
+          showError;
+        }
+      );
     }
   }
 
-  constructor(
-    private profileService: ProfileService,
-    private formBuilder: FormBuilder
-  ) {
-    this.buildForm();
-  }
+  constructor(private profileService: ProfileService) {}
 
-  ngOnInit(): void {}
-
-  private buildForm() {
-    this.form = this.formBuilder.group({
-      resume: ['', Validators.required],
-    });
+  ngOnInit(): void {
+    this.getProfile();
   }
 }

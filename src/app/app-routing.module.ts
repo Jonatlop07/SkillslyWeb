@@ -5,23 +5,22 @@ import { AuthRoutingModule } from './auth/auth.routing';
 import { PagesRoutingModule } from './pages/pages.routing';
 
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
+import { ProfileRoutingModule } from './profile/profile-routing.module';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
-  { path: '**', component:  NopagefoundComponent},
-  {
-    path: 'profile',
-    loadChildren: () =>
-      import('./profile/profile.module').then((m) => m.ProfileModule),
-  },
+  { path: '**', component: NopagefoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{
-    preloadingStrategy: PreloadAllModules
-  }), 
+  imports: [
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+    }),
     AuthRoutingModule,
-    PagesRoutingModule],
-  exports: [RouterModule]
+    PagesRoutingModule,
+    ProfileRoutingModule,
+  ],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
