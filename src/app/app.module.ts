@@ -7,9 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { PagesModule } from './pages/pages.module';
-import { SharedModule } from './shared/shared.module';
-import { NavbarComponent } from './shared/navbar/navbar.component';
-
 @NgModule({
   declarations: [AppComponent, NopagefoundComponent],
   imports: [
