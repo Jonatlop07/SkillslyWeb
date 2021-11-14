@@ -5,12 +5,14 @@ import { PagesComponent } from './pages.component';
 import { AccountComponent } from './account/account.component'
 import { ReactiveFormsModule } from '@angular/forms'
 import { CalendarModule } from 'primeng/calendar'
-import { RouterModule } from '@angular/router'
+import { RouterModule } from '@angular/router';
+import { SearchComponent } from './search/search.component'
 
 @NgModule({
   declarations: [
     PagesComponent,
-    AccountComponent
+    AccountComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,
