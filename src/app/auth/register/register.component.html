@@ -20,7 +20,7 @@
                      aria-label="Username" aria-describedby="basic-addon1" required/>
             </div>
             <div class="col text-danger">
-              <p *ngIf="invalidInput('name') || invalidForm()">* El nombre es obligatorio, mínimo 4 carácteres</p>
+              <p *ngIf="invalidInput('name')">* El nombre es obligatorio, mínimo 4 carácteres</p>
             </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -31,7 +31,7 @@
                      aria-label="Username" aria-describedby="basic-addon1" required/>
             </div>
             <div class="col text-danger">
-              <p *ngIf="invalidInput('email') || invalidForm()">* El email es obligatorio y tiene que ser válido</p>
+              <p *ngIf="invalidInput('email')">* El email es obligatorio y tiene que ser válido</p>
             </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -43,8 +43,8 @@
                      pPassword/>
             </div>
             <div class="col text-danger">
-              <p *ngIf="invalidInput('password') || invalidForm()">* La contraseña es obligatoria y debe contener:</p>
-              <ul _ngcontent-cmx-c54="" *ngIf="invalidInput('password') || invalidForm()">
+              <p *ngIf="invalidInput('password')">* La contraseña es obligatoria y debe contener:</p>
+              <ul _ngcontent-cmx-c54="" *ngIf="invalidInput('password')">
                 <li _ngcontent-cmx-c54="">Al menos una minúscula</li>
                 <li _ngcontent-cmx-c54="">Al menos una mayúscula</li>
                 <li _ngcontent-cmx-c54="">Al menos un número</li>
@@ -66,7 +66,7 @@
           <div class="col-12 ">
             <div class="form-group ">
               <div class="pt-3 d-grid ">
-                <button class="btn btn-block btn-lg btn-info " type="submit ">
+                <button class="btn btn-block btn-lg btn-info " type="submit">
                   Registrarse
                 </button>
                 <a class="mt-2" [routerLink]="['/login']">¿Ya tienes una cuenta?</a>
