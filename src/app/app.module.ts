@@ -6,17 +6,17 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
-import { PagesComponent } from './pages/pages.component';
-import { ProfileModule } from './profile/profile.module';
+
+import { PagesModule } from './pages/pages.module';
 
 @NgModule({
-  declarations: [AppComponent, NopagefoundComponent, PagesComponent],
+  declarations: [AppComponent, NopagefoundComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    PagesModule,
     AuthModule,
-    ProfileModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

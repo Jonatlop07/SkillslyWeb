@@ -4,11 +4,10 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthRoutingModule } from './auth/auth.routing';
 import { PagesRoutingModule } from './pages/pages.routing';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
-import { ProfileRoutingModule } from './profile/profile-routing.module';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '**', component:  NopagefoundComponent},
+  { path: '**', component: NopagefoundComponent },
 ];
 
 @NgModule({
@@ -18,7 +17,6 @@ const routes: Routes = [
     }),
     AuthRoutingModule,
     PagesRoutingModule,
-    ProfileRoutingModule,
   ],
   exports: [RouterModule],
 })

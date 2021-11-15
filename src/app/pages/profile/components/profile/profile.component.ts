@@ -3,11 +3,11 @@ import { ProfileService } from 'src/app/services/profile.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-create-profile',
-  templateUrl: './create-profile.component.html',
-  styleUrls: ['./create-profile.component.css'],
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css'],
 })
-export class CreateProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   knowledge: Array<string> = [];
   talents: Array<string> = [];
   activities: Array<string> = [];
