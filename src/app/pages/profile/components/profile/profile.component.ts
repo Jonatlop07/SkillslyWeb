@@ -44,7 +44,7 @@ export class ProfileComponent implements OnInit {
       activities: this.activities,
       talents: this.talents,
       interests: this.interests,
-      userEmail: email,
+      user_email: email,
     };
 
     const showError = Swal.fire(

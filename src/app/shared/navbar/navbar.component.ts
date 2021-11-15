@@ -9,18 +9,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class NavbarComponent {
 
-  public searchForm: Boolean = false; 
+  public searchForm: Boolean = false;
 
   constructor(private authService:AuthService, private router:Router, private activatedRoute: ActivatedRoute) { }
 
   logout(){
     this.authService.logout();
-    this.router.navigate(['/login']); 
+    this.router.navigate(['/login']);
   }
 
   showSearchForm(){
     if(!this.searchForm){
-      this.searchForm = true; 
+      this.searchForm = true;
     } else {
       this.searchForm = false;
     }
@@ -29,10 +29,10 @@ export class NavbarComponent {
   searchUser(searchInput: string){
     searchInput = searchInput.trim();
     if (!searchInput){
-      this.searchForm = false; 
+      this.searchForm = false;
       return;
     }
-    this.router.navigate(['./search',searchInput], {relativeTo: this.activatedRoute }); 
+    this.router.navigate(['./search',searchInput], {relativeTo: this.activatedRoute });
   }
 
 }
