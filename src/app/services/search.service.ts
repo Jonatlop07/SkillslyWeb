@@ -14,6 +14,9 @@ export class SearchService {
   constructor(private readonly http: HttpClient, private readonly jwt_service: JwtService) { }
 
   public searchUser(searchUserForm: SearchUserForm){
-    return this.http.post(`${this.API_URL}/users/search`,searchUserForm,this.jwt_service.getHttpOptions())
+    return this.http.get(
+      `${this.API_URL}/users?email=${searchUserForm.name}&name=${searchUserForm.email}`,
+      this.jwt_service.getHttpOptions()
+    )
   }
 }
