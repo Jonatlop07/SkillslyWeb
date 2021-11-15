@@ -9,16 +9,19 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent{
-
+export class RegisterComponent {
   public form: FormGroup;
   public register_form: RegisterForm;
   public today = new Date();
   public form_submitted = false;
 
-  constructor(private form_builder: FormBuilder, private auth_service: AuthService, private router: Router) {
+  constructor(
+    private form_builder: FormBuilder,
+    private auth_service: AuthService,
+    private router: Router
+  ) {
     this.initForm();
   }
 
@@ -49,7 +52,7 @@ export class RegisterComponent{
     });
   }
 
-  saveForm(){
+  saveForm() {
     this.form_submitted = true;
     if (this.invalidForm()) {
       return;
@@ -66,7 +69,7 @@ export class RegisterComponent{
     });
   }
 
-  invalidInput( input: string ): boolean {
+  invalidInput(input: string): boolean {
     return this.form.get(input).invalid && this.form.get(input).touched;
   }
 

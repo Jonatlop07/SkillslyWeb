@@ -13,13 +13,15 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { PostsCreateComponent } from './user/posts/posts-create/posts-create.component';
 
 @NgModule({
   declarations: [
     PagesComponent,
     AccountComponent,
     SearchComponent,
-    ProfileComponent
+    ProfileComponent,
+    PostsCreateComponent
   ],
   imports: [
     CommonModule,

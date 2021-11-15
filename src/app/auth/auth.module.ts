@@ -8,23 +8,19 @@ import { PasswordModule } from 'primeng/password';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
-import { AccountService } from '../services/account.service'
-
+import { AccountService } from '../services/account.service';
 
 @NgModule({
   declarations: [RegisterComponent, LoginComponent],
-  providers: [
-    AccountService
-  ],
+  providers: [AccountService],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     CalendarModule,
     PasswordModule,
-    RouterModule
+    RouterModule,
   ],
-  exports: [RegisterComponent]
+  exports: [RegisterComponent],
 })
-export class AuthModule {
-}
+export class AuthModule {}
