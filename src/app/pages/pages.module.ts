@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { ChipsModule } from 'primeng/chips';
 import { RouterModule } from '@angular/router';
+import { SearchComponent } from './search/search.component';
 import { ProfileComponent } from './profile/components/profile/profile.component';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -14,7 +15,12 @@ import { CardModule } from 'primeng/card';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
-  declarations: [PagesComponent, AccountComponent, ProfileComponent],
+  declarations: [
+    PagesComponent,
+    AccountComponent,
+    SearchComponent,
+    ProfileComponent
+  ],
   imports: [
     CommonModule,
     SharedModule,

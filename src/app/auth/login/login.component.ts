@@ -45,7 +45,6 @@ export class LoginComponent {
           this.authService.setExpiresDate(now.getTime().toString());
           localStorage.setItem('id', result.id);
           localStorage.setItem('email', result.email);
-          console.log(result);
           this.router.navigate(['/main']);
         },
         (err) => {
