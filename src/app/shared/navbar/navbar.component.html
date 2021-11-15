@@ -46,12 +46,11 @@
         <!-- ============================================================== -->
         <!-- Search -->
         <!-- ============================================================== -->
+        <li *ngIf="searchForm" class="nav-item search-box mt-3">
+          <input #searchInput (keyup.enter)="searchUser(searchInput.value)" type="text" class="form-control" placeholder="Busca un usuario y Enter" />
+        </li>
         <li class="nav-item search-box">
-          <a class="nav-link waves-effect waves-dark"><i class="mdi mdi-magnify fs-4"></i></a>
-          <form class="app-search position-absolute">
-            <input type="text" class="form-control" placeholder="Search &amp; enter"/>
-            <a class="srh-btn"><i class="mdi mdi-window-close"></i></a>
-          </form>
+          <a (click)="showSearchForm()" class="nav-link waves-effect waves-dark"><i class="mdi mdi-magnify fs-4"></i></a>
         </li>
         <!-- ============================================================== -->
         <!-- Comment -->
@@ -149,9 +148,9 @@
             <img src="../assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"/>
           </a>
           <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="javascript:void(0)">
-              <i class="mdi mdi-account me-1 ms-1"></i>
-              My Profile</a>
+            <a class="dropdown-item" [routerLink]="['./profile']">
+              <i class="mdi mdi-account me-1 ms-1" ></i>
+              Mi perfil</a>
             <a class="dropdown-item" href="javascript:void(0)">
               <i class="mdi mdi-wallet me-1 ms-1"></i>
               My Balance</a>
