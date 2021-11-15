@@ -1,0 +1,124 @@
+<div class="row">
+  <div class="col-lg-5">
+    <div class="box">
+      <p-card
+        header="Tu perfil de usuario"
+        subheader="A continuación te invitamos a ingresar la información de tu perfil "
+        styleClass="p-card-shadow"
+      >
+        <form (ngSubmit)="saveProfile($event)">
+          <div class="p-fluid">
+            <label for="knowledgeInput">Cuentanos un poco de ti 👐🏻</label>
+            <br />
+            <textarea
+              rows="3"
+              cols="30"
+              pInputTextarea
+              [(ngModel)]="resume"
+              name="resume"
+              required
+            ></textarea>
+            <br />
+          </div>
+
+          <div class="p-fluid">
+            <label for="knowledgeInput">Ingresa tus conocimientos 📚</label>
+            <br />
+            <p-chips
+              [(ngModel)]="knowledge"
+              separator=","
+              placeholder="Ingresa tus conocimientos"
+              id="knowledgeInput"
+              styleClass="p-inputtext-sm"
+              name="knowledge"
+              required
+            ></p-chips>
+            <br />
+          </div>
+          <div class="p-fluid">
+            <label for="Input">Ingresa tus talentos 🤖</label>
+            <br />
+            <p-chips
+              [(ngModel)]="talents"
+              separator=","
+              placeholder="Ingresa tus conocimientos"
+              id="knowledgeInput"
+              styleClass="p-inputtext-sm"
+              name="talents"
+              required
+            ></p-chips>
+            <br />
+          </div>
+
+          <div class="p-fluid">
+            <label for="Input">Ingresa tus actividades ⛹🏻‍♂️</label>
+            <br />
+            <p-chips
+              [(ngModel)]="activities"
+              separator=","
+              placeholder="Ingresa tus conocimientos"
+              id="knowledgeInput"
+              styleClass="p-inputtext-sm"
+              name="activities"
+              required
+            ></p-chips>
+            <br />
+          </div>
+
+          <div class="p-fluid">
+            <label for="Input">Ingresa tus intereses 💭</label>
+            <br />
+            <p-chips
+              [(ngModel)]="interests"
+              separator=","
+              placeholder="Ingresa tus conocimientos"
+              id="knowledgeInput"
+              styleClass="p-inputtext-sm"
+              name="interests"
+              required
+            ></p-chips>
+          </div>
+
+          <div class="row center-xs">
+            <div class="col-lg-8">
+              <div class="box">
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  label="Editar perfil"
+                  class="p-button-outlined p-button-rounded"
+                  icon="pi pi-user-edit"
+                  *ngIf="profileExists; else notShow"
+                  type="submit"
+                ></button>
+
+                <ng-template #notShow>
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    label="Crear perfil"
+                    class="p-button-outlined p-button-rounded"
+                    icon="pi pi-user-plus"
+                    type="submit"
+                  ></button>
+                </ng-template>
+
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  label="Cancelar"
+                  icon="pi pi-times"
+                  class="p-button-outlined p-button-rounded p-button-secondary"
+                  [style]="{ 'margin-left': '.5em' }"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </p-card>
+    </div>
+  </div>
+</div>

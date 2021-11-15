@@ -6,24 +6,19 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
-import { PagesModule } from './pages/pages.module';
-import { SharedModule } from './shared/shared.module'
-import { NavbarComponent } from './shared/navbar/navbar.component'
-
+import { PagesComponent } from './pages/pages.component';
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NopagefoundComponent,
-  ],
+  declarations: [AppComponent, NopagefoundComponent, PagesComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     AuthModule,
-    PagesModule
+    ProfileModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
