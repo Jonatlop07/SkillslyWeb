@@ -54,21 +54,22 @@ export class LoginComponent {
       return;
     }
     this.loginForm = this.form.value;
-    this.authService.loginUser(this.loginForm).subscribe(
-      (result: any) => {
-        this.authService.saveToken(result.access_token);
-        const now = new Date();
-        now.setSeconds(7200);
-        this.authService.setExpiresDate(now.getTime().toString());
-        localStorage.setItem('id', result.id);
-        localStorage.setItem('email', result.email);
-        console.log(result);
-        this.router.navigate(['/main']);
-      },
-      (err) => {
-        Swal.fire('Error', err.error.error, 'error');
-      }
-    );
+    this.authService
+      .loginUser(this.loginForm)
+      .subscribe(
+        (result: any) => {
+          this.authService.saveToken(result.access_token);
+          const now = new Date();
+          now.setSeconds(7200);
+          this.authService.setExpiresDate(now.getTime().toString());
+          localStorage.setItem('id', result.id);
+          localStorage.setItem('email', result.email);
+          this.router.navigate(['/main']);
+        },
+        (err) => {
+          Swal.fire('Error', err.error.error, 'error');
+        }
+      );
   }
 
   invalidInput(input: string): boolean {

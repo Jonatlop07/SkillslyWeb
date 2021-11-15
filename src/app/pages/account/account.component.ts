@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '../../services/account.service';
 import { AccountForm } from '../../interfaces/account_form.interface';
-import Swal from 'sweetalert2'
 import { GetAccountDataPresenter } from '../../interfaces/presenter/get_account_data.presenter'
+import Swal from 'sweetalert2'
 import * as moment from 'moment'
+import { JwtService } from '../../services/jwt.service'
+import { AuthService } from '../../services/auth.service'
+
 
 @Component({
   selector: 'app-account',
@@ -19,7 +23,9 @@ export class AccountComponent implements OnInit {
 
   constructor(
     private readonly form_builder: FormBuilder,
-    private readonly account_service: AccountService
+    private readonly account_service: AccountService,
+    private readonly auth_service: AuthService,
+    private router: Router
   ) {
   }
 
@@ -51,6 +57,19 @@ export class AccountComponent implements OnInit {
       .subscribe((account_data: GetAccountDataPresenter) => {
         this.initForm(account_data);
       });
+  }
+
+  deleteUserAccount() {
+    this.account_service
+      .deleteUserAccount()
+      .subscribe(() => {
+        this.auth_service.logout();
+        this.router.navigate(['/login']);
+      },
+        (err) => {
+          Swal.fire('Error', err.error.error, 'error');
+        }
+      );
   }
 
   invalidInput(input: string): boolean {

@@ -27,46 +27,34 @@ export class RegisterComponent {
 
   initForm(): void {
     this.form = this.form_builder.group({
-      name: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(20),
-        ],
-      ],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            /^[_A-Za-z0-9-\\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/
-          ),
-        ],
-      ],
-      password: [
-        '',
-        [
-          Validators.pattern(
-            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
-          ),
-        ],
-      ],
-      date_of_birth: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/
-          ),
-        ],
-      ],
+      name: ['', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(20)
+      ]],
+      email: ['', [
+        Validators.required,
+        Validators.pattern(
+          /^[_A-Za-z0-9-\\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/
+        )
+      ]],
+      password: ['', [
+        Validators.pattern(
+          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
+        )
+      ]],
+      date_of_birth: ['01/01/2000', [
+        Validators.required,
+        Validators.pattern(
+          /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/
+        )
+      ]]
     });
   }
 
   saveForm() {
     this.form_submitted = true;
-    if (this.form.invalid) {
+    if (this.invalidForm()) {
       return;
     }
     this.register_form = this.form.value;
@@ -74,14 +62,11 @@ export class RegisterComponent {
       this.form.get('date_of_birth').value
     ).format('DD/MM/YYYY');
     const registerResponse = this.auth_service.registerUser(this.register_form);
-    registerResponse.subscribe(
-      () => {
-        this.router.navigate(['/login']);
-      },
-      (err) => {
-        Swal.fire('Error', err.error.error, 'error');
-      }
-    );
+    registerResponse.subscribe(() => {
+      this.router.navigate(['/login']);
+    }, (err) => {
+      Swal.fire('Error', err.error.error, 'error' );
+    });
   }
 
   invalidInput(input: string): boolean {
