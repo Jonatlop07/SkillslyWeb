@@ -40,7 +40,7 @@ export class RegisterComponent{
           /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
         )
       ]],
-      date_of_birth: ['', [
+      date_of_birth: ['01/01/2000', [
         Validators.required,
         Validators.pattern(
           /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/
@@ -51,14 +51,14 @@ export class RegisterComponent{
 
   saveForm(){
     this.form_submitted = true;
-    if (this.form.invalid) {
+    if (this.invalidForm()) {
       return;
     }
     this.register_form = this.form.value;
     this.register_form.date_of_birth = moment(
       this.form.get('date_of_birth').value
     ).format('DD/MM/YYYY');
-    const registerResponse =  this.auth_service.registerUser(this.register_form);
+    const registerResponse = this.auth_service.registerUser(this.register_form);
     registerResponse.subscribe(() => {
       this.router.navigate(['/login']);
     }, (err) => {
