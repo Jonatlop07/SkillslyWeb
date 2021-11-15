@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { PostService } from 'src/app/services/posts.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class PostsCreateComponent implements OnInit {
   postForm: FormGroup;
   requireOne = false;
   referenceIncomplete = false;
-  constructor(private postService: PostService) {}
+  constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -60,6 +61,8 @@ export class PostsCreateComponent implements OnInit {
 
   onCancel() {
     this.postService.onToggleCreate();
+    this.router.navigate(['./main']); 
+    
   }
 
   onSubmit($event: Event) {
