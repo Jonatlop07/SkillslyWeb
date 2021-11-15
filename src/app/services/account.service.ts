@@ -28,4 +28,11 @@ export class AccountService {
       this.jwt_service.getHttpOptions()
     );
   }
+
+  public deleteUserAccount() {
+    return this.http.delete(
+      `${this.API_URL}/users/account/${localStorage.getItem('id')}`,
+      this.jwt_service.getHttpOptions()
+    );
+  }
 }
