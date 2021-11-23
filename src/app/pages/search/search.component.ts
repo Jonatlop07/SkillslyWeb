@@ -11,7 +11,7 @@ import { SearchUserForm } from '../../interfaces/search_users_response.interface
 export class SearchComponent implements OnInit {
 
   public searchInput: string;
-  public findedUsers: SearchUserForm[];
+  public foundUsers: SearchUserForm[];
 
   constructor(private activatedRoute: ActivatedRoute, private searchService: SearchService) { }
 
@@ -23,7 +23,7 @@ export class SearchComponent implements OnInit {
         name: this.searchInput
       }
       const searchServiceResponse = this.searchService.searchUser(searchUserForm);
-      searchServiceResponse.subscribe((resp:any) => this.findedUsers=resp.users); 
+      searchServiceResponse.subscribe((resp:any) => this.foundUsers=resp.users); 
     })
   }
 
