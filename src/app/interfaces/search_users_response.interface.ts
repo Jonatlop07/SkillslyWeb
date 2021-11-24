@@ -1,4 +1,4 @@
 export interface SearchUserForm {
-  email: string; 
-  name: string; 
+  email: string;
+  name: string;
 }

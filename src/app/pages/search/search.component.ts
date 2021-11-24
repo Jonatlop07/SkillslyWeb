@@ -19,12 +19,11 @@ export class SearchComponent implements OnInit {
     this.activatedRoute.params.subscribe( params => {
       this.searchInput = params.searchInput;
       const searchUserForm: SearchUserForm = {
-        email : this.searchInput, 
-        name: this.searchInput
-      }
+        email : this.searchInput,
+        name: this.searchInput,
+      };
       const searchServiceResponse = this.searchService.searchUser(searchUserForm);
-      searchServiceResponse.subscribe((resp:any) => this.findedUsers=resp.users); 
-    })
+      searchServiceResponse.subscribe((resp:any) => this.findedUsers=resp.users );
+    });
   }
-
 }

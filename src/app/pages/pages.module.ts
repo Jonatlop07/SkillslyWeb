@@ -14,6 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PostsCreateComponent } from './user/posts/posts-create/posts-create.component';
+import { PostsQueryComponent } from './user/posts/posts-query/posts-query.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PostsCreateComponent } from './user/posts/posts-create/posts-create.com
     AccountComponent,
     SearchComponent,
     ProfileComponent,
-    PostsCreateComponent
+    PostsCreateComponent,
+    PostsQueryComponent
   ],
   imports: [
     CommonModule,
