@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CreatePostDataPresenter } from '../interfaces/presenter/create_post_data.presenter';
 import { toPost } from '../interfaces/presenter/post_form_data.presenter';
 import { JwtService } from './jwt.service';
+import { QueryPostPresenter } from '../interfaces/presenter/query_post.presenter';
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
@@ -23,10 +24,35 @@ export class PostService {
           content: content,
         },
         this.jwtService.getHttpOptions()
-      )
-      .subscribe((created_post) => {
-        console.log(created_post);
-      });
+      );
+  }
+
+  queryPostCollection(queryPostParams: QueryPostPresenter) {
+    let params = new HttpParams();
+    params = params.append('user_id', queryPostParams.user_id);
+    return this.http
+      .get(
+        `${this.API_URL}/permanent-posts`,
+        {
+          params,
+          ...this.jwtService.getHttpOptions(),
+        }
+      );
+
+  }
+
+  queryPost(queryPostPresenter: QueryPostPresenter) {
+    let params = new HttpParams();
+    const id_post = queryPostPresenter.post_id;
+    params = params.append('user_id', queryPostPresenter.user_id);
+    return this.http
+      .get(
+        `${this.API_URL}/permanent-posts/${id_post}`,
+        {
+          params,
+          ...this.jwtService.getHttpOptions(),
+        }
+      );
   }
 
   onToggleCreate() {

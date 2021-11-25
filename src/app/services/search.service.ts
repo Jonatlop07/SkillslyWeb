@@ -23,6 +23,6 @@ export class SearchService {
         params,
         ...this.jwt_service.getHttpOptions()
       }
-    )
+    );
   }
 }

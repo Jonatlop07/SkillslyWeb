@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs'
-import { GetAccountDataPresenter } from '../interfaces/presenter/get_account_data.presenter'
-import { JwtService } from './jwt.service'
-import { HttpClient } from '@angular/common/http'
-import { environment } from '../../environments/environment'
-import { UpdateUserDataPresenter } from '../interfaces/presenter/update_user_data.presenter'
+import { Observable } from 'rxjs';
+import { GetAccountDataPresenter } from '../interfaces/presenter/get_account_data.presenter';
+import { JwtService } from './jwt.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { UpdateUserDataPresenter } from '../interfaces/presenter/update_user_data.presenter';
 
 @Injectable()
 export class AccountService {
