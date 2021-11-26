@@ -15,6 +15,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PostsCreateComponent } from './user/posts/posts-create/posts-create.component';
 import { SharePostComponent } from './share-post/share-post.component';
+import { PostsQueryComponent } from './user/posts/posts-query/posts-query.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { SharePostComponent } from './share-post/share-post.component';
     SearchComponent,
     ProfileComponent,
     PostsCreateComponent,
-    SharePostComponent
+    SharePostComponent,
+    PostsQueryComponent
   ],
   imports: [
     CommonModule,

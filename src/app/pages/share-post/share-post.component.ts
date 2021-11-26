@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PostService } from '../../services/posts.service';
 import { SharePostInterface } from '../../interfaces/share_post.interface';
 
@@ -7,14 +7,11 @@ import { SharePostInterface } from '../../interfaces/share_post.interface';
   templateUrl: './share-post.component.html',
   styleUrls: ['./share-post.component.css']
 })
-export class SharePostComponent implements OnInit {
+export class SharePostComponent {
 
-  public post_id: string = '036e19fd-04f5-4de5-8c2c-c0b584516256';  
+  public post_id = '036e19fd-04f5-4de5-8c2c-c0b584516256';  
 
   constructor(private postService: PostService) { }
-
-  ngOnInit(): void {
-  }
 
   sharePost(){
     const sharePostInterface: SharePostInterface = {

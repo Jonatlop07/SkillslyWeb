@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { JwtService } from './jwt.service';
-import { SearchUserForm } from '../interfaces/search_users_response.interface';
-
+import { SearchUserInputForm } from '../interfaces/search_users_input_form.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +12,7 @@ export class SearchService {
 
   constructor(private readonly http: HttpClient, private readonly jwt_service: JwtService) { }
 
-  public searchUser(searchUserForm: SearchUserForm){
+  public searchUser(searchUserForm: SearchUserInputForm){
     let params = new HttpParams();
     params = params.append('email', searchUserForm.email);
     params = params.append('name', searchUserForm.name);
@@ -23,6 +22,6 @@ export class SearchService {
         params,
         ...this.jwt_service.getHttpOptions()
       }
-    )
+    );
   }
 }
