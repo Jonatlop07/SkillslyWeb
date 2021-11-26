@@ -11,7 +11,6 @@
     ],
     "rules": {
         //"quotes": ["error", "double"],
-        "semi": ["error", "always"],
         "curly": "error",
         "no-empty": "error",
         "@typescript-eslint/interface-name-prefix": "off",
@@ -20,7 +19,6 @@
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-unused-vars": "error",
         "@typescript-eslint/no-use-before-define": "error",
-        "@typescript-eslint/semi": ["error", "always"],
         "@typescript-eslint/no-useless-constructor": "error",
         "@typescript-eslint/no-extra-parens": "warn",
         "@typescript-eslint/no-extra-semi": "error",
