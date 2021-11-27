@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PermanentPostPresenter, QueryPostPresenter } from 'src/app/interfaces/presenter/query_post.presenter';
+import { PermanentPostPresenter, QueryPostPresenter } from 'src/app/interfaces/presenter/post/query_post.presenter';
 import { ActivatedRoute } from '@angular/router';
 import { PostService } from 'src/app/services/posts.service';
 import { SharePostInterface } from 'src/app/interfaces/share_post.interface';
-
 
 @Component({
   selector: 'app-posts-query',
@@ -28,11 +27,11 @@ export class PostsQueryComponent implements OnInit {
 
   sharePost(post_id: string) : void {
     const sharePostInterface: SharePostInterface = {
-      post_id: post_id, 
+      post_id: post_id,
       user_id: localStorage.getItem('id')
     }
     const postResponse = this.postService.sharePost(sharePostInterface);
-    postResponse.subscribe(resp => console.log(resp));  
+    postResponse.subscribe(resp => console.log(resp));
   }
 
   isImage(referenceType: string): boolean {

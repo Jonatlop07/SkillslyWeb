@@ -1,3 +1,9 @@
-<h1>Mis Conversaciones</h1>
-<app-conversations [conversations]="conversations"></app-conversations>
-<app-current-conversation></app-current-conversation>
+<div class="row flex-wrap">
+  <div class="col-lg-4">
+    <app-conversations [conversations]="conversations"></app-conversations>
+  </div>
+  <div class="col-lg-8">
+    <app-current-conversation></app-current-conversation>
+  </div>
+</div>
+

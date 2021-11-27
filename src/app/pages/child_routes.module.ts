@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'posts', component: PostsCreateComponent},
   { path: 'share-post', component: SharePostComponent},
   { path: 'query', component: PostsQueryComponent},
-  { path: 'chat', component: ChatComponent }
+  { path: 'conversations', component: ChatComponent }
 ];
 
 @NgModule({

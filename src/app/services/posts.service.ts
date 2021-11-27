@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { CreatePostDataPresenter } from '../interfaces/presenter/post/create_post_data.presenter';
 import { toPost } from '../interfaces/presenter/post/post_form_data.presenter';
 import { JwtService } from './jwt.service';
-import { QueryPostPresenter } from '../interfaces/presenter/query_post.presenter';
+import { QueryPostPresenter } from '../interfaces/presenter/post/query_post.presenter';
 import { SharePostInterface } from '../interfaces/share_post.interface';
 
 
