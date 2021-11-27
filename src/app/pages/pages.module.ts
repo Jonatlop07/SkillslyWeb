@@ -16,7 +16,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PostsCreateComponent } from './user/posts/posts-create/posts-create.component';
 import { SharePostComponent } from './share-post/share-post.component';
 import { PostsQueryComponent } from './user/posts/posts-query/posts-query.component';
-import { ChatModule } from './chat/chat.module'
+import { ChatComponent } from './chat/components/chat.component'
 
 @NgModule({
   declarations: [
@@ -26,7 +26,8 @@ import { ChatModule } from './chat/chat.module'
     ProfileComponent,
     PostsCreateComponent,
     SharePostComponent,
-    PostsQueryComponent
+    PostsQueryComponent,
+    ChatComponent,
   ],
   imports: [
     CommonModule,
@@ -40,7 +41,6 @@ import { ChatModule } from './chat/chat.module'
     InputTextareaModule,
     FormsModule,
     ButtonModule,
-    ChatModule
   ],
 })
 export class PagesModule {}

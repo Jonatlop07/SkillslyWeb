@@ -6,7 +6,7 @@ import { ProfileComponent } from './profile/components/profile/profile.component
 import { PostsCreateComponent } from './user/posts/posts-create/posts-create.component';
 import { SharePostComponent } from './share-post/share-post.component';
 import { PostsQueryComponent } from './user/posts/posts-query/posts-query.component';
-import { ChatComponent } from './chat/chat.component'
+import { ChatComponent } from './chat/components/chat.component'
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent },
