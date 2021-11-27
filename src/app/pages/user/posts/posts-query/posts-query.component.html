@@ -7,56 +7,7 @@
             <h3 class="card-title">Publicaciones</h3>
             <hr />
             <div *ngFor="let post of foundPosts">
-              <div class="d-flex">
-                <div class="d-flex flex-fill">
-                  <div class="p-2">
-                    <img
-                      src="../assets/images/users/1.jpg"
-                      alt="user"
-                      width="30"
-                      class="rounded-circle"
-                    />
-                  </div>
-                  <div class="align-self-center">
-                    <h5 class="font-medium">Nombre de Usuario</h5>
-                  </div>
-                </div>
-                <div class="d-flex">
-                  <p class="font-light small p-1 my-auto">
-                    {{ post.created_at }}
-                  </p>
-                  <i class="mdi mdi-settings fs-2 p-1"></i>
-                </div>
-              </div>
-              <div *ngFor="let content of post.content" class="m-2">
-                <div class="comment-text w-100">
-                  <h6 class="font-light pb-2">{{ content.description }}</h6>
-                  <div class="pb-3 row justify-content-center">
-                    <div *ngIf="isImage(content.reference_type)">
-                      <img [src]="content.reference" />
-                    </div>
-                    <div *ngIf="!isImage(content.reference_type)">
-                      <video controls>
-                        <source [src]="content.reference" type="video/mp4" />
-                      </video>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="d-flex m-2">
-                <button
-                  type="button"
-                  class="btn btn-block btn-cyan btn-sm text-white p-1"
-                >
-                  Compartir
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-block btn-success btn-sm text-white"
-                >
-                  Comentar
-                </button>
-              </div>
+              <app-post [post]="post"> </app-post>
               <hr />
             </div>
           </div>

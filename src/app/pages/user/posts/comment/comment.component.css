@@ -1,0 +1,8 @@
+.clickable:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.p-tooltip {
+  font-size: smaller;
+  background-color: #f5f5f5;
+}
