@@ -5,6 +5,7 @@ import { HttpHeaders } from '@angular/common/http'
   providedIn: 'root'
 })
 export class JwtService {
+  
   public getHttpOptions() {
     return {
       headers: new HttpHeaders({
@@ -12,7 +13,7 @@ export class JwtService {
         'Authorization': `Bearer ${this.getToken()}`
       })
     }
-  };
+  }
 
   public isUserAuthenticated() {
     const auth_token: string = localStorage.getItem('authToken');

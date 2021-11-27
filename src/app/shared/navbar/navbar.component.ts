@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class NavbarComponent {
 
-  public searchForm: Boolean = false;
+  public searchForm = false;
 
   constructor(private authService:AuthService, private router:Router, private activatedRoute: ActivatedRoute) { }
 
@@ -19,7 +19,7 @@ export class NavbarComponent {
   }
 
   showSearchForm(){
-    if(!this.searchForm){
+    if (!this.searchForm) {
       this.searchForm = true;
     } else {
       this.searchForm = false;
@@ -32,7 +32,7 @@ export class NavbarComponent {
       this.searchForm = false;
       return;
     }
-    this.router.navigate(['./search',searchInput], {relativeTo: this.activatedRoute });
+    this.router.navigate(['./search', searchInput], {relativeTo: this.activatedRoute });
   }
 
 }

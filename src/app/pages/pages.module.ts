@@ -14,6 +14,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PostsCreateComponent } from './user/posts/posts-create/posts-create.component';
+import { SharePostComponent } from './share-post/share-post.component';
+import { PostsQueryComponent } from './user/posts/posts-query/posts-query.component';
 import { ChatModule } from './chat/chat.module'
 
 @NgModule({
@@ -23,6 +25,8 @@ import { ChatModule } from './chat/chat.module'
     SearchComponent,
     ProfileComponent,
     PostsCreateComponent,
+    SharePostComponent,
+    PostsQueryComponent
   ],
   imports: [
     CommonModule,

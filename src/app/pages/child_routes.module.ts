@@ -4,6 +4,8 @@ import { AccountComponent } from './account/account.component'
 import { SearchComponent } from './search/search.component';
 import { ProfileComponent } from './profile/components/profile/profile.component';
 import { PostsCreateComponent } from './user/posts/posts-create/posts-create.component';
+import { SharePostComponent } from './share-post/share-post.component';
+import { PostsQueryComponent } from './user/posts/posts-query/posts-query.component';
 import { ChatComponent } from './chat/chat.component'
 
 const routes: Routes = [
@@ -11,6 +13,8 @@ const routes: Routes = [
   { path: 'search/:searchInput' , component: SearchComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'posts', component: PostsCreateComponent},
+  { path: 'share-post', component: SharePostComponent},
+  { path: 'query', component: PostsQueryComponent},
   { path: 'chat', component: ChatComponent }
 ];
 

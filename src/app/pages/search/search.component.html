@@ -1,6 +1,6 @@
 <div class="comment-widgets scrollable ps-container ps-theme-default" data-ps-id="5626d95c-2430-cb2f-f343-45fdeb2c69e5">
     <!-- Comment Row -->
-    <div *ngFor="let user of findedUsers" class="d-flex flex-row comment-row m-2">
+    <div *ngFor="let user of foundUsers" class="d-flex flex-row comment-row m-2">
         <div class="p-2">
             <img src="../assets/images/users/1.jpg" alt="user" width="50" class="rounded-circle">
         </div>
@@ -9,9 +9,10 @@
             <span class="mb-3 d-block">{{user.email}}</span>
             <div class="comment-footer">
                 <button type="button" class="btn btn-block btn-cyan btn-sm text-white">Ver Perfil</button>
-                <button type="button" class="btn btn-block btn-success btn-sm text-white">Añadir como amigo</button>
-                <div>
-                    <span class="text-muted float-end">April 14, 2021</span>
+                <button type="button" class="btn btn-block btn-success btn-sm text-white">Seguir</button>
+                <div class="mt-3">
+                    <h6>Nacido en: </h6>
+                    <span class="text-muted">{{user.date_of_birth}}</span>
                 </div>
             </div>
         </div>
@@ -22,4 +23,10 @@
             <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div>
         </div>
     </div>
+</div>
+<div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px">
+    <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px"></div>
+</div>
+<div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px">
+    <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px"></div>
 </div>

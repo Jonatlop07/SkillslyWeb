@@ -16,7 +16,7 @@ import { AuthService } from '../../services/auth.service'
 export class AccountComponent implements OnInit {
   public form: FormGroup;
   public account_form: AccountForm;
-  public change_password: boolean = false;
+  public change_password = false;
   public today = new Date();
 
   constructor(
