@@ -14,6 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PostsCreateComponent } from './user/posts/posts-create/posts-create.component';
+import { ChatModule } from './chat/chat.module'
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { PostsCreateComponent } from './user/posts/posts-create/posts-create.com
     AccountComponent,
     SearchComponent,
     ProfileComponent,
-    PostsCreateComponent
+    PostsCreateComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +36,7 @@ import { PostsCreateComponent } from './user/posts/posts-create/posts-create.com
     InputTextareaModule,
     FormsModule,
     ButtonModule,
+    ChatModule
   ],
 })
 export class PagesModule {}

@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { CreatePostDataPresenter } from '../interfaces/presenter/create_post_data.presenter';
-import { toPost } from '../interfaces/presenter/post_form_data.presenter';
+import { CreatePostDataPresenter } from '../interfaces/presenter/post/create_post_data.presenter';
+import { toPost } from '../interfaces/presenter/post/post_form_data.presenter';
 import { JwtService } from './jwt.service';
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
-  private readonly API_URL: string = environment.API_URL;
+    private readonly API_URL: string = environment.API_URL;
   toggleCreate = false;
   constructor(
     private readonly http: HttpClient,
