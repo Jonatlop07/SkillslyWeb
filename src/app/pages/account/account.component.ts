@@ -6,7 +6,6 @@ import { AccountForm } from '../../interfaces/account_form.interface';
 import { GetAccountDataPresenter } from '../../interfaces/presenter/get_account_data.presenter'
 import Swal from 'sweetalert2'
 import * as moment from 'moment'
-import { JwtService } from '../../services/jwt.service'
 import { AuthService } from '../../services/auth.service'
 
 
@@ -18,7 +17,7 @@ import { AuthService } from '../../services/auth.service'
 export class AccountComponent implements OnInit {
   public form: FormGroup;
   public account_form: AccountForm;
-  public change_password: boolean = false;
+  public change_password = false;
   public today = new Date();
 
   constructor(

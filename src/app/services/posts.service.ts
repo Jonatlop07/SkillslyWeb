@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CreatePostDataPresenter } from '../interfaces/presenter/create_post_data.presenter';
 import { toPost } from '../interfaces/presenter/post_form_data.presenter';
+import { SharePostInterface } from '../interfaces/share_post.interface';
 import { JwtService } from './jwt.service';
 import { QueryPostPresenter } from '../interfaces/presenter/query_post.presenter';
 
@@ -52,6 +53,17 @@ export class PostService {
           params,
           ...this.jwtService.getHttpOptions(),
         }
+      );
+  }
+
+  sharePost(sharePostInterface: SharePostInterface){
+    return this.http
+      .post(
+        `${this.API_URL}/permanent-posts/${sharePostInterface.post_id}/share`,
+        {
+          user_id: sharePostInterface.user_id
+        },
+        this.jwtService.getHttpOptions()
       );
   }
 
