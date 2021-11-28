@@ -1,0 +1,167 @@
+<div class="d-flex w-100">
+  <div class="d-flex flex-fill">
+    <div class="p-2">
+      <img
+        src="../assets/images/users/1.jpg"
+        alt="user"
+        width="30"
+        class="rounded-circle"
+      />
+    </div>
+    <div class="align-self-center">
+      <h5 class="font-medium">Nombre de Usuario</h5>
+    </div>
+  </div>
+  <div class="d-flex">
+    <p class="font-light small p-1 my-auto">
+      {{ post.created_at }}
+    </p>
+    <i class="mdi mdi-settings fs-2 p-1"></i>
+  </div>
+</div>
+<div *ngFor="let content of post.content" class="m-2">
+  <div class="comment-text w-100">
+    <h6 class="font-light pb-2">{{ content.description }}</h6>
+    <div class="pb-3 row justify-content-center">
+      <div *ngIf="isImage(content.reference_type)">
+        <img [src]="content.reference" />
+      </div>
+      <div *ngIf="!isImage(content.reference_type)">
+        <video controls>
+          <source [src]="content.reference" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-inline m-2">
+  <div
+    *ngFor="let type of reactionTypes"
+    class="d-inline m-1"
+  >
+    <button
+      (click)="onAddReaction(type, post.post_id)"
+      class="btn btn-outline-primary rounded-circle btn-md"
+      [ngClass]="{'btn-primary': reacted}"
+      ><i *ngIf="type == 'like'" class="far fa-thumbs-up"></i>
+      <i *ngIf="type == 'interested'" class="far fa-star"></i>
+      <i *ngIf="type == 'fun'" class="far fa-smile"></i
+    ></button>
+  </div>
+  <p-dialog header="Reacciones" [(visible)]="display">
+    <p-tabView>
+      <p-tabPanel header="Me gusta">
+        <div class="comment-widgets scrollable">
+          <div
+            *ngFor="let reactor of reactors['likes'].reactors"
+            class="d-flex flex-row comment-row mt-0"
+          >
+            <div class="comment-text w-100">
+              <h6 class="font-medium">{{ reactor.name }}</h6>
+              <span class="mb-3 d-block"
+                >{{ reactor.email }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Me interesa">
+        <div class="comment-widgets scrollable">
+          <div
+            *ngFor="let reactor of reactors['interested'].reactors"
+            class="d-flex flex-row comment-row mt-0"
+          >
+            <div class="comment-text w-100">
+              <h6 class="font-medium">{{ reactor.name }}</h6>
+              <span class="mb-3 d-block"
+                >{{ reactor.email }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="jajaja">
+        <div class="comment-widgets scrollable">
+          <div
+            *ngFor="let reactor of reactors['fun'].reactors"
+            class="d-flex flex-row comment-row mt-0"
+          >
+            <div class="comment-text w-100">
+              <h6 class="font-medium">{{ reactor.name }}</h6>
+              <span class="mb-3 d-block"
+                >{{ reactor.email }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </p-dialog>
+  <button
+    (click)="queryReactions()"
+    class="btn btn-block btn-outline-primary rounded align-self-center m-2 px-3"
+    type="button"
+  >
+    {{ reactionCount }}
+  </button>
+</div>
+<div class="d-flex m-2">
+  <button type="button" class="btn btn-block btn-cyan btn-sm text-white p-1 m-1">
+    Compartir
+  </button>
+  <button
+    type="button"
+    class="btn btn-block btn-success btn-sm text-white m-1"
+    (click)="handleShowComments()"
+  >
+    Comentar
+  </button>
+</div>
+<div class="container-fluid" *ngIf="showComments">
+  <div class="row">
+    <div class="col-auto">
+      <img
+        src="../assets/images/users/d4.jpg"
+        alt="user"
+        width="30"
+        class="rounded-circle"
+      />
+    </div>
+    <div class="col-10">
+      <input
+        type="text"
+        class="form-control"
+        id="fname"
+        placeholder="Escribe un comentario ..."
+        [(ngModel)]="comment"
+        (keyup.enter)="sendComment()"
+      />
+    </div>
+  </div>
+  <div class="row card-body">
+    <div class="flex">
+      <small
+        *ngIf="postComments.length === 0; else elseBlock"
+        class="font-bold"
+      >
+        No hay comentarios
+      </small>
+
+      <small
+        *ngIf="page > 0"
+        class="clickable"
+        class="text-muted clickable"
+        (click)="resetComments()"
+        >Anterior</small
+      >
+    </div>
+
+    <ng-template #elseBlock>
+      <app-comment *ngFor="let comment of postComments" [comment]="comment">
+      </app-comment>
+      <span class="clickable m-2" (click)="handleMoreComments()"
+        >Ver más respuestas</span
+      >
+    </ng-template>
+  </div>
+</div>
