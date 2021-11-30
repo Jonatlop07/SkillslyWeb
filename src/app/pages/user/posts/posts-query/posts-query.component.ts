@@ -25,16 +25,6 @@ export class PostsQueryComponent implements OnInit {
     const queryPostParams: QueryPostPresenter = {
       user_id: localStorage.getItem('id'),
     };
-<<<<<<< HEAD
-    const postServiceResponse =
-      this.postService.queryPostCollection(queryPostParams);
-    postServiceResponse.subscribe((res: any) => {
-      this.foundPosts = res.posts;
-    });
-  }
-
-}
-=======
     const postServiceResponse = this.postService.queryPostCollection(queryPostParams);
     postServiceResponse.subscribe((res:any) => {
       this.foundPosts=res.posts;
@@ -58,4 +48,3 @@ export class PostsQueryComponent implements OnInit {
   }
 
 }
->>>>>>> 8fd3a64cd6a7b1a1c1f558a8b6038bf7dc9322bf
