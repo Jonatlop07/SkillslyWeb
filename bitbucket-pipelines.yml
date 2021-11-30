@@ -8,7 +8,6 @@ definitions:
     - step: &build-test-sonarcloud
         name: Build, test and analyze on SonarCloud
         caches:
-          - docker
           - sonar
         script:
           - pipe: sonarsource/sonarcloud-scan:1.2.1
