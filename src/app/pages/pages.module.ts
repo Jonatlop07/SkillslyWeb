@@ -33,7 +33,8 @@ import { DialogModule } from 'primeng/dialog';
     PostsQueryComponent,
     PostComponent,
     CommentComponent,
-    SharePostComponent
+    SharePostComponent,
+    PostsQueryComponent
   ],
   imports: [
     CommonModule,
