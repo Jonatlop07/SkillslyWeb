@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'posts', component: PostsCreateComponent}, 
   { path: 'share-post', component: SharePostComponent},
-  { path: 'query', component: PostsQueryComponent}
+  { path: 'query/:searchPost', component: PostsQueryComponent}
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from '../../services/search.service';
 import { SearchUserResponse } from '../../interfaces/search_users_response.interface';
 import * as moment from 'moment';
@@ -15,7 +15,7 @@ export class SearchComponent implements OnInit {
   public searchInput: string;
   public foundUsers: SearchUserResponse[];
 
-  constructor(private activatedRoute: ActivatedRoute, private searchService: SearchService) { }
+  constructor(private activatedRoute: ActivatedRoute, private router:Router, private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe( params => {
@@ -30,9 +30,12 @@ export class SearchComponent implements OnInit {
         this.foundUsers.forEach( (user: any) => {
           const date_of_birth = new Date(user.date_of_birth);
           user.date_of_birth = moment(date_of_birth).locale('es').format('dddd DD MMMM - YYYY')
-        })   
+        })
       })
-    }) 
+    })
+  }
+  searchPost(searchInput: string){
+    this.router.navigate(['../../query', searchInput], {relativeTo: this.activatedRoute });
   }
 }
 
