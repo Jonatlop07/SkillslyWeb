@@ -18,18 +18,8 @@ export class PostComponent implements OnInit {
 
   constructor(private commentsService: CommentsService) {}
 
-  ngOnInit(page = this.page, limit = this.limit): void {
-    this.commentsService.getComments(this.post.post_id, page, limit).subscribe(
-      (comments: any) => {
-        this.postComments = comments;
-      },
-      (err) => {
-        if (err.status === 404) {
-          this.postComments = [];
-        }
-      }
-    );
-    // console.log(this.postComments);
+  ngOnInit(): void {
+    this.getComments();
   }
 
   isImage(referenceType: string): boolean {
@@ -61,7 +51,7 @@ export class PostComponent implements OnInit {
 
   handleMoreComments() {
     this.limit = 10;
-    this.ngOnInit(this.page, this.limit);
+    this.getComments();
     this.page += 1;
   }
 
@@ -72,7 +62,19 @@ export class PostComponent implements OnInit {
     } else {
       this.limit = 10;
     }
+    this.getComments();
+  }
 
-    this.ngOnInit();
+  getComments(page = this.page, limit = this.limit) {
+    this.commentsService.getComments(this.post.post_id, page, limit).subscribe(
+      (comments: any) => {
+        this.postComments = comments;
+      },
+      (err) => {
+        if (err.status === 404) {
+          this.postComments = [];
+        }
+      }
+    );
   }
 }
