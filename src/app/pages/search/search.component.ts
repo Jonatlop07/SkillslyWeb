@@ -34,8 +34,8 @@ export class SearchComponent implements OnInit {
       })
     })
   }
-  searchPost(searchInput: string){
-    this.router.navigate(['../../query', searchInput], {relativeTo: this.activatedRoute });
+  searchPost(userId: string){
+    this.router.navigate(['../../query', userId], {relativeTo: this.activatedRoute });
   }
 }
 
