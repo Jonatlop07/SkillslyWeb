@@ -16,6 +16,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PostsCreateComponent } from './user/posts/posts-create/posts-create.component';
 import { SharePostComponent } from './share-post/share-post.component';
 import { PostsQueryComponent } from './user/posts/posts-query/posts-query.component';
+import { PostComponent } from './user/posts/post/post.component';
+import { CommentComponent } from './user/posts/comment/comment.component';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,9 @@ import { PostsQueryComponent } from './user/posts/posts-query/posts-query.compon
     SearchComponent,
     ProfileComponent,
     PostsCreateComponent,
+    PostsQueryComponent,
+    PostComponent,
+    CommentComponent,
     SharePostComponent,
     PostsQueryComponent
   ],
@@ -39,6 +45,7 @@ import { PostsQueryComponent } from './user/posts/posts-query/posts-query.compon
     InputTextareaModule,
     FormsModule,
     ButtonModule,
+    TooltipModule,
   ],
 })
 export class PagesModule {}

@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import Profile from '../models/profile.model';
-import { JwtService } from './jwt.service'
+import { JwtService } from './jwt.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +10,17 @@ import { JwtService } from './jwt.service'
 export class ProfileService {
   private readonly API_URL: string = environment.API_URL;
 
-  constructor(private http: HttpClient, private readonly jwt_service: JwtService) {}
+  constructor(
+    private http: HttpClient,
+    private readonly jwt_service: JwtService
+  ) {}
 
   createProfile(profile: Profile) {
-    return this.http.post(`${this.API_URL}/users/profile`, profile, this.jwt_service.getHttpOptions());
+    return this.http.post(
+      `${this.API_URL}/users/profile`,
+      profile,
+      this.jwt_service.getHttpOptions()
+    );
   }
 
   getProfile(email: string) {
@@ -24,6 +31,10 @@ export class ProfileService {
   }
 
   updateProfile(profile: Profile) {
-    return this.http.put(`${this.API_URL}/users/profile`, profile, this.jwt_service.getHttpOptions());
+    return this.http.put(
+      `${this.API_URL}/users/profile`,
+      profile,
+      this.jwt_service.getHttpOptions()
+    );
   }
 }
