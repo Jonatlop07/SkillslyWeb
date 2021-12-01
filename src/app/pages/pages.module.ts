@@ -19,6 +19,9 @@ import { PostsQueryComponent } from './user/posts/posts-query/posts-query.compon
 import { PostComponent } from './user/posts/post/post.component';
 import { CommentComponent } from './user/posts/comment/comment.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { TabViewModule } from 'primeng/tabview';
+import { DialogModule } from 'primeng/dialog';
+
 
 @NgModule({
   declarations: [
@@ -46,6 +49,8 @@ import { TooltipModule } from 'primeng/tooltip';
     FormsModule,
     ButtonModule,
     TooltipModule,
+    TabViewModule,
+    DialogModule
   ],
 })
 export class PagesModule {}
