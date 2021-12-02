@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Comment } from 'src/app/interfaces/presenter/comment.presenter';
-import { PermanentPostPresenter } from 'src/app/interfaces/presenter/query_post.presenter';
 import {
   QueryReactionsReactors,
   Reactor,
 } from 'src/app/interfaces/presenter/query_reactions.presenter';
 import { CommentsService } from 'src/app/services/comments.service';
 import { ReactionService } from 'src/app/services/reaction.service';
+import { PermanentPostPresenter } from 'src/app/interfaces/presenter/post/query_post.presenter'
 
 @Component({
   selector: 'app-post',
@@ -122,7 +122,7 @@ export class PostComponent implements OnInit {
         this.onQueryReactions();
       }
     );
-    
+
   }
 
   onQueryReactions() {

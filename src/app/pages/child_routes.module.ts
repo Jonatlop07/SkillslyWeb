@@ -12,9 +12,9 @@ const routes: Routes = [
   { path: 'account', component: AccountComponent },
   { path: 'search/:searchInput', component: SearchComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'posts', component: PostsCreateComponent},
-  { path: 'share-post', component: SharePostComponent},
-  { path: 'query/:searchPost', component: PostsQueryComponent}
+  { path: 'posts', component: PostsCreateComponent },
+  { path: 'share-post', component: SharePostComponent },
+  { path: 'query/:searchPost', component: PostsQueryComponent },
   { path: 'conversations', component: ChatComponent }
 ];
 
@@ -22,4 +22,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ChildRoutesModule {}
+export class ChildRoutesModule {
+}
