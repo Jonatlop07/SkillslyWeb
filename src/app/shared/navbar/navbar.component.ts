@@ -34,6 +34,9 @@ export class NavbarComponent {
     }
     this.router.navigate(['./search', searchInput], {relativeTo: this.activatedRoute });
   }
+  searchPost(){
+    this.router.navigate(['./query', localStorage.getItem('id')], {relativeTo: this.activatedRoute });
+  }
 
 }
 

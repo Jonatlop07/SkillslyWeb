@@ -17,6 +17,11 @@ import { PostsCreateComponent } from './user/posts/posts-create/posts-create.com
 import { SharePostComponent } from './share-post/share-post.component';
 import { PostsQueryComponent } from './user/posts/posts-query/posts-query.component';
 import { ChatComponent } from './chat/components/chat.component'
+import { PostComponent } from './user/posts/post/post.component';
+import { CommentComponent } from './user/posts/comment/comment.component';
+import { TooltipModule } from 'primeng/tooltip';
+import { TabViewModule } from 'primeng/tabview';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -25,8 +30,10 @@ import { ChatComponent } from './chat/components/chat.component'
     SearchComponent,
     ProfileComponent,
     PostsCreateComponent,
-    SharePostComponent,
     PostsQueryComponent,
+    PostComponent,
+    CommentComponent,
+    SharePostComponent,
     ChatComponent,
   ],
   imports: [
@@ -41,6 +48,9 @@ import { ChatComponent } from './chat/components/chat.component'
     InputTextareaModule,
     FormsModule,
     ButtonModule,
+    TooltipModule,
+    TabViewModule,
+    DialogModule
   ],
 })
 export class PagesModule {}

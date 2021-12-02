@@ -10,11 +10,11 @@ import { ChatComponent } from './chat/components/chat.component'
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent },
-  { path: 'search/:searchInput' , component: SearchComponent },
+  { path: 'search/:searchInput', component: SearchComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'posts', component: PostsCreateComponent},
   { path: 'share-post', component: SharePostComponent},
-  { path: 'query', component: PostsQueryComponent},
+  { path: 'query/:searchPost', component: PostsQueryComponent}
   { path: 'conversations', component: ChatComponent }
 ];
 
