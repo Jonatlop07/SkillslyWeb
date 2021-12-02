@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 
 import { PagesModule } from './pages/pages.module';
+import { SocketIoModule } from 'ngx-socket-io'
 
 @NgModule({
   declarations: [AppComponent, NopagefoundComponent],
@@ -17,6 +18,7 @@ import { PagesModule } from './pages/pages.module';
     AppRoutingModule,
     PagesModule,
     AuthModule,
+    SocketIoModule
   ],
   providers: [],
   bootstrap: [AppComponent],

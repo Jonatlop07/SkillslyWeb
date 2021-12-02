@@ -16,12 +16,12 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PostsCreateComponent } from './user/posts/posts-create/posts-create.component';
 import { SharePostComponent } from './share-post/share-post.component';
 import { PostsQueryComponent } from './user/posts/posts-query/posts-query.component';
+import { ChatComponent } from './chat/components/chat.component'
 import { PostComponent } from './user/posts/post/post.component';
 import { CommentComponent } from './user/posts/comment/comment.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { TabViewModule } from 'primeng/tabview';
 import { DialogModule } from 'primeng/dialog';
-
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import { DialogModule } from 'primeng/dialog';
     PostComponent,
     CommentComponent,
     SharePostComponent,
-    PostsQueryComponent
+    ChatComponent,
   ],
   imports: [
     CommonModule,

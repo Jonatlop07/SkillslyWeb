@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  PermanentPostPresenter,
-  QueryPostPresenter,
-} from 'src/app/interfaces/presenter/query_post.presenter';
 import { ActivatedRoute } from '@angular/router';
 import { PostService } from 'src/app/services/posts.service';
 import { SharePostInterface } from 'src/app/interfaces/share_post.interface';
+import { PermanentPostPresenter, QueryPostPresenter } from '../../../../interfaces/presenter/post/query_post.presenter'
+
 
 @Component({
   selector: 'app-posts-query',
@@ -26,12 +24,12 @@ export class PostsQueryComponent implements OnInit {
     this.activatedRoute.params.subscribe( params => {
       this.searchPost = params.searchPost;
       const queryPostParams: QueryPostPresenter = {
-        user_id : this.searchPost,
+        user_id: this.searchPost,
       };
       const postServiceResponse = this.postService.queryPostCollection(queryPostParams);
       postServiceResponse.subscribe((res:any) => {
-      this.foundPosts=res.posts;
-    });
+        this.foundPosts=res.posts;
+      });
     })
   }
 
@@ -50,5 +48,4 @@ export class PostsQueryComponent implements OnInit {
     }
     return false;
   }
-
 }
