@@ -62,7 +62,7 @@ export class LoginComponent {
           const now = new Date();
           now.setSeconds(7200);
           this.authService.setExpiresDate(now.getTime().toString());
-          localStorage.setItem('id', result.id);
+          localStorage.setItem('id', result.id)
           localStorage.setItem('email', result.email);
           this.router.navigate(['/main']);
         },

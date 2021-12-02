@@ -17,7 +17,7 @@ export class PostsQueryComponent implements OnInit {
 
   ngOnInit(): void {
     const queryPostParams: QueryPostPresenter = {
-      user_id :localStorage.getItem('id'),
+      user_id: localStorage.getItem('id'),
     };
     const postServiceResponse = this.postService.queryPostCollection(queryPostParams);
     postServiceResponse.subscribe((res:any) => {

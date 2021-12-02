@@ -1,245 +1,163 @@
-<div class="row flex-wrap">
-  <div class="col-lg-4">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">Latest Posts</h4>
+<section>
+  <div class="row flex-wrap">
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Tus Conversaciones</h4>
+        </div>
+        <div class="comment-widgets scrollable">
+          <div
+            *ngFor="let conversation of conversations | keyvalue"
+            class="d-flex flex-row comment-row mt-0 align-items-center"
+            (click)="selectConversation(conversation.value)"
+          >
+            <div class="p-2">
+              <img
+                src="../assets/images/users/1.jpg"
+                alt="user"
+                width="50"
+                class="rounded-circle"
+              />
+            </div>
+            <div class="comment-text w-100">
+              <h6 class="font-medium">{{conversation.value.conversation_name}}</h6>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="comment-widgets scrollable">
-        <div *ngFor="let conversation of conversations" class="d-flex flex-row comment-row mt-0">
-          <div class="p-2">
-            <img
-              src="../assets/images/users/1.jpg"
-              alt="user"
-              width="50"
-              class="rounded-circle"
-            />
-          </div>
-          <div class="comment-text w-100">
-            <h6 class="font-medium">{{conversation.conversation_name}}</h6>
-            <span class="mb-3 d-block">
-          Lorem Ipsum is simply dummy text of the printing and type setting industry.
-        </span>
-            <div class="comment-footer">
-              <span class="text-muted float-end">April 14, 2021</span>
+      <div class="card px-3">
+        <div class="card-body" *ngIf="!is_creating_conversation">
+          <button
+            type="button"
+            (click)="toggleCreatingConversation()"
+            class="btn btn-primary"
+          >
+            Nueva conversación
+          </button>
+        </div>
+        <form
+          *ngIf="is_creating_conversation && create_conversation_form"
+          [formGroup]="create_conversation_form"
+          class="card-body"
+        >
+          <h5 class="card-title">Nueva conversación</h5>
+          <div class="form-group row">
+            <label class="col-md-4 mt-3">Nombre de la conversación</label>
+            <div class="col-md-8">
+              <input
+                type="text"
+                class="form-control"
+                id="new_conversation_name"
+                placeholder="Nombre de la conversación"
+                formControlName="conversation_name"
+              />
             </div>
           </div>
-        </div>
-        <!-- Comment Row -->
-        <div class="d-flex flex-row comment-row mt-0">
-          <div class="p-2">
-            <img
-              src="../assets/images/users/1.jpg"
-              alt="user"
-              width="50"
-              class="rounded-circle"
-            />
-          </div>
-          <div class="comment-text w-100">
-            <h6 class="font-medium">James Anderson</h6>
-            <span class="mb-3 d-block"
-            >Lorem Ipsum is simply dummy text of the printing and
-                        type setting industry.
-                      </span>
-            <div class="comment-footer">
-              <span class="text-muted float-end">April 14, 2021</span>
-              <button
-                type="button"
-                class="btn btn-cyan btn-sm text-white"
+          <div class="form-group row">
+            <label class="col-md-4 mt-3">Miembros de la conversación</label>
+            <div class="col-md-8">
+              <select
+                [(ngModel)]="member_option"
+                (change)="addMemberToNewConversation(member_option)"
+                class="select2 form-select shadow-none mt-3"
+                multiple="multiple"
+                style="height: 100px; width: 100%"
               >
-                Edit
-              </button>
-              <button
-                type="button"
-                class="btn btn-success btn-sm text-white"
-              >
-                Publish
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger btn-sm text-white"
-              >
-                Delete
-              </button>
+                <option value="johan">Johan</option>
+                <option value="miguel">Miguel Ángel</option>
+              </select>
             </div>
           </div>
-        </div>
-        <!-- Comment Row -->
-        <div class="d-flex flex-row comment-row">
-          <div class="p-2">
-            <img
-              src="../assets/images/users/4.jpg"
-              alt="user"
-              width="50"
-              class="rounded-circle"
-            />
+          <div class="form-group row">
+            <label class="col-md-4">Imagen (opcional)</label>
+            <div class="col-md-8">
+              <div class="custom-file">
+                <input
+                  type="file"
+                  class="custom-file-input"
+                  id="validatedCustomFile"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Example invalid custom file feedback
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="comment-text active w-100">
-            <h6 class="font-medium">Michael Jorden</h6>
-            <span class="mb-3 d-block"
-            >Lorem Ipsum is simply dummy text of the printing and
-                        type setting industry.
-                      </span>
-            <div class="comment-footer">
-              <span class="text-muted float-end">May 10, 2021</span>
+          <div class="border-top">
+            <div class="card-body">
               <button
                 type="button"
-                class="btn btn-cyan btn-sm text-white"
+                class="btn btn-primary"
+                (click)="createConversation()"
               >
-                Edit
+                Crear conversación
               </button>
               <button
                 type="button"
-                class="btn btn-success btn-sm text-white"
-              >
-                Publish
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger btn-sm text-white"
-              >
-                Delete
+                (click)="toggleCreatingConversation()"
+                class="btn btn-secondary mx-3">
+                Cancelar
               </button>
             </div>
           </div>
-        </div>
-        <!-- Comment Row -->
-        <div class="d-flex flex-row comment-row">
-          <div class="p-2">
-            <img
-              src="../assets/images/users/5.jpg"
-              alt="user"
-              width="50"
-              class="rounded-circle"
-            />
-          </div>
-          <div class="comment-text w-100">
-            <h6 class="font-medium">Johnathan Doeting</h6>
-            <span class="mb-3 d-block"
-            >Lorem Ipsum is simply dummy text of the printing and
-                        type setting industry.
-                      </span>
-            <div class="comment-footer">
-              <span class="text-muted float-end">August 1, 2021</span>
-              <button
-                type="button"
-                class="btn btn-cyan btn-sm text-white"
-              >
-                Edit
-              </button>
-              <button
-                type="button"
-                class="btn btn-success btn-sm text-white"
-              >
-                Publish
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger btn-sm text-white"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
-    <div class="card">
-      <div class="card-body">
-        <button type="button" (click)="setupGroupConversation()" class="btn btn-primary">
-          Crear una nueva conversación
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-8">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">Chat Option</h4>
-        <div class="chat-box scrollable px-4" style="height: 475px">
-          <ul class="chat-list">
-            <li class="chat-item">
-              <div class="chat-img">
-                <img src="../assets/images/users/1.jpg" alt="user"/>
-              </div>
-              <div class="chat-content">
-                <h6 class="font-medium">James Anderson</h6>
-                <div class="box bg-light-info">
-                  Lorem Ipsum is simply dummy text of the printing
-                  &amp; type setting industry.
+    <div class="col-lg-8">
+      <div class="card" *ngIf="selected_conversation">
+        <div class="card-body">
+          <h4 class="card-title">{{selected_conversation.conversation_name}}</h4>
+          <div class="chat-box scrollable px-4" style="height: 475px">
+            <ul class="chat-list">
+              <!-- Chat message -->
+              <li
+                [ngClass]="isNotCurrentUser(message.user_id) ? 'chat-item' : 'odd chat-item'"
+                *ngFor="let message of selected_conversation.messages "
+              >
+                <div class="chat-img" *ngIf="isNotCurrentUser(message.user_id)">
+                  <img src="../assets/images/users/1.jpg" alt="user"/>
                 </div>
-              </div>
-              <div class="chat-time">10:56 am</div>
-            </li>
-            <!--chat Row -->
-            <li class="chat-item">
-              <div class="chat-img">
-                <img src="../assets/images/users/2.jpg" alt="user"/>
-              </div>
-              <div class="chat-content">
-                <h6 class="font-medium">Bianca Doe</h6>
-                <div class="box bg-light-info">
-                  It’s Great opportunity to work.
+                <div class="chat-content">
+                  <h6 *ngIf="isNotCurrentUser(message.user_id)"
+                      class="font-medium">{{getUserName(message.user_id)}}</h6>
+                  <div [ngClass]="isNotCurrentUser(message.user_id) ? 'box bg-light-info' : 'box bg-light-inverse'">
+                    {{message.content}}
+                  </div>
                 </div>
-              </div>
-              <div class="chat-time">10:57 am</div>
-            </li>
-            <!--chat Row -->
-            <li class="odd chat-item">
-              <div class="chat-content">
-                <div class="box bg-light-inverse">
-                  I would love to join the team.
-                </div>
-                <br/>
-              </div>
-            </li>
-            <!--chat Row -->
-            <li class="odd chat-item">
-              <div class="chat-content">
-                <div class="box bg-light-inverse">
-                  Whats budget of the new project.
-                </div>
-                <br/>
-              </div>
-              <div class="chat-time">10:59 am</div>
-            </li>
-            <!--chat Row -->
-            <li class="chat-item">
-              <div class="chat-img">
-                <img src="../assets/images/users/3.jpg" alt="user"/>
-              </div>
-              <div class="chat-content">
-                <h6 class="font-medium">Angelina Rhodes</h6>
-                <div class="box bg-light-info">
-                  Well we have good budget for the project
-                </div>
-              </div>
-              <div class="chat-time">11:00 am</div>
-            </li>
-            <!--chat Row -->
-          </ul>
-        </div>
-      </div>
-      <div class="card-body border-top">
-        <div class="row">
-          <div class="col-9">
-            <div class="input-field mt-0 mb-0">
-                        <textarea
-                          id="textarea1"
-                          placeholder="Type and enter"
-                          class="form-control border-0"
-                        ></textarea>
-            </div>
+                <div
+                  class="chat-time mb-0 font-medium">{{moment(message.created_at, 'YYYY/MM/DD HH:mm:ss').local().format('HH:mm')}}</div>
+                <div
+                  class="chat-time mt-0">{{moment(message.created_at, 'YYYY/MM/DD HH:mm:ss').local().format('DD/MM/YYYY')}}</div>
+              </li>
+            </ul>
           </div>
-          <div class="col-3">
-            <a
-              class="btn-circle btn-lg btn-cyan float-end text-white"
-              href="javascript:void(0)"
-            ><i class="mdi mdi-send fs-3"></i
-            ></a>
+        </div>
+        <div class="card-body border-top">
+          <div class="row">
+            <div class="col-lg-11">
+              <div class="input-field mt-0 mb-0">
+              <textarea
+                [(ngModel)]="current_message"
+                id="textarea1"
+                placeholder="Type and enter"
+                class="form-control border-3"
+              ></textarea>
+              </div>
+            </div>
+            <div class="col-lg-1 pt-1">
+              <a
+                class="btn-circle btn-lg btn-cyan float-end text-white"
+                href="javascript:void(0)"
+                (click)="sendMessage()"
+              ><i class="mdi mdi-send fs-3"></i
+              ></a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
+
 
