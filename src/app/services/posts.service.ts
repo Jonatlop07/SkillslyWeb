@@ -6,6 +6,7 @@ import { toPost } from '../interfaces/presenter/post_form_data.presenter';
 import { SharePostInterface } from '../interfaces/share_post.interface';
 import { JwtService } from './jwt.service';
 import { QueryPostPresenter } from '../interfaces/presenter/query_post.presenter';
+import { DeletePostInterface } from '../interfaces/delete_post.interface';
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
@@ -14,7 +15,7 @@ export class PostService {
   constructor(
     private readonly http: HttpClient,
     private readonly jwtService: JwtService
-  ) {}
+  ) { }
 
   createPost(post: CreatePostDataPresenter) {
     const content = toPost(post);
@@ -39,7 +40,13 @@ export class PostService {
           ...this.jwtService.getHttpOptions(),
         }
       );
-
+  }
+  deletePost(deletePostInterface: DeletePostInterface) {
+    return this.http
+      .delete(
+        `${this.API_URL}/permanent-posts/${deletePostInterface.post_id}/delete`,
+        this.jwtService.getHttpOptions()
+      );
   }
 
   queryPost(queryPostPresenter: QueryPostPresenter) {
@@ -56,7 +63,7 @@ export class PostService {
       );
   }
 
-  sharePost(sharePostInterface: SharePostInterface){
+  sharePost(sharePostInterface: SharePostInterface) {
     return this.http
       .post(
         `${this.API_URL}/permanent-posts/${sharePostInterface.post_id}/share`,

@@ -16,7 +16,20 @@
     <p class="font-light small p-1 my-auto">
       {{ post.created_at }}
     </p>
-    <i class="mdi mdi-settings fs-2 p-1"></i>
+    <div class="dropdown">
+      <a class="mdi mdi-settings fs-2 dropdown"
+      role="button"
+      id="dropdownMenuLink"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+      type="button"
+      id="dropdownMenuButton1">
+    </a>
+    <ul class="dropdown-menu pull-left dropdown-menu-left" aria-labelledby="dropdownMenuLink">
+      <li><a class="dropdown-item" (click)="deletePost(post.post_id)" >Eliminar</a></li>
+      <li><a class="dropdown-item" >Editar</a></li>
+    </ul>
+    </div>
   </div>
 </div>
 <div *ngFor="let content of post.content" class="m-2">

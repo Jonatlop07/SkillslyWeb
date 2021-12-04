@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DeletePostInterface } from 'src/app/interfaces/delete_post.interface';
 import { Comment } from 'src/app/interfaces/presenter/comment.presenter';
 import { PermanentPostPresenter } from 'src/app/interfaces/presenter/query_post.presenter';
 import { CommentsService } from 'src/app/services/comments.service';
+import { PostService } from 'src/app/services/posts.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-post',
@@ -16,14 +19,14 @@ export class PostComponent implements OnInit {
   public page = 0;
   public limit = 2;
 
-  constructor(private commentsService: CommentsService) {}
+  constructor(private commentsService: CommentsService, private router: Router, private activatedRoute: ActivatedRoute, private postService: PostService) { }
 
   ngOnInit(): void {
     this.getComments();
   }
 
   isImage(referenceType: string): boolean {
-    if (referenceType == 'image') {
+    if (referenceType == 'imagen') {
       return true;
     }
     return false;
@@ -31,6 +34,17 @@ export class PostComponent implements OnInit {
 
   handleShowComments() {
     this.showComments = !this.showComments;
+  }
+
+  deletePost(post_id: string) {
+    const deletePostInterface: DeletePostInterface = {
+      post_id,
+    }
+    const postServiceResponse = this.postService.deletePost(deletePostInterface);
+    postServiceResponse.subscribe(resp => {
+      console.log(resp),
+        window.location.reload()
+    });
   }
 
   sendComment() {

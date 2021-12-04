@@ -20,22 +20,22 @@ export class PostsQueryComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private postService: PostService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe( params => {
+    this.activatedRoute.params.subscribe(params => {
       this.searchPost = params.searchPost;
       const queryPostParams: QueryPostPresenter = {
-        user_id : this.searchPost,
+        user_id: this.searchPost,
       };
       const postServiceResponse = this.postService.queryPostCollection(queryPostParams);
-      postServiceResponse.subscribe((res:any) => {
-      this.foundPosts=res.posts;
-    });
+      postServiceResponse.subscribe((res: any) => {
+        this.foundPosts = res.posts;
+      });
     })
   }
 
-  sharePost(post_id: string) : void {
+  sharePost(post_id: string): void {
     const sharePostInterface: SharePostInterface = {
       post_id: post_id,
       user_id: localStorage.getItem('id')
@@ -43,12 +43,4 @@ export class PostsQueryComponent implements OnInit {
     const postResponse = this.postService.sharePost(sharePostInterface);
     postResponse.subscribe(resp => console.log(resp));
   }
-
-  isImage(referenceType: string): boolean {
-    if (referenceType =='imagen'){
-      return true;
-    }
-    return false;
-  }
-
 }
