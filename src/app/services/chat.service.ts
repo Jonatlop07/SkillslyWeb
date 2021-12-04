@@ -84,7 +84,7 @@ export class ChatService {
     this.socket_service.emitEvent(
       this.send_message_event,
       {
-        user_id: localStorage.getItem('id'),
+        user_id: this.jtw_service.getUserId(),
         conversation_id: payload.conversation_id,
         message: payload.message
       }
@@ -105,5 +105,9 @@ export class ChatService {
 
   public stop() {
     this.socket_service.disconnect();
+  }
+
+  public getUserId(): string {
+    return this.jtw_service.getUserId();
   }
 }

@@ -16,14 +16,14 @@ export class AccountService {
 
   public getUserAccountData(): Observable<GetAccountDataPresenter> {
     return this.http.get<GetAccountDataPresenter>(
-      `${this.API_URL}/users/account/${localStorage.getItem('id')}`,
+      `${this.API_URL}/users/account/${this.jwt_service.getUserId()}`,
       this.jwt_service.getHttpOptions()
     );
   }
 
   public updateUserAccountData(update_user_data: UpdateUserDataPresenter): Observable<GetAccountDataPresenter> {
     return this.http.put<GetAccountDataPresenter>(
-      `${this.API_URL}/users/account/${localStorage.getItem('id')}`,
+      `${this.API_URL}/users/account/${this.jwt_service.getUserId()}`,
       update_user_data,
       this.jwt_service.getHttpOptions()
     );
@@ -31,7 +31,7 @@ export class AccountService {
 
   public deleteUserAccount() {
     return this.http.delete(
-      `${this.API_URL}/users/account/${localStorage.getItem('id')}`,
+      `${this.API_URL}/users/account/${this.jwt_service.getUserId()}`,
       this.jwt_service.getHttpOptions()
     );
   }
