@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core'
 import { HttpHeaders } from '@angular/common/http'
+import { Select } from '@ngxs/store'
+import { SessionState } from '../shared/state/session/session.state'
+import { Observable } from 'rxjs'
+import { SessionModel } from '../models/session.model'
 
 @Injectable({
   providedIn: 'root'
 })
 export class JwtService {
-  
+  @Select(SessionState) session$: Observable<SessionModel>;
+
+  constructor() {}
+
   public getHttpOptions() {
     return {
       headers: new HttpHeaders({
@@ -16,44 +23,45 @@ export class JwtService {
   }
 
   public isUserAuthenticated() {
-    const auth_token: string = localStorage.getItem('authToken');
+    let auth_token;
+    this.session$.subscribe((session) => {
+      auth_token = session.access_token;
+    })
+
     if (auth_token && auth_token !== '') {
       return this.getExpiresDate() > new Date();
     }
     return false;
   }
 
-  public getToken(): string {
+  public getUserId(): string {
+    let user_id = '';
     if (this.isUserAuthenticated()) {
-      return localStorage.getItem('authToken');
+      this.session$.subscribe((session) => {
+        user_id = session.user_id;
+      })
     }
-    return '';
+    return user_id;
   }
 
-  public saveToken(token: string) {
-    localStorage.setItem('authToken', token);
-  }
-
-  public destroyToken() {
-    localStorage.removeItem('authToken');
+  public getToken(): string {
+    let token = '';
+    if (this.isUserAuthenticated()) {
+      this.session$.subscribe((session) => {
+        token = session.access_token;
+      })
+    }
+    return token;
   }
 
   public getExpiresDate(): Date {
-    const expires_date = new Date();
-    expires_date.setTime(
-      Number(
-        Number(
-          localStorage.getItem('expiresDate')) || 0
-      )
-    );
-    return expires_date;
-  }
-
-  public setExpiresDate(expires_date: string) {
-    localStorage.setItem('expiresDate', expires_date);
-  }
-
-  expireToken() {
-    localStorage.removeItem('expiresDate');
+    let expires_date;
+    this.session$.subscribe((session) => {
+      expires_date = session.expires_date;
+    })
+    if (expires_date) {
+      return new Date(Number(expires_date));
+    }
+    return new Date();
   }
 }

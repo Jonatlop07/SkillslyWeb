@@ -7,6 +7,8 @@ import { GetAccountDataPresenter } from '../../interfaces/presenter/user/get_acc
 import Swal from 'sweetalert2'
 import * as moment from 'moment'
 import { AuthService } from '../../services/auth.service'
+import { Store } from '@ngxs/store'
+import { UpdateSessionEmail } from '../../shared/state/session/session.actions'
 
 @Component({
   selector: 'app-account',
@@ -23,7 +25,8 @@ export class AccountComponent implements OnInit {
     private readonly form_builder: FormBuilder,
     private readonly account_service: AccountService,
     private readonly auth_service: AuthService,
-    private router: Router
+    private readonly store: Store,
+    private readonly router: Router
   ) {
   }
 
@@ -54,6 +57,7 @@ export class AccountComponent implements OnInit {
       .updateUserAccountData(this.account_form)
       .subscribe((account_data: GetAccountDataPresenter) => {
         this.initForm(account_data);
+        this.store.dispatch(new UpdateSessionEmail(account_data.email));
       });
   }
 

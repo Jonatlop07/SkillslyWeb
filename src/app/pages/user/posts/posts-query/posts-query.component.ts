@@ -35,11 +35,10 @@ export class PostsQueryComponent implements OnInit {
 
   sharePost(post_id: string) : void {
     const sharePostInterface: SharePostInterface = {
-      post_id: post_id,
-      user_id: localStorage.getItem('id')
-    }
-    const postResponse = this.postService.sharePost(sharePostInterface);
-    postResponse.subscribe(resp => console.log(resp));
+      post_id: post_id
+    };
+    this.postService.sharePost(sharePostInterface)
+      .subscribe(resp => console.log(resp));
   }
 
   isImage(referenceType: string): boolean {

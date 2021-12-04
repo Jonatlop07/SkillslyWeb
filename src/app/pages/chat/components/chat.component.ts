@@ -156,7 +156,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   public isNotCurrentUser(user_id: string): boolean {
-    return user_id !== localStorage.getItem('id');
+    return user_id !== this.chat_service.getUserId();
   }
 
   public toggleCreatingConversation() {

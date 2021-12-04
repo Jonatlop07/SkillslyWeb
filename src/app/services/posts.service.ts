@@ -6,12 +6,19 @@ import { toPost } from '../interfaces/presenter/post/post_form_data.presenter';
 import { JwtService } from './jwt.service';
 import { QueryPostPresenter } from '../interfaces/presenter/post/query_post.presenter';
 import { SharePostInterface } from '../interfaces/share_post.interface';
+import { Select } from '@ngxs/store'
+import { SessionState } from '../shared/state/session/session.state'
+import { Observable } from 'rxjs'
+import { SessionModel } from '../models/session.model'
 
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
+  @Select(SessionState) session$: Observable<SessionModel>;
+
   private readonly API_URL: string = environment.API_URL;
   toggleCreate = false;
+
   constructor(
     private readonly http: HttpClient,
     private readonly jwtService: JwtService
@@ -64,7 +71,7 @@ export class PostService {
       .post(
         `${this.API_URL}/permanent-posts/${sharePostInterface.post_id}/share`,
         {
-          user_id: sharePostInterface.user_id
+          user_id: this.jwtService.getUserId()
         },
         this.jwtService.getHttpOptions()
       );
