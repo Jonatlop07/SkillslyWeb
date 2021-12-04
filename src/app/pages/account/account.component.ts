@@ -3,11 +3,10 @@ import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '../../services/account.service';
 import { AccountForm } from '../../interfaces/account_form.interface';
-import { GetAccountDataPresenter } from '../../interfaces/presenter/get_account_data.presenter'
+import { GetAccountDataPresenter } from '../../interfaces/presenter/user/get_account_data.presenter'
 import Swal from 'sweetalert2'
 import * as moment from 'moment'
 import { AuthService } from '../../services/auth.service'
-
 
 @Component({
   selector: 'app-account',

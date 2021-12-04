@@ -1,4 +1,5 @@
-import { PostContentData } from './create_post_data.presenter';
+import { PostContentData } from './create_post_data.presenter'
+
 export interface QueryPostPresenter {
     user_id: string;
     post_id?: string;

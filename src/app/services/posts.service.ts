@@ -1,12 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { CreatePostDataPresenter } from '../interfaces/presenter/create_post_data.presenter';
-import { toPost } from '../interfaces/presenter/post_form_data.presenter';
-import { SharePostInterface } from '../interfaces/share_post.interface';
+import { CreatePostDataPresenter } from '../interfaces/presenter/post/create_post_data.presenter';
+import { toPost } from '../interfaces/presenter/post/post_form_data.presenter';
 import { JwtService } from './jwt.service';
-import { QueryPostPresenter } from '../interfaces/presenter/query_post.presenter';
 import { DeletePostInterface } from '../interfaces/delete_post.interface';
+import { QueryPostPresenter } from '../interfaces/presenter/post/query_post.presenter';
+import { SharePostInterface } from '../interfaces/share_post.interface';
+
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
@@ -26,7 +27,10 @@ export class PostService {
           content: content,
         },
         this.jwtService.getHttpOptions()
-      );
+      )
+      .subscribe((created_post) => {
+        console.log(created_post);
+      });
   }
 
   queryPostCollection(queryPostParams: QueryPostPresenter) {

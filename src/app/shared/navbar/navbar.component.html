@@ -9,7 +9,7 @@
       <a
         class="nav-toggler waves-effect waves-light d-block d-md-none"
         href="javascript:void(0)"
-        ><i class="ti-menu ti-close"></i
+      ><i class="ti-menu ti-close"></i
       ></a>
     </div>
     <div
@@ -25,7 +25,7 @@
           <a
             class="nav-link sidebartoggler waves-effect waves-light"
             data-sidebartype="mini-sidebar"
-            ><i class="mdi mdi-menu font-24"></i
+          ><i class="mdi mdi-menu font-24"></i
           ></a>
         </li>
         <!-- ============================================================== -->
@@ -41,7 +41,7 @@
             aria-expanded="false"
           >
             <span class="d-none d-md-block"
-              >Publicaciones <i class="fa fa-angle-down"></i
+            >Publicaciones <i class="fa fa-angle-down"></i
             ></span>
             <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
           </a>
@@ -81,7 +81,7 @@
         </li>
         <li class="nav-item search-box">
           <a (click)="showSearchForm()" class="nav-link waves-effect waves-dark"
-            ><i class="mdi mdi-magnify fs-4"></i
+          ><i class="mdi mdi-magnify fs-4"></i
           ></a>
         </li>
         <!-- ============================================================== -->
@@ -148,12 +148,12 @@
                           align-items-center
                           justify-content-center
                         "
-                        ><i class="mdi mdi-calendar text-white fs-4"></i
+                      ><i class="mdi mdi-calendar text-white fs-4"></i
                       ></span>
                       <div class="ms-2">
                         <h5 class="mb-0">Event today</h5>
                         <span class="mail-desc"
-                          >Just a reminder that event</span
+                        >Just a reminder that event</span
                         >
                       </div>
                     </div>
@@ -168,12 +168,12 @@
                           align-items-center
                           justify-content-center
                         "
-                        ><i class="mdi mdi-settings fs-4"></i
+                      ><i class="mdi mdi-settings fs-4"></i
                       ></span>
                       <div class="ms-2">
                         <h5 class="mb-0">Settings</h5>
                         <span class="mail-desc"
-                          >You can customize this template</span
+                        >You can customize this template</span
                         >
                       </div>
                     </div>
@@ -188,7 +188,7 @@
                           align-items-center
                           justify-content-center
                         "
-                        ><i class="mdi mdi-account fs-4"></i
+                      ><i class="mdi mdi-account fs-4"></i
                       ></span>
                       <div class="ms-2">
                         <h5 class="mb-0">Pavan kumar</h5>
@@ -206,12 +206,12 @@
                           align-items-center
                           justify-content-center
                         "
-                        ><i class="mdi mdi-link fs-4"></i
+                      ><i class="mdi mdi-link fs-4"></i
                       ></span>
                       <div class="ms-2">
                         <h5 class="mb-0">Luanch Admin</h5>
                         <span class="mail-desc"
-                          >Just see the my new admin!</span
+                        >Just see the my new admin!</span
                         >
                       </div>
                     </div>
@@ -255,13 +255,11 @@
             aria-labelledby="navbarDropdown"
           >
             <a class="dropdown-item" [routerLink]="['./profile']">
-              <i class="mdi mdi-account me-1 ms-1"></i>
-              Mi perfil</a
-            >
-            <a class="dropdown-item" href="javascript:void(0)">
+              <i class="mdi mdi-account me-1 ms-1" ></i>
+              Mi perfil</a>
+            <a [routerLink]="['./conversations']" class="dropdown-item" href="javascript:void(0)">
               <i class="mdi mdi-wallet me-1 ms-1"></i>
-              My Balance</a
-            >
+              Mis conversaciones</a>
             <a class="dropdown-item" href="javascript:void(0)">
               <i class="mdi mdi-email me-1 ms-1"></i>
               Inbox
@@ -285,7 +283,7 @@
               <a
                 href="javascript:void(0)"
                 class="btn btn-sm btn-success btn-rounded text-white"
-                >View Profile</a
+              >View Profile</a
               >
             </div>
           </ul>

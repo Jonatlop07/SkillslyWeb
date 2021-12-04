@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  PermanentPostPresenter,
-  QueryPostPresenter,
-} from 'src/app/interfaces/presenter/query_post.presenter';
 import { ActivatedRoute } from '@angular/router';
 import { PostService } from 'src/app/services/posts.service';
 import { SharePostInterface } from 'src/app/interfaces/share_post.interface';
+import { PermanentPostPresenter, QueryPostPresenter } from '../../../../interfaces/presenter/post/query_post.presenter'
+
 
 @Component({
   selector: 'app-posts-query',
@@ -42,5 +40,12 @@ export class PostsQueryComponent implements OnInit {
     }
     const postResponse = this.postService.sharePost(sharePostInterface);
     postResponse.subscribe(resp => console.log(resp));
+  }
+
+  isImage(referenceType: string): boolean {
+    if (referenceType == 'imagen') {
+      return true;
+    }
+    return false;
   }
 }
