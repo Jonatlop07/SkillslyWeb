@@ -10,6 +10,8 @@ import { CommentsService } from 'src/app/services/comments.service';
 import { PostService } from 'src/app/services/posts.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { PermanentPostPresenter } from 'src/app/interfaces/presenter/post/query_post.presenter'
+import {Store} from "@ngxs/store";
+import {DeleteMyPost} from "../../../../shared/state/posts/posts.actions";
 
 @Component({
   selector: 'app-post',
@@ -21,6 +23,7 @@ export class PostComponent implements OnInit {
   public showComments = false;
   public postComments: Array<Comment> = [];
   public comment: string;
+  public user_name = 'nombre de usuario';
   public page = 0;
   public limit = 2;
   public reactionTypes = ['like', 'fun', 'interested'];
@@ -37,7 +40,8 @@ export class PostComponent implements OnInit {
   constructor(
     private commentsService: CommentsService,
     private reactionsService: ReactionService,
-    private postService: PostService
+    private postService: PostService,
+    private readonly store : Store
   ) { }
 
   ngOnInit(): void {
@@ -74,11 +78,12 @@ export class PostComponent implements OnInit {
     const deletePostInterface: DeletePostInterface = {
       post_id,
     }
-    const postServiceResponse = this.postService.deletePost(deletePostInterface);
-    postServiceResponse.subscribe(resp => {
-      console.log(resp),
-        window.location.reload()
-    });
+    this.postService
+      .deletePost(deletePostInterface)
+      .subscribe( () => {
+        this.store.dispatch(new DeleteMyPost( post_id ));
+      } );
+
   }
 
   sendComment() {
