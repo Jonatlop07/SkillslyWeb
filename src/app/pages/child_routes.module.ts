@@ -8,6 +8,7 @@ import { SharePostComponent } from './share-post/share-post.component';
 import { PostsQueryComponent } from './user/posts/posts-query/posts-query.component';
 import { ChatComponent } from './chat/components/chat.component'
 import { FollowRequestComponent } from './follow-request/follow-request.component';
+import { PostUpdateComponent } from './user/posts/post-update/post-update.component';
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'share-post', component: SharePostComponent },
   { path: 'query/:searchPost', component: PostsQueryComponent },
   { path: 'conversations', component: ChatComponent }, 
-  { path: 'follow-requests', component: FollowRequestComponent}
+  { path: 'follow-requests', component: FollowRequestComponent},
+  { path: 'post/update/:post_id', component: PostUpdateComponent }
 ];
 
 @NgModule({
