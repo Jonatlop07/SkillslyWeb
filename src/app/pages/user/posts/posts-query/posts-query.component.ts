@@ -11,7 +11,7 @@ import { PermanentPostPresenter, QueryPostPresenter } from '../../../../interfac
   styleUrls: ['./posts-query.component.css'],
 })
 export class PostsQueryComponent implements OnInit {
-  public searchPost: string;
+  public post_owner: string;
   public userName: string;
   public foundPosts: PermanentPostPresenter[];
 
@@ -22,9 +22,9 @@ export class PostsQueryComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.searchPost = params.searchPost;
+      this.post_owner = params.user_id;
       const queryPostParams: QueryPostPresenter = {
-        user_id: this.searchPost,
+        user_id: this.post_owner,
       };
       const postServiceResponse = this.postService.queryPostCollection(queryPostParams);
       postServiceResponse.subscribe((res: any) => {

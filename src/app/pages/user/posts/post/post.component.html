@@ -37,7 +37,7 @@
     <h6 class="font-light pb-2">{{ content.description }}</h6>
     <div class="pb-3 row justify-content-center">
       <div *ngIf="isImage(content.reference_type)">
-        <img [src]="content.reference" />
+        <img [src]="content.reference" class="img-fluid"/>
       </div>
       <div *ngIf="!isImage(content.reference_type)">
         <video controls>

@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'posts', component: PostsCreateComponent },
   { path: 'share-post', component: SharePostComponent },
-  { path: 'query/:searchPost', component: PostsQueryComponent },
+  { path: 'query/:user_id', component: PostsQueryComponent },
   { path: 'conversations', component: ChatComponent }
 ];
 

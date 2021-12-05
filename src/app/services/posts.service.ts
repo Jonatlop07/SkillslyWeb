@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CreatePostDataPresenter } from '../interfaces/presenter/post/create_post_data.presenter';
-import { toPost } from '../interfaces/presenter/post/post_form_data.presenter';
+import { toPostContent } from '../interfaces/presenter/post/post_form_data.presenter';
 import { JwtService } from './jwt.service';
 import { DeletePostInterface } from '../interfaces/delete_post.interface';
 import { QueryPostPresenter } from '../interfaces/presenter/post/query_post.presenter';
@@ -11,7 +11,6 @@ import { Select } from '@ngxs/store'
 import { SessionState } from '../shared/state/session/session.state'
 import { Observable } from 'rxjs'
 import { SessionModel } from '../models/session.model'
-
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
@@ -26,12 +25,13 @@ export class PostService {
   ) { }
 
   createPost(post: CreatePostDataPresenter) {
-    const content = toPost(post);
+    const content = toPostContent(post.content);
     return this.http
       .post(
         `${this.API_URL}/permanent-posts`,
         {
           content: content,
+          privacy: post.privacy
         },
         this.jwtService.getHttpOptions()
       )
@@ -41,13 +41,10 @@ export class PostService {
   }
 
   queryPostCollection(queryPostParams: QueryPostPresenter) {
-    let params = new HttpParams();
-    params = params.append('user_id', queryPostParams.user_id);
     return this.http
       .get(
-        `${this.API_URL}/permanent-posts`,
+        `${this.API_URL}/permanent-posts/${queryPostParams.user_id}`,
         {
-          params,
           ...this.jwtService.getHttpOptions(),
         }
       );
@@ -87,5 +84,9 @@ export class PostService {
 
   onToggleCreate() {
     this.toggleCreate = !this.toggleCreate;
+  }
+
+  getIfReactorEmail(){
+    return this.jwtService.getEmail();
   }
 }
