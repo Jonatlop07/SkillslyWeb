@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DeletePostInterface } from 'src/app/interfaces/delete_post.interface';
 import { MenuItem } from 'primeng/api';
 import { Comment } from 'src/app/interfaces/presenter/comment.presenter';
 import {
@@ -6,6 +7,7 @@ import {
   Reactor,
 } from 'src/app/interfaces/presenter/query_reactions.presenter';
 import { CommentsService } from 'src/app/services/comments.service';
+import { PostService } from 'src/app/services/posts.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { PermanentPostPresenter } from 'src/app/interfaces/presenter/post/query_post.presenter'
 
@@ -34,8 +36,9 @@ export class PostComponent implements OnInit {
 
   constructor(
     private commentsService: CommentsService,
-    private reactionsService: ReactionService
-  ) {}
+    private reactionsService: ReactionService,
+    private postService: PostService
+  ) { }
 
   ngOnInit(): void {
     this.getComments();
@@ -57,7 +60,7 @@ export class PostComponent implements OnInit {
   }
 
   isImage(referenceType: string): boolean {
-    if (referenceType == 'image') {
+    if (referenceType == 'imagen') {
       return true;
     }
     return false;
@@ -65,6 +68,17 @@ export class PostComponent implements OnInit {
 
   handleShowComments() {
     this.showComments = !this.showComments;
+  }
+
+  deletePost(post_id: string) {
+    const deletePostInterface: DeletePostInterface = {
+      post_id,
+    }
+    const postServiceResponse = this.postService.deletePost(deletePostInterface);
+    postServiceResponse.subscribe(resp => {
+      console.log(resp),
+        window.location.reload()
+    });
   }
 
   sendComment() {

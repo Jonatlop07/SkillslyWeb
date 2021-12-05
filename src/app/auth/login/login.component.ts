@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
 
 import { LoginForm } from '../../interfaces/login_form.inteface';
+import { LoginResponse } from '../../interfaces/login_response.interface'
 
 @Component({
   selector: 'app-login',
@@ -57,14 +58,19 @@ export class LoginComponent {
     this.authService
       .loginUser(this.loginForm)
       .subscribe(
-        (result: any) => {
-          this.authService.saveToken(result.access_token);
+        (result: LoginResponse) => {
+          const { id, email, roles, access_token } = result;
           const now = new Date();
           now.setSeconds(7200);
-          this.authService.setExpiresDate(now.getTime().toString());
-          localStorage.setItem('id', result.id)
-          localStorage.setItem('email', result.email);
-          this.router.navigate(['/main']);
+          this.authService.setSessionData({
+            user_id: id,
+            user_email: email,
+            user_roles: roles,
+            access_token,
+            expires_date: now.getTime().toString()
+          }).subscribe(() => {
+            this.router.navigate(['/main']);
+          });
         },
         (err) => {
           Swal.fire('Error', err.error.error, 'error');

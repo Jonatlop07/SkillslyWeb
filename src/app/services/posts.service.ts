@@ -4,18 +4,26 @@ import { environment } from 'src/environments/environment';
 import { CreatePostDataPresenter } from '../interfaces/presenter/post/create_post_data.presenter';
 import { toPost } from '../interfaces/presenter/post/post_form_data.presenter';
 import { JwtService } from './jwt.service';
+import { DeletePostInterface } from '../interfaces/delete_post.interface';
 import { QueryPostPresenter } from '../interfaces/presenter/post/query_post.presenter';
 import { SharePostInterface } from '../interfaces/share_post.interface';
+import { Select } from '@ngxs/store'
+import { SessionState } from '../shared/state/session/session.state'
+import { Observable } from 'rxjs'
+import { SessionModel } from '../models/session.model'
 
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
+  @Select(SessionState) session$: Observable<SessionModel>;
+
   private readonly API_URL: string = environment.API_URL;
   toggleCreate = false;
+
   constructor(
     private readonly http: HttpClient,
     private readonly jwtService: JwtService
-  ) {}
+  ) { }
 
   createPost(post: CreatePostDataPresenter) {
     const content = toPost(post);
@@ -44,6 +52,13 @@ export class PostService {
         }
       );
   }
+  deletePost(deletePostInterface: DeletePostInterface) {
+    return this.http
+      .delete(
+        `${this.API_URL}/permanent-posts/${deletePostInterface.post_id}/delete`,
+        this.jwtService.getHttpOptions()
+      );
+  }
 
   queryPost(queryPostPresenter: QueryPostPresenter) {
     let params = new HttpParams();
@@ -59,12 +74,12 @@ export class PostService {
       );
   }
 
-  sharePost(sharePostInterface: SharePostInterface){
+  sharePost(sharePostInterface: SharePostInterface) {
     return this.http
       .post(
         `${this.API_URL}/permanent-posts/${sharePostInterface.post_id}/share`,
         {
-          user_id: sharePostInterface.user_id
+          user_id: this.jwtService.getUserId()
         },
         this.jwtService.getHttpOptions()
       );
