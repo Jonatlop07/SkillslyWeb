@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { PermanentPostPresenter, QueryPostPresenter } from '../../../../interfaces/presenter/post/query_post.presenter'
+import { PermanentPostPresenter } from '../../../../interfaces/presenter/post/query_post.presenter'
 import { ActivatedRoute, Router } from '@angular/router'
 import { PostService } from '../../../../services/posts.service'
 import { UpdatePostPresenter } from '../../../../interfaces/presenter/post/update_post.presenter'
@@ -34,7 +34,6 @@ export class PostUpdateComponent implements OnInit {
         .queryPost(this.post_id)
         .subscribe((post: PermanentPostPresenter) => {
           this.post = post;
-          console.log(post);
           this.initForm(this.post);
         });
     })
@@ -42,6 +41,7 @@ export class PostUpdateComponent implements OnInit {
 
   private initForm(post_form_values: UpdatePostPresenter) {
     this.post_form = new FormGroup({
+      privacy: new FormControl(post_form_values.privacy, Validators.required),
       content: new FormArray(post_form_values.content.map(
         (content_element) =>
           new FormGroup({
@@ -56,25 +56,25 @@ export class PostUpdateComponent implements OnInit {
   }
 
   get controls() {
-    return (<FormArray>this.post_form.get('content')).controls;
+    return (<FormArray> this.post_form.get('content')).controls;
   }
 
   onSubmit($event: Event) {
-    const controls = (<FormArray>this.post_form.get('content')).controls;
+    const controls = (<FormArray> this.post_form.get('content')).controls;
     if (this.validateContent(controls)) {
       this.incomplete_reference = false;
       this.require_one = false;
-      console.log(this.post_form.value);
       this.post_to_update = {
         ...this.post_form.value,
         post_id: this.post.post_id,
-        user_id: this.post.user_id
+        user_id: this.post.user_id,
       }
       this.post_service
         .updatePermanentPost(this.post_to_update)
         .subscribe((post: UpdatePostPresenter) => {
-          this.post_to_update = post;
+          this.post = post;
         });
+      this.router.navigate(['./main'])
       return true;
     } else {
       $event.preventDefault();
@@ -83,7 +83,7 @@ export class PostUpdateComponent implements OnInit {
   }
 
   onAddContent() {
-    (<FormArray>this.post_form.get('content')).push(
+    (<FormArray> this.post_form.get('content')).push(
       new FormGroup({
         description: new FormControl(null, Validators.maxLength(250)),
         reference: new FormControl(null),
@@ -95,12 +95,12 @@ export class PostUpdateComponent implements OnInit {
   }
 
   onDeleteContent(index: number) {
-    (<FormArray>this.post_form.get('content')).removeAt(index);
+    (<FormArray> this.post_form.get('content')).removeAt(index);
   }
 
   onCancel() {
     this.post_service.onToggleCreate();
-    this.router.navigate(['../../query', this.post.user_id], { relativeTo: this.activated_route });
+    this.router.navigate(['main/query', this.post.user_id]);
   }
 
   validateContent(controls: AbstractControl[]) {

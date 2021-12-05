@@ -41,7 +41,6 @@ export class PostsCreateComponent implements OnInit {
   }
 
   get controls() {
-    console.log(this.controls);
     return (<FormArray> this.postForm.get('content')).controls;
   }
 

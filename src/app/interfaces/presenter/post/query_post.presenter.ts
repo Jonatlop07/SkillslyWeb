@@ -8,5 +8,6 @@ export interface PermanentPostPresenter{
     user_id: string;
     post_id: string;
     content: PostContentData[];
+    privacy: string;
     created_at: string;
 }

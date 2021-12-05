@@ -1,13 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-<<<<<<< HEAD
-import { CreatePostDataPresenter } from '../interfaces/presenter/post/create_post_data.presenter';
 import { toPostContent } from '../interfaces/presenter/post/post_form_data.presenter';
-=======
-import { CreatePostDataPresenter, PostContentData } from '../interfaces/presenter/post/create_post_data.presenter';
-import { toPost } from '../interfaces/presenter/post/post_form_data.presenter';
->>>>>>> e743b46d8762381e6dc11b4d2617e34df9b86d74
+import { CreatePostDataPresenter } from '../interfaces/presenter/post/create_post_data.presenter';
 import { JwtService } from './jwt.service';
 import { DeletePostInterface } from '../interfaces/delete_post.interface';
 import { PermanentPostPresenter, QueryPostPresenter } from '../interfaces/presenter/post/query_post.presenter';
@@ -58,7 +53,7 @@ export class PostService {
   deletePost(deletePostInterface: DeletePostInterface) {
     return this.http
       .delete(
-        `${this.API_URL}/permanent-posts/${deletePostInterface.post_id}/delete`,
+        `${this.API_URL}/permanent-posts/post/${deletePostInterface.post_id}`,
         this.jwtService.getHttpOptions()
       );
   }
@@ -66,26 +61,28 @@ export class PostService {
   queryPost(post_id: string): Observable<PermanentPostPresenter> {
     return this.http
       .get<PermanentPostPresenter>(
-        `${this.API_URL}/permanent-posts/${post_id}`,
+        `${this.API_URL}/permanent-posts/post/${post_id}`,
         this.jwtService.getHttpOptions()
       );
   }
 
   updatePermanentPost(post_to_update: UpdatePostPresenter): Observable<UpdatePostPresenter> {
     return this.http.put<UpdatePostPresenter>(
-      `${this.API_URL}/permanent-posts/${post_to_update.post_id}`,
+      `${this.API_URL}/permanent-posts/post/${post_to_update.post_id}`,
       {
         user_id: this.jwtService.getUserId(),
         content: post_to_update.content,
+        privacy: post_to_update.privacy
       },
       this.jwtService.getHttpOptions()
     );
   }
 
+
   sharePost(sharePostInterface: SharePostInterface) {
     return this.http
       .post(
-        `${this.API_URL}/permanent-posts/${sharePostInterface.post_id}/share`,
+        `${this.API_URL}/permanent-posts/post/${sharePostInterface.post_id}/share`,
         {
           user_id: this.jwtService.getUserId()
         },
