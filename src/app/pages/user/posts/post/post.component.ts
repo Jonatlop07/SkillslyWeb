@@ -10,6 +10,7 @@ import { CommentsService } from 'src/app/services/comments.service';
 import { PostService } from 'src/app/services/posts.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { PermanentPostPresenter } from 'src/app/interfaces/presenter/post/query_post.presenter'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-post',
@@ -37,7 +38,8 @@ export class PostComponent implements OnInit {
   constructor(
     private commentsService: CommentsService,
     private reactionsService: ReactionService,
-    private postService: PostService
+    private postService: PostService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -79,6 +81,10 @@ export class PostComponent implements OnInit {
       console.log(resp),
         window.location.reload()
     });
+  }
+
+  updatePost(post_id: string) {
+    this.router.navigate(['main/post/update', post_id]);
   }
 
   sendComment() {
