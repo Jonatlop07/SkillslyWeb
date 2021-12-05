@@ -22,6 +22,8 @@ import { CommentComponent } from './user/posts/comment/comment.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { TabViewModule } from 'primeng/tabview';
 import { DialogModule } from 'primeng/dialog';
+import { FollowRequestComponent } from './follow-request/follow-request.component';
+import { PostUpdateComponent } from './user/posts/post-update/post-update.component'
 
 @NgModule({
   declarations: [
@@ -31,10 +33,12 @@ import { DialogModule } from 'primeng/dialog';
     ProfileComponent,
     PostsCreateComponent,
     PostsQueryComponent,
+    PostUpdateComponent,
     PostComponent,
     CommentComponent,
     SharePostComponent,
     ChatComponent,
+    FollowRequestComponent,
   ],
   imports: [
     CommonModule,

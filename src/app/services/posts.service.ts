@@ -1,16 +1,22 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+<<<<<<< HEAD
 import { CreatePostDataPresenter } from '../interfaces/presenter/post/create_post_data.presenter';
 import { toPostContent } from '../interfaces/presenter/post/post_form_data.presenter';
+=======
+import { CreatePostDataPresenter, PostContentData } from '../interfaces/presenter/post/create_post_data.presenter';
+import { toPost } from '../interfaces/presenter/post/post_form_data.presenter';
+>>>>>>> e743b46d8762381e6dc11b4d2617e34df9b86d74
 import { JwtService } from './jwt.service';
 import { DeletePostInterface } from '../interfaces/delete_post.interface';
-import { QueryPostPresenter } from '../interfaces/presenter/post/query_post.presenter';
+import { PermanentPostPresenter, QueryPostPresenter } from '../interfaces/presenter/post/query_post.presenter';
 import { SharePostInterface } from '../interfaces/share_post.interface';
 import { Select } from '@ngxs/store'
 import { SessionState } from '../shared/state/session/session.state'
 import { Observable } from 'rxjs'
 import { SessionModel } from '../models/session.model'
+import { UpdatePostPresenter } from '../interfaces/presenter/post/update_post.presenter'
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
@@ -57,18 +63,23 @@ export class PostService {
       );
   }
 
-  queryPost(queryPostPresenter: QueryPostPresenter) {
-    let params = new HttpParams();
-    const id_post = queryPostPresenter.post_id;
-    params = params.append('user_id', queryPostPresenter.user_id);
+  queryPost(post_id: string): Observable<PermanentPostPresenter> {
     return this.http
-      .get(
-        `${this.API_URL}/permanent-posts/${id_post}`,
-        {
-          params,
-          ...this.jwtService.getHttpOptions(),
-        }
+      .get<PermanentPostPresenter>(
+        `${this.API_URL}/permanent-posts/${post_id}`,
+        this.jwtService.getHttpOptions()
       );
+  }
+
+  updatePermanentPost(post_to_update: UpdatePostPresenter): Observable<UpdatePostPresenter> {
+    return this.http.put<UpdatePostPresenter>(
+      `${this.API_URL}/permanent-posts/${post_to_update.post_id}`,
+      {
+        user_id: this.jwtService.getUserId(),
+        content: post_to_update.content,
+      },
+      this.jwtService.getHttpOptions()
+    );
   }
 
   sharePost(sharePostInterface: SharePostInterface) {
