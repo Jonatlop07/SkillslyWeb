@@ -9,7 +9,7 @@ import { FollowService } from 'src/app/services/follow.service';
 })
 export class FollowRequestComponent implements OnInit {
 
-  public pendingSendedUsers: SearchUserResponse[];
+  public pendingSentUsers: SearchUserResponse[];
   
   constructor(
     private followService: FollowService
@@ -18,21 +18,21 @@ export class FollowRequestComponent implements OnInit {
   ngOnInit(): void {
     const followServiceResponse = this.followService.getFollowRequests(); 
     followServiceResponse.subscribe((resp:any) => {
-      this.pendingSendedUsers = resp.pendingSendedUsers; 
+      this.pendingSentUsers = resp.pendingSentUsers; 
     })
   }
 
   acceptFollowRequest(user:SearchUserResponse, index: number) : void {
     const followServiceResponse = this.followService.updateFollowRequest(user,true);
     followServiceResponse.subscribe((resp:any) => {
-      this.pendingSendedUsers.splice(index,1); 
+      this.pendingSentUsers.splice(index,1); 
     })
   }
 
   rejectFollowRequest(user:SearchUserResponse, index: number) : void {
     const followServiceResponse = this.followService.updateFollowRequest(user,false);
     followServiceResponse.subscribe((resp:any) => {
-      this.pendingSendedUsers.splice(index,1); 
+      this.pendingSentUsers.splice(index,1); 
     })
   }
 
