@@ -4,4 +4,5 @@ export interface UpdatePostPresenter {
   user_id: string;
   post_id: string;
   content: PostContentData[];
+  privacy: string;
 }

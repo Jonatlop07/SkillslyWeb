@@ -167,7 +167,7 @@ export class PostComponent implements OnInit {
   }
 
   hasReacted() {
-    const email = localStorage.getItem('email');
+    const email = this.postService.getIfReactorEmail();
     if (
       this.existsReactor(email, this.reactors['likes'].reactors) ||
       this.existsReactor(email, this.reactors['interested'].reactors) ||
