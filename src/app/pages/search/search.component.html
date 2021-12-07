@@ -13,7 +13,7 @@
                     <span class="text-muted" *ngIf="sameUser[i]">Eres tú</span>
                 </div>
                 <button type="button" (click)="searchPost(user.user_id)" class="btn btn-block btn-cyan btn-sm text-white">Ver Perfil</button>
-                <button type="button" *ngIf="!isFollowing[i] && !isPending[i] &&!sameUser[i]" (click)="followUser(user,i)" class="btn btn-block btn-success btn-sm text-white">Seguir</button>
+                <button type="button" *ngIf="!isFollowing[i] && !isPending[i] && !sameUser[i]" (click)="followUser(user,i)" class="btn btn-block btn-success btn-sm text-white">Seguir</button>
                 <button type="button" *ngIf="isPending[i]" (click)="cancelFollow(user,i,true)" class="btn btn-block btn-danger btn-sm text-white">Cancelar solicitud</button>
                 <button type="button" *ngIf="isFollowing[i]" (click)="cancelFollow(user,i,false)" class="btn btn-block btn-info btn-sm text-white">Dejar de seguir</button>
             </div>
