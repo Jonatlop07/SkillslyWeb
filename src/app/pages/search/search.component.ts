@@ -19,6 +19,7 @@ export class SearchComponent implements OnInit {
   public followingUsers: SearchUserResponse[];
   public isPending: boolean[];
   public isFollowing: boolean[];
+  public sameUser: boolean[]; 
 
   constructor(
     private activatedRoute: ActivatedRoute, 
@@ -39,6 +40,7 @@ export class SearchComponent implements OnInit {
         this.foundUsers = resp.users;
         this.isFollowing = new Array(this.foundUsers.length).fill(false);
         this.isPending = new Array(this.foundUsers.length).fill(false);
+        this.sameUser = new Array(this.foundUsers.length).fill(false);
         this.foundUsers.forEach( (user: any) => {
           const date_of_birth = new Date(user.date_of_birth);
           user.date_of_birth = moment(date_of_birth).locale('es').format('dddd DD MMMM - YYYY')
@@ -49,6 +51,9 @@ export class SearchComponent implements OnInit {
           this.followingUsers = resp.followingUsers;
           for (let i = 0; i<this.foundUsers.length; i++) {
             let foundUser: SearchUserResponse = this.foundUsers[i];
+            if (this.pendingUsers.filter(e => e.user_id == this.searchService.getUserId())) {
+              this.sameUser[i] = true; 
+            }
             if (this.pendingUsers.filter(e => e.email == foundUser.email).length > 0) {
               this.isPending[i] = true;
             } else if(this.followingUsers.filter(e => e.email == foundUser.email).length > 0) {
