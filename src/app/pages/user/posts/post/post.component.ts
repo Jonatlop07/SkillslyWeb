@@ -10,8 +10,10 @@ import { CommentsService } from 'src/app/services/comments.service';
 import { PostService } from 'src/app/services/posts.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { PermanentPostPresenter } from 'src/app/interfaces/presenter/post/query_post.presenter'
-import {Store} from "@ngxs/store";
-import {DeleteMyPost} from "../../../../shared/state/posts/posts.actions";
+import { Store } from "@ngxs/store";
+import { DeleteMyPost } from "../../../../shared/state/posts/posts.actions";
+import { Router } from '@angular/router'
+import { SharePostInterface } from 'src/app/interfaces/share_post.interface';
 
 @Component({
   selector: 'app-post',
@@ -41,7 +43,11 @@ export class PostComponent implements OnInit {
     private commentsService: CommentsService,
     private reactionsService: ReactionService,
     private postService: PostService,
-    private readonly store : Store
+<<<<<<< HEAD
+    private readonly store: Store
+=======
+    private router: Router
+>>>>>>> 6390c4f907ee72f65fb325184d9f4c437dfa2e58
   ) { }
 
   ngOnInit(): void {
@@ -80,10 +86,22 @@ export class PostComponent implements OnInit {
     }
     this.postService
       .deletePost(deletePostInterface)
-      .subscribe( () => {
-        this.store.dispatch(new DeleteMyPost( post_id ));
-      } );
+      .subscribe(() => {
+        this.store.dispatch(new DeleteMyPost(post_id));
+      });
 
+  }
+
+  updatePost(post_id: string) {
+    this.router.navigate(['main/post/update', post_id]);
+  }
+
+  sharePost(post_id: string) {
+    const sharePostInterface: SharePostInterface = {
+      post_id
+    };
+    this.postService.sharePost(sharePostInterface)
+      .subscribe(resp => console.log(resp));
   }
 
   sendComment() {
@@ -166,7 +184,7 @@ export class PostComponent implements OnInit {
   }
 
   hasReacted() {
-    const email = localStorage.getItem('email');
+    const email = this.postService.getIfReactorEmail();
     if (
       this.existsReactor(email, this.reactors['likes'].reactors) ||
       this.existsReactor(email, this.reactors['interested'].reactors) ||

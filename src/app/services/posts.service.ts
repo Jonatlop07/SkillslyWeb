@@ -1,17 +1,17 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { toPostContent } from '../interfaces/presenter/post/post_form_data.presenter';
 import { CreatePostDataPresenter } from '../interfaces/presenter/post/create_post_data.presenter';
-import { toPost } from '../interfaces/presenter/post/post_form_data.presenter';
 import { JwtService } from './jwt.service';
 import { DeletePostInterface } from '../interfaces/delete_post.interface';
-import { QueryPostPresenter } from '../interfaces/presenter/post/query_post.presenter';
+import { PermanentPostPresenter, QueryPostPresenter } from '../interfaces/presenter/post/query_post.presenter';
 import { SharePostInterface } from '../interfaces/share_post.interface';
 import { Select } from '@ngxs/store'
 import { SessionState } from '../shared/state/session/session.state'
 import { Observable } from 'rxjs'
 import { SessionModel } from '../models/session.model'
-
+import { UpdatePostPresenter } from '../interfaces/presenter/post/update_post.presenter'
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
@@ -26,12 +26,13 @@ export class PostService {
   ) { }
 
   createPost(post: CreatePostDataPresenter) {
-    const content = toPost(post);
+    const content = toPostContent(post.content);
     return this.http
       .post(
         `${this.API_URL}/permanent-posts`,
         {
           content: content,
+          privacy: post.privacy
         },
         this.jwtService.getHttpOptions()
       )
@@ -41,13 +42,10 @@ export class PostService {
   }
 
   queryPostCollection(queryPostParams: QueryPostPresenter) {
-    let params = new HttpParams();
-    params = params.append('user_id', queryPostParams.user_id);
     return this.http
       .get(
-        `${this.API_URL}/permanent-posts`,
+        `${this.API_URL}/permanent-posts/${queryPostParams.user_id}`,
         {
-          params,
           ...this.jwtService.getHttpOptions(),
         }
       );
@@ -55,29 +53,36 @@ export class PostService {
   deletePost(deletePostInterface: DeletePostInterface) {
     return this.http
       .delete(
-        `${this.API_URL}/permanent-posts/${deletePostInterface.post_id}/delete`,
+        `${this.API_URL}/permanent-posts/post/${deletePostInterface.post_id}`,
         this.jwtService.getHttpOptions()
       );
   }
 
-  queryPost(queryPostPresenter: QueryPostPresenter) {
-    let params = new HttpParams();
-    const id_post = queryPostPresenter.post_id;
-    params = params.append('user_id', queryPostPresenter.user_id);
+  queryPost(post_id: string): Observable<PermanentPostPresenter> {
     return this.http
-      .get(
-        `${this.API_URL}/permanent-posts/${id_post}`,
-        {
-          params,
-          ...this.jwtService.getHttpOptions(),
-        }
+      .get<PermanentPostPresenter>(
+        `${this.API_URL}/permanent-posts/post/${post_id}`,
+        this.jwtService.getHttpOptions()
       );
   }
+
+  updatePermanentPost(post_to_update: UpdatePostPresenter): Observable<UpdatePostPresenter> {
+    return this.http.put<UpdatePostPresenter>(
+      `${this.API_URL}/permanent-posts/post/${post_to_update.post_id}`,
+      {
+        user_id: this.jwtService.getUserId(),
+        content: post_to_update.content,
+        privacy: post_to_update.privacy
+      },
+      this.jwtService.getHttpOptions()
+    );
+  }
+
 
   sharePost(sharePostInterface: SharePostInterface) {
     return this.http
       .post(
-        `${this.API_URL}/permanent-posts/${sharePostInterface.post_id}/share`,
+        `${this.API_URL}/permanent-posts/post/${sharePostInterface.post_id}/share`,
         {
           user_id: this.jwtService.getUserId()
         },
@@ -87,5 +92,9 @@ export class PostService {
 
   onToggleCreate() {
     this.toggleCreate = !this.toggleCreate;
+  }
+
+  getIfReactorEmail(){
+    return this.jwtService.getEmail();
   }
 }

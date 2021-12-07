@@ -36,6 +36,7 @@ export class PostsCreateComponent implements OnInit {
           ]),
         }),
       ]),
+      privacy: new FormControl('public', Validators.required)
     });
   }
 
@@ -61,8 +62,7 @@ export class PostsCreateComponent implements OnInit {
 
   onCancel() {
     this.postService.onToggleCreate();
-    this.router.navigate(['./main']); 
-    
+    this.router.navigate(['./main']);
   }
 
   onSubmit($event: Event) {
@@ -71,6 +71,7 @@ export class PostsCreateComponent implements OnInit {
       this.referenceIncomplete = false;
       this.requireOne = false;
       this.postService.createPost(this.postForm.value);
+      this.router.navigate(['./main']);
       return true;
     } else {
       $event.preventDefault();

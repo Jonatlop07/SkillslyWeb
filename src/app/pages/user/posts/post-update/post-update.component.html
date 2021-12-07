@@ -4,20 +4,21 @@
       <div class="col-md-12">
         <div class="card">
           <form
-            [formGroup]="postForm"
+            *ngIf="post_form"
+            [formGroup]="post_form"
             (ngSubmit)="onSubmit($event)"
             class="form-horizontal"
           >
             <div class="card-body">
-              <h3 class="card-title">Publicación</h3>
+              <h3 class="card-title">Editar Publicación</h3>
               <div class="row">
                 <div class="col-xs-12">
                   <button
                     type="submit"
                     class="btn btn-success"
-                    [disabled]="postForm.invalid || !postForm.touched"
+                    [disabled]="post_form.invalid || !post_form.touched"
                   >
-                    Guardar publicacion
+                    Actualizar publicacion
                   </button>
                   |
                   <button
@@ -27,37 +28,31 @@
                   >
                     Cancelar
                   </button>
-                  <select
-                    class="select2 form-select shadow-none float-end w-50"
-                    id="privacy"
-                    formControlName="privacy"
-                  >
+                  <select class="select2 form-select shadow-none float-end w-50" formControlName="privacy"> 
                     <option value="" disabled>Privacidad</option>
                     <option value="public">Pública</option>
-                    <option value="private">
-                      Privada (sólo tus seguidores podrán verla)
-                    </option>
+                    <option value="private">Privada (sólo tus seguidores podrán verla)</option>
                   </select>
                 </div>
               </div>
-              <hr />
+              <hr/>
               <div class="form-group-row">
                 <div class="col-xs-12" formArrayName="content">
                   <div
                     class="row"
-                    *ngFor="let contentCtrl of controls; let i = index"
+                    *ngFor="let contentCtrl of controls; let i = index;"
                     [formGroupName]="i"
                     style="margin-bottom: 10px"
                   >
                     <div class="col-xs-12">
-                      <textarea
-                        type="text"
-                        class="form-control"
-                        formControlName="description"
-                        placeholder="Describe tu post!"
-                        rows="6"
-                      >
-                      </textarea>
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      formControlName="description"
+                      placeholder="Describe tu post!"
+                      rows="6"
+                    >
+                    </textarea>
                     </div>
 
                     <div class="col-xs-12">
@@ -66,6 +61,7 @@
                         class="form-control"
                         formControlName="reference"
                         placeholder="Agrega enlaces a imagenes o videos"
+
                       />
                     </div>
                     <div class="col-xs-12">
@@ -79,9 +75,9 @@
                     <span
                       class="text-danger"
                       *ngIf="!contentCtrl.get('reference_type').valid"
-                      >Los tipos aceptados son: imagen o video
-                    </span>
-                    <hr />
+                    >Los tipos aceptados son: imagen o video
+                  </span>
+                    <hr/>
 
                     <div class="text-end">
                       <button
@@ -94,14 +90,14 @@
                       </button>
                     </div>
                   </div>
-                  <div *ngIf="requireOne" class="text-danger">
-                    No puedes crear publicaciones sin contenido!
+                  <div *ngIf="require_one" class="text-danger">
+                    No puedes dejar la publicación sin contenido!
                   </div>
-                  <div *ngIf="referenceIncomplete" class="text-danger">
+                  <div *ngIf="incomplete_reference" class="text-danger">
                     Si quieres poner una imagen o video, debes poner el enlace y
                     el tipo
                   </div>
-                  <hr />
+                  <hr/>
                   <div class="row">
                     <div class="col-xs-12 text-end">
                       <button

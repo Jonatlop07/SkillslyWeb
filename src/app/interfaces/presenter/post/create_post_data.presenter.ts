@@ -6,4 +6,5 @@ export interface PostContentData {
 
 export interface CreatePostDataPresenter {
   content: PostContentData[];
+  privacy: string;
 }

@@ -52,6 +52,16 @@ export class JwtService {
     return token;
   }
 
+  public getEmail(): string {
+    let user_email = '';
+    if (this.isUserAuthenticated()){
+      this.session$.subscribe((session) => {
+        user_email = session.user_email;
+      })
+    }
+    return user_email;
+  }
+
   public getExpiresDate(): Date {
     let expires_date;
     this.session$.subscribe((session) => {
