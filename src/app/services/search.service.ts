@@ -24,4 +24,8 @@ export class SearchService {
       }
     );
   }
+
+  public getUserId(){
+    return this.jwt_service.getUserId();
+  }
 }

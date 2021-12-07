@@ -11,6 +11,7 @@ import { PostService } from 'src/app/services/posts.service';
 import { ReactionService } from 'src/app/services/reaction.service';
 import { PermanentPostPresenter } from 'src/app/interfaces/presenter/post/query_post.presenter'
 import { Router } from '@angular/router'
+import { SharePostInterface } from 'src/app/interfaces/share_post.interface';
 
 @Component({
   selector: 'app-post',
@@ -85,6 +86,14 @@ export class PostComponent implements OnInit {
 
   updatePost(post_id: string) {
     this.router.navigate(['main/post/update', post_id]);
+  }
+
+  sharePost(post_id: string) {
+    const sharePostInterface: SharePostInterface = {
+      post_id
+    };
+    this.postService.sharePost(sharePostInterface)
+      .subscribe(resp => console.log(resp));
   }
 
   sendComment() {

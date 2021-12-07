@@ -14,7 +14,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PostsCreateComponent } from './user/posts/posts-create/posts-create.component';
-import { SharePostComponent } from './share-post/share-post.component';
 import { PostsQueryComponent } from './user/posts/posts-query/posts-query.component';
 import { ChatComponent } from './chat/components/chat.component'
 import { PostComponent } from './user/posts/post/post.component';
@@ -36,7 +35,6 @@ import { PostUpdateComponent } from './user/posts/post-update/post-update.compon
     PostUpdateComponent,
     PostComponent,
     CommentComponent,
-    SharePostComponent,
     ChatComponent,
     FollowRequestComponent,
   ],
