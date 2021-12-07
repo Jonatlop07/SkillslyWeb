@@ -26,7 +26,7 @@ export class SearchComponent implements OnInit {
     private router:Router, 
     private searchService: SearchService, 
     private followService: FollowService
-    ) {}
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe( params => {
@@ -51,7 +51,7 @@ export class SearchComponent implements OnInit {
           this.followingUsers = resp.followingUsers;
           for (let i = 0; i<this.foundUsers.length; i++) {
             let foundUser: SearchUserResponse = this.foundUsers[i];
-            if (this.pendingUsers.filter(e => e.user_id == this.searchService.getUserId())) {
+            if (foundUser.user_id == this.searchService.getUserId()) {
               this.sameUser[i] = true; 
             }
             if (this.pendingUsers.filter(e => e.email == foundUser.email).length > 0) {
