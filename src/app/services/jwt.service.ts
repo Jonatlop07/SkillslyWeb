@@ -11,8 +11,6 @@ import { SessionModel } from '../models/session.model'
 export class JwtService {
   @Select(SessionState) session$: Observable<SessionModel>;
 
-  constructor() {}
-
   public getHttpOptions() {
     return {
       headers: new HttpHeaders({
