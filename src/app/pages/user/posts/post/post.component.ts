@@ -43,11 +43,8 @@ export class PostComponent implements OnInit {
     private commentsService: CommentsService,
     private reactionsService: ReactionService,
     private postService: PostService,
-<<<<<<< HEAD
-    private readonly store: Store
-=======
+    private readonly store: Store,
     private router: Router
->>>>>>> 6390c4f907ee72f65fb325184d9f4c437dfa2e58
   ) { }
 
   ngOnInit(): void {
