@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostService } from 'src/app/services/posts.service';
 import { SharePostInterface } from 'src/app/interfaces/share_post.interface';
-import { PermanentPostPresenter, QueryPostPresenter } from '../../../../interfaces/presenter/post/query_post.presenter'
+import { QueryPostPresenter } from '../../../../interfaces/presenter/post/query_post.presenter'
+import {Select, Store} from "@ngxs/store";
+import {Observable} from "rxjs";
+import {MyPostsState} from "../../../../shared/state/posts/posts.state";
+import {PostsModel, PostModel} from "../../../../models/posts.model";
+import {SetMyPosts} from "../../../../shared/state/posts/posts.actions";
 
 
 @Component({
@@ -14,11 +19,13 @@ export class PostsQueryComponent implements OnInit {
   
   public post_owner: string;
   public userName: string;
-  public foundPosts: PermanentPostPresenter[];
+  @Select(MyPostsState) my_posts$: Observable<PostsModel>;
+  public posts: Array<PostModel>
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private postService: PostService
+    private postService: PostService,
+    private readonly store: Store
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +36,10 @@ export class PostsQueryComponent implements OnInit {
       };
       const postServiceResponse = this.postService.queryPostCollection(queryPostParams);
       postServiceResponse.subscribe((res: any) => {
-        this.foundPosts = res.posts;
+        this.store.dispatch(new SetMyPosts({posts: res.posts}));
+        this.my_posts$.subscribe(my_posts => {
+          this.posts = my_posts.posts;
+        })
       });
     })
   }
@@ -42,10 +52,4 @@ export class PostsQueryComponent implements OnInit {
       .subscribe(resp => console.log(resp));
   }
 
-  isImage(referenceType: string): boolean {
-    if (referenceType == 'imagen') {
-      return true;
-    }
-    return false;
-  }
 }
