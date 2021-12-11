@@ -11,6 +11,7 @@ import { PermanentPostPresenter, QueryPostPresenter } from '../../../../interfac
   styleUrls: ['./posts-query.component.css'],
 })
 export class PostsQueryComponent implements OnInit {
+  
   public post_owner: string;
   public userName: string;
   public foundPosts: PermanentPostPresenter[];
