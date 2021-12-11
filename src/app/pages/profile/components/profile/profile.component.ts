@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
   profileExists = false;
 
   getProfile() {
-    const email = localStorage.getItem('email');
+    const email = this.profileService.getUserEmail();
     if (email) {
       this.profileService.getProfile(email).subscribe(
         (response: any) => {
@@ -36,7 +36,7 @@ export class ProfileComponent implements OnInit {
 
   saveProfile(e: Event) {
     e.preventDefault();
-    const email = localStorage.getItem('email');
+    const email = this.profileService.getUserEmail();
 
     const profileSend = {
       resume: this.resume,

@@ -3,21 +3,37 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { JwtService } from './jwt.service';
 import { SearchUserResponse } from '../interfaces/search_users_response.interface';
+import { ConversationPresenter } from '../interfaces/presenter/chat/conversation.presenter';
+import { Observable } from 'rxjs'
+import { AppendPrivateConversation } from '../shared/state/conversations/conversations.actions'
+import { Select, Store } from '@ngxs/store'
+import { UserFollowCollectionPresenter } from '../interfaces/presenter/user/user_follow_collection.presenter'
+import { User } from '../interfaces/user.interface';
+import { StoreFollowers } from '../shared/state/followers/followers.actions';
+import { StoreFollowingUsers } from '../shared/state/following_users/following_users.actions';
+import { FollowingUsersState } from '../shared/state/following_users/following_users.state';
+import { FollowingUsersModel } from '../models/following_users.model';
+import { FollowersState } from '../shared/state/followers/followers.state';
+import { FollowersModel } from '../models/followers.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FollowService {
+  @Select(FollowingUsersState) following_users$: Observable<FollowingUsersModel>;
+  @Select(FollowersState) followers$: Observable<FollowersModel>;
 
   private readonly API_URL: string = environment.API_URL;
 
   constructor(
     private readonly http: HttpClient,
-    private readonly jtw_service: JwtService
-  ) {}
+    private readonly jtw_service: JwtService,
+    private readonly store: Store
+  ) {
+  }
 
-  public getFollowRequests() {
-    return this.http.get(
+  public getUserFollowCollection(): Observable<UserFollowCollectionPresenter> {
+    return this.http.get<UserFollowCollectionPresenter>(
       `${this.API_URL}/users/follow`,
       this.jtw_service.getHttpOptions()
     )
@@ -43,13 +59,41 @@ export class FollowService {
     )
   }
 
-  public updateFollowRequest(user:SearchUserResponse, accept:boolean){
-    return this.http.put(
+  public updateFollowRequest(user: SearchUserResponse, accept: boolean): Observable<ConversationPresenter> {
+    return this.http.put<ConversationPresenter>(
       `${this.API_URL}/users/follow/${user.user_id}`,
       {
         accept
       },
       this.jtw_service.getHttpOptions()
     )
+  }
+
+  public getFollowingUsers(): Array<User> {
+    let users: Array<User> = [];
+    this.following_users$.subscribe(following_users => {
+      users = following_users.users;
+    });
+    return users;
+  }
+
+  public getFollowers(): Array<User> {
+    let users: Array<User> = [];
+    this.followers$.subscribe(followers => {
+      users = followers.users;
+    });
+    return users;
+  }
+
+  public appendPrivateConversation(new_conversation: ConversationPresenter): Observable<void> {
+    return this.store.dispatch(new AppendPrivateConversation(new_conversation));
+  }
+
+  public storeFollowingUsers(following_users: Array<User>): Observable<void> {
+    return this.store.dispatch(new StoreFollowingUsers(following_users))
+  }
+
+  public storeFollowers(followers: Array<User>): Observable<void> {
+    return this.store.dispatch(new StoreFollowers(followers));
   }
 }

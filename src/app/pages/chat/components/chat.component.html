@@ -3,28 +3,52 @@
     <div class="col-lg-4">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Tus Conversaciones</h4>
-        </div>
-        <div class="comment-widgets scrollable">
-          <div
-            *ngFor="let conversation of conversations | keyvalue"
-            class="d-flex flex-row comment-row mt-0 align-items-center"
-            (click)="selectConversation(conversation.value)"
-          >
-            <div class="p-2">
-              <img
-                src="../assets/images/users/1.jpg"
-                alt="user"
-                width="50"
-                class="rounded-circle"
-              />
-            </div>
-            <div class="comment-text w-100">
-              <h6 class="font-medium">{{conversation.value.conversation_name}}</h6>
+          <h4 class="card-title">Tus Conversaciones Privadas</h4>
+          <p *ngIf="private_conversations.size === 0">No tienes conversaciones privadas en este momento</p>
+          <div class="comment-widgets scrollable">
+            <div
+              *ngFor="let conversation of private_conversations | keyvalue"
+              class="d-flex flex-row comment-row mt-0 align-items-center"
+              (click)="selectConversation(conversation.value)"
+            >
+              <div class="p-2">
+                <img
+                  src="../assets/images/users/1.jpg"
+                  alt="user"
+                  width="50"
+                  class="rounded-circle"
+                />
+              </div>
+              <div class="comment-text w-100">
+                <h6 class="font-medium">{{getPrivateConversationName(conversation.value.conversation_id)}}</h6>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <div class="card-body">
+          <h4 class="card-title">Tus Conversaciones Grupales</h4>
+          <div class="comment-widgets scrollable">
+            <p *ngIf="group_conversations.size === 0">No tienes conversaciones grupales en este momento</p>
+            <div
+              *ngFor="let conversation of group_conversations | keyvalue"
+              class="d-flex flex-row comment-row mt-0 align-items-center"
+              (click)="selectConversation(conversation.value)"
+            >
+              <div class="p-2">
+                <img
+                  src="../assets/images/users/1.jpg"
+                  alt="user"
+                  width="50"
+                  class="rounded-circle"
+                />
+              </div>
+              <div class="comment-text w-100">
+                <h6 class="font-medium">{{conversation.value.conversation_name}}</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
       <div class="card px-3">
         <div class="card-body" *ngIf="!is_creating_conversation">
           <button
@@ -35,9 +59,8 @@
             Nueva conversación
           </button>
         </div>
-        <form
-          *ngIf="is_creating_conversation && create_conversation_form"
-          [formGroup]="create_conversation_form"
+        <div
+          *ngIf="is_creating_conversation"
           class="card-body"
         >
           <h5 class="card-title">Nueva conversación</h5>
@@ -49,23 +72,9 @@
                 class="form-control"
                 id="new_conversation_name"
                 placeholder="Nombre de la conversación"
-                formControlName="conversation_name"
+                [(ngModel)]="new_conversation_name"
+                required
               />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-md-4 mt-3">Miembros de la conversación</label>
-            <div class="col-md-8">
-              <select
-                [(ngModel)]="member_option"
-                (change)="addMemberToNewConversation(member_option)"
-                class="select2 form-select shadow-none mt-3"
-                multiple="multiple"
-                style="height: 100px; width: 100%"
-              >
-                <option value="johan">Johan</option>
-                <option value="miguel">Miguel Ángel</option>
-              </select>
             </div>
           </div>
           <div class="form-group row">
@@ -82,6 +91,32 @@
                   Example invalid custom file feedback
                 </div>
               </div>
+            </div>
+          </div>
+          <label class="col-md-6 mt-3">Añadir miembros a la conversación:</label>
+          <div class="form-group row">
+            <div class="col-md-8">
+              <ul class="mt-3">
+                <li
+                  class="btn btn-info"
+                  *ngFor="let related_user of related_users"
+                  (click)="addMemberToNewConversation(related_user)"
+                >
+                  {{related_user.name}}
+                </li>
+              </ul>
+            </div>
+            <label class="col-md-6 mt-3">Miembros añadidos (para remover un miembro haz clic sobre él):</label>
+            <div class="col-md-8">
+              <ul>
+                <li
+                  class="btn btn-info"
+                  *ngFor="let conversation_member of new_conversation_members"
+                  (click)="removeMemberFromConversation(conversation_member)"
+                >
+                  {{conversation_member.name}}
+                </li>
+              </ul>
             </div>
           </div>
           <div class="border-top">
@@ -101,7 +136,7 @@
               </button>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
     <div class="col-lg-8">

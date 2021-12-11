@@ -10,9 +10,15 @@ import { NewConversationPresenter } from '../interfaces/presenter/chat/new_conve
 import { DeleteConversationPresenter } from '../interfaces/presenter/chat/delete_conversation.presenter'
 import { ConversationsPresenter } from '../interfaces/presenter/chat/conversations.presenter'
 import { MessageCollectionPresenter } from '../interfaces/presenter/chat/message_collection.presenter'
+import { Select, Store } from '@ngxs/store'
+import { AppendGroupConversation, StoreConversations } from '../shared/state/conversations/conversations.actions'
+import { MyConversationsState } from '../shared/state/conversations/conversations.state'
+import { ConversationsModel } from '../models/conversations.model'
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
+  @Select(MyConversationsState) conversations$: Observable<ConversationsModel>;
+
   private readonly API_URL: string = environment.API_URL;
 
   private readonly join_conversation_event = 'join_conversation';
@@ -25,15 +31,42 @@ export class ChatService {
   constructor(
     private readonly http: HttpClient,
     private readonly jtw_service: JwtService,
-    private readonly socket_service: WebSocketService
+    private readonly socket_service: WebSocketService,
+    private readonly store: Store
   ) {}
 
-  public getConversations() {
+  public getConversations(): Observable<ConversationsPresenter> {
     return this.http
       .get<ConversationsPresenter>(
         `${this.API_URL}/chat`,
         this.jtw_service.getHttpOptions()
       );
+  }
+
+  public storeConversations(conversations_presenter: ConversationsPresenter): Observable<void> {
+    return this.store.dispatch(
+      new StoreConversations(
+        conversations_presenter.conversations.filter(
+          (conversation: ConversationPresenter) => conversation.is_private
+        ),
+        conversations_presenter.conversations.filter(
+          (conversation: ConversationPresenter) => !conversation.is_private
+        )
+      )
+    );
+  }
+
+  public getConversationsFromStore() {
+    let private_conversations: Array<ConversationPresenter> = [];
+    let group_conversations: Array<ConversationPresenter> = [];
+    this.conversations$.subscribe((conversations: ConversationsModel) => {
+      private_conversations = conversations.private_conversations;
+      group_conversations = conversations.group_conversations;
+    });
+    return {
+      private_conversations,
+      group_conversations
+    }
   }
 
   public joinConversation(conversation_id: string) {
@@ -51,9 +84,19 @@ export class ChatService {
   public createConversation(new_conversation: NewConversationPresenter): Observable<ConversationPresenter> {
     return this.http.post<ConversationPresenter>(
       `${this.API_URL}/chat/group`,
-        new_conversation,
+      {
+        name: new_conversation.conversation_name,
+        members: [
+          ...new_conversation.conversation_members,
+          this.jtw_service.getUserId()
+        ]
+      },
         this.jtw_service.getHttpOptions()
       );
+  }
+
+  public appendGroupConversation(new_conversation: ConversationPresenter): Observable<void> {
+    return this.store.dispatch(new AppendGroupConversation(new_conversation));
   }
 
   public exitConversation(conversation_id: string) {
