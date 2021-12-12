@@ -7,10 +7,8 @@ import { AuthService } from 'src/app/services/auth.service';
 
 import { LoginForm } from '../../interfaces/login_form.inteface';
 import { LoginResponse } from '../../interfaces/login_response.interface'
-import { ChatService } from '../../services/chat.service'
-import { ConversationsPresenter } from '../../interfaces/presenter/chat/conversations.presenter'
+import { ChatService } from '../../services/chat.service';
 import { FollowService } from '../../services/follow.service';
-import { UserFollowCollectionPresenter } from '../../interfaces/presenter/user/user_follow_collection.presenter';
 
 @Component({
   selector: 'app-login',
@@ -61,6 +59,7 @@ export class LoginComponent {
       return;
     }
     this.loginForm = this.form.value;
+
     this.authService
       .loginUser(this.loginForm)
       .subscribe(
@@ -75,23 +74,10 @@ export class LoginComponent {
             access_token,
             expires_date: now.getTime().toString()
           }).subscribe(() => {
-            this.follow_service.getUserFollowCollection()
-              .subscribe((user_follow_collection: UserFollowCollectionPresenter) => {
-                this.follow_service.storeFollowingUsers(user_follow_collection.followingUsers)
-                  .subscribe(() => {
-                    this.follow_service.storeFollowers(user_follow_collection.followers)
-                      .subscribe(() => {
-                        this.chat_service.getConversations()
-                          .subscribe((conversations_presenter: ConversationsPresenter) => {
-                            this.chat_service.storeConversations(conversations_presenter)
-                              .subscribe(() => {
-                                this.router.navigate(['/main']);
-                              });
-                          });
-                      });
-                  });
-              })
-          });
+            this.follow_service.getAndStoreUserFollowCollection();
+            this.chat_service.getAndStoreConversations();
+            this.router.navigate(['/main']);
+          })
         },
         (err) => {
           Swal.fire('Error', err.error.error, 'error');

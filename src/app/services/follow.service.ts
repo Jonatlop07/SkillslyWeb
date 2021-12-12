@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { JwtService } from './jwt.service';
 import { SearchUserResponse } from '../interfaces/search_users_response.interface';
 import { ConversationPresenter } from '../interfaces/presenter/chat/conversation.presenter';
-import { Observable } from 'rxjs'
+import { forkJoin, Observable } from 'rxjs'
 import { AppendPrivateConversation } from '../shared/state/conversations/conversations.actions'
 import { Select, Store } from '@ngxs/store'
 import { UserFollowCollectionPresenter } from '../interfaces/presenter/user/user_follow_collection.presenter'
@@ -32,11 +32,26 @@ export class FollowService {
   ) {
   }
 
-  public getUserFollowCollection(): Observable<UserFollowCollectionPresenter> {
+  public getUserFollowCollection() {
     return this.http.get<UserFollowCollectionPresenter>(
       `${this.API_URL}/users/follow`,
       this.jtw_service.getHttpOptions()
+    );
+  }
+
+  public getAndStoreUserFollowCollection() {
+    this.http.get<UserFollowCollectionPresenter>(
+      `${this.API_URL}/users/follow`,
+      this.jtw_service.getHttpOptions()
     )
+      .subscribe((user_follow_collection: UserFollowCollectionPresenter) => {
+      forkJoin(
+        {
+          store_following_users: this.storeFollowingUsers(user_follow_collection.followingUsers),
+          store_followers: this.storeFollowers(user_follow_collection.followers)
+        }
+      ).subscribe(({}) => {});
+    })
   }
 
   public createUserFollowRequest(user: SearchUserResponse) {
@@ -89,11 +104,11 @@ export class FollowService {
     return this.store.dispatch(new AppendPrivateConversation(new_conversation));
   }
 
-  public storeFollowingUsers(following_users: Array<User>): Observable<void> {
+  private storeFollowingUsers(following_users: Array<User>): Observable<void> {
     return this.store.dispatch(new StoreFollowingUsers(following_users))
   }
 
-  public storeFollowers(followers: Array<User>): Observable<void> {
+  private storeFollowers(followers: Array<User>): Observable<void> {
     return this.store.dispatch(new StoreFollowers(followers));
   }
 }

@@ -35,15 +35,17 @@ export class ChatService {
     private readonly store: Store
   ) {}
 
-  public getConversations(): Observable<ConversationsPresenter> {
-    return this.http
+  public getAndStoreConversations() {
+    this.http
       .get<ConversationsPresenter>(
         `${this.API_URL}/chat`,
         this.jtw_service.getHttpOptions()
-      );
+      ).subscribe((conversations: ConversationsPresenter) => {
+        this.storeConversations(conversations).subscribe(() => {});
+      });
   }
 
-  public storeConversations(conversations_presenter: ConversationsPresenter): Observable<void> {
+  private storeConversations(conversations_presenter: ConversationsPresenter): Observable<void> {
     return this.store.dispatch(
       new StoreConversations(
         conversations_presenter.conversations.filter(
