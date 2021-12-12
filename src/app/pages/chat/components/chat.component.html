@@ -48,7 +48,7 @@
             </div>
           </div>
         </div>
-        </div>
+      </div>
       <div class="card px-3">
         <div class="card-body" *ngIf="!is_creating_conversation">
           <button
@@ -142,7 +142,65 @@
     <div class="col-lg-8">
       <div class="card" *ngIf="selected_conversation">
         <div class="card-body">
-          <h4 class="card-title">{{selected_conversation.conversation_name}}</h4>
+          <div class="row">
+            <div class="col-md-11 mt-3">
+              <h4 class="card-title">{{
+                selected_conversation.is_private
+                  ? getPrivateConversationName(selected_conversation.conversation_id)
+                  : selected_conversation.conversation_name
+                }}</h4>
+            </div>
+            <div class="col-md-1 dropdown" *ngIf="!selected_conversation.is_private">
+              <a class="mdi mdi-settings fs-2 dropdown" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                 aria-expanded="false" type="button" id="dropdownMenuButton1">
+              </a>
+              <ul class="dropdown-menu pull-left dropdown-menu-left" aria-labelledby="dropdownMenuLink">
+                <li>
+                  <a class="dropdown-item"
+                     (click)="toggleEditingGroupConversationDetails()"
+                  >
+                    Editar detalles de la Conversación
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item"
+                     (click)="exitGroupConversation(selected_conversation.conversation_id)"
+                  >
+                    Salirse de la Conversación
+                  </a>
+                </li>
+                <li><a class="dropdown-item" (click)="deleteGroupConversation(selected_conversation.conversation_id)">Eliminar
+                  Conversación</a></li>
+              </ul>
+            </div>
+            <p-dialog header="Editar los detalles de la conversación"
+                      [(visible)]="is_editing_group_conversation_details">
+              <p-tabView>
+                <div class="comment-widgets scrollable">
+                  <div class="form-group row mt-4">
+                    <label
+                      for="edit_conversation_name"
+                      class="col-sm-4 text-start control-label col-form-label"
+                    >Nuevo nombre de la conversación</label>
+                    <div class="col-sm-8 mt-2">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="edit_conversation_name"
+                        [(ngModel)]="edited_conversation_name"
+                      />
+                    </div>
+                  </div>
+                  <button
+                    class="btn btn-success text-white"
+                    (click)="editGroupConversationDetails(selected_conversation.conversation_id)"
+                  >
+                    Efectuar el cambio
+                  </button>
+                </div>
+              </p-tabView>
+            </p-dialog>
+          </div>
           <div class="chat-box scrollable px-4" style="height: 475px">
             <ul class="chat-list">
               <!-- Chat message -->

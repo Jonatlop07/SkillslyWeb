@@ -11,9 +11,14 @@ import { DeleteConversationPresenter } from '../interfaces/presenter/chat/delete
 import { ConversationsPresenter } from '../interfaces/presenter/chat/conversations.presenter'
 import { MessageCollectionPresenter } from '../interfaces/presenter/chat/message_collection.presenter'
 import { Select, Store } from '@ngxs/store'
-import { AppendGroupConversation, StoreConversations } from '../shared/state/conversations/conversations.actions'
+import {
+  AppendGroupConversation,
+  DeleteGroupConversation, EditGroupConversationDetails,
+  StoreConversations
+} from '../shared/state/conversations/conversations.actions'
 import { MyConversationsState } from '../shared/state/conversations/conversations.state'
 import { ConversationsModel } from '../models/conversations.model'
+import { GroupConversationDetailsPresenter } from '../interfaces/presenter/chat/group_conversation_details.presenter'
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -101,21 +106,42 @@ export class ChatService {
     return this.store.dispatch(new AppendGroupConversation(new_conversation));
   }
 
-  public exitConversation(conversation_id: string) {
-    return this.http.post(
-      `${this.API_URL}/chat/${encodeURIComponent(conversation_id)}/exit`,
-      {
-        conversation_id
-      },
+  public editGroupConversationDetails(conversation_id: string, conversation_details: GroupConversationDetailsPresenter)
+    : Observable<GroupConversationDetailsPresenter> {
+    return this.http.patch<GroupConversationDetailsPresenter>(
+      `${this.API_URL}/chat/group/${encodeURIComponent(conversation_id)}/`,
+      conversation_details,
       this.jtw_service.getHttpOptions()
     );
   }
 
-  public deleteConversation(conversation_id: string): Observable<DeleteConversationPresenter> {
+  public exitConversation(conversation_id: string) {
+    return this.http.post(
+      `${this.API_URL}/chat/group/${encodeURIComponent(conversation_id)}/exit`,
+      {},
+      this.jtw_service.getHttpOptions()
+    );
+  }
+
+  public deleteGroupConversation(conversation_id: string): Observable<DeleteConversationPresenter> {
     return this.http.delete<DeleteConversationPresenter>(
       `${this.API_URL}/chat/group/${encodeURIComponent(conversation_id)}/`,
       this.jtw_service.getHttpOptions()
     );
+  }
+
+  public deleteGroupConversationInStore(conversation_id: string): Observable<void> {
+    return this.store.dispatch(new DeleteGroupConversation(conversation_id));
+  }
+
+  public editGroupConversationDetailsInStore(
+    conversation_id: string,
+    conversation_details: GroupConversationDetailsPresenter
+  ): Observable<void> {
+    return this.store.dispatch(new EditGroupConversationDetails(
+      conversation_id,
+      conversation_details
+    ));
   }
 
   public getMessages(conversation_id: string): Observable<MessageCollectionPresenter> {

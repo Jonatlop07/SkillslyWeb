@@ -1,6 +1,11 @@
 import { Action, State, StateContext, StateToken } from '@ngxs/store'
 import { ConversationsModel } from '../../../models/conversations.model'
-import { AppendGroupConversation, AppendPrivateConversation, StoreConversations } from './conversations.actions'
+import {
+  AppendGroupConversation,
+  AppendPrivateConversation, DeleteGroupConversation,
+  EditGroupConversationDetails,
+  StoreConversations
+} from './conversations.actions'
 import { Injectable } from '@angular/core'
 
 const CONVERSATIONS_STATE_TOKEN = new StateToken<ConversationsModel>('my_conversations');
@@ -46,6 +51,35 @@ export class MyConversationsState {
     ctx.setState({
       private_conversations: action.private_conversations,
       group_conversations: action.group_conversations
+    })
+  }
+
+  @Action(EditGroupConversationDetails)
+  public editGroupConversationDetails(ctx: StateContext<ConversationsModel>, action: EditGroupConversationDetails) {
+    const state = ctx.getState();
+    for (let i = 0; i < state.group_conversations.length; ++i) {
+      if (state.group_conversations[i].conversation_id === action.conversation_id) {
+        const conversation = state.group_conversations[i]
+        conversation.conversation_name = action.conversation_details.conversation_name;
+        state.group_conversations[i] = conversation;
+        break;
+      }
+    }
+    ctx.setState({
+      private_conversations: state.private_conversations,
+      group_conversations: state.group_conversations
+    })
+  }
+
+  @Action(DeleteGroupConversation)
+  public deleteGroupConversation(ctx: StateContext<ConversationsModel>, action: DeleteGroupConversation) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      group_conversations: state.group_conversations.filter(
+        (conversation) =>
+          conversation.conversation_id !== action.conversation_id
+      )
     })
   }
 }
