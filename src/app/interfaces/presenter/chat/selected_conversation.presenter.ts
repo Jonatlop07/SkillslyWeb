@@ -6,4 +6,5 @@ export interface SelectedConversationPresenter {
   conversation_members: Array<ConversationMemberPresenter>;
   conversation_name?: string;
   messages: Array<MessagePresenter>;
+  is_private: boolean;
 }

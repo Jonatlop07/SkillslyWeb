@@ -7,6 +7,8 @@ import { AuthService } from 'src/app/services/auth.service';
 
 import { LoginForm } from '../../interfaces/login_form.inteface';
 import { LoginResponse } from '../../interfaces/login_response.interface'
+import { ChatService } from '../../services/chat.service';
+import { FollowService } from '../../services/follow.service';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +22,10 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private router: Router
+    private readonly authService: AuthService,
+    private readonly chat_service: ChatService,
+    private readonly follow_service: FollowService,
+    private readonly router: Router
   ) {
     this.initForm();
   }
@@ -55,6 +59,7 @@ export class LoginComponent {
       return;
     }
     this.loginForm = this.form.value;
+
     this.authService
       .loginUser(this.loginForm)
       .subscribe(
@@ -69,8 +74,10 @@ export class LoginComponent {
             access_token,
             expires_date: now.getTime().toString()
           }).subscribe(() => {
-            this.router.navigate(['/main/feed']);
-          });
+            this.follow_service.getAndStoreUserFollowCollection();
+            this.chat_service.getAndStoreConversations();
+            this.router.navigate(['/main']);
+          })
         },
         (err) => {
           Swal.fire('Error', err.error.error, 'error');
