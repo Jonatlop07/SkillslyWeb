@@ -21,7 +21,10 @@ import { SharePostInterface } from 'src/app/interfaces/share_post.interface';
   styleUrls: ['./post.component.css'],
 })
 export class PostComponent implements OnInit {
+  
   @Input() post: PermanentPostPresenter;
+  @Input() editable: boolean; 
+
   public showComments = false;
   public postComments: Array<Comment> = [];
   public comment: string;

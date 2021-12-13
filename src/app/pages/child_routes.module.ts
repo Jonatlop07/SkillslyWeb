@@ -8,6 +8,7 @@ import { PostsQueryComponent } from './user/posts/posts-query/posts-query.compon
 import { ChatComponent } from './chat/components/chat.component'
 import { FollowRequestComponent } from './follow-request/follow-request.component';
 import { PostUpdateComponent } from './user/posts/post-update/post-update.component';
+import { FeedComponent } from './feed/feed.component';
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'query/:user_id', component: PostsQueryComponent },
   { path: 'conversations', component: ChatComponent }, 
   { path: 'follow-requests', component: FollowRequestComponent},
-  { path: 'post/update/:post_id', component: PostUpdateComponent }
+  { path: 'post/update/:post_id', component: PostUpdateComponent }, 
+  { path: 'feed', component: FeedComponent }, 
 ];
 
 @NgModule({

@@ -11,7 +11,7 @@
         <p class="font-light small p-1 my-auto">
             {{ post.created_at }}
         </p>
-        <div class="dropdown">
+        <div class="dropdown" *ngIf="editable">
             <a class="mdi mdi-settings fs-2 dropdown" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton1">
             </a>
             <ul class="dropdown-menu pull-left dropdown-menu-left" aria-labelledby="dropdownMenuLink">

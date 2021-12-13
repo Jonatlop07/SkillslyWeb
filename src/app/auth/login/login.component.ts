@@ -69,7 +69,7 @@ export class LoginComponent {
             access_token,
             expires_date: now.getTime().toString()
           }).subscribe(() => {
-            this.router.navigate(['/main']);
+            this.router.navigate(['/main/feed']);
           });
         },
         (err) => {
