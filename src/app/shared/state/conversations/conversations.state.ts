@@ -1,12 +1,14 @@
 import { Action, State, StateContext, StateToken } from '@ngxs/store'
 import { ConversationsModel } from '../../../models/conversations.model'
 import {
+  AddMembersToGroupConversation,
   AppendGroupConversation,
   AppendPrivateConversation, DeleteGroupConversation,
   EditGroupConversationDetails,
   StoreConversations
 } from './conversations.actions'
 import { Injectable } from '@angular/core'
+import { ConversationPresenter } from '../../../interfaces/presenter/chat/conversation.presenter'
 
 const CONVERSATIONS_STATE_TOKEN = new StateToken<ConversationsModel>('my_conversations');
 
@@ -80,6 +82,26 @@ export class MyConversationsState {
         (conversation) =>
           conversation.conversation_id !== action.conversation_id
       )
+    })
+  }
+
+  @Action(AddMembersToGroupConversation)
+  public addMembersToGroupConversation(ctx: StateContext<ConversationsModel>, action: AddMembersToGroupConversation) {
+    const state = ctx.getState();
+    const group_conversations = [...state.group_conversations];
+    for (let i = 0; i < group_conversations.length; ++i) {
+      if (group_conversations[i].conversation_id === action.conversation_id) {
+        const conversation = group_conversations[i];
+        group_conversations[i] = {
+          ...conversation,
+          conversation_members: conversation.conversation_members.concat(action.members_to_add)
+        };
+        break;
+      }
+    }
+    ctx.setState({
+      private_conversations: state.private_conversations,
+      group_conversations
     })
   }
 }

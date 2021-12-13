@@ -12,6 +12,7 @@ import { ConversationsPresenter } from '../interfaces/presenter/chat/conversatio
 import { MessageCollectionPresenter } from '../interfaces/presenter/chat/message_collection.presenter'
 import { Select, Store } from '@ngxs/store'
 import {
+  AddMembersToGroupConversation,
   AppendGroupConversation,
   DeleteGroupConversation, EditGroupConversationDetails,
   StoreConversations
@@ -19,6 +20,9 @@ import {
 import { MyConversationsState } from '../shared/state/conversations/conversations.state'
 import { ConversationsModel } from '../models/conversations.model'
 import { GroupConversationDetailsPresenter } from '../interfaces/presenter/chat/group_conversation_details.presenter'
+import { User } from '../interfaces/user.interface'
+import { AddedMembersPresenter } from '../interfaces/presenter/chat/added_members.presenter'
+import { ConversationMemberPresenter } from '../interfaces/presenter/chat/conversation_member.presenter'
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -115,6 +119,17 @@ export class ChatService {
     );
   }
 
+  public addMembersToExistingConversation(conversation_id: string, members_to_add: Array<string>)
+    : Observable<AddedMembersPresenter>{
+    return this.http.put<AddedMembersPresenter>(
+      `${this.API_URL}/chat/group/${encodeURIComponent(conversation_id)}/add-members`,
+      {
+        members_to_add
+      },
+      this.jtw_service.getHttpOptions()
+    );
+  }
+
   public exitConversation(conversation_id: string) {
     return this.http.post(
       `${this.API_URL}/chat/group/${encodeURIComponent(conversation_id)}/exit`,
@@ -142,6 +157,18 @@ export class ChatService {
       conversation_id,
       conversation_details
     ));
+  }
+
+  public addNewMembersToGroupConversationInStore(
+    conversation_id: string,
+    members_to_add: Array<ConversationMemberPresenter>
+  ): Observable<void> {
+    return this.store.dispatch(
+      new AddMembersToGroupConversation(
+        conversation_id,
+        members_to_add
+      )
+    );
   }
 
   public getMessages(conversation_id: string): Observable<MessageCollectionPresenter> {

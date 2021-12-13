@@ -12,6 +12,7 @@ import { ConversationMemberPresenter } from '../../../interfaces/presenter/chat/
 import { User } from 'src/app/interfaces/user.interface';
 import { FollowService } from '../../../services/follow.service';
 import { GroupConversationDetailsPresenter } from '../../../interfaces/presenter/chat/group_conversation_details.presenter'
+import { AddedMembersPresenter } from '../../../interfaces/presenter/chat/added_members.presenter'
 
 @Component({
   selector: 'app-chat',
@@ -26,16 +27,20 @@ export class ChatComponent implements OnInit, OnDestroy {
   selected_conversation: SelectedConversationPresenter;
   current_message: string = '';
 
-  related_users: Array<User> = [];
+  is_creating_conversation = false;
+  is_editing_group_conversation_details = false;
+  is_adding_group_conversation_members = false;
+
+  related_users: Array<ConversationMemberPresenter> = [];
+  related_users_not_in_conversation: Array<ConversationMemberPresenter> = [];
 
   new_conversation: NewConversationPresenter;
   new_conversation_name = '';
-  new_conversation_members: Array<User> = [];
+  new_conversation_members: Array<ConversationMemberPresenter> = [];
 
   edited_conversation_name = '';
 
-  is_creating_conversation = false;
-  is_editing_group_conversation_details = false;
+  conversation_members_to_add: Array<ConversationMemberPresenter> = [];
 
   private unsubscribe_on_destroy = new Subject<void>();
 
@@ -58,7 +63,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     } else if (group_conversations.length > 0) {
       this.setSelectedConversation(this.group_conversations.get(group_conversations[0].conversation_id))
     }
-
     this.chat_service
       .onMessageSent()
       .pipe(takeUntil(this.unsubscribe_on_destroy))
@@ -74,7 +78,15 @@ export class ChatComponent implements OnInit, OnDestroy {
           this.selected_conversation.messages.splice(message_to_delete_index, 1);
         }
       });
-    this.related_users = this.follow_service.getFollowingUsers().concat(this.follow_service.getFollowers());
+    this.related_users = this.follow_service
+      .getFollowingUsers()
+      .concat(this.follow_service.getFollowers())
+      .map((user) =>
+        ({
+          member_id: user.user_id,
+          member_name: user.name
+        })
+      );
   }
 
   ngOnDestroy() {
@@ -94,6 +106,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       messages: [],
       is_private
     };
+    this.setRelatedUsersNotInConversation();
     this.chat_service.getMessages(this.selected_conversation.conversation_id)
       .subscribe((message_collection: MessageCollectionPresenter) => {
           this.selected_conversation.messages = message_collection.messages
@@ -109,6 +122,25 @@ export class ChatComponent implements OnInit, OnDestroy {
       );
   }
 
+  private setRelatedUsersNotInConversation() {
+    this.related_users_not_in_conversation = this.follow_service
+      .getFollowingUsers()
+      .concat(this.follow_service.getFollowers())
+      .map((user) =>
+        ({
+          member_id: user.user_id,
+          member_name: user.name
+        })
+      )
+      .filter((user) => {
+          for (const member of this.selected_conversation.conversation_members)
+            if (member.member_id === user.member_id)
+              return false;
+          return true;
+        }
+      );
+  }
+
   public selectConversation(conversation: ConversationPresenter) {
     if (this.selected_conversation)
       if (conversation.conversation_id !== this.selected_conversation.conversation_id)
@@ -120,19 +152,26 @@ export class ChatComponent implements OnInit, OnDestroy {
     if (this.new_conversation_name === '') return;
     this.new_conversation = {
       conversation_name: this.new_conversation_name,
-      conversation_members: this.new_conversation_members.map(member => member.user_id)
+      conversation_members: this.new_conversation_members.map(member => member.member_id)
     };
     this.chat_service
       .createConversation(this.new_conversation)
       .subscribe((conversation: ConversationPresenter) => {
         this.chat_service.appendGroupConversation(conversation);
-        console.log(conversation.conversation_name);
         this.group_conversations.set(conversation.conversation_id, conversation);
         this.setSelectedConversation(conversation);
         this.toggleCreatingConversation();
         this.new_conversation_name = '';
         this.new_conversation_members = [];
-        this.related_users = this.follow_service.getFollowingUsers().concat(this.follow_service.getFollowers());
+        this.related_users = this.follow_service
+          .getFollowingUsers()
+          .concat(this.follow_service.getFollowers())
+          .map((user) =>
+            ({
+              member_id: user.user_id,
+              member_name: user.name
+            })
+          );
       });
   }
 
@@ -151,6 +190,33 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.selected_conversation.conversation_name = edited_conversation.conversation_name;
     })
     this.toggleEditingGroupConversationDetails();
+  }
+
+  public addMembersToExistingConversation() {
+    const conversation_id = this.selected_conversation.conversation_id;
+    this.chat_service.addMembersToExistingConversation(
+      this.selected_conversation.conversation_id,
+      this.conversation_members_to_add.map((member) => member.member_id)
+    ).subscribe((response: AddedMembersPresenter) => {
+      const added_members: Array<ConversationMemberPresenter> = response.added_members.map(
+        (member) =>
+          ({
+            member_id: member.user_id,
+            member_name: member.name
+          })
+        );
+      const conversation: ConversationPresenter = this.group_conversations.get(conversation_id);
+      const conversation_with_members_added: ConversationPresenter = {
+        ...conversation,
+        conversation_members: conversation.conversation_members.concat(added_members)
+      };
+      this.chat_service.addNewMembersToGroupConversationInStore(conversation_id, added_members).subscribe();
+      this.group_conversations.set(conversation_id, conversation_with_members_added);
+      this.setRelatedUsersNotInConversation();
+      this.conversation_members_to_add = [];
+      this.toggleAddingGroupConversationMembers();
+      this.setSelectedConversation(conversation_with_members_added);
+    });
   }
 
   public exitGroupConversation(conversation_id: string) {
@@ -208,17 +274,44 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.is_editing_group_conversation_details = !this.is_editing_group_conversation_details
   }
 
-  public addMemberToNewConversation(member: User) {
+  public toggleAddingGroupConversationMembers() {
+    this.is_adding_group_conversation_members = !this.is_adding_group_conversation_members;
+  }
+
+  public addMemberToNewConversation(member: ConversationMemberPresenter) {
     if (!this.new_conversation_members.includes(member)) {
       this.new_conversation_members.push(member);
-      this.related_users = this.related_users.filter((related_user) => related_user.user_id !== member.user_id);
+      this.related_users = this.related_users.filter(
+        (related_user) =>
+          related_user.member_id !== member.member_id
+      );
     }
   }
 
-  public removeMemberFromConversation(member: User) {
+  public removeMemberFromConversation(member: ConversationMemberPresenter) {
     if (this.new_conversation_members.includes(member)) {
       this.related_users.push(member);
-      this.new_conversation_members = this.new_conversation_members.filter((conversation_member) => conversation_member.user_id !== member.user_id);
+      this.new_conversation_members = this.new_conversation_members
+        .filter(
+          (conversation_member) =>
+            conversation_member.member_id !== member.member_id
+        );
+    }
+  }
+
+  public addMemberToExistingConversation(member: ConversationMemberPresenter) {
+    if (!this.conversation_members_to_add.includes(member)) {
+      this.conversation_members_to_add.push(member);
+      this.related_users_not_in_conversation = this.related_users_not_in_conversation
+        .filter((related_user) => related_user.member_id !== member.member_id);
+    }
+  }
+
+  public undoAddingMemberToExistingConversation(member: ConversationMemberPresenter) {
+    if (this.conversation_members_to_add.includes(member)) {
+      this.related_users_not_in_conversation.push(member);
+      this.conversation_members_to_add = this.conversation_members_to_add
+        .filter((conversation_member) => conversation_member.member_id !== member.member_id);
     }
   }
 
