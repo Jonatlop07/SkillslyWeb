@@ -23,7 +23,10 @@ import { TabViewModule } from 'primeng/tabview';
 import { DialogModule } from 'primeng/dialog';
 import { FollowRequestComponent } from './follow-request/follow-request.component';
 import { PostUpdateComponent } from './user/posts/post-update/post-update.component';
-import { FeedComponent } from './feed/feed.component'
+import { FeedComponent } from './feed/feed.component';
+import { EventComponent } from './user/events/event/event.component';
+import { EventCreateComponent } from './user/events/event-create/event-create.component'
+
 
 @NgModule({
   declarations: [
@@ -39,6 +42,8 @@ import { FeedComponent } from './feed/feed.component'
     ChatComponent,
     FollowRequestComponent,
     FeedComponent,
+    EventComponent,
+    EventCreateComponent,
   ],
   imports: [
     CommonModule,
@@ -54,7 +59,8 @@ import { FeedComponent } from './feed/feed.component'
     ButtonModule,
     TooltipModule,
     TabViewModule,
-    DialogModule
+    DialogModule, 
+    
   ],
 })
 export class PagesModule {}

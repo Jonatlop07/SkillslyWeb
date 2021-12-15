@@ -1,18 +1,44 @@
-<div class="bg-primary bg-gradient overflow-auto">
-    <div class="w-75 mx-auto pt-5">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">Publicaciones recientes de tu amigos</h3>
-                        <hr />
-                        <div *ngFor="let post of foundPosts">
-                            <app-post [post]="post" [editable]="false"> </app-post>
-                            <hr />
+<div class="card">
+    <p-tabView>
+        <p-tabPanel header="Publicaciones" leftIcon="pi pi-book">
+            <div class="bg-primary bg-gradient overflow-auto">
+                <div class="w-75 mx-auto pt-5">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Publicaciones recientes de tu amigos</h3>
+                                    <hr />
+                                    <div *ngFor="let post of foundPosts">
+                                        <app-post [post]="post" [editable]="false"> </app-post>
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </p-tabPanel>
+        <p-tabPanel header="Eventos" rightIcon="pi pi-calendar">
+            <div class="bg-primary bg-gradient overflow-auto">
+                <div class="w-75 mx-auto pt-5">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Eventos recientes de tu amigos</h3>
+                                    <hr />
+                                    <div *ngFor="let post of foundPosts">
+                                        <app-post [post]="post" [editable]="false"> </app-post>
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
 </div>
