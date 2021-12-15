@@ -1,0 +1,24 @@
+<div class="no-block mt-2">
+  <div class="row">
+    <div class="col-auto">
+      <img
+        src="../assets/images/users/d1.jpg"
+        alt="user"
+        width="30"
+        class="rounded-circle"
+      />
+    </div>
+    <div class="col-10">
+      <span class="mb-0 font-medium p-0">{{ comment.name }}</span> ·
+      <small class="font-weight-lighter"> {{ comment.email }}</small>
+      <p class="mb-0 font-weight-light p-0">{{ comment.comment }}</p>
+      <small class="font-bold clickable"> Responder </small> ·
+      <small
+        class="text-muted clickable"
+        pTooltip="{{ viewDate() }}"
+        tooltipPosition="bottom"
+        >{{ transformDate() }}</small
+      >
+    </div>
+  </div>
+</div>
