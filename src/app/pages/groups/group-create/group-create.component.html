@@ -1,0 +1,76 @@
+<div class="bg-secondary bg-gradient h-100 overflow-auto">
+  <div class="w-75 mx-auto pt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <form
+            [formGroup]="groupForm"
+            (ngSubmit)="onSubmit()"
+            class="form-horizontal"
+          >
+            <div class="card-body">
+              <div class="row">
+                <div class="col-xs-12">
+                  <button
+                    type="submit"
+                    class="btn btn-success"
+                    [disabled]="groupForm.invalid || !groupForm.touched"
+                  >
+                    Crear grupo
+                  </button>
+                  <select
+                    class="select2 form-select shadow-none float-end w-50"
+                    id="category"
+                    formControlName="category"
+                  >
+                    <option value="Development" disabled>Categoria</option>
+                    <option value="Development">Desarrollo de software</option>
+                    <option value="Cripto">Criptografia</option>
+                    <option value="Graphic Design">Diseño</option>
+                    <option value="Arts">Arte</option>
+                    <option value="Astronomy">Astronomia</option>
+                  </select>
+                </div>
+              </div>
+              <hr />
+              <div class="form-group-row">
+                <div class="col-md-12">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="name"
+                    placeholder="Nombre del grupo"
+                  />
+                  <div class="text-danger small" *ngIf="!groupForm.get('name').valid && groupForm.get('name').touched">
+                    Debes poner un nombre a tu grupo para poder crearlo.
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    formControlName="description"
+                    placeholder="Breve descripcion del grupo"
+                    rows="6"
+                  >
+                  </textarea>
+                  <div class="text-danger small" *ngIf="!groupForm.get('description').valid && groupForm.get('description').touched">
+                    Debes ingresar una descripción de tu grupo para poder crearlo.
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Imagen del grupo - debe ser un enlace"
+                    formControlName="picture"
+                  />
+                </div>
+              </div>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

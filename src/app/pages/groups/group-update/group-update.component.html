@@ -1,0 +1,132 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-0">Actualizacion de grupo</h4>
+        </div>
+        <form
+          [formGroup]="groupForm"
+          *ngIf="groupForm"
+          (ngSubmit)="onUpdateGroup()"
+          class="form-horizontal"
+        >
+          <div class="card-body">
+            <div class="row">
+              <div class="col-xs-12">
+                <button
+                  type="submit"
+                  class="btn btn-success"
+                  [disabled]="groupForm.invalid || !groupForm.touched"
+                >
+                  Actualizar grupo
+                </button>
+                <select
+                  class="select2 form-select shadow-none float-end w-50"
+                  id="category"
+                  formControlName="category"
+                >
+                  <option value="Development" disabled>Categoria</option>
+                  <option value="Development">Desarrollo de software</option>
+                  <option value="Cripto">Criptografia</option>
+                  <option value="Graphic Design">Diseño</option>
+                  <option value="Arts">Arte</option>
+                  <option value="Astronomy">Astronomia</option>
+                </select>
+              </div>
+            </div>
+            <hr />
+            <div class="form-group-row">
+              <div class="col-md-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                  placeholder="Nombre del grupo"
+                />
+                <div
+                  class="text-danger small"
+                  *ngIf="
+                    !groupForm.get('name').valid &&
+                    groupForm.get('name').touched
+                  "
+                >
+                  Debes poner un nombre a tu grupo para poder crearlo.
+                </div>
+              </div>
+              <div class="col-md-12">
+                <textarea
+                  type="text"
+                  class="form-control"
+                  formControlName="description"
+                  placeholder="Breve descripcion del grupo"
+                  rows="6"
+                >
+                </textarea>
+                <div
+                  class="text-danger small"
+                  *ngIf="
+                    !groupForm.get('description').valid &&
+                    groupForm.get('description').touched
+                  "
+                >
+                  Debes ingresar una descripción de tu grupo para poder crearlo.
+                </div>
+              </div>
+              <div class="col-md-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Imagen del grupo - debe ser un enlace"
+                  formControlName="picture"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title mb-0">Administrar solicitudes de grupo</h4>
+          </div>
+          <div class="comment-widgets scrollable">
+            <div class="d-flex flex-row comment-row" *ngFor="let request of requests; let i = index">
+              <div class="p-2">
+                <img
+                  src="../assets/images/users/3.jpg"
+                  alt="user"
+                  width="50"
+                  class="rounded-circle"
+                />
+              </div>
+              <div class="comment-text w-100">
+                <h6 class="font-medium">{{request.user_name}}</h6>
+                <span class="mb-3 d-block"
+                  >{{request.user_email}}
+                </span>
+                <div class="comment-footer">
+                  <button
+                    type="button"
+                    class="btn btn-success btn-sm text-white m-1"
+                    (click)="onUpdateRequest(request.user_id, 'accept', i)"
+                  >
+                    Aceptar solicitud
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm text-white m-1"
+                    (click)="onUpdateRequest(request.user_id, 'reject', i)"
+                  >
+                    Rechazar solicitud
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
