@@ -14,6 +14,17 @@
         </div>
       </div>
     </div>
+    <div class="row" *ngIf="only_owner_error">
+    <div class="alert alert-danger d-flex justify-content-center align-items-center" role="alert">
+      <h4 class="alert-heading m-2">Unico administrador</h4>
+      <p class="m-2">
+        Eres el único administrador del grupo, así que te recomendamos
+        no abandonarlo. Si aun así quieres irte, puedes eliminar el
+        grupo en la ventana de administración
+      </p>
+      <button class="btn btn-danger m-2" (click)="onCloseError()">cerrar</button>
+    </div>
+    </div>
     <div class="row">
       <div class="col-9">
         <div class="card">
@@ -42,7 +53,7 @@
             >
               <div class="comment-widgets scrollable">
                 <div
-                  *ngFor="let user of users"
+                  *ngFor="let user of users; let i = index"
                   class="d-flex flex-row comment-row mt-0"
                 >
                   <div class="comment-text w-100">
@@ -67,7 +78,15 @@
               [routerLink]="['admin']"
             >
               Administrar grupo
-          </a>
+            </a>
+            <p-confirmPopup></p-confirmPopup>
+            <button
+              type="button"
+              class="btn btn-danger m-1"
+              (click)="onLeaveGroup($event)"
+            >
+              Abandonar grupo
+            </button>
           </div>
         </div>
       </div>
@@ -201,18 +220,13 @@
       <!-- column -->
 
       <div class="col-lg-6">
-        <!-- Card -->
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">Chat Option</h4>
-          </div>
-        </div>
+      
         <!-- card -->
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Our partner (Box with Fix height)</h4>
           </div>
-          <div class="comment-widgets scrollable" style="max-height: 130px">
+          <div class="comment-widgets scrollable" style="max-height: 400px">
             <!-- Comment Row -->
             <div class="d-flex flex-row comment-row mt-0">
               <div class="p-2">
@@ -336,26 +350,24 @@
             <h5 class="card-title">
               Si deseas ver el contenido del grupo debes unirte a este.
             </h5>
-              <h5 class="card-title">
-                Solicita unirte!
-              </h5>
-              <button
-                type="button"
-                *ngIf="!group.existsRequest"
-                (click)="joinGroup()"
-                class="btn btn-block btn-danger btn-sm text-white"
-              >
-                Unirse al grupo
-              </button>
-              <button
-                type="button"
-                *ngIf="group.existsRequest"
-                (click)="cancelGroupRequest()"
-                class="btn btn-block btn-info btn-sm text-white"
-              >
-                Cancelar solicitud
-              </button>
-            </div>
+            <h5 class="card-title">Solicita unirte!</h5>
+            <button
+              type="button"
+              *ngIf="!group.existsRequest"
+              (click)="joinGroup()"
+              class="btn btn-block btn-info btn-sm text-white"
+            >
+              Unirse al grupo
+            </button>
+            <button
+              type="button"
+              *ngIf="group.existsRequest"
+              (click)="cancelGroupRequest()"
+              class="btn btn-block btn-danger btn-sm text-white"
+            >
+              Cancelar solicitud
+            </button>
+          </div>
         </div>
       </div>
     </div>

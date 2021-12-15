@@ -14,7 +14,6 @@ import {
 } from '../interfaces/presenter/group/query_groups.presenter';
 import { QueryGroupUsersPresenter } from '../interfaces/presenter/group/query_group_users.presenter';
 import UpdateGroupUserPresenter from '../interfaces/presenter/group/update_group_user.presenter';
-import GroupRequest from '../interfaces/presenter/group/group_request.presenter';
 import UpdateGroupPresenter from '../interfaces/presenter/group/update_group.presenter';
 
 @Injectable({ providedIn: 'root' })
@@ -32,20 +31,16 @@ export class GroupsService {
     const picture = group.picture
       ? group.picture
       : 'https://static.vecteezy.com/system/resources/previews/001/183/293/large_2x/neutral-low-poly-abstract-banner-vector.jpg';
-    return this.http
-      .post(
-        `${this.API_URL}/groups/create`,
-        {
-          name: group.name,
-          description: group.description,
-          category: group.category,
-          picture: picture,
-        },
-        this.jwtService.getHttpOptions()
-      )
-      .subscribe((created_group) => {
-        console.log(created_group);
-      });
+    return this.http.post(
+      `${this.API_URL}/groups/create`,
+      {
+        name: group.name,
+        description: group.description,
+        category: group.category,
+        picture: picture,
+      },
+      this.jwtService.getHttpOptions()
+    );
   }
 
   queryUserGroups(queryGroupsParams: QueryGroupsPresenter) {
@@ -135,6 +130,20 @@ export class GroupsService {
     return this.http.put(
       `${this.API_URL}/groups/${action}/${group_id}`,
       { user_id: user_id },
+      this.jwtService.getHttpOptions()
+    );
+  }
+
+  deleteGroup(group_id: string) {
+    return this.http.delete(
+      `${this.API_URL}/groups/${group_id}`,
+      this.jwtService.getHttpOptions()
+    );
+  }
+
+  leaveGroup(group_id: string) {
+    return this.http.delete(
+      `${this.API_URL}/groups/leave/${group_id}`,
       this.jwtService.getHttpOptions()
     );
   }

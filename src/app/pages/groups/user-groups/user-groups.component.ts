@@ -34,9 +34,9 @@ export class UserGroupsComponent implements OnInit {
     this.display = !this.display;
   }
 
-  onToggleCreate() {
+  onToggleCreate(group: GroupPresenter) {
+    this.groups.push(group);
     this.showDialog();
-    console.log(this.display);
   }
 
   @HostListener('window:scroll', ['$event'])

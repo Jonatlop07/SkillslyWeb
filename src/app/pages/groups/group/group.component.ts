@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { GroupPresenter } from 'src/app/interfaces/presenter/group/groups.presenter';
 import GroupUser from 'src/app/interfaces/presenter/group/group_user.interface';
@@ -23,9 +23,11 @@ export class GroupComponent implements OnInit {
   public display = false;
   public limit: number;
   public offset: number;
+  public only_owner_error = false;
   constructor(
     private groupsService: GroupsService,
     private route: ActivatedRoute,
+    private router: Router,
     private confirmationService: ConfirmationService
   ) {}
 
@@ -59,7 +61,7 @@ export class GroupComponent implements OnInit {
   confirm(event: Event, user_id: string) {
     this.confirmationService.confirm({
       target: event.target,
-      message: 'Estas seguro que deseas eliminar este usuario del grupo?',
+      message: 'Estás seguro que deseas eliminar este usuario del grupo?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.groupsService
@@ -68,8 +70,8 @@ export class GroupComponent implements OnInit {
             group_id: this.searchedGroup,
             action: 'remove',
           })
-          .subscribe((res) => {
-            console.log(res);
+          .subscribe(() => {
+            this.router.navigate(['../../../mygroups'], { relativeTo: this.route });
           });
       },
       reject: () => {
@@ -96,5 +98,32 @@ export class GroupComponent implements OnInit {
         this.group.existsRequest = false;
       }
     )
+  }
+
+  onLeaveGroup(event: Event){
+    this.confirmationService.confirm({
+      target: event.target,
+      message: 'Estás seguro que deseas abandonar este grupo?',
+      icon: 'mdi mdi-emoticon-sad',
+      accept: () => {
+        this.groupsService
+          .leaveGroup(this.searchedGroup)
+          .subscribe(() => {
+            this.router.navigate(['../../mygroups'], { relativeTo: this.route });
+          },
+          (error) => {
+            if (error.status === 401){
+              this.only_owner_error = true;
+            }
+          });
+      },
+      reject: () => {
+        return;
+      },
+    });
+  }
+
+  onCloseError(){
+    this.only_owner_error = false;
   }
 }

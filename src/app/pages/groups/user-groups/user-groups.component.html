@@ -47,7 +47,7 @@
           [modal]="true"
         >
           <app-group-create
-            (toggleCreate)="onToggleCreate()"
+            (toggleCreate)="onToggleCreate($event)"
           ></app-group-create>
         </p-dialog>
       </div>
@@ -99,9 +99,9 @@
             <h5 class="mb-4">
               Si deseas ver otros grupos dale click al boton!
             </h5>
-            <button type="button" class="btn btn-warning btn-lg">
+            <a [routerLink]='["../groups"]' class="btn btn-warning btn-lg">
               Otros grupos
-            </button>
+            </a>
           </div>
         </div>
       </div>

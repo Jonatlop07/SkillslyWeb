@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { resetFakeAsyncZone } from '@angular/core/testing';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { GroupPresenter } from 'src/app/interfaces/presenter/group/groups.presenter';
 import { GroupsService } from 'src/app/services/groups.service';
 
 
@@ -11,9 +13,10 @@ import { GroupsService } from 'src/app/services/groups.service';
 })
 export class GroupCreateComponent implements OnInit {
 
-  @Output() toggleCreate = new EventEmitter();
+  @Output() toggleCreate = new EventEmitter<GroupPresenter>();
 
   groupForm: FormGroup;
+  created_group: GroupPresenter
   requireOne = false;
   referenceIncomplete = false;
   constructor(private router: Router, private groupsService: GroupsService) {}
@@ -32,8 +35,13 @@ export class GroupCreateComponent implements OnInit {
   }
 
   onSubmit(){
-    this.groupsService.createGroup(this.groupForm.value);
-    this.toggleCreate.emit();
+    this.groupsService.createGroup(this.groupForm.value).subscribe(
+      (res: any) => {
+        const { id, name, description, picture } = res
+        this.created_group = { id, name, description, picture };
+        this.toggleCreate.emit(this.created_group);
+      }
+    )
   }
 
 }

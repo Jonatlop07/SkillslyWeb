@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { GroupPresenter } from 'src/app/interfaces/presenter/group/groups.presenter';
 import JoinRequest from 'src/app/interfaces/presenter/group/join_request.interface';
 import { GroupsService } from 'src/app/services/groups.service';
@@ -9,6 +10,7 @@ import { GroupsService } from 'src/app/services/groups.service';
   selector: 'app-group-update',
   templateUrl: './group-update.component.html',
   styleUrls: ['./group-update.component.css'],
+  providers: [ ConfirmationService ]
 })
 export class GroupUpdateComponent implements OnInit {
   public groupForm: FormGroup;
@@ -25,7 +27,8 @@ export class GroupUpdateComponent implements OnInit {
   constructor(
     private groupsService: GroupsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -90,5 +93,23 @@ export class GroupUpdateComponent implements OnInit {
       .subscribe(() => {
         this.requests.splice(index, 1);
       });
+  }
+
+  onDeleteGroup(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target,
+      message: 'Estás seguro que deseas eliminar este grupo?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.groupsService
+          .deleteGroup(this.group.id)
+          .subscribe(() => {
+            this.router.navigate(['../../../mygroups'], { relativeTo: this.route });
+          });
+      },
+      reject: () => {
+        return;
+      },
+    });
   }
 }
