@@ -37,4 +37,8 @@ export class ProfileService {
       this.jwt_service.getHttpOptions()
     );
   }
+
+  getUserEmail() {
+    return this.jwt_service.getEmail();
+  }
 }

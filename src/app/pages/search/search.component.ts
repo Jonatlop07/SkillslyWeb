@@ -19,22 +19,22 @@ export class SearchComponent implements OnInit {
   public followingUsers: SearchUserResponse[];
   public isPending: boolean[];
   public isFollowing: boolean[];
-  public sameUser: boolean[]; 
+  public sameUser: boolean[];
 
   constructor(
-    private activatedRoute: ActivatedRoute, 
-    private router:Router, 
-    private searchService: SearchService, 
+    private activatedRoute: ActivatedRoute,
+    private router:Router,
+    private searchService: SearchService,
     private followService: FollowService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe( params => {
-      this.searchInput = params.searchInput; 
+      this.searchInput = params.searchInput;
       const searchUserForm: SearchUserInputForm = {
-        email: this.searchInput, 
+        email: this.searchInput,
         name: this.searchInput
-      }; 
+      };
       const searchServiceResponse = this.searchService.searchUser(searchUserForm);
       searchServiceResponse.subscribe( (resp: any) => {
         this.foundUsers = resp.users;
@@ -44,20 +44,20 @@ export class SearchComponent implements OnInit {
         this.foundUsers.forEach( (user: any) => {
           const date_of_birth = new Date(user.date_of_birth);
           user.date_of_birth = moment(date_of_birth).locale('es').format('dddd DD MMMM - YYYY')
-        }); 
-        const followServiceResponse = this.followService.getFollowRequests();
+        });
+        const followServiceResponse = this.followService.getUserFollowCollection();
         followServiceResponse.subscribe( (resp:any) => {
-          this.pendingUsers = resp.pendingUsers; 
+          this.pendingUsers = resp.pendingUsers;
           this.followingUsers = resp.followingUsers;
           for (let i = 0; i<this.foundUsers.length; i++) {
             let foundUser: SearchUserResponse = this.foundUsers[i];
             if (foundUser.user_id == this.searchService.getUserId()) {
-              this.sameUser[i] = true; 
+              this.sameUser[i] = true;
             }
             if (this.pendingUsers.filter(e => e.email == foundUser.email).length > 0) {
               this.isPending[i] = true;
             } else if(this.followingUsers.filter(e => e.email == foundUser.email).length > 0) {
-              this.isFollowing[i] = true; 
+              this.isFollowing[i] = true;
             }
           }
         });
@@ -72,7 +72,7 @@ export class SearchComponent implements OnInit {
   followUser(user: SearchUserResponse, index: number): void {
     const followServiceResponse = this.followService.createUserFollowRequest(user);
     followServiceResponse.subscribe((resp:any) => {
-      this.isPending[index] = true; 
+      this.isPending[index] = true;
     })
   }
 
@@ -80,9 +80,9 @@ export class SearchComponent implements OnInit {
     const followServiceResponse = this.followService.deleteUserFollowRequest(user, isRequest);
     followServiceResponse.subscribe((resp:any) => {
       if (isRequest) {
-        this.isPending[index] = false; 
+        this.isPending[index] = false;
       } else {
-        this.isFollowing[index] = false; 
+        this.isFollowing[index] = false;
       }
     })
   }
