@@ -1,4 +1,4 @@
-import {PostsModel} from "../../../models/posts.model";
+import { PostsModel } from "../../../models/posts.model";
 
 export class SetMyPosts {
   static readonly type = '[Posts Query] Set My Posts';

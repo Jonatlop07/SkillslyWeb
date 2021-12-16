@@ -5,12 +5,14 @@ import { SelectedConversationPresenter } from '../../../interfaces/presenter/cha
 import { MessagePresenter } from '../../../interfaces/presenter/chat/message.presenter'
 import { NewConversationPresenter } from '../../../interfaces/presenter/chat/new_conversation.presenter'
 import * as moment from 'moment';
-import { Subject } from 'rxjs'
-import { takeUntil } from 'rxjs/operators'
-import { ConversationsPresenter } from '../../../interfaces/presenter/chat/conversations.presenter'
-import { MessageCollectionPresenter } from '../../../interfaces/presenter/chat/message_collection.presenter'
-import { ConversationMemberPresenter } from '../../../interfaces/presenter/chat/conversation_member.presenter'
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { MessageCollectionPresenter } from '../../../interfaces/presenter/chat/message_collection.presenter';
+import { ConversationMemberPresenter } from '../../../interfaces/presenter/chat/conversation_member.presenter';
+import { User } from 'src/app/interfaces/user.interface';
+import { FollowService } from '../../../services/follow.service';
+import { GroupConversationDetailsPresenter } from '../../../interfaces/presenter/chat/group_conversation_details.presenter'
+import { AddedMembersPresenter } from '../../../interfaces/presenter/chat/added_members.presenter'
 
 @Component({
   selector: 'app-chat',
@@ -19,35 +21,48 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms'
 })
 export class ChatComponent implements OnInit, OnDestroy {
   moment = moment
-  create_conversation_form: FormGroup;
 
-  conversations: Map<string, ConversationPresenter> = new Map<string, ConversationPresenter>();
+  private_conversations: Map<string, ConversationPresenter> = new Map<string, ConversationPresenter>();
+  group_conversations: Map<string, ConversationPresenter> = new Map<string, ConversationPresenter>();
   selected_conversation: SelectedConversationPresenter;
   current_message: string = '';
 
-  new_conversation: NewConversationPresenter;
-  new_conversation_members: Array<string> = []
-  member_option: string;
-
   is_creating_conversation = false;
+  is_editing_group_conversation_details = false;
+  is_adding_group_conversation_members = false;
+
+  related_users: Array<ConversationMemberPresenter> = [];
+  related_users_not_in_conversation: Array<ConversationMemberPresenter> = [];
+
+  new_conversation: NewConversationPresenter;
+  new_conversation_name = '';
+  new_conversation_members: Array<ConversationMemberPresenter> = [];
+
+  edited_conversation_name = '';
+
+  conversation_members_to_add: Array<ConversationMemberPresenter> = [];
 
   private unsubscribe_on_destroy = new Subject<void>();
 
   constructor(
-    private readonly form_builder: FormBuilder,
-    private readonly chat_service: ChatService
+    private readonly chat_service: ChatService,
+    private readonly follow_service: FollowService
   ) {
   }
 
   ngOnInit() {
-    this.chat_service
-      .getConversations()
-      .subscribe((response: ConversationsPresenter) => {
-        response.conversations.forEach((conversation: ConversationPresenter) => {
-          this.conversations.set(conversation.conversation_id, conversation);
-        });
-        this.setSelectedConversation(this.conversations.get(response.conversations[0].conversation_id));
-      });
+    const { private_conversations, group_conversations } = this.chat_service.getConversationsFromStore();
+    private_conversations.forEach((conversation: ConversationPresenter) => {
+      this.private_conversations.set(conversation.conversation_id, conversation);
+    });
+    group_conversations.forEach((conversation: ConversationPresenter) => {
+      this.group_conversations.set(conversation.conversation_id, conversation);
+    });
+    if (private_conversations.length > 0) {
+      this.setSelectedConversation(this.private_conversations.get(private_conversations[0].conversation_id));
+    } else if (group_conversations.length > 0) {
+      this.setSelectedConversation(this.group_conversations.get(group_conversations[0].conversation_id))
+    }
     this.chat_service
       .onMessageSent()
       .pipe(takeUntil(this.unsubscribe_on_destroy))
@@ -63,24 +78,35 @@ export class ChatComponent implements OnInit, OnDestroy {
           this.selected_conversation.messages.splice(message_to_delete_index, 1);
         }
       });
-    this.initCreateConversationForm();
+    this.related_users = this.follow_service
+      .getFollowingUsers()
+      .concat(this.follow_service.getFollowers())
+      .map((user) =>
+        ({
+          member_id: user.user_id,
+          member_name: user.name
+        })
+      );
   }
 
   ngOnDestroy() {
     this.unsubscribe_on_destroy.next();
     this.unsubscribe_on_destroy.complete();
-    this.chat_service.leaveConversation(this.selected_conversation.conversation_id);
+    if (this.selected_conversation)
+      this.chat_service.leaveConversation(this.selected_conversation.conversation_id);
     this.chat_service.stop();
   }
 
   private setSelectedConversation(conversation: ConversationPresenter) {
-    const { conversation_id, conversation_members, conversation_name } = conversation;
+    const { conversation_id, conversation_members, conversation_name, is_private } = conversation;
     this.selected_conversation = {
       conversation_id,
       conversation_members,
       conversation_name,
-      messages: []
+      messages: [],
+      is_private
     };
+    this.setRelatedUsersNotInConversation();
     this.chat_service.getMessages(this.selected_conversation.conversation_id)
       .subscribe((message_collection: MessageCollectionPresenter) => {
           this.selected_conversation.messages = message_collection.messages
@@ -96,42 +122,123 @@ export class ChatComponent implements OnInit, OnDestroy {
       );
   }
 
+  private setRelatedUsersNotInConversation() {
+    this.related_users_not_in_conversation = this.follow_service
+      .getFollowingUsers()
+      .concat(this.follow_service.getFollowers())
+      .map((user) =>
+        ({
+          member_id: user.user_id,
+          member_name: user.name
+        })
+      )
+      .filter((user) => {
+          for (const member of this.selected_conversation.conversation_members)
+            if (member.member_id === user.member_id)
+              return false;
+          return true;
+        }
+      );
+  }
+
   public selectConversation(conversation: ConversationPresenter) {
-    if (conversation.conversation_id !== this.selected_conversation.conversation_id) {
-      this.chat_service.leaveConversation(this.selected_conversation.conversation_id);
-      this.setSelectedConversation(conversation);
-    }
+    if (this.selected_conversation)
+      if (conversation.conversation_id !== this.selected_conversation.conversation_id)
+        this.chat_service.leaveConversation(this.selected_conversation.conversation_id);
+    this.setSelectedConversation(conversation);
   }
 
   public createConversation() {
-    this.new_conversation = this.create_conversation_form.value;
-    if (this.isInvalidCreateConversationForm()) {
-      return;
-    }
+    if (this.new_conversation_name === '') return;
+    this.new_conversation = {
+      conversation_name: this.new_conversation_name,
+      conversation_members: this.new_conversation_members.map(member => member.member_id)
+    };
     this.chat_service
       .createConversation(this.new_conversation)
       .subscribe((conversation: ConversationPresenter) => {
-        this.conversations.set(conversation.conversation_id, conversation);
+        this.chat_service.appendGroupConversation(conversation);
+        this.group_conversations.set(conversation.conversation_id, conversation);
+        this.setSelectedConversation(conversation);
+        this.toggleCreatingConversation();
+        this.new_conversation_name = '';
+        this.new_conversation_members = [];
+        this.related_users = this.follow_service
+          .getFollowingUsers()
+          .concat(this.follow_service.getFollowers())
+          .map((user) =>
+            ({
+              member_id: user.user_id,
+              member_name: user.name
+            })
+          );
       });
   }
 
-  public deleteConversation(conversation_id: string) {
+  public editGroupConversationDetails(conversation_id: string) {
+    if (this.edited_conversation_name === '') return;
     this.chat_service
-      .deleteConversation(
-        conversation_id
-      ).subscribe((res) => {
-      this.conversations.delete(conversation_id);
-      this.selected_conversation = null;
+      .editGroupConversationDetails(conversation_id, { conversation_name: this.edited_conversation_name })
+      .subscribe((conversation_details: GroupConversationDetailsPresenter) => {
+        const conversation: ConversationPresenter = this.group_conversations.get(conversation_id);
+        const edited_conversation: ConversationPresenter = {
+          ...conversation,
+          conversation_name: conversation_details.conversation_name
+        };
+        this.chat_service.editGroupConversationDetailsInStore(conversation_id, conversation_details).subscribe();
+        this.group_conversations.set(conversation_id, edited_conversation);
+        this.selected_conversation.conversation_name = edited_conversation.conversation_name;
     })
+    this.toggleEditingGroupConversationDetails();
   }
 
-  public exitConversation(conversation_id: string) {
+  public addMembersToExistingConversation() {
+    const conversation_id = this.selected_conversation.conversation_id;
+    this.chat_service.addMembersToExistingConversation(
+      this.selected_conversation.conversation_id,
+      this.conversation_members_to_add.map((member) => member.member_id)
+    ).subscribe((response: AddedMembersPresenter) => {
+      const added_members: Array<ConversationMemberPresenter> = response.added_members.map(
+        (member) =>
+          ({
+            member_id: member.user_id,
+            member_name: member.name
+          })
+        );
+      const conversation: ConversationPresenter = this.group_conversations.get(conversation_id);
+      const conversation_with_members_added: ConversationPresenter = {
+        ...conversation,
+        conversation_members: conversation.conversation_members.concat(added_members)
+      };
+      this.chat_service.addNewMembersToGroupConversationInStore(conversation_id, added_members).subscribe();
+      this.group_conversations.set(conversation_id, conversation_with_members_added);
+      this.setRelatedUsersNotInConversation();
+      this.conversation_members_to_add = [];
+      this.toggleAddingGroupConversationMembers();
+      this.setSelectedConversation(conversation_with_members_added);
+    });
+  }
+
+  public exitGroupConversation(conversation_id: string) {
     this.chat_service
       .exitConversation(conversation_id)
-      .subscribe((res) => {
-        this.conversations.delete(conversation_id);
-        this.selected_conversation = null;
+      .subscribe(() => {
+        this.removeConversation(conversation_id);
       });
+  }
+
+  public deleteGroupConversation(conversation_id: string) {
+    this.chat_service
+      .deleteGroupConversation(conversation_id)
+      .subscribe(() => {
+        this.removeConversation(conversation_id);
+      });
+  }
+
+  private removeConversation(conversation_id: string) {
+    this.group_conversations.delete(conversation_id);
+    this.chat_service.deleteGroupConversationInStore(conversation_id).subscribe();
+    this.selected_conversation = null;
   }
 
   public sendMessage() {
@@ -163,17 +270,57 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.is_creating_conversation = !this.is_creating_conversation;
   }
 
-  public initCreateConversationForm() {
-    this.create_conversation_form = this.form_builder.group({
-      conversation_name: ['', [Validators.required]],
-    });
+  public toggleEditingGroupConversationDetails() {
+    this.is_editing_group_conversation_details = !this.is_editing_group_conversation_details
   }
 
-  private isInvalidCreateConversationForm() {
-    return this.create_conversation_form.invalid;
+  public toggleAddingGroupConversationMembers() {
+    this.is_adding_group_conversation_members = !this.is_adding_group_conversation_members;
   }
 
-  public addMemberToNewConversation(member: string) {
-    this.new_conversation_members.push(member);
+  public addMemberToNewConversation(member: ConversationMemberPresenter) {
+    if (!this.new_conversation_members.includes(member)) {
+      this.new_conversation_members.push(member);
+      this.related_users = this.related_users.filter(
+        (related_user) =>
+          related_user.member_id !== member.member_id
+      );
+    }
+  }
+
+  public removeMemberFromConversation(member: ConversationMemberPresenter) {
+    if (this.new_conversation_members.includes(member)) {
+      this.related_users.push(member);
+      this.new_conversation_members = this.new_conversation_members
+        .filter(
+          (conversation_member) =>
+            conversation_member.member_id !== member.member_id
+        );
+    }
+  }
+
+  public addMemberToExistingConversation(member: ConversationMemberPresenter) {
+    if (!this.conversation_members_to_add.includes(member)) {
+      this.conversation_members_to_add.push(member);
+      this.related_users_not_in_conversation = this.related_users_not_in_conversation
+        .filter((related_user) => related_user.member_id !== member.member_id);
+    }
+  }
+
+  public undoAddingMemberToExistingConversation(member: ConversationMemberPresenter) {
+    if (this.conversation_members_to_add.includes(member)) {
+      this.related_users_not_in_conversation.push(member);
+      this.conversation_members_to_add = this.conversation_members_to_add
+        .filter((conversation_member) => conversation_member.member_id !== member.member_id);
+    }
+  }
+
+  public getPrivateConversationName(conversation_id: string): string {
+    for (const member of this.private_conversations.get(conversation_id).conversation_members) {
+      if (member.member_id !== this.chat_service.getUserId()) {
+        return member.member_name;
+      }
+    }
+    return '';
   }
 }

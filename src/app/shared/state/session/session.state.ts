@@ -3,9 +3,13 @@ import { SessionModel } from '../../../models/session.model'
 import {
   SetSessionData, UpdateSessionEmail
 } from './session.actions'
+import { Injectable } from '@angular/core'
 
 const SESSION_STATE_TOKEN = new StateToken<SessionModel>('session');
 
+@Injectable({
+  providedIn: 'root'
+})
 @State<SessionModel>({
   name: SESSION_STATE_TOKEN
 })
