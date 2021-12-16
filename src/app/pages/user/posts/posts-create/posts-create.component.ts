@@ -71,7 +71,7 @@ export class PostsCreateComponent implements OnInit {
       this.referenceIncomplete = false;
       this.requireOne = false;
       this.postService.createPost(this.postForm.value);
-      this.router.navigate(['./main']);
+      this.router.navigate(['./main/feed']);
       return true;
     } else {
       $event.preventDefault();

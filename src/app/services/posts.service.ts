@@ -71,7 +71,7 @@ export class PostService {
       tap(() => {
         this.isChargingFeedPosts = false; 
       })
-    )
+    );
   }
 
   deletePost(deletePostInterface: DeletePostInterface) {

@@ -23,7 +23,7 @@ import { state_list } from './shared/state/state_list'
     SocketIoModule,
     NgxsModule.forRoot([...state_list], {
       developmentMode: !environment.production
-    }),
+    }), 
     NgxsStoragePluginModule.forRoot()
   ],
   providers: [],

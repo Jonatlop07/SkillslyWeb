@@ -9,6 +9,8 @@ import { ChatComponent } from './chat/components/chat.component'
 import { FollowRequestComponent } from './follow-request/follow-request.component';
 import { PostUpdateComponent } from './user/posts/post-update/post-update.component';
 import { FeedComponent } from './feed/feed.component';
+import { EventCreateComponent } from './user/events/event-create/event-create.component';
+import { MyEventsComponent } from './user/events/my-events/my-events.component';
 import { UserGroupsComponent } from './groups/user-groups/user-groups.component';
 import { GroupsQueryComponent } from './groups/groups-query/groups-query.component';
 import { GroupComponent } from './groups/group/group.component';
@@ -19,6 +21,8 @@ const routes: Routes = [
   { path: 'search/:searchInput', component: SearchComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'posts', component: PostsCreateComponent },
+  { path: 'events', component: EventCreateComponent},
+  { path: 'my-events', component: MyEventsComponent },
   { path: 'query/:user_id', component: PostsQueryComponent },
   { path: 'conversations', component: ChatComponent }, 
   { path: 'follow-requests', component: FollowRequestComponent},

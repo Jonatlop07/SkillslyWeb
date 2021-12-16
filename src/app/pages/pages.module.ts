@@ -24,6 +24,9 @@ import { DialogModule } from 'primeng/dialog';
 import { FollowRequestComponent } from './follow-request/follow-request.component';
 import { PostUpdateComponent } from './user/posts/post-update/post-update.component';
 import { FeedComponent } from './feed/feed.component';
+import { EventComponent } from './user/events/event/event.component';
+import { EventCreateComponent } from './user/events/event-create/event-create.component';
+import { MyEventsComponent } from './user/events/my-events/my-events.component'
 import { UserGroupsComponent } from './groups/user-groups/user-groups.component';
 import { GroupsQueryComponent } from './groups/groups-query/groups-query.component';
 import { GroupComponent } from './groups/group/group.component';
@@ -45,6 +48,9 @@ import { GroupUpdateComponent } from './groups/group-update/group-update.compone
     ChatComponent,
     FollowRequestComponent,
     FeedComponent,
+    EventComponent,
+    EventCreateComponent,
+    MyEventsComponent,
     UserGroupsComponent,
     GroupsQueryComponent,
     GroupComponent,
@@ -66,7 +72,7 @@ import { GroupUpdateComponent } from './groups/group-update/group-update.compone
     ButtonModule,
     TooltipModule,
     TabViewModule,
-    DialogModule,
+    DialogModule, 
   ],
 })
 export class PagesModule {}
