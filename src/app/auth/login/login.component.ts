@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 
 import { LoginForm } from '../../interfaces/login_form.inteface';
 import { LoginResponse } from '../../interfaces/login_response.interface'
-import { ChatService } from '../../services/chat.service';
+import { ConversationService } from '../../services/conversation.service';
 import { FollowService } from '../../services/follow.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class LoginComponent {
   constructor(
     private formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private readonly chat_service: ChatService,
+    private readonly conversation_service: ConversationService,
     private readonly follow_service: FollowService,
     private readonly router: Router
   ) {
@@ -75,8 +75,8 @@ export class LoginComponent {
             expires_date: now.getTime().toString()
           }).subscribe(() => {
             this.follow_service.getAndStoreUserFollowCollection();
-            this.chat_service.getAndStoreConversations();
-            this.router.navigate(['/main']);
+            this.conversation_service.getAndStoreConversations();
+            this.router.navigate(['/main/feed']);
           })
         },
         (err) => {

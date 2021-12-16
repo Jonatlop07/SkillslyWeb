@@ -1,15 +1,15 @@
 import { Socket } from 'ngx-socket-io'
-import { JwtService } from './jwt.service'
+import { JwtService } from '../services/jwt.service'
 import { Injectable } from '@angular/core'
 import { environment } from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
-export class WebSocketService extends Socket {
+export class ChatSocket extends Socket {
   constructor(private readonly jwt_service: JwtService) {
     super({
-      url: environment.SOCKET_SERVER_URL,
+      url: `${environment.SOCKET_SERVER_URL}/chat`,
       options: {
         transportOptions: {
           polling: {
