@@ -9,7 +9,7 @@ import { PagesModule } from './pages/pages.module';
 import { SocketIoModule } from 'ngx-socket-io';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from '../environments/environment'
-import { state_list } from './shared/state/state_list'
+import { state_list } from './shared/state/state_list';
 
 @NgModule({
   declarations: [AppComponent, NopagefoundComponent],

@@ -76,7 +76,7 @@ export class LoginComponent {
           }).subscribe(() => {
             this.follow_service.getAndStoreUserFollowCollection();
             this.chat_service.getAndStoreConversations();
-            this.router.navigate(['/main']);
+            this.router.navigate(['/main/feed']);
           })
         },
         (err) => {
