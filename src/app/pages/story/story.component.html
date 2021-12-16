@@ -1,0 +1,50 @@
+<p-card styleClass="p-card-shadow" *ngIf="validateDate()">
+  <ng-template pTemplate="header">
+    <img alt="Card" src="{{ storiesData[0].reference }}" />
+  </ng-template>
+  <p *ngIf="storiesData[0].description" [style.fontSize]="6">
+    {{ storiesData[0].description }}
+  </p>
+  <div>
+    <div class="row">
+      <small [style.fontSize]="6">
+        {{ storiesData[0].name }} · {{ storiesData[0].email }}
+      </small>
+    </div>
+    <div class="row">
+      <div class="d-flex justify-content-between align-items-center">
+        <small class="text-muted">{{ getTime() }} </small>
+        <p-tag
+          styleClass="p-mr-2"
+          severity="info"
+          value="{{ storiesData.length - 1 }}+"
+          [style.fontSize]="4"
+          class="clickable"
+          (click)="showModalDialog()"
+        ></p-tag>
+      </div>
+    </div>
+  </div>
+
+  <p-dialog
+    header="Historia de {{ storiesData[0].name }}"
+    [(visible)]="displayModal"
+    [modal]="true"
+    [style]="{ width: '30vw' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <div class="flex justify-content-center">
+      <app-story-gallery [images]="storiesData"></app-story-gallery>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <p-button
+        icon="pi pi-check"
+        (click)="displayModal = false"
+        label="Cerrar"
+        styleClass="p-button-text"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
+</p-card>
