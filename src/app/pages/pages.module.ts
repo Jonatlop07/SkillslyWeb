@@ -23,7 +23,13 @@ import { TabViewModule } from 'primeng/tabview';
 import { DialogModule } from 'primeng/dialog';
 import { FollowRequestComponent } from './follow-request/follow-request.component';
 import { PostUpdateComponent } from './user/posts/post-update/post-update.component';
-import { FeedComponent } from './feed/feed.component'
+import { FeedComponent } from './feed/feed.component';
+import { UserGroupsComponent } from './groups/user-groups/user-groups.component';
+import { GroupsQueryComponent } from './groups/groups-query/groups-query.component';
+import { GroupComponent } from './groups/group/group.component';
+import { GroupCreateComponent } from './groups/group-create/group-create.component';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { GroupUpdateComponent } from './groups/group-update/group-update.component';
 
 @NgModule({
   declarations: [
@@ -39,8 +45,14 @@ import { FeedComponent } from './feed/feed.component'
     ChatComponent,
     FollowRequestComponent,
     FeedComponent,
+    UserGroupsComponent,
+    GroupsQueryComponent,
+    GroupComponent,
+    GroupCreateComponent,
+    GroupUpdateComponent,
   ],
   imports: [
+    ConfirmPopupModule,
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
@@ -54,7 +66,7 @@ import { FeedComponent } from './feed/feed.component'
     ButtonModule,
     TooltipModule,
     TabViewModule,
-    DialogModule
+    DialogModule,
   ],
 })
 export class PagesModule {}
