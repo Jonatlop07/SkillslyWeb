@@ -69,7 +69,6 @@ export class LoginComponent {
           const { id, email, roles, access_token } = result;
           const now = new Date();
           now.setSeconds(7200);
-          localStorage.setItem('token', access_token);
           this.authService.setSessionData({
             user_id: id,
             user_email: email,
