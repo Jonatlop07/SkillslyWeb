@@ -64,7 +64,7 @@
                   <button
                     *ngIf="isOwnerAndNotSelf(user.user_id)"
                     type="button"
-                    (click)="confirm($event, user.user_id)"
+                    (click)="onRemoveUser($event, user.user_id, i)"
                     class="btn btn-outline-danger m-1"
                   >
                     Remover usuario

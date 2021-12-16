@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { GroupPresenter } from 'src/app/interfaces/presenter/group/groups.presenter';
 import { GroupsService } from 'src/app/services/groups.service';
@@ -8,7 +8,7 @@ import { GroupsService } from 'src/app/services/groups.service';
   templateUrl: './groups-query.component.html',
   styleUrls: ['./groups-query.component.css'],
 })
-export class GroupsQueryComponent implements OnInit {
+export class GroupsQueryComponent{
 
   public no_groups = false;
   public limit: number;
@@ -23,8 +23,6 @@ export class GroupsQueryComponent implements OnInit {
   ];
   public groups: Array<GroupPresenter> = [];
   constructor(private groupsService: GroupsService, private router: Router) {}
-
-  ngOnInit(): void {}
 
   searchGroup(groupName: string) {
     groupName = groupName.trim();

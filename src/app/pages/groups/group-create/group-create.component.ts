@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { resetFakeAsyncZone } from '@angular/core/testing';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GroupPresenter } from 'src/app/interfaces/presenter/group/groups.presenter';

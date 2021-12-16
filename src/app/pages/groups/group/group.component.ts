@@ -58,7 +58,7 @@ export class GroupComponent implements OnInit {
     this.display = !this.display;
   }
 
-  confirm(event: Event, user_id: string) {
+  onRemoveUser(event: Event, user_id: string, index: number) {
     this.confirmationService.confirm({
       target: event.target,
       message: 'Estás seguro que deseas eliminar este usuario del grupo?',
@@ -71,7 +71,7 @@ export class GroupComponent implements OnInit {
             action: 'remove',
           })
           .subscribe(() => {
-            this.router.navigate(['../../../mygroups'], { relativeTo: this.route });
+            this.users.splice(index, 1);
           });
       },
       reject: () => {
