@@ -1,0 +1,132 @@
+<div class="bg-primary bg-gradient h-100 overflow-auto">
+  <div class="w-75 mx-auto pt-5">
+    <div class="row">
+      <div class="col-md-12 box">
+        <p-card header="Creador de Proyectos" styleClass="p-card-shadow">
+          <form
+            (ngSubmit)="saveForm(form)"
+            class="form-horizontal"
+            #form="ngForm"
+          >
+            <div class="p-fluid col-xs-12">
+              <label for="Input">Titulo del proyecto</label>
+              <br />
+              <input
+                [(ngModel)]="paramsProject.title"
+                styleClass="p-input text-sm"
+                name="title"
+                type="text"
+                pInputText
+                id="Input"
+                class="col-xs-12"
+                required
+              />
+              <br />
+            </div>
+            <div class="p-fluid col-xs-12">
+              <label for="Input">Miembros del proyecto</label>
+              <br />
+              <p-chips
+                [(ngModel)]="members"
+                separator=","
+                placeholder="Pepe , Lucia ..."
+                styleClass="p-inputtext-sm"
+                name="members"
+                id="Input"
+                class="col-xs-12"
+                required
+              ></p-chips>
+              <br />
+            </div>
+            <div class="p-fluid col-xs-12">
+              <label for="Input">Descripción</label>
+              <br />
+              <textarea
+                rows="3"
+                cols="30"
+                pInputTextarea
+                [(ngModel)]="paramsProject.description"
+                name="description"
+                id="Input"
+                required
+              ></textarea>
+              <br />
+            </div>
+            <div class="p-fluid col-xs-12">
+              <label for="Input">Ingresa el link de una imagen o video</label>
+              <br />
+              <input
+                [(ngModel)]="paramsProject.reference"
+                styleClass="p-inputtext-sm"
+                name="reference"
+                id="Input"
+                type="text"
+                pInputText
+                class="col-xs-12"
+                required
+              />
+              <br />
+            </div>
+
+            <div class="p-fluid col-xs-12">
+              <label for="Input">ingresa el tipo de archivo multimedia</label>
+              <br />
+              <input
+                [(ngModel)]="paramsProject.reference_type"
+                styleClass="p-inputtext-sm"
+                name="reference_type"
+                id="Input"
+                type="text"
+                pInputText
+                class="col-xs-12"
+                required
+              />
+              <br />
+            </div>
+
+            <div class="p-fluid col-xs-12">
+              <label for="Input">anexos</label>
+              <br />
+              <p-chips
+                [(ngModel)]="annexes"
+                separator=","
+                styleClass="p-inputtext-sm"
+                name="annexes"
+                id="Input"
+                class="col-xs-12"
+                required
+              ></p-chips>
+            </div>
+
+            <div class="row center-xs">
+              <div class="col-lg-8">
+                <div class="box">
+                  <button
+                    pButton
+                    pRipple
+                    label="Guardar Proyecto"
+                    class="p-button-outlined p-button-rounded"
+                    icon="pi pi-check"
+                    type="submit"
+                  ></button>
+
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    label="Cancelar"
+                    icon="pi pi-times"
+                    class="
+                      p-button-outlined p-button-rounded p-button-secondary
+                    "
+                    [style]="{ 'margin-left': '.5em' }"
+                  ></button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </p-card>
+      </div>
+    </div>
+  </div>
+</div>

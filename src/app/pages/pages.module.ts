@@ -24,6 +24,7 @@ import { DialogModule } from 'primeng/dialog';
 import { FollowRequestComponent } from './follow-request/follow-request.component';
 import { PostUpdateComponent } from './user/posts/post-update/post-update.component';
 import { FeedComponent } from './feed/feed.component';
+import { ProjectsCreateComponent } from './user/projects/projects-create/projects-create.component';
 import { StoriesComponent } from './stories/stories.component';
 import { BadgeModule } from 'primeng/badge';
 import { StoryComponent } from './story/story.component';
@@ -34,7 +35,7 @@ import { GalleriaModule } from 'primeng/galleria';
 import { ChipModule } from 'primeng/chip';
 import { EventComponent } from './user/events/event/event.component';
 import { EventCreateComponent } from './user/events/event-create/event-create.component';
-import { MyEventsComponent } from './user/events/my-events/my-events.component'
+import { MyEventsComponent } from './user/events/my-events/my-events.component';
 import { UserGroupsComponent } from './groups/user-groups/user-groups.component';
 import { GroupsQueryComponent } from './groups/groups-query/groups-query.component';
 import { GroupComponent } from './groups/group/group.component';
@@ -56,6 +57,7 @@ import { GroupUpdateComponent } from './groups/group-update/group-update.compone
     ChatComponent,
     FollowRequestComponent,
     FeedComponent,
+    ProjectsCreateComponent,
     StoriesComponent,
     StoryComponent,
     StoryGalleryComponent,
@@ -89,7 +91,7 @@ import { GroupUpdateComponent } from './groups/group-update/group-update.compone
     TagModule,
     GalleriaModule,
     ChipModule,
-    DialogModule, 
+    DialogModule,
   ],
 })
 export class PagesModule {}
