@@ -32,6 +32,15 @@ import { TagModule } from 'primeng/tag';
 import { StoryGalleryComponent } from './story-gallery/story-gallery.component';
 import { GalleriaModule } from 'primeng/galleria';
 import { ChipModule } from 'primeng/chip';
+import { EventComponent } from './user/events/event/event.component';
+import { EventCreateComponent } from './user/events/event-create/event-create.component';
+import { MyEventsComponent } from './user/events/my-events/my-events.component'
+import { UserGroupsComponent } from './groups/user-groups/user-groups.component';
+import { GroupsQueryComponent } from './groups/groups-query/groups-query.component';
+import { GroupComponent } from './groups/group/group.component';
+import { GroupCreateComponent } from './groups/group-create/group-create.component';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { GroupUpdateComponent } from './groups/group-update/group-update.component';
 
 @NgModule({
   declarations: [
@@ -50,8 +59,17 @@ import { ChipModule } from 'primeng/chip';
     StoriesComponent,
     StoryComponent,
     StoryGalleryComponent,
+    EventComponent,
+    EventCreateComponent,
+    MyEventsComponent,
+    UserGroupsComponent,
+    GroupsQueryComponent,
+    GroupComponent,
+    GroupCreateComponent,
+    GroupUpdateComponent,
   ],
   imports: [
+    ConfirmPopupModule,
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
@@ -71,6 +89,7 @@ import { ChipModule } from 'primeng/chip';
     TagModule,
     GalleriaModule,
     ChipModule,
+    DialogModule, 
   ],
 })
 export class PagesModule {}

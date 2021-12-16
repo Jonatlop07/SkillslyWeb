@@ -15,8 +15,7 @@
             <!-- ============================================================== -->
             <ul class="navbar-nav float-start me-auto">
                 <li class="nav-item d-none d-lg-block">
-                    <a class="nav-link sidebartoggler waves-effect waves-light" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i
-          ></a>
+                    <a class="nav-link sidebartoggler waves-effect waves-light" [routerLink]="['./feed']" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a>
                 </li>
                 <!-- ============================================================== -->
                 <!-- create new -->
@@ -44,6 +43,43 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="d-none d-md-block">Eventos<i class="fa fa-angle-down"></i></span>
+                        <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <button [routerLink]="['./events']" class="dropdown-item">Crear evento</button>
+                        </li>
+                        <li>
+                            <button [routerLink]="['./my-events']" class="dropdown-item">Mis eventos</button>
+                        </li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="d-none d-md-block">Grupos<i class="fa fa-angle-down"></i
+              ></span>
+                        <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <button [routerLink]="['./mygroups']" class="dropdown-item">
+                  Mis grupos 
+                </button>
+                        </li>
+                        <li>
+                            <button [routerLink]="['./groups']" class="dropdown-item">
+                  Buscar grupos
+                </button>
+                        </li>
+                    </ul>
+                </li>
             </ul>
             <!-- ============================================================== -->
             <!-- Right side toggle and nav items -->
@@ -63,7 +99,8 @@
                 <!-- Follow Request -->
                 <!-- ============================================================== -->
                 <li class="nav-item search-box">
-                    <a [routerLink]="['./follow-requests']" class="nav-link waves-effect waves-dark"><i class="mdi mdi-account-check fs-4"></i></a>
+                    <a [routerLink]="['./follow-requests']" class="nav-link waves-effect waves-dark"><i class="mdi mdi-account-check fs-4"></i
+          ></a>
                 </li>
                 <!-- ============================================================== -->
                 <!-- Comment -->
@@ -129,7 +166,7 @@
                           align-items-center
                           justify-content-center
                         "
-                      ><i class="mdi mdi-settings fs-4"></i
+                        ><i class="mdi mdi-settings fs-4"></i
                       ></span>
                                                 <div class="ms-2">
                                                     <h5 class="mb-0">Settings</h5>
@@ -148,7 +185,7 @@
                           align-items-center
                           justify-content-center
                         "
-                      ><i class="mdi mdi-account fs-4"></i
+                        ><i class="mdi mdi-account fs-4"></i
                       ></span>
                                                     <div class="ms-2">
                                                         <h5 class="mb-0">Pavan kumar</h5>
@@ -212,11 +249,17 @@
             aria-labelledby="navbarDropdown"
           >
             <a class="dropdown-item" [routerLink]="['./profile']">
-              <i class="mdi mdi-account me-1 ms-1" ></i>
-              Mi perfil</a>
-            <a [routerLink]="['./conversations']" class="dropdown-item" href="javascript:void(0)">
+              <i class="mdi mdi-account me-1 ms-1"></i>
+              Mi perfil</a
+            >
+            <a
+              [routerLink]="['./conversations']"
+              class="dropdown-item"
+              href="javascript:void(0)"
+            >
               <i class="mdi mdi-wallet me-1 ms-1"></i>
-              Mis conversaciones</a>
+              Mis conversaciones</a
+            >
             <a class="dropdown-item" href="javascript:void(0)">
               <i class="mdi mdi-email me-1 ms-1"></i>
               Inbox
@@ -240,7 +283,7 @@
               <a
                 href="javascript:void(0)"
                 class="btn btn-sm btn-success btn-rounded text-white"
-              >View Profile</a
+                >View Profile</a
               >
             </div>
           </ul>
