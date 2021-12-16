@@ -24,6 +24,7 @@
         <li class="nav-item d-none d-lg-block">
           <a
             class="nav-link sidebartoggler waves-effect waves-light"
+            [routerLink]="['./feed']"
             data-sidebartype="mini-sidebar"
             ><i class="mdi mdi-menu font-24"></i
           ></a>
@@ -56,14 +57,85 @@
                 Buscar publicación
               </button>
             </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span class="d-none d-md-block"
+              >Proyectos <i class="fa fa-angle-down"></i
+            ></span>
+            <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li>
-              <button [routerLink]="['./projects']" class="dropdown-item">
+              <button [routerLink]="['./proyects']" class="dropdown-item">
                 Crear proyecto
+              </button>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span class="d-none d-md-block"
+              >Eventos<i class="fa fa-angle-down"></i
+            ></span>
+            <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <button [routerLink]="['./events']" class="dropdown-item">
+                Crear evento
+              </button>
+            </li>
+            <li>
+              <button [routerLink]="['./my-events']" class="dropdown-item">
+                Mis eventos
               </button>
             </li>
             <li><a class="dropdown-item" href="#">Another action</a></li>
             <li>
               <a class="dropdown-item" href="#">Something else here</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span class="d-none d-md-block"
+              >Grupos<i class="fa fa-angle-down"></i
+            ></span>
+            <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <button [routerLink]="['./mygroups']" class="dropdown-item">
+                Mis grupos
+              </button>
+            </li>
+            <li>
+              <button [routerLink]="['./groups']" class="dropdown-item">
+                Buscar grupos
+              </button>
             </li>
           </ul>
         </li>

@@ -1,0 +1,375 @@
+<div class="page-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <img
+              [src]="group.picture"
+              class="rounded img-fluid mx-auto d-block"
+              style="height: 35vmax; width: 100%"
+              alt="..."
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="only_owner_error">
+    <div class="alert alert-danger d-flex justify-content-center align-items-center" role="alert">
+      <h4 class="alert-heading m-2">Unico administrador</h4>
+      <p class="m-2">
+        Eres el único administrador del grupo, así que te recomendamos
+        no abandonarlo. Si aun así quieres irte, puedes eliminar el
+        grupo en la ventana de administración
+      </p>
+      <button class="btn btn-danger m-2" (click)="onCloseError()">cerrar</button>
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-9">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">{{ group.name }}</h3>
+            <p>
+              {{ group.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-3" *ngIf="group.isMember">
+        <div class="card">
+          <div class="card-body">
+            <button
+              type="button"
+              class="btn btn-primary m-1"
+              (click)="showGroupUsers()"
+            >
+              Usuarios
+            </button>
+            <p-dialog
+              header="Usuarios del grupo"
+              [(visible)]="display"
+              [modal]="true"
+            >
+              <div class="comment-widgets scrollable">
+                <div
+                  *ngFor="let user of users; let i = index"
+                  class="d-flex flex-row comment-row mt-0"
+                >
+                  <div class="comment-text w-100">
+                    <h6 class="font-medium">{{ user.user_name }}</h6>
+                    <span class="mb-3 d-block">{{ user.user_email }} </span>
+                  </div>
+                  <p-confirmPopup></p-confirmPopup>
+                  <button
+                    *ngIf="isOwnerAndNotSelf(user.user_id)"
+                    type="button"
+                    (click)="onRemoveUser($event, user.user_id, i)"
+                    class="btn btn-outline-danger m-1"
+                  >
+                    Remover usuario
+                  </button>
+                </div>
+              </div>
+            </p-dialog>
+            <a
+              class="btn btn-info m-1"
+              *ngIf="group.isOwner"
+              [routerLink]="['admin']"
+            >
+              Administrar grupo
+            </a>
+            <p-confirmPopup></p-confirmPopup>
+            <button
+              type="button"
+              class="btn btn-danger m-1"
+              (click)="onLeaveGroup($event)"
+            >
+              Abandonar grupo
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- Sales chart -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Recent comment and chats -->
+    <!-- ============================================================== -->
+    <div class="row" *ngIf="group.isMember">
+      <!-- column -->
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Latest Posts</h4>
+          </div>
+          <div class="comment-widgets scrollable">
+            <!-- Comment Row -->
+            <div class="d-flex flex-row comment-row mt-0">
+              <div class="p-2">
+                <img
+                  src="../assets/images/users/1.jpg"
+                  alt="user"
+                  width="50"
+                  class="rounded-circle"
+                />
+              </div>
+              <div class="comment-text w-100">
+                <h6 class="font-medium">James Anderson</h6>
+                <span class="mb-3 d-block"
+                  >Lorem Ipsum is simply dummy text of the printing and type
+                  setting industry.
+                </span>
+                <div class="comment-footer">
+                  <span class="text-muted float-end">April 14, 2021</span>
+                  <button type="button" class="btn btn-cyan btn-sm text-white">
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success btn-sm text-white"
+                  >
+                    Publish
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm text-white"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Comment Row -->
+            <div class="d-flex flex-row comment-row">
+              <div class="p-2">
+                <img
+                  src="../assets/images/users/4.jpg"
+                  alt="user"
+                  width="50"
+                  class="rounded-circle"
+                />
+              </div>
+              <div class="comment-text active w-100">
+                <h6 class="font-medium">Michael Jorden</h6>
+                <span class="mb-3 d-block"
+                  >Lorem Ipsum is simply dummy text of the printing and type
+                  setting industry.
+                </span>
+                <div class="comment-footer">
+                  <span class="text-muted float-end">May 10, 2021</span>
+                  <button type="button" class="btn btn-cyan btn-sm text-white">
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success btn-sm text-white"
+                  >
+                    Publish
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm text-white"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Comment Row -->
+            <div class="d-flex flex-row comment-row">
+              <div class="p-2">
+                <img
+                  src="../assets/images/users/5.jpg"
+                  alt="user"
+                  width="50"
+                  class="rounded-circle"
+                />
+              </div>
+              <div class="comment-text w-100">
+                <h6 class="font-medium">Johnathan Doeting</h6>
+                <span class="mb-3 d-block"
+                  >Lorem Ipsum is simply dummy text of the printing and type
+                  setting industry.
+                </span>
+                <div class="comment-footer">
+                  <span class="text-muted float-end">August 1, 2021</span>
+                  <button type="button" class="btn btn-cyan btn-sm text-white">
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success btn-sm text-white"
+                  >
+                    Publish
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm text-white"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- column -->
+
+      <div class="col-lg-6">
+      
+        <!-- card -->
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Our partner (Box with Fix height)</h4>
+          </div>
+          <div class="comment-widgets scrollable" style="max-height: 400px">
+            <!-- Comment Row -->
+            <div class="d-flex flex-row comment-row mt-0">
+              <div class="p-2">
+                <img
+                  src="../assets/images/users/1.jpg"
+                  alt="user"
+                  width="50"
+                  class="rounded-circle"
+                />
+              </div>
+              <div class="comment-text w-100">
+                <h6 class="font-medium">James Anderson</h6>
+                <span class="mb-3 d-block"
+                  >Lorem Ipsum is simply dummy text of the printing and type
+                  setting industry.
+                </span>
+                <div class="comment-footer">
+                  <span class="text-muted float-end">April 14, 2021</span>
+                  <button type="button" class="btn btn-cyan btn-sm text-white">
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success btn-sm text-white"
+                  >
+                    Publish
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm text-white"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Comment Row -->
+            <div class="d-flex flex-row comment-row">
+              <div class="p-2">
+                <img
+                  src="../assets/images/users/4.jpg"
+                  alt="user"
+                  width="50"
+                  class="rounded-circle"
+                />
+              </div>
+              <div class="comment-text active w-100">
+                <h6 class="font-medium">Michael Jorden</h6>
+                <span class="mb-3 d-block"
+                  >Lorem Ipsum is simply dummy text of the printing and type
+                  setting industry.
+                </span>
+                <div class="comment-footer">
+                  <span class="text-muted float-end">May 10, 2021</span>
+                  <button type="button" class="btn btn-cyan btn-sm text-white">
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success btn-sm text-white"
+                  >
+                    Publish
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm text-white"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Comment Row -->
+            <div class="d-flex flex-row comment-row">
+              <div class="p-2">
+                <img
+                  src="../assets/images/users/5.jpg"
+                  alt="user"
+                  width="50"
+                  class="rounded-circle"
+                />
+              </div>
+              <div class="comment-text w-100">
+                <h6 class="font-medium">Johnathan Doeting</h6>
+                <span class="mb-3 d-block"
+                  >Lorem Ipsum is simply dummy text of the printing and type
+                  setting industry.
+                </span>
+                <div class="comment-footer">
+                  <span class="text-muted float-end">August 1, 2021</span>
+                  <button type="button" class="btn btn-cyan btn-sm text-white">
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success btn-sm text-white"
+                  >
+                    Publish
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm text-white"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- Recent comment and chats -->
+    <!-- ============================================================== -->
+    <div class="row" *ngIf="!group.isMember">
+      <div class="col-12 text-center">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              Si deseas ver el contenido del grupo debes unirte a este.
+            </h5>
+            <h5 class="card-title">Solicita unirte!</h5>
+            <button
+              type="button"
+              *ngIf="!group.existsRequest"
+              (click)="joinGroup()"
+              class="btn btn-block btn-info btn-sm text-white"
+            >
+              Unirse al grupo
+            </button>
+            <button
+              type="button"
+              *ngIf="group.existsRequest"
+              (click)="cancelGroupRequest()"
+              class="btn btn-block btn-danger btn-sm text-white"
+            >
+              Cancelar solicitud
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
