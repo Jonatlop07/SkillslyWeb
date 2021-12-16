@@ -25,7 +25,8 @@ import { FollowRequestComponent } from './follow-request/follow-request.componen
 import { PostUpdateComponent } from './user/posts/post-update/post-update.component';
 import { FeedComponent } from './feed/feed.component';
 import { EventComponent } from './user/events/event/event.component';
-import { EventCreateComponent } from './user/events/event-create/event-create.component'
+import { EventCreateComponent } from './user/events/event-create/event-create.component';
+import { MyEventsComponent } from './user/events/my-events/my-events.component'
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { EventCreateComponent } from './user/events/event-create/event-create.co
     FeedComponent,
     EventComponent,
     EventCreateComponent,
+    MyEventsComponent,
   ],
   imports: [
     CommonModule,

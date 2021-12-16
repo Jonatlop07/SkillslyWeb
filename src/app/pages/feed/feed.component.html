@@ -29,8 +29,8 @@
                                 <div class="card-body">
                                     <h3 class="card-title">Eventos recientes de tu amigos</h3>
                                     <hr />
-                                    <div *ngFor="let post of foundPosts">
-                                        <app-post [post]="post" [editable]="false"> </app-post>
+                                    <div *ngFor="let event of foundEvents; let i =index">
+                                        <app-event [event]="event" [editable]="false" [map_id]="i"> </app-event>
                                         <hr />
                                     </div>
                                 </div>

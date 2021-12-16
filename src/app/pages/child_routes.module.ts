@@ -10,6 +10,7 @@ import { FollowRequestComponent } from './follow-request/follow-request.componen
 import { PostUpdateComponent } from './user/posts/post-update/post-update.component';
 import { FeedComponent } from './feed/feed.component';
 import { EventCreateComponent } from './user/events/event-create/event-create.component';
+import { MyEventsComponent } from './user/events/my-events/my-events.component';
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent },
@@ -17,7 +18,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'posts', component: PostsCreateComponent },
   { path: 'events', component: EventCreateComponent},
-  //{ path: 'my-events', component: }
+  { path: 'my-events', component: MyEventsComponent },
   { path: 'query/:user_id', component: PostsQueryComponent },
   { path: 'conversations', component: ChatComponent }, 
   { path: 'follow-requests', component: FollowRequestComponent},

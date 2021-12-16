@@ -10,6 +10,7 @@ import { SocketIoModule } from 'ngx-socket-io';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from '../environments/environment'
 import { state_list } from './shared/state/state_list'
+import { NgxsStoragePluginModule }  from '@ngxs/storage-plugin'; 
 
 @NgModule({
   declarations: [AppComponent, NopagefoundComponent],
@@ -22,7 +23,8 @@ import { state_list } from './shared/state/state_list'
     SocketIoModule,
     NgxsModule.forRoot([...state_list], {
       developmentMode: !environment.production
-    })
+    }), 
+    NgxsStoragePluginModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],

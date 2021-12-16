@@ -1,1 +1,39 @@
-<p>event works!</p>
+<div class="d-flex w-100">
+    <div class="d-flex flex-fill">
+        <div class="p-2">
+            <img src="../assets/images/users/1.jpg" alt="user" width="30" class="rounded-circle" />
+        </div>
+        <div class="align-self-center">
+            <div class="row">
+                <div class="col-sm">
+                    <h5 class="font-medium">Nombre de Usuario</h5>
+                </div>
+                <div class="col-sm">
+                    <h5 class="font-medium">{{ event.name }}</h5>
+                </div>
+                <div class="col-sm">
+                    <h5 class="font-medium">{{ event.date}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex">
+        <div class="dropdown" *ngIf="editable">
+            <a class="mdi mdi-settings fs-2 dropdown" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton1">
+            </a>
+            <ul class="dropdown-menu pull-left dropdown-menu-left" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item" (click)="deleteEvent(event.event_id)">Eliminar</a></li>
+                <li><a class="dropdown-item" (click)="updateEvent(event.event_id)">Editar</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="comment-text w-100">
+    <h6 class="font-light pb-2">{{ event.description }}</h6>
+    <div class="pb-3 row">
+        <div id="map{{map_id}}" style="width: 300px; height: 300px;"></div>
+    </div>
+</div>
+<div class="d-flex m-2">
+    <button type="button" class="btn btn-block btn-success btn-sm text-white p-1 m-1">Asistir</button>
+</div>

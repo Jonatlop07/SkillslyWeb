@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EventService } from 'src/app/services/event.service';
@@ -11,7 +11,7 @@ import { CreateEventPresenter } from '../../../../interfaces/presenter/event/cre
   templateUrl: './event-create.component.html',
   styleUrls: ['./event-create.component.css']
 })
-export class EventCreateComponent implements OnInit {
+export class EventCreateComponent implements OnInit, AfterViewInit {
 
   eventForm: FormGroup;
   event: CreateEventPresenter;
@@ -28,6 +28,9 @@ export class EventCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+  }
+
+  ngAfterViewInit(): void {
     this.initMap();
   }
 
@@ -82,8 +85,8 @@ export class EventCreateComponent implements OnInit {
         date: this.eventForm.get('date').value
       };
       const eventResponse = this.eventService.createEvent(this.event);
-      eventResponse.subscribe((resp:any) => console.log(resp));
-      this.router.navigate(['./main/feed']);
+      eventResponse.subscribe((resp:any) => this.eventService.getAndStoreMyEventsCollection());
+      this.router.navigate(['./main/my-events']);
       return true;
     } else {
       $event.preventDefault();
