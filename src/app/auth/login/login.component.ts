@@ -9,6 +9,7 @@ import { LoginForm } from '../../interfaces/login_form.inteface';
 import { LoginResponse } from '../../interfaces/login_response.interface'
 import { ConversationService } from '../../services/conversation.service';
 import { FollowService } from '../../services/follow.service';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ export class LoginComponent {
     private readonly authService: AuthService,
     private readonly conversation_service: ConversationService,
     private readonly follow_service: FollowService,
+    private readonly event_service: EventService,
     private readonly router: Router
   ) {
     this.initForm();
@@ -76,6 +78,7 @@ export class LoginComponent {
           }).subscribe(() => {
             this.follow_service.getAndStoreUserFollowCollection();
             this.conversation_service.getAndStoreConversations();
+            this.event_service.getAndStoreMyEventsCollection();
             this.router.navigate(['/main/feed']);
           })
         },

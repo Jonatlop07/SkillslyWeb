@@ -1,0 +1,18 @@
+<div class="bg-primary bg-gradient overflow-auto">
+    <div class="w-75 mx-auto pt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Tus eventos</h3>
+                        <hr />
+                        <div *ngFor="let event of foundEvents; let i =index">
+                            <app-event [event]="event" [editable]="true" [map_id]="i"> </app-event>
+                            <hr/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
