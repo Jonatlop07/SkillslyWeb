@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ConversationPresenter } from '../../../interfaces/presenter/chat/conversation.presenter'
-import { ChatService } from '../../../services/chat.service'
+import { ConversationService } from '../../../services/conversation.service'
 import { SelectedConversationPresenter } from '../../../interfaces/presenter/chat/selected_conversation.presenter'
 import { MessagePresenter } from '../../../interfaces/presenter/chat/message.presenter'
 import { NewConversationPresenter } from '../../../interfaces/presenter/chat/new_conversation.presenter'
@@ -9,10 +9,10 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MessageCollectionPresenter } from '../../../interfaces/presenter/chat/message_collection.presenter';
 import { ConversationMemberPresenter } from '../../../interfaces/presenter/chat/conversation_member.presenter';
-import { User } from 'src/app/interfaces/user.interface';
 import { FollowService } from '../../../services/follow.service';
 import { GroupConversationDetailsPresenter } from '../../../interfaces/presenter/chat/group_conversation_details.presenter'
 import { AddedMembersPresenter } from '../../../interfaces/presenter/chat/added_members.presenter'
+import { ChatService } from '../../../services/chat.service'
 
 @Component({
   selector: 'app-chat',
@@ -45,13 +45,14 @@ export class ChatComponent implements OnInit, OnDestroy {
   private unsubscribe_on_destroy = new Subject<void>();
 
   constructor(
-    private readonly chat_service: ChatService,
-    private readonly follow_service: FollowService
+    private readonly conversation_service: ConversationService,
+    private readonly follow_service: FollowService,
+    private readonly chat_service: ChatService
   ) {
   }
 
   ngOnInit() {
-    const { private_conversations, group_conversations } = this.chat_service.getConversationsFromStore();
+    const { private_conversations, group_conversations } = this.conversation_service.getConversationsFromStore();
     private_conversations.forEach((conversation: ConversationPresenter) => {
       this.private_conversations.set(conversation.conversation_id, conversation);
     });
@@ -107,7 +108,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       is_private
     };
     this.setRelatedUsersNotInConversation();
-    this.chat_service.getMessages(this.selected_conversation.conversation_id)
+    this.conversation_service.getMessages(this.selected_conversation.conversation_id)
       .subscribe((message_collection: MessageCollectionPresenter) => {
           this.selected_conversation.messages = message_collection.messages
             .sort(
@@ -154,10 +155,10 @@ export class ChatComponent implements OnInit, OnDestroy {
       conversation_name: this.new_conversation_name,
       conversation_members: this.new_conversation_members.map(member => member.member_id)
     };
-    this.chat_service
+    this.conversation_service
       .createConversation(this.new_conversation)
       .subscribe((conversation: ConversationPresenter) => {
-        this.chat_service.appendGroupConversation(conversation);
+        this.conversation_service.appendGroupConversation(conversation);
         this.group_conversations.set(conversation.conversation_id, conversation);
         this.setSelectedConversation(conversation);
         this.toggleCreatingConversation();
@@ -177,7 +178,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   public editGroupConversationDetails(conversation_id: string) {
     if (this.edited_conversation_name === '') return;
-    this.chat_service
+    this.conversation_service
       .editGroupConversationDetails(conversation_id, { conversation_name: this.edited_conversation_name })
       .subscribe((conversation_details: GroupConversationDetailsPresenter) => {
         const conversation: ConversationPresenter = this.group_conversations.get(conversation_id);
@@ -185,7 +186,7 @@ export class ChatComponent implements OnInit, OnDestroy {
           ...conversation,
           conversation_name: conversation_details.conversation_name
         };
-        this.chat_service.editGroupConversationDetailsInStore(conversation_id, conversation_details).subscribe();
+        this.conversation_service.editGroupConversationDetailsInStore(conversation_id, conversation_details).subscribe();
         this.group_conversations.set(conversation_id, edited_conversation);
         this.selected_conversation.conversation_name = edited_conversation.conversation_name;
     })
@@ -194,7 +195,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   public addMembersToExistingConversation() {
     const conversation_id = this.selected_conversation.conversation_id;
-    this.chat_service.addMembersToExistingConversation(
+    this.conversation_service.addMembersToExistingConversation(
       this.selected_conversation.conversation_id,
       this.conversation_members_to_add.map((member) => member.member_id)
     ).subscribe((response: AddedMembersPresenter) => {
@@ -210,7 +211,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         ...conversation,
         conversation_members: conversation.conversation_members.concat(added_members)
       };
-      this.chat_service.addNewMembersToGroupConversationInStore(conversation_id, added_members).subscribe();
+      this.conversation_service.addNewMembersToGroupConversationInStore(conversation_id, added_members).subscribe();
       this.group_conversations.set(conversation_id, conversation_with_members_added);
       this.setRelatedUsersNotInConversation();
       this.conversation_members_to_add = [];
@@ -220,7 +221,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   public exitGroupConversation(conversation_id: string) {
-    this.chat_service
+    this.conversation_service
       .exitConversation(conversation_id)
       .subscribe(() => {
         this.removeConversation(conversation_id);
@@ -228,7 +229,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   public deleteGroupConversation(conversation_id: string) {
-    this.chat_service
+    this.conversation_service
       .deleteGroupConversation(conversation_id)
       .subscribe(() => {
         this.removeConversation(conversation_id);
@@ -237,7 +238,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   private removeConversation(conversation_id: string) {
     this.group_conversations.delete(conversation_id);
-    this.chat_service.deleteGroupConversationInStore(conversation_id).subscribe();
+    this.conversation_service.deleteGroupConversationInStore(conversation_id).subscribe();
     this.selected_conversation = null;
   }
 
@@ -263,7 +264,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   public isNotCurrentUser(user_id: string): boolean {
-    return user_id !== this.chat_service.getUserId();
+    return user_id !== this.conversation_service.getUserId();
   }
 
   public toggleCreatingConversation() {
@@ -317,7 +318,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   public getPrivateConversationName(conversation_id: string): string {
     for (const member of this.private_conversations.get(conversation_id).conversation_members) {
-      if (member.member_id !== this.chat_service.getUserId()) {
+      if (member.member_id !== this.conversation_service.getUserId()) {
         return member.member_name;
       }
     }
