@@ -8,9 +8,9 @@ import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { PagesModule } from './pages/pages.module';
 import { SocketIoModule } from 'ngx-socket-io';
 import { NgxsModule } from '@ngxs/store';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { environment } from '../environments/environment'
 import { state_list } from './shared/state/state_list'
-import { NgxsStoragePluginModule }  from '@ngxs/storage-plugin'; 
 
 @NgModule({
   declarations: [AppComponent, NopagefoundComponent],

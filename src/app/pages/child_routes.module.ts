@@ -11,6 +11,10 @@ import { PostUpdateComponent } from './user/posts/post-update/post-update.compon
 import { FeedComponent } from './feed/feed.component';
 import { EventCreateComponent } from './user/events/event-create/event-create.component';
 import { MyEventsComponent } from './user/events/my-events/my-events.component';
+import { UserGroupsComponent } from './groups/user-groups/user-groups.component';
+import { GroupsQueryComponent } from './groups/groups-query/groups-query.component';
+import { GroupComponent } from './groups/group/group.component';
+import { GroupUpdateComponent } from './groups/group-update/group-update.component';
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent },
@@ -24,6 +28,10 @@ const routes: Routes = [
   { path: 'follow-requests', component: FollowRequestComponent},
   { path: 'post/update/:post_id', component: PostUpdateComponent }, 
   { path: 'feed', component: FeedComponent }, 
+  { path: 'mygroups', component: UserGroupsComponent},
+  { path: 'groups', component: GroupsQueryComponent},
+  { path: 'group/:groupId', component: GroupComponent},
+  { path: 'group/:groupId/admin', component: GroupUpdateComponent}
 ];
 
 @NgModule({

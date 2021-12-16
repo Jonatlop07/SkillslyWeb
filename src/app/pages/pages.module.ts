@@ -27,7 +27,12 @@ import { FeedComponent } from './feed/feed.component';
 import { EventComponent } from './user/events/event/event.component';
 import { EventCreateComponent } from './user/events/event-create/event-create.component';
 import { MyEventsComponent } from './user/events/my-events/my-events.component'
-
+import { UserGroupsComponent } from './groups/user-groups/user-groups.component';
+import { GroupsQueryComponent } from './groups/groups-query/groups-query.component';
+import { GroupComponent } from './groups/group/group.component';
+import { GroupCreateComponent } from './groups/group-create/group-create.component';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { GroupUpdateComponent } from './groups/group-update/group-update.component';
 
 @NgModule({
   declarations: [
@@ -46,8 +51,14 @@ import { MyEventsComponent } from './user/events/my-events/my-events.component'
     EventComponent,
     EventCreateComponent,
     MyEventsComponent,
+    UserGroupsComponent,
+    GroupsQueryComponent,
+    GroupComponent,
+    GroupCreateComponent,
+    GroupUpdateComponent,
   ],
   imports: [
+    ConfirmPopupModule,
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
@@ -62,7 +73,6 @@ import { MyEventsComponent } from './user/events/my-events/my-events.component'
     TooltipModule,
     TabViewModule,
     DialogModule, 
-    
   ],
 })
 export class PagesModule {}
