@@ -15,7 +15,9 @@ export class ChatSocket extends Socket {
           polling: {
             extraHeaders: {
               Authorization: `Bearer ${jwt_service.getToken()}`
-            }
+            },
+            secure: true,
+            rejectUnauthorized: true
           }
         },
       }
