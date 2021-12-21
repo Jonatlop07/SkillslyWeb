@@ -59,11 +59,14 @@ export class MyConversationsState {
   @Action(EditGroupConversationDetails)
   public editGroupConversationDetails(ctx: StateContext<ConversationsModel>, action: EditGroupConversationDetails) {
     const state = ctx.getState();
-    for (let i = 0; i < state.group_conversations.length; ++i) {
-      if (state.group_conversations[i].conversation_id === action.conversation_id) {
-        const conversation = state.group_conversations[i]
-        conversation.conversation_name = action.conversation_details.conversation_name;
-        state.group_conversations[i] = conversation;
+    const group_conversations = [...state.group_conversations];
+    for (let i = 0; i < group_conversations.length; ++i) {
+      if (group_conversations[i].conversation_id === action.conversation_id) {
+        const conversation = group_conversations[i];
+        group_conversations[i] = {
+          ...conversation,
+          conversation_name: action.conversation_details.conversation_name
+        };
         break;
       }
     }
