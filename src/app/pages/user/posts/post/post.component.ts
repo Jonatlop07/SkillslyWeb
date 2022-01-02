@@ -70,7 +70,7 @@ export class PostComponent implements OnInit {
   }
 
   isImage(referenceType: string): boolean {
-    if (referenceType == 'image') {
+    if (referenceType == 'imagen') {
       return true;
     }
     return false;
