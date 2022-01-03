@@ -82,10 +82,24 @@ export class EventService {
   public getMyEvents() {
     let events: Array<EventModel> = [];
     this.events$.subscribe(e => {
-      console.log(e)
       events = e.events;
     });
     return events;
+  }
+
+  public deleteEvent(event_id : string) {
+    return this.http.delete(
+      `${this.API_URL}/event/${event_id}`,
+      this.jwt_service.getHttpOptions()
+    );
+  }
+
+  public updateEvent(event: CreateEventPresenter, event_id : string) {
+    return this.http.put(
+      `${this.API_URL}/event/${event_id}`,
+      event,
+      this.jwt_service.getHttpOptions()
+    );
   }
    
   private storeMyEvents(events: Array<EventModel>): Observable<void> {
