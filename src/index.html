@@ -5,6 +5,24 @@
     <title>SkillslyFrontend</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        base-uri 'self';
+        block-all-mixed-content;
+        font-src 'self' https: data:;
+        img-src 'self' https: data:;
+        object-src 'none';
+        script-src 'self' 'unsafe-eval' https://api.mapbox.com;
+        script-src-attr 'none';
+        style-src 'self' https: 'unsafe-inline';
+        media-src https: data:;
+        upgrade-insecure-requests;
+        connect-src http: https: ws:;
+        worker-src blob:;
+      "
+    />
     <!-- Favicon icon -->
     <link
       rel="icon"
