@@ -24,6 +24,7 @@
                     type="button"
                     class="btn btn-danger"
                     (click)="onCancel()"
+                    *ngIf="!this.group_id"
                   >
                     Cancelar
                   </button>
@@ -31,6 +32,7 @@
                     class="select2 form-select shadow-none float-end w-50"
                     id="privacy"
                     formControlName="privacy"
+                    *ngIf="!this.group_id"
                   >
                     <option value="" disabled>Privacidad</option>
                     <option value="public">Pública</option>

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { PostService } from '../../../../services/posts.service'
 import { UpdatePostPresenter } from '../../../../interfaces/presenter/post/update_post.presenter'
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms'
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-post-update',
@@ -23,7 +24,8 @@ export class PostUpdateComponent implements OnInit {
   constructor(
     private activated_route: ActivatedRoute,
     private post_service: PostService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
   }
 
@@ -74,7 +76,7 @@ export class PostUpdateComponent implements OnInit {
         .subscribe((post: UpdatePostPresenter) => {
           this.post = post;
         });
-      this.router.navigate(['./main'])
+      this.location.back();
       return true;
     } else {
       $event.preventDefault();
@@ -100,7 +102,7 @@ export class PostUpdateComponent implements OnInit {
 
   onCancel() {
     this.post_service.onToggleCreate();
-    this.router.navigate(['main/query', this.post.user_id]);
+    this.location.back();
   }
 
   validateContent(controls: AbstractControl[]) {
