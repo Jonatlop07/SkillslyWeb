@@ -16,6 +16,7 @@ import { UserGroupsComponent } from './groups/user-groups/user-groups.component'
 import { GroupsQueryComponent } from './groups/groups-query/groups-query.component';
 import { GroupComponent } from './groups/group/group.component';
 import { GroupUpdateComponent } from './groups/group-update/group-update.component';
+import { EventUpdateComponent } from './user/events/event-update/event-update.component';
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'posts', component: PostsCreateComponent },
   { path: 'events', component: EventCreateComponent },
   { path: 'my-events', component: MyEventsComponent },
+  { path: 'events/update/:event_id', component: EventUpdateComponent },
   { path: 'query/:user_id', component: PostsQueryComponent },
   { path: 'conversations', component: ChatComponent },
   { path: 'follow-requests', component: FollowRequestComponent },

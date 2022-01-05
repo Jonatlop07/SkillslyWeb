@@ -4,19 +4,23 @@ import { environment } from 'src/environments/environment';
 import { JwtService } from './jwt.service';
 import { CreateEventPresenter } from '../interfaces/presenter/event/create_event.presenter';
 import { Select, Store } from '@ngxs/store';
-import { SessionState } from '../shared/state/session/session.state';
 import { Observable, of } from 'rxjs';
-import { SessionModel } from '../models/session.model';
 import { EventsState } from '../shared/state/events/events.state';
+import { AssistancesState } from '../shared/state/events/assistances/assistances.state';
 import { EventModel, EventsModel } from '../models/events.model';
 import { SetMyEvents } from '../shared/state/events/events.actions';
 import { tap } from 'rxjs/operators';
+import { SetMyAssistances } from '../shared/state/events/assistances/assistances.actions';
+import { CreateAssistancePresenter } from '../interfaces/presenter/event/assistance/create_assistance.presenter';
+import { DeleteAssistancePresenter } from '../interfaces/presenter/event/assistance/delete_assistance.presenter';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
   @Select(EventsState) events$: Observable<EventsModel>;
+  @Select(AssistancesState) assistance$: Observable<EventsModel>;
+
   
   private readonly API_URL: string = environment.API_URL;
   public isChargingFeedEvents = false;
@@ -82,7 +86,6 @@ export class EventService {
   public getMyEvents() {
     let events: Array<EventModel> = [];
     this.events$.subscribe(e => {
-      console.log(e)
       events = e.events;
     });
     return events;
@@ -92,4 +95,56 @@ export class EventService {
     return this.store.dispatch(new SetMyEvents({events}));
   }
 
+  public deleteEvent(event_id : string) {
+    return this.http.delete(
+      `${this.API_URL}/event/${event_id}`,
+      this.jwt_service.getHttpOptions()
+    );
+  }
+
+  public updateEvent(event: CreateEventPresenter, event_id : string) {
+    return this.http.put(
+      `${this.API_URL}/event/${event_id}`,
+      event,
+      this.jwt_service.getHttpOptions()
+    );
+  }
+
+  public createAssistance(assistance: CreateAssistancePresenter) {
+    return this.http.post(
+      `${this.API_URL}/event/assistant/${assistance.event_id}}`,
+      {},
+      this.jwt_service.getHttpOptions()
+    );
+  }
+
+  public deleteAssistance(assistance: DeleteAssistancePresenter) {
+    return this.http.post(
+      `${this.API_URL}/event/assistant`,
+      assistance,
+      this.jwt_service.getHttpOptions(), 
+    );
+  }
+
+  public getAndStoreMyAssistancesCollection() {
+    this.http.get(
+      `${this.API_URL}/event/assistant/my-assistant/${this.jwt_service.getUserId()}`,
+      this.jwt_service.getHttpOptions()
+    )
+    .subscribe((my_assistance_collection: any) => {
+      this.storeMyAssistances(my_assistance_collection.events)
+    });
+  }
+
+  public getMyAssistances() {
+    let assistances: Array<EventModel> = [];
+    this.assistance$.subscribe(e => {
+      assistances = e.events;
+    });
+    return assistances;
+  }
+   
+  private storeMyAssistances(events: Array<EventModel>): Observable<void> {
+    return this.store.dispatch(new SetMyAssistances({events}));
+  }
 }

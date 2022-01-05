@@ -79,6 +79,7 @@ export class LoginComponent {
             this.follow_service.getAndStoreUserFollowCollection();
             this.conversation_service.getAndStoreConversations();
             this.event_service.getAndStoreMyEventsCollection();
+            this.event_service.getAndStoreMyAssistancesCollection();
             this.router.navigate(['/main/feed']);
           })
         },
