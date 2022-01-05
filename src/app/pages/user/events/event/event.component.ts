@@ -4,6 +4,7 @@ import { Store } from '@ngxs/store';
 import * as mapboxgl from 'mapbox-gl';
 import { EventModel } from 'src/app/models/events.model';
 import { EventService } from 'src/app/services/event.service';
+import { DeleteMyEvent } from 'src/app/shared/state/events/events.actions';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -40,18 +41,14 @@ export class EventComponent implements OnInit, AfterViewInit {
   }
 
   deleteEvent(event_id: string) {
-    // const deletePostInterface: DeletePostInterface = {
-    //   post_id,
-    // }
-    // this.postService
-    //   .deletePost(deletePostInterface)
-    //   .subscribe(() => {
-    //     this.store.dispatch(new DeleteMyPost(post_id));
-    //   });
+    const eventServiceResponse = this.eventService.deleteEvent(event_id);
+    eventServiceResponse.subscribe(() => {
+      this.store.dispatch(new DeleteMyEvent(event_id));
+    });
   }
 
   updateEvent(event_id: string) {
-    // this.router.navigate(['main/post/update', post_id]);
+    this.router.navigate(['main/events/update', event_id]);
   }
 
   public initMap(): void {

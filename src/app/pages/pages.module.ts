@@ -42,6 +42,7 @@ import { GroupComponent } from './groups/group/group.component';
 import { GroupCreateComponent } from './groups/group-create/group-create.component';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { GroupUpdateComponent } from './groups/group-update/group-update.component';
+import { EventUpdateComponent } from './user/events/event-update/event-update.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { GroupUpdateComponent } from './groups/group-update/group-update.compone
     GroupComponent,
     GroupCreateComponent,
     GroupUpdateComponent,
+    EventUpdateComponent,
   ],
   imports: [
     ConfirmPopupModule,

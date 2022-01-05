@@ -89,7 +89,6 @@ export class PostComponent implements OnInit {
       .subscribe(() => {
         this.store.dispatch(new DeleteMyPost(post_id));
       });
-
   }
 
   updatePost(post_id: string) {

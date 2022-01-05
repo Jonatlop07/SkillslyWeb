@@ -53,7 +53,7 @@ export class PostService {
       );
   }
 
-  getPostsOfFriendsCollection (limit: number,offset: number) {
+  getPostsOfFriendsCollection(limit: number,offset: number) {
     if (this.isChargingFeedPosts) {
       return of([]);
     }
@@ -118,7 +118,7 @@ export class PostService {
     this.toggleCreate = !this.toggleCreate;
   }
 
-  getIfReactorEmail(){
+  getIfReactorEmail() {
     return this.jwtService.getEmail();
   }
 }
