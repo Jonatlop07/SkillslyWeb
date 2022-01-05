@@ -6,6 +6,7 @@ import { EventModel } from 'src/app/models/events.model';
 import { EventService } from 'src/app/services/event.service';
 import { DeleteMyEvent } from 'src/app/shared/state/events/events.actions';
 import { environment } from 'src/environments/environment';
+import { JwtService } from '../../../../services/jwt.service';
 
 @Component({
   selector: 'app-event',
@@ -21,6 +22,7 @@ export class EventComponent implements OnInit, AfterViewInit {
   map: any; 
   mapToken: string = environment.MAP_BOX_TOKEN;
   markers: mapboxgl.Marker[]=[];
+  assistance: boolean; 
 
 
   public user_name = 'nombre de usuario';
@@ -28,12 +30,18 @@ export class EventComponent implements OnInit, AfterViewInit {
 
   constructor(
     private eventService: EventService,
+    private  jwtService:JwtService,
     private store: Store,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    
+    this.assistance = false; 
+    this.eventService.getMyAssistances().forEach( (event:EventModel) => {
+      if (this.event.event_id == event.event_id) {
+        this.assistance = true; 
+      }
+    });
   }
   
   ngAfterViewInit(): void {
@@ -77,6 +85,23 @@ export class EventComponent implements OnInit, AfterViewInit {
     }
     const marcador = new mapboxgl.Marker().setLngLat(e).addTo(this.map);
     this.markers.push(marcador); 
+  }
+
+  createAssistance(event_id: string) {
+    const eventServiceResponse = this.eventService.createAssistance({event_id, user_id: this.jwtService.getUserId()});
+    eventServiceResponse.subscribe((resp:any) => {
+      console.log(resp)
+      this.assistance = true;
+      this.eventService.getAndStoreMyAssistancesCollection();
+    });
+  }
+
+  deleteAssistance(event_id:string) {
+    const eventServiceResponse = this.eventService.deleteAssistance({event_id, user_id: this.jwtService.getUserId()});
+    eventServiceResponse.subscribe(() => {
+      this.assistance = false;
+      this.eventService.getAndStoreMyAssistancesCollection();
+    });
   }
 
 }
