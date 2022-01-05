@@ -165,6 +165,7 @@ export class GroupComponent implements OnInit {
     const max =
       document.documentElement.scrollHeight || document.body.scrollHeight;
     if (pos > max) {
+      console.log(this.postsService.isChargingPosts)
       if (!this.postsService.isChargingPosts) {
         this.postsService
           .queryPostCollection({

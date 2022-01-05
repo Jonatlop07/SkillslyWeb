@@ -47,9 +47,6 @@ export class PostService {
 
   queryPostCollection(queryPostParams: QueryPostPresenter) {
     const { user_id, group_id, limit, offset } = queryPostParams;
-    if (this.isChargingPosts) {
-      return of([]);
-    }
     this.isChargingPosts = true;
     return this.http.post(
       `${this.API_URL}/permanent-posts/posts`,
