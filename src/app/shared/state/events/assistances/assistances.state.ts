@@ -1,28 +1,28 @@
 import { Injectable } from "@angular/core";
 import {Action, State, StateContext, StateToken} from "@ngxs/store";
 import { EventsModel } from "src/app/models/events.model";
-import { DeleteMyEvent, SetMyEvents } from "./events.actions";
+import { DeleteMyAssistance, SetMyAssistances } from "./assistances.actions";
 
-const EVENTS_STATE_TOKEN = new StateToken<EventsModel>('my_event');
+const ASSISTANCES_STATE_TOKEN = new StateToken<EventsModel>('my_assistance');
 
 @Injectable({
   providedIn: 'root'
 })
 @State<EventsModel>({
-  name: EVENTS_STATE_TOKEN,
+  name: ASSISTANCES_STATE_TOKEN,
   defaults: {events: []}
 })
 
-export class EventsState{
-  @Action(SetMyEvents)
-  public setMyEvents(ctx: StateContext<EventsModel>, action: SetMyEvents){
+export class AssistancesState{
+  @Action(SetMyAssistances)
+  public setMyAssistances(ctx: StateContext<EventsModel>, action: SetMyAssistances){
     ctx.setState({
       ...action.events
     });
   }
 
-  @Action(DeleteMyEvent)
-  public deleteMyEvent(ctx: StateContext<EventsModel>, action: DeleteMyEvent){
+  @Action(DeleteMyAssistance)
+  public deleteMyAssistance(ctx: StateContext<EventsModel>, action: DeleteMyAssistance){
     const state = ctx.getState();
     ctx.setState({
       events : state.events.filter( event => event.event_id !== action.event_id )

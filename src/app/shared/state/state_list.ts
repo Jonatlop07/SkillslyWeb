@@ -4,6 +4,7 @@ import { MyConversationsState } from './conversations/conversations.state'
 import { FollowingUsersState } from "./following_users/following_users.state";
 import { FollowersState } from "./followers/followers.state";
 import { EventsState } from './events/events.state';
+import { AssistancesState } from './events/assistances/assistances.state';
 
 
 export const state_list = [
@@ -12,5 +13,6 @@ export const state_list = [
   MyConversationsState,
   FollowingUsersState,
   FollowersState, 
-  EventsState
+  EventsState, 
+  AssistancesState
 ];
