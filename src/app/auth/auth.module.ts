@@ -9,6 +9,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { AccountService } from '../services/account.service';
+import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [RegisterComponent, LoginComponent],
@@ -20,6 +21,8 @@ import { AccountService } from '../services/account.service';
     CalendarModule,
     PasswordModule,
     RouterModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
   ],
   exports: [RegisterComponent],
 })

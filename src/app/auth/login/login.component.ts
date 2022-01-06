@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -10,16 +10,20 @@ import { LoginResponse } from '../../interfaces/login_response.interface'
 import { ConversationService } from '../../services/conversation.service';
 import { FollowService } from '../../services/follow.service';
 import { EventService } from 'src/app/services/event.service';
+import { RecaptchaComponent } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   public form: FormGroup;
   public loginForm: LoginForm;
   public formSubmitted = false;
+  public sitekey: any;
+  public validCaptcha = false;
+  @ViewChild('captchaElem') captcha: RecaptchaComponent;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,6 +33,10 @@ export class LoginComponent {
     private readonly event_service: EventService,
     private readonly router: Router
   ) {
+    
+  }
+  ngOnInit(): void {
+    this.sitekey = '6Le-PfMdAAAAAIM0bEC7_TxiGoL5J-8YkcAC4R0-'
     this.initForm();
   }
 
@@ -52,12 +60,15 @@ export class LoginComponent {
           ),
         ],
       ],
+      recaptcha: ['', Validators.required]
     });
   }
 
   async saveForm(): Promise<void> {
     this.formSubmitted = true;
     if (this.form.invalid) {
+      this.captcha.reset();
+      this.validCaptcha = false;
       return;
     }
     this.loginForm = this.form.value;

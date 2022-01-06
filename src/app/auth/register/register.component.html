@@ -60,13 +60,14 @@
                           dateFormat="dd/mm/yy" [yearNavigator]="true" yearRange="1930:2021" [readonlyInput]="true"
                           inputId="monthpicker" [showIcon]="true"></p-calendar>
             </div>
+            <re-captcha formControlName="recaptcha" type="image" [siteKey]="sitekey" #captchaElem theme="dark"></re-captcha> 
           </div>
         </div>
         <div class="row border-top border-secondary ">
           <div class="col-12 ">
             <div class="form-group ">
               <div class="pt-3 d-grid ">
-                <button class="btn btn-block btn-lg btn-info " type="submit">
+                <button [disabled]="!form.valid" class="btn btn-block btn-lg btn-info " type="submit">
                   Registrarse
                 </button>
                 <a class="mt-2" [routerLink]="['/login']">¿Ya tienes una cuenta?</a>
