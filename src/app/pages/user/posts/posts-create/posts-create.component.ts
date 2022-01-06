@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PermanentPostPresenter } from 'src/app/interfaces/presenter/post/query_post.presenter';
 import { PostService } from 'src/app/services/posts.service';
 
 @Component({
@@ -15,6 +16,10 @@ import { PostService } from 'src/app/services/posts.service';
   styleUrls: ['./posts-create.component.css'],
 })
 export class PostsCreateComponent implements OnInit {
+
+  @Output() toggleCreate = new EventEmitter<PermanentPostPresenter>();
+  @Input() group_id: string;
+
   allowedTypes = '^imagen$|^video$';
   postForm: FormGroup;
   requireOne = false;
@@ -70,8 +75,12 @@ export class PostsCreateComponent implements OnInit {
     if (this.validateContent(controls)) {
       this.referenceIncomplete = false;
       this.requireOne = false;
-      this.postService.createPost(this.postForm.value);
-      this.router.navigate(['./main/feed']);
+      this.postService.createPost(this.postForm.value, this.group_id).subscribe((res:any) => {
+        this.toggleCreate.emit(res as PermanentPostPresenter);
+      });
+      if (!this.group_id){
+        this.router.navigate(['./main/feed']);
+      }
       return true;
     } else {
       $event.preventDefault();
@@ -100,4 +109,6 @@ export class PostsCreateComponent implements OnInit {
     }
     return true;
   }
+
+  
 }

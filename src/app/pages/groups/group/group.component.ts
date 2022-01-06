@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { GroupPresenter } from 'src/app/interfaces/presenter/group/groups.presenter';
 import GroupUser from 'src/app/interfaces/presenter/group/group_user.interface';
+import { PermanentPostPresenter } from 'src/app/interfaces/presenter/post/query_post.presenter';
+import { PostModel } from 'src/app/models/posts.model';
 import { GroupsService } from 'src/app/services/groups.service';
+import { PostService } from 'src/app/services/posts.service';
 
 @Component({
   selector: 'app-group',
@@ -20,7 +23,9 @@ export class GroupComponent implements OnInit {
   };
   public searchedGroup: string;
   public users: Array<GroupUser> = [];
+  public posts: Array<PostModel> = [];
   public display = false;
+  public display_create = false;
   public limit: number;
   public offset: number;
   public only_owner_error = false;
@@ -28,7 +33,8 @@ export class GroupComponent implements OnInit {
     private groupsService: GroupsService,
     private route: ActivatedRoute,
     private router: Router,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private postsService: PostService
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +44,9 @@ export class GroupComponent implements OnInit {
         .queryGroup({ group_id: this.searchedGroup })
         .subscribe((res: any) => {
           this.group = res;
+          if (this.group.isMember) {
+            this.loadPosts();
+          }
         });
     });
   }
@@ -80,42 +89,40 @@ export class GroupComponent implements OnInit {
     });
   }
 
-  isOwnerAndNotSelf(user_id: string){
-    return !(this.groupsService.getUserId() === user_id) && this.group.isOwner
+  isOwnerAndNotSelf(user_id: string) {
+    return !(this.groupsService.getUserId() === user_id) && this.group.isOwner;
   }
 
-  joinGroup(){
-    this.groupsService.joinGroup(this.group.id).subscribe(
-      () => {
-        this.group.existsRequest = true;
-      }
-    )
+  joinGroup() {
+    this.groupsService.joinGroup(this.group.id).subscribe(() => {
+      this.group.existsRequest = true;
+    });
   }
 
-  cancelGroupRequest(){
-    this.groupsService.removeJoinRequest(this.group.id).subscribe(
-      () => {
-        this.group.existsRequest = false;
-      }
-    )
+  cancelGroupRequest() {
+    this.groupsService.removeJoinRequest(this.group.id).subscribe(() => {
+      this.group.existsRequest = false;
+    });
   }
 
-  onLeaveGroup(event: Event){
+  onLeaveGroup(event: Event) {
     this.confirmationService.confirm({
       target: event.target,
       message: 'Estás seguro que deseas abandonar este grupo?',
       icon: 'mdi mdi-emoticon-sad',
       accept: () => {
-        this.groupsService
-          .leaveGroup(this.searchedGroup)
-          .subscribe(() => {
-            this.router.navigate(['../../mygroups'], { relativeTo: this.route });
+        this.groupsService.leaveGroup(this.searchedGroup).subscribe(
+          () => {
+            this.router.navigate(['../../mygroups'], {
+              relativeTo: this.route,
+            });
           },
           (error) => {
-            if (error.status === 401){
+            if (error.status === 401) {
               this.only_owner_error = true;
             }
-          });
+          }
+        );
       },
       reject: () => {
         return;
@@ -123,7 +130,54 @@ export class GroupComponent implements OnInit {
     });
   }
 
-  onCloseError(){
+  onCloseError() {
     this.only_owner_error = false;
+  }
+
+  loadPosts() {
+    this.limit = 3;
+    this.offset = 0;
+    this.postsService
+      .queryPostCollection({
+        group_id: this.group.id,
+        limit: this.limit,
+        offset: this.offset,
+      })
+      .subscribe((res: any) => {
+        this.posts = res.posts;
+        this.offset = this.offset + this.limit;
+      });
+  }
+
+  onToggleCreate(post: PermanentPostPresenter) {
+    this.posts.push(post);
+    this.display_create = !this.display_create;
+  }
+
+  onDeletePost(id: string) {
+    this.posts.splice(parseInt(id), 1);
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll() {
+    const pos =
+      (document.documentElement.scrollTop || document.body.scrollTop) + 1300;
+    const max =
+      document.documentElement.scrollHeight || document.body.scrollHeight;
+    if (pos > max) {
+      console.log(this.postsService.isChargingPosts)
+      if (!this.postsService.isChargingPosts) {
+        this.postsService
+          .queryPostCollection({
+            group_id: this.group.id,
+            limit: this.limit,
+            offset: this.offset,
+          })
+          .subscribe((resp: any) => {
+            this.posts.push(...resp.posts);
+            this.offset = this.offset + this.limit;
+          });
+      }
+    }
   }
 }
