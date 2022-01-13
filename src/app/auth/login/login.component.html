@@ -1,3 +1,40 @@
+<div class="row justify-content-center">
+    <div class="col-xs-3 col-md-5">
+        <div class="card">
+            <div class="img">
+                <p-image src="../../../assets/images/Skillsly.png" width="100%" height="50%"></p-image>
+            </div>
+            <div class="login m-xs-2 m-md-2">
+                <div>
+                    <h3>Iniciar Sesión</h3>
+                </div>
+                <form class="signin-form" [formGroup]="form" (ngSubmit)="saveForm()">
+                    <div class="form-group mt-4">
+                        <span class="p-float-label p-input-icon-left" style="width: 100%;">
+                            <i class="pi pi-envelope"></i>
+                            <input style="width: 100%;" id="float-input" type="text" pInputText> 
+                            <label for="float-input">Correo</label>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <input id="password-field" type="password" class="form-control" required="">
+                        <label class="form-control-placeholder" for="password">Password</label>
+                        <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
+                    </div>
+                    <div class="form-group d-md-flex">
+                        <div class="w-50 text-md-right">
+                            <a href="#">Forgot Password</a>
+                        </div>
+                    </div>
+                </form>
+                <p class="text-center">Not a member? <a data-toggle="tab" href="#signup">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Login box.scss -->
 <!-- ============================================================== -->
 <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark h-100">
