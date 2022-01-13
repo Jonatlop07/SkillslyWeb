@@ -23,7 +23,11 @@ export class AuthService {
   ) {}
 
   public registerUser(registerForm: RegisterForm){
-    return this.http.post(`${this.API_URL}/users/account`, registerForm, {
+    return this.http.post(`${this.API_URL}/users/account`, {
+      ...registerForm,
+      is_requester: false,
+      is_investor: true
+    }, {
       headers: new HttpHeaders({
         'Content-type': 'application/json'
       })
