@@ -1,3 +1,6 @@
 .clickable:hover {
   cursor: pointer;
 }
+.story-font {
+  font-family: "Poppins", sans-serif;
+}

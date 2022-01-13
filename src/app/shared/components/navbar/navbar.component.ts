@@ -1,25 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserNotificationsService } from '../../../services/user_notifications.service'
-import { Subject } from 'rxjs'
-import { takeUntil } from 'rxjs/operators'
-import { Store } from '@ngxs/store'
-import { AppendGroupConversation } from '../../state/conversations/conversations.actions'
-import { ConversationPresenter } from '../../../interfaces/presenter/chat/conversation.presenter'
-import { User } from '../../../interfaces/user.interface'
+import { UserNotificationsService } from '../../../services/user_notifications.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Store } from '@ngxs/store';
+import { AppendGroupConversation } from '../../state/conversations/conversations.actions';
+import { ConversationPresenter } from '../../../interfaces/presenter/chat/conversation.presenter';
+import { User } from '../../../interfaces/user.interface';
 import {
   AppendReceivedFollowRequest,
-  DeleteSentFollowRequest
-} from '../../state/follow_requests/follow_requests.actions'
+  DeleteSentFollowRequest,
+} from '../../state/follow_requests/follow_requests.actions';
+
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-
   public searchForm = false;
 
   private unsubscribe = new Subject<void>();
@@ -30,24 +30,24 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly store: Store
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.notification_service.join();
-    this.notification_service.
-      onFollowRequestReceived()
+    this.notification_service
+      .onFollowRequestReceived()
       .pipe(takeUntil(this.unsubscribe))
       .subscribe((follow_request: User) => {
         this.store.dispatch(new AppendReceivedFollowRequest(follow_request));
-      })
-    this.notification_service.
-      onFollowRequestAccepted()
+      });
+    this.notification_service
+      .onFollowRequestAccepted()
       .pipe(takeUntil(this.unsubscribe))
       .subscribe((follow_request: User) => {
         this.store.dispatch(new DeleteSentFollowRequest(follow_request));
       });
-    this.notification_service.
-      onFollowRequestDeleted()
+    this.notification_service
+      .onFollowRequestDeleted()
       .pipe(takeUntil(this.unsubscribe))
       .subscribe((follow_request: User) => {
         this.store.dispatch(new DeleteSentFollowRequest(follow_request));
@@ -56,7 +56,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
       .onAddedToNewGroupConversation()
       .pipe(takeUntil(this.unsubscribe))
       .subscribe((new_group_conversation: ConversationPresenter) => {
-        this.store.dispatch(new AppendGroupConversation(new_group_conversation));
+        this.store.dispatch(
+          new AppendGroupConversation(new_group_conversation)
+        );
       });
   }
 
@@ -64,7 +66,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.notification_service.leave();
   }
 
-  logout(){
+  logout() {
     this.authService.logout();
     this.unsubscribe.next();
     this.unsubscribe.complete();
@@ -72,7 +74,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
   }
 
-  showSearchForm(){
+  showSearchForm() {
     if (!this.searchForm) {
       this.searchForm = true;
     } else {
@@ -80,17 +82,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
-  searchUser(searchInput: string){
+  searchUser(searchInput: string) {
     searchInput = searchInput.trim();
-    if (!searchInput){
+    if (!searchInput) {
       this.searchForm = false;
       return;
     }
-    this.router.navigate(['./search', searchInput], {relativeTo: this.activatedRoute });
+    this.router.navigate(['./search', searchInput], {
+      relativeTo: this.activatedRoute,
+    });
   }
-  searchPost(){
-    this.router.navigate(['./query', this.authService.getUserId()], {relativeTo: this.activatedRoute });
+  searchPost() {
+    this.router.navigate(['./query', this.authService.getUserId()], {
+      relativeTo: this.activatedRoute,
+    });
   }
-
 }
-

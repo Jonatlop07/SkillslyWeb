@@ -7,7 +7,9 @@ import * as moment from 'moment';
   styleUrls: ['./story.component.css'],
 })
 export class StoryComponent implements OnInit {
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.storiesData);
+  }
 
   displayModal: boolean;
 

@@ -5,7 +5,7 @@
   <p *ngIf="storiesData[0].description" [style.fontSize]="6">
     {{ storiesData[0].description }}
   </p>
-  <div>
+  <div class="story-font">
     <div class="row">
       <small [style.fontSize]="6">
         {{ storiesData[0].name }} · {{ storiesData[0].email }}
@@ -28,13 +28,15 @@
 
   <p-dialog
     header="Historia de {{ storiesData[0].name }}"
+    class="story-font"
+    [style.fontFamily]="'Poppins'"
     [(visible)]="displayModal"
     [modal]="true"
     [style]="{ width: '30vw' }"
     [draggable]="false"
     [resizable]="false"
   >
-    <div class="flex justify-content-center">
+    <div class="flex justify-content-center story-font">
       <app-story-gallery [images]="storiesData"></app-story-gallery>
     </div>
 
@@ -43,7 +45,7 @@
         icon="pi pi-check"
         (click)="displayModal = false"
         label="Cerrar"
-        styleClass="p-button-text"
+        styleClass="p-button-text story-font"
       ></p-button>
     </ng-template>
   </p-dialog>

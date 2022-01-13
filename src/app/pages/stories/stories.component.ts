@@ -91,6 +91,7 @@ export class StoriesComponent implements OnInit {
 
   getLoggedUserInfo() {
     this.accountService.getUserAccountData().subscribe((response) => {
+      console.log(response);
       this.userLogged = response;
     });
   }
