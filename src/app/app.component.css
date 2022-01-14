@@ -1,1 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+
+:host ::ng-deep .p-inputtext:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 1px #00887ace;
+  border-color: #00887a;
+}
+
+:host ::ng-deep .p-inputtext {
+  font-family: "Poppins", sans-serif;
+}
+
+:host ::ng-deep .p-chips .p-chips-multiple-container:not(p-disabled).p-focus {
+  box-shadow: 0 0 0 1px #00887ace;
+  border-color: #00887a;
+}
+:host
+  ::ng-deep
+  .p-chips
+  .p-chips-multiple-container
+  .p-chips-input-token
+  input {
+  font-family: "Poppins", sans-serif;
+}
+
+:host ::ng-deep .p-chips .p-chips-multiple-container .p-chips-token {
+  background: rgba(70, 229, 176, 0.04);
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header .p-dialog-header-icon:hover {
+  background: rgba(70, 229, 176, 0.04);
+  color: #00887a;
+}
+:host ::ng-deep .p-dialog .p-dialog-header .p-dialog-header-icon:focus {
+  box-shadow: 0 0 0 1px #00887a;
+}
+
+
