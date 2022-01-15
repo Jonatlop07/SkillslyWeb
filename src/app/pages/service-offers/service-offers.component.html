@@ -1,0 +1,82 @@
+<div class="bg-feed">
+  <div class="w-100">
+    <div class="row">
+      <div class="col-md-3 m-5">
+        <button
+          pButton
+          pRipple
+          label="Crear una nueva oferta de servicio"
+          icon="pi pi-plus"
+          iconPos="left"
+          class="p-button-sm button-add w-75"
+          (click)="showCreateServiceOfferModalDialog()"
+        ></button>
+      </div>
+    </div>
+    <p-dialog
+      header="Nueva oferta de servicio"
+      [(visible)]="displayCreateServiceOfferModal"
+      [modal]="true"
+      [style]="{ width: '30vw' }"
+      [draggable]="false"
+      [resizable]="false"
+    >
+      <div class="card story-font">
+        <div class="p-grid p-fluid">
+          <div class="p-field p-col-12">
+            <label for="description">Descripción de tu historia</label>
+            <br />
+            <input
+              id="description"
+              type="text"
+              aria-describedby="description"
+              pInputText
+              [(ngModel)]="description"
+            />
+            <br />
+            <small id="username1-help"
+            >Breve descripcion de lo que vas a publicar</small
+            >
+          </div>
+          <br />
+          <div class="p-field p-col-6">
+            <label for="reference">Referencia del recurso</label>
+            <br />
+            <input
+              id="reference"
+              type="text"
+              aria-describedby="reference"
+              pInputText
+              [(ngModel)]="reference"
+            />
+            <br />
+            <small id="username1-help">Por ahora solo imagenes :) </small>
+          </div>
+          <br />
+          <div class="p-field p-col-6">
+            <label for="referenceType">Tipo de referencia</label>
+            <br />
+            <input
+              id="referenceType"
+              type="text"
+              aria-describedby="referenceType"
+              pInputText
+              [(ngModel)]="referenceType"
+            />
+            <br />
+            <small id="username1-help">jpg o jpeg</small>
+          </div>
+        </div>
+      </div>
+
+      <ng-template pTemplate="footer">
+        <p-button
+          icon="pi pi-send"
+          (click)="sendStory()"
+          label="Enviar"
+          styleClass="p-button-text"
+        ></p-button>
+      </ng-template>
+    </p-dialog>
+  </div>
+</div>
