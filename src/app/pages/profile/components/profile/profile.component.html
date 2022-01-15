@@ -1,15 +1,17 @@
-<div class="h-100 bg-gradient">
-  <div class="row center-xs">
+<div class="h-100 bg-profile">
+  <div class="row d-flex justify-content-center">
     <div class="col-lg-5">
       <div class="box">
         <p-card
           header="Tu perfil de usuario"
           subheader="A continuación te invitamos a ingresar la información de tu perfil "
-          styleClass="p-card-shadow"
+          styleClass="profile-card"
         >
           <form (ngSubmit)="saveProfile($event)">
             <div class="p-fluid">
-              <label for="knowledgeInput">Cuentanos un poco de ti 👐🏻</label>
+              <label for="resumeInput" class="profile-element"
+                >Cuentanos un poco de ti 👐🏻</label
+              >
               <br />
               <textarea
                 rows="3"
@@ -18,12 +20,15 @@
                 [(ngModel)]="resume"
                 name="resume"
                 required
+                id="resumeInput"
               ></textarea>
               <br />
             </div>
 
             <div class="p-fluid">
-              <label for="knowledgeInput">Ingresa tus conocimientos 📚</label>
+              <label for="knowledgeInput" class="profile-element"
+                >Ingresa tus conocimientos 📚</label
+              >
               <br />
               <p-chips
                 [(ngModel)]="knowledge"
@@ -37,14 +42,16 @@
               <br />
             </div>
             <div class="p-fluid">
-              <label for="Input">Ingresa tus talentos 🤖</label>
+              <label for="talentsInput" class="profile-element"
+                >Ingresa tus talentos 🤖</label
+              >
               <br />
               <p-chips
                 [(ngModel)]="talents"
                 separator=","
-                placeholder="Ingresa tus conocimientos"
-                id="knowledgeInput"
-                styleClass="p-inputtext-sm"
+                placeholder="Ingresa tus talentos"
+                id="talentsInput"
+                styleClass="p-inputtext-sm profile-element"
                 name="talents"
                 required
               ></p-chips>
@@ -52,13 +59,15 @@
             </div>
 
             <div class="p-fluid">
-              <label for="Input">Ingresa tus actividades ⛹🏻‍♂️</label>
+              <label for="activitiesInput" class="profile-element"
+                >Ingresa tus actividades ⛹🏻‍♂️</label
+              >
               <br />
               <p-chips
                 [(ngModel)]="activities"
                 separator=","
-                placeholder="Ingresa tus conocimientos"
-                id="knowledgeInput"
+                placeholder="Ingresa tus actividades"
+                id="activitiesInput"
                 styleClass="p-inputtext-sm"
                 name="activities"
                 required
@@ -67,13 +76,15 @@
             </div>
 
             <div class="p-fluid">
-              <label for="Input">Ingresa tus intereses 💭</label>
+              <label for="interestsInput" class="profile-element"
+                >Ingresa tus intereses 💭</label
+              >
               <br />
               <p-chips
                 [(ngModel)]="interests"
                 separator=","
-                placeholder="Ingresa tus conocimientos"
-                id="knowledgeInput"
+                placeholder="Ingresa tus intereses"
+                id="interestsInput"
                 styleClass="p-inputtext-sm"
                 name="interests"
                 required
@@ -88,7 +99,7 @@
                     pRipple
                     type="button"
                     label="Editar perfil"
-                    class="p-button-outlined p-button-rounded"
+                    class="p-button-outlined p-button-rounded profile-button"
                     icon="pi pi-user-edit"
                     *ngIf="profileExists; else notShow"
                     type="submit"
@@ -100,7 +111,7 @@
                       pRipple
                       type="button"
                       label="Crear perfil"
-                      class="p-button-outlined p-button-rounded"
+                      class="p-button-outlined p-button-rounded profile-button"
                       icon="pi pi-user-plus"
                       type="submit"
                     ></button>
@@ -112,10 +123,9 @@
                     type="button"
                     label="Cancelar"
                     icon="pi pi-times"
-                    class="
-                      p-button-outlined p-button-rounded p-button-secondary
-                    "
+                    class="p-button-outlined p-button-rounded p-button-secondary"
                     [style]="{ 'margin-left': '.5em' }"
+                    (click)="cancel()"
                   ></button>
                 </div>
               </div>

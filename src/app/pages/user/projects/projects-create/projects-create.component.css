@@ -1,0 +1,32 @@
+.bg-projects {
+  background-color: #f2f8ff;
+}
+
+.projects-card {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  border-radius: 10px;
+}
+.project-element {
+  font-family: "Poppins", sans-serif;
+}
+
+.projects-button.p-button.p-button-rounded {
+  font-family: "Poppins", sans-serif;
+  border-color: #00887a;
+  color: #00887a;
+}
+.projects-button.p-button.p-button-rounded:hover {
+  border-color: #00887a;
+  color: #00887a;
+  background: rgba(70, 229, 176, 0.04);
+}
+.projects-button.p-button.p-button-rounded:active {
+  background: rgba(70, 229, 176, 0.04);
+}
+.projects-button.p-button.p-button-rounded:focus {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #00887a, 0 1px 2px 0 rgb(0 0 0 / 0%);
+}
+:host ::ng-deep .p-card .p-card-title {
+  font-family: "Poppins", sans-serif;
+}

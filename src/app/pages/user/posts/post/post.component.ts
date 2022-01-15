@@ -72,6 +72,7 @@ export class PostComponent implements OnInit {
         console.log(error);
       }
     );
+
   }
 
   isImage(referenceType: string): boolean {
@@ -215,5 +216,4 @@ export class PostComponent implements OnInit {
     }
     return false;
   }
-
 }

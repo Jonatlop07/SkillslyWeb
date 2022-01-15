@@ -1,0 +1,31 @@
+.bg-feed {
+  background-color: #f2f8ff;
+}
+.feed-card {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  border-radius: 10px;
+}
+
+:host ::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #ffffff;
+  border-color: #00887a;
+  color: #00887a;
+  font-family: "Poppins", sans-serif;
+  
+}
+
+:host ::ng-deep .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
+  background: #ffffff;
+  border-color: #3f3f46;
+  color: #3f3f46;
+}
+
+:host ::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus{
+  box-shadow: inset 0 0 0 1px #00887a;
+}
+
+.text-feed{
+  font-family: 'Poppins', sans-serif;
+  color: #3f3f46;
+}
