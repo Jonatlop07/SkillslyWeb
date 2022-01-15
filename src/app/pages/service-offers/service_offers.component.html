@@ -1,0 +1,94 @@
+<div class="bg-feed">
+  <div class="w-100">
+    <div class="row">
+      <div class="col-md-3 m-5">
+        <button
+          pButton
+          pRipple
+          label="Crear una nueva oferta de servicio"
+          icon="pi pi-plus"
+          iconPos="left"
+          class="p-button-sm button-add w-75"
+          (click)="showCreateServiceOfferModalDialog()"
+        ></button>
+      </div>
+    </div>
+    <p-dialog
+      header="Nueva oferta de servicio"
+      [(visible)]="displayCreateServiceOfferModal"
+      [modal]="true"
+      [style]="{ width: '30vw' }"
+      [draggable]="false"
+      [resizable]="false"
+    >
+      <div class="card">
+        <div class="p-grid p-fluid">
+          <div class="p-field p-col-12">
+            <label for="service_offer_title">Título de tu servicio</label>
+            <br />
+            <input
+              id="service_offer_title"
+              type="text"
+              aria-describedby="service_offer_title"
+              pInputText
+              [(ngModel)]="title"
+            />
+            <br />
+            <small id="username1-help">Breve frase que describa tu servicio</small>
+          </div>
+          <br />
+          <div class="p-field p-col-12">
+            <label for="service_offer_brief">Descripción de tu servicio</label>
+            <br />
+            <input
+              id="service_offer_brief"
+              type="text"
+              aria-describedby="service_offer_brief"
+              pInputText
+              [(ngModel)]="service_brief"
+            />
+            <br />
+            <small id="username1-help"
+            >Breve párrafo con la descripción de tu servicio</small
+            >
+          </div>
+          <div class="p-field p-col-12">
+            <label for="service_offer_contact_info">Información de contacto</label>
+            <br />
+            <input
+              id="service_offer_contact_info"
+              type="text"
+              aria-describedby="service_offer_contact_info"
+              pInputText
+              [(ngModel)]="contact_information"
+            />
+            <br />
+            <small id="username1-help">Información adicional para que los interesados puedan contactarte</small>
+          </div>
+          <br />
+          <div class="p-field p-col-12">
+            <label for="service_offer_category">Categoría de tu servicio</label>
+            <br />
+            <input
+              id="service_offer_category"
+              type="text"
+              aria-describedby="service_offer_category"
+              pInputText
+              [(ngModel)]="category"
+            />
+            <br />
+            <small id="username1-help">Categoría en la que enmarcarías tu servicio</small>
+          </div>
+        </div>
+      </div>
+      <ng-template pTemplate="footer">
+        <p-button
+          icon="pi pi-send"
+          (click)="createServiceOffer()"
+          label="Enviar"
+          styleClass="p-button-text"
+        ></p-button>
+      </ng-template>
+    </p-dialog>
+  </div>
+</div>

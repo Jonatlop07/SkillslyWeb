@@ -17,7 +17,7 @@ import { GroupsQueryComponent } from './groups/groups-query/groups-query.compone
 import { GroupComponent } from './groups/group/group.component';
 import { GroupUpdateComponent } from './groups/group-update/group-update.component';
 import { EventUpdateComponent } from './user/events/event-update/event-update.component';
-import { ServiceOffersComponent } from './service-offers/service-offers.component'
+import { ServiceOffersComponent } from './service-offers/service_offers.component'
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent },
