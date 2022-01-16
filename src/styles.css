@@ -1,5 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+    --app-primary-color: #77A6F7;
+    --app-main-bg-color: #f2f8ff;
+    --app-secondary-color: #00887A;
+    --app-alternative-color: #fc6662;
+}
+
 html,
 body {
     height: 100%;
@@ -17,27 +24,27 @@ body {
 }
 
 .p-inputtext:enabled:focus {
-    border-color: #00887A !important;
-    box-shadow: 0 0 0 0.02rem #00887A !important;
+    border-color: var(--app-secondary-color) !important;
+    box-shadow: 0 0 0 0.02rem var(--app-secondary-color) !important;
 }
 
 .p-inputtext:hover {
-    box-shadow: 0 0 0 0.02rem #00887A !important;
+    box-shadow: 0 0 0 0.02rem var(--app-secondary-color) !important;
 }
 
 .p-inputtext.ng-dirty.ng-invalid,
 .p-inputtext.ng-touched.ng-invalid {
-    border-color: #FC6662 !important;
+    border-color: var(--app-alternative-color) !important;
 }
 
 .p-float-label>.ng-invalid.ng-dirty+label,
 .p-float-label>.ng-invalid.ng-touched+label {
-    color: #FC6662 !important;
+    color: var(--app-alternative-color) !important;
 }
 
 .p-button {
     width: 100% !important;
-    background-color: #00887A !important;
+    background-color: var(--app-secondary-color) !important;
 }
 
 .p-calendar {

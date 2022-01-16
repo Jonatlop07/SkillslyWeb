@@ -20,6 +20,7 @@ export class ProfileComponent implements OnInit {
     if (email) {
       this.profileService.getProfile(email).subscribe(
         (response: any) => {
+          console.log(response);
           this.profileExists = true;
           this.resume = response['resume'];
           this.knowledge = response['knowledge'];
@@ -86,6 +87,10 @@ export class ProfileComponent implements OnInit {
         }
       );
     }
+  }
+
+  cancel() {
+    window.location.href = '/main/feed';
   }
 
   constructor(private profileService: ProfileService) {}

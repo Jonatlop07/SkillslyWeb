@@ -1,38 +1,44 @@
-<div class="col-12">
-  <div class="card">
+<div class="pt-5">
+  <div class="stories-card card overflow-auto">
     <div class="card-body">
-      <h3 class="card-title">Historias de tus amigos</h3>
-      <div class="row">
-        <div class="col-2">
-          <p-card styleClass="p-card-shadow" class="h-100">
-            <p>Tu historia</p>
-
-            <p-button
-              label="Agregar"
-              icon="pi pi-plus"
-              iconPos="left"
-              styleClass="p-button-sm"
-              class="w-100"
-              (click)="showModalDialogAddStory()"
-            ></p-button>
-
-            <button
-              pButton
-              pRipple
-              type="button"
-              label="Ver mi historia"
-              class="p-button-outlined p-button-secondary"
-              *ngIf="userStories.length > 0"
-              styleClass="p-button-sm"
-              (click)="showModalDialog()"
-            ></button>
-
-            <ng-template pTemplate="footer" *ngIf="userLogged">
-              <small> {{ userLogged.name }} · {{ userLogged.email }}</small>
-            </ng-template>
-          </p-card>
+      <h2 class="card-title">Historias de tus amigos</h2>
+      <div class="dropdown-divider"></div>
+      <div class="row mt-4">
+        <div class="col-sm-8 col-md-4 col-lg-2 my-story-card p-3">
+          <div class="flex align-items-center">
+            <p>Hola {{ userLogged.name }}, esta es tu historia</p>
+            <div class="row">
+              <div class="col-12 p-1">
+                <button
+                  pButton
+                  pRipple
+                  label="Agregar"
+                  icon="pi pi-plus"
+                  iconPos="left"
+                  class="p-button-sm button-add w-100"
+                  (click)="showModalDialogAddStory()"
+                ></button>
+              </div>
+              <div class="col-12 p-1">
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  label="Ver mi historia"
+                  class="p-button-outlined p-button-secondary p-button-sm w-100"
+                  *ngIf="userStories.length > 0"
+                  (click)="showModalDialog()"
+                ></button>
+              </div>
+            </div>
+            <div class="dropdown-divider"></div>
+            <small class="mt-2">
+              Has ingresado como: {{ userLogged.email }}
+            </small>
+          </div>
         </div>
-        <div *ngFor="let user of users" class="col-2">
+
+        <div *ngFor="let user of users" class="col-sm-5 col-md-4 col-lg-2">
           <app-story [storiesData]="dataStories[user]"></app-story>
         </div>
 
@@ -44,10 +50,10 @@
           [draggable]="false"
           [resizable]="false"
         >
-          <div class="card">
+          <div class="card story-font">
             <div class="p-grid p-fluid">
               <div class="p-field p-col-12">
-                <label for="description">Descripcion de tu historia</label>
+                <label for="description">Descripción de tu historia</label>
                 <br />
                 <input
                   id="description"
@@ -110,7 +116,7 @@
           [draggable]="false"
           [resizable]="false"
         >
-          <div class="card">
+          <div class="card story-font">
             <ul class="list-style-none">
               <li
                 class="d-flex no-block card-body"
@@ -137,7 +143,7 @@
                       pRipple
                       type="button"
                       icon="pi pi-times"
-                      class="p-button-rounded p-button-danger p-button-outlined"
+                      class="p-button-sm p-button-rounded p-button-outlined"
                       (click)="deleteStory(story.temporal_post_id)"
                     ></button>
                   </div>

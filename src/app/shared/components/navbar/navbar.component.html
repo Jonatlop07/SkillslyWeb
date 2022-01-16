@@ -1,22 +1,9 @@
 <!-- ============================================================== -->
 <!-- Topbar header - style you can find in pages.scss -->
 <!-- ============================================================== -->
-<header class="topbar" data-navbarbg="skin5">
+<header class="topbar" data-navbarbg="skin5" style="height: 56px">
   <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-    <div class="navbar-header" data-logobg="skin5">
-      <!-- Toggle which is visible on mobile only -->
-      <!-- ============================================================== -->
-      <a
-        class="nav-toggler waves-effect waves-light d-block d-md-none"
-        href="javascript:void(0)"
-        ><i class="ti-menu ti-close"></i
-      ></a>
-    </div>
-    <div
-      class="navbar-collapse collapse"
-      id="navbarSupportedContent"
-      data-navbarbg="skin5"
-    >
+    <div class="navbar-collapse collapse my-navbar">
       <!-- ============================================================== -->
       <!-- toggle and nav items -->
       <!-- ============================================================== -->
@@ -26,12 +13,11 @@
             class="nav-link sidebartoggler waves-effect waves-light"
             [routerLink]="['./feed']"
             data-sidebartype="mini-sidebar"
-            ><i class="mdi mdi-menu font-24"></i
-          ></a>
+          >
+            <span class="d-none d-md-block app-title"> Skillsly </span>
+            ></a
+          >
         </li>
-        <!-- ============================================================== -->
-        <!-- create new -->
-        <!-- ============================================================== -->
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -41,7 +27,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <span class="d-none d-md-block"
+            <span class="d-none d-md-block navbar-element"
               >Publicaciones <i class="fa fa-angle-down"></i
             ></span>
             <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
@@ -68,7 +54,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <span class="d-none d-md-block"
+            <span class="d-none d-md-block navbar-element"
               >Proyectos <i class="fa fa-angle-down"></i
             ></span>
             <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
@@ -90,7 +76,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <span class="d-none d-md-block"
+            <span class="d-none d-md-block navbar-element"
               >Eventos<i class="fa fa-angle-down"></i
             ></span>
             <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
@@ -117,7 +103,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <span class="d-none d-md-block"
+            <span class="d-none d-md-block navbar-element"
               >Grupos<i class="fa fa-angle-down"></i
             ></span>
             <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
@@ -136,27 +122,27 @@
           </ul>
         </li>
       </ul>
-      <!-- ============================================================== -->
-      <!-- Right side toggle and nav items -->
-      <!-- ============================================================== -->
       <ul class="navbar-nav float-end">
         <!-- ============================================================== -->
         <!-- Search -->
         <!-- ============================================================== -->
-        <li *ngIf="searchForm" class="nav-item search-box mt-3">
-          <input
-            #searchInput
-            (keyup.enter)="searchUser(searchInput.value)"
-            type="text"
-            class="form-control"
-            placeholder="Busca un usuario y Enter"
-          />
+        <li class="search-box mt-3">
+          <span class="p-input-icon-right">
+            <i class="pi pi-search"></i>
+            <input
+              #searchInput
+              type="text"
+              pInputText
+              class="p-inputtext-sm"
+              (keyup.enter)="searchUser(searchInput.value)"
+              type="text"
+              class="form-control"
+              placeholder="Busca un usuario, luego enter"
+              style="font-size: 1em"
+            />
+          </span>
         </li>
-        <li class="nav-item search-box">
-          <a (click)="showSearchForm()" class="nav-link waves-effect waves-dark"
-            ><i class="mdi mdi-magnify fs-4"></i
-          ></a>
-        </li>
+
         <!-- ============================================================== -->
         <!-- Follow Request -->
         <!-- ============================================================== -->
@@ -164,181 +150,43 @@
           <a
             [routerLink]="['./follow-requests']"
             class="nav-link waves-effect waves-dark"
-            ><i class="mdi mdi-account-check fs-4"></i
+            ><i
+              class="pi pi-user-plus"
+              style="font-size: 1rem; color: white"
+            ></i
           ></a>
         </li>
-        <!-- ============================================================== -->
-        <!-- Comment -->
-        <!-- ============================================================== -->
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i class="mdi mdi-bell font-24"></i>
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </li>
-          </ul>
-        </li>
-        <!-- ============================================================== -->
-        <!-- End Comment -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Messages -->
-        <!-- ============================================================== -->
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle waves-effect waves-dark"
-            href="#"
-            id="2"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i class="font-24 mdi mdi-comment-processing"></i>
-          </a>
-          <ul
-            class="
-              dropdown-menu dropdown-menu-end
-              mailbox
-              animated
-              bounceInDown
-            "
-            aria-labelledby="2"
-          >
-            <ul class="list-style-none">
-              <li>
-                <div class="">
-                  <!-- Message -->
-                  <a href="javascript:void(0)" class="link border-top">
-                    <div class="d-flex no-block align-items-center p-10">
-                      <span
-                        class="
-                          btn btn-success btn-circle
-                          d-flex
-                          align-items-center
-                          justify-content-center
-                        "
-                        ><i class="mdi mdi-calendar text-white fs-4"></i
-                      ></span>
-                      <div class="ms-2">
-                        <h5 class="mb-0">Event today</h5>
-                        <span class="mail-desc"
-                          >Just a reminder that event</span
-                        >
-                      </div>
-                    </div>
-                  </a>
-                  <!-- Message -->
-                  <a href="javascript:void(0)" class="link border-top">
-                    <div class="d-flex no-block align-items-center p-10">
-                      <span
-                        class="
-                          btn btn-info btn-circle
-                          d-flex
-                          align-items-center
-                          justify-content-center
-                        "
-                        ><i class="mdi mdi-settings fs-4"></i
-                      ></span>
-                      <div class="ms-2">
-                        <h5 class="mb-0">Settings</h5>
-                        <span class="mail-desc"
-                          >You can customize this template</span
-                        >
-                      </div>
-                    </div>
-                  </a>
-                  <!-- Message -->
-                  <a href="javascript:void(0)" class="link border-top">
-                    <div class="d-flex no-block align-items-center p-10">
-                      <span
-                        class="
-                          btn btn-primary btn-circle
-                          d-flex
-                          align-items-center
-                          justify-content-center
-                        "
-                        ><i class="mdi mdi-account fs-4"></i
-                      ></span>
-                      <div class="ms-2">
-                        <h5 class="mb-0">Pavan kumar</h5>
-                        <span class="mail-desc">Just see the my admin!</span>
-                      </div>
-                    </div>
-                  </a>
-                  <!-- Message -->
-                  <a href="javascript:void(0)" class="link border-top">
-                    <div class="d-flex no-block align-items-center p-10">
-                      <span
-                        class="
-                          btn btn-danger btn-circle
-                          d-flex
-                          align-items-center
-                          justify-content-center
-                        "
-                        ><i class="mdi mdi-link fs-4"></i
-                      ></span>
-                      <div class="ms-2">
-                        <h5 class="mb-0">Luanch Admin</h5>
-                        <span class="mail-desc"
-                          >Just see the my new admin!</span
-                        >
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </ul>
-        </li>
-        <!-- ============================================================== -->
-        <!-- End Messages -->
-        <!-- ============================================================== -->
 
-        <!-- ============================================================== -->
-        <!-- User profile and search -->
-        <!-- ============================================================== -->
         <li class="nav-item dropdown">
           <a
-            class="
-              nav-link
-              dropdown-toggle
-              text-muted
-              waves-effect waves-dark
-              pro-pic
-            "
+            class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
             href="#"
             id="navbarDropdown"
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <img
-              src="../assets/images/users/1.jpg"
-              alt="user"
-              class="rounded-circle"
-              width="31"
-            />
+            <i class="pi pi-bell" style="font-size: 1rem; color: white"> </i>
+          </a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="pi pi-user" style="font-size: 1rem; color: white"> </i>
           </a>
           <ul
             class="dropdown-menu dropdown-menu-end user-dd animated"
             aria-labelledby="navbarDropdown"
           >
             <a class="dropdown-item" [routerLink]="['./profile']">
-              <i class="mdi mdi-account me-1 ms-1"></i>
+              <i class="pi pi-user me-1 ms-1"></i>
               Mi perfil</a
             >
             <a
@@ -346,35 +194,27 @@
               class="dropdown-item"
               href="javascript:void(0)"
             >
-              <i class="mdi mdi-wallet me-1 ms-1"></i>
+              <i class="pi pi-comments me-1 ms-1"></i>
               Mis conversaciones</a
             >
-            <a class="dropdown-item" href="javascript:void(0)">
-              <i class="mdi mdi-email me-1 ms-1"></i>
+            <!-- <a class="dropdown-item" href="javascript:void(0)">
+              <i class="pi pi-envelope me-1 ms-1"></i>
               Inbox
-            </a>
+            </a> -->
             <div class="dropdown-divider"></div>
             <a
               [routerLink]="['./account']"
               class="dropdown-item"
               href="javascript:void(0)"
             >
-              <i class="mdi mdi-settings me-1 ms-1"></i>
+              <i class="pi pi-cog me-1 ms-1"></i>
               Mi cuenta
             </a>
-            <div class="dropdown-divider"></div>
+
             <button class="dropdown-item" (click)="logout()">
-              <i class="fa fa-power-off me-1 ms-1"></i>
+              <i class="pi pi-power-off me-1 ms-1"></i>
               Cerrar sesión
             </button>
-            <div class="dropdown-divider"></div>
-            <div class="ps-4 p-10">
-              <a
-                href="javascript:void(0)"
-                class="btn btn-sm btn-success btn-rounded text-white"
-                >View Profile</a
-              >
-            </div>
           </ul>
         </li>
         <!-- ============================================================== -->

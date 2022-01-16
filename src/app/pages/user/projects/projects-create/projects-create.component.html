@@ -1,15 +1,15 @@
-<div class="bg-primary bg-gradient h-100 overflow-auto">
-  <div class="w-75 mx-auto pt-5">
-    <div class="row">
-      <div class="col-md-12 box">
-        <p-card header="Creador de Proyectos" styleClass="p-card-shadow">
+<div class="bg-projects h-100 overflow-auto">
+  <div class="p-4">
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-5 box">
+        <p-card header="Creador de Proyectos" styleClass="projects-card ">
           <form
             (ngSubmit)="saveForm(form)"
-            class="form-horizontal"
+            class="form-horizontal project-element"
             #form="ngForm"
           >
-            <div class="p-fluid col-xs-12">
-              <label for="Input">Titulo del proyecto</label>
+            <div class="p-fluid">
+              <label for="inputTitle" class="">Titulo del proyecto</label>
               <br />
               <input
                 [(ngModel)]="paramsProject.title"
@@ -17,14 +17,14 @@
                 name="title"
                 type="text"
                 pInputText
-                id="Input"
+                id="inputTitle"
                 class="col-xs-12"
                 required
               />
               <br />
             </div>
-            <div class="p-fluid col-xs-12">
-              <label for="Input">Miembros del proyecto</label>
+            <div class="p-fluid">
+              <label for="inputMembers">Miembros del proyecto</label>
               <br />
               <p-chips
                 [(ngModel)]="members"
@@ -32,13 +32,12 @@
                 placeholder="Pepe , Lucia ..."
                 styleClass="p-inputtext-sm"
                 name="members"
-                id="Input"
-                class="col-xs-12"
+                id="inputMembers"
                 required
               ></p-chips>
               <br />
             </div>
-            <div class="p-fluid col-xs-12">
+            <div class="p-fluid">
               <label for="Input">Descripción</label>
               <br />
               <textarea
@@ -52,7 +51,7 @@
               ></textarea>
               <br />
             </div>
-            <div class="p-fluid col-xs-12">
+            <div class="p-fluid">
               <label for="Input">Ingresa el link de una imagen o video</label>
               <br />
               <input
@@ -62,13 +61,12 @@
                 id="Input"
                 type="text"
                 pInputText
-                class="col-xs-12"
                 required
               />
               <br />
             </div>
 
-            <div class="p-fluid col-xs-12">
+            <div class="p-fluid">
               <label for="Input">ingresa el tipo de archivo multimedia</label>
               <br />
               <input
@@ -78,14 +76,13 @@
                 id="Input"
                 type="text"
                 pInputText
-                class="col-xs-12"
                 required
               />
               <br />
             </div>
 
-            <div class="p-fluid col-xs-12">
-              <label for="Input">anexos</label>
+            <div class="p-fluid">
+              <label for="Input">Anexos</label>
               <br />
               <p-chips
                 [(ngModel)]="annexes"
@@ -104,21 +101,19 @@
                   <button
                     pButton
                     pRipple
+                    type="button"
                     label="Guardar Proyecto"
-                    class="p-button-outlined p-button-rounded"
-                    icon="pi pi-check"
+                    class="p-button-outlined p-button-rounded projects-button"
+                    icon="pi pi-envelope"
                     type="submit"
                   ></button>
-
                   <button
                     pButton
                     pRipple
                     type="button"
                     label="Cancelar"
                     icon="pi pi-times"
-                    class="
-                      p-button-outlined p-button-rounded p-button-secondary
-                    "
+                    class="p-button-outlined p-button-rounded p-button-secondary"
                     [style]="{ 'margin-left': '.5em' }"
                   ></button>
                 </div>

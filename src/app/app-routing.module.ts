@@ -4,6 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthRoutingModule } from './auth/auth.routing';
 import { PagesRoutingModule } from './pages/pages.routing';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
+import { InputTextModule } from 'primeng/inputtext';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -17,6 +18,7 @@ const routes: Routes = [
     }),
     AuthRoutingModule,
     PagesRoutingModule,
+    InputTextModule,
   ],
   exports: [RouterModule],
 })
