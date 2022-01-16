@@ -1,25 +1,41 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { ServiceOfferDetails } from '../../interfaces/service-offers/service_offer_details'
 import { ServiceOffersService } from '../../services/service_offers.service'
 import { ServiceOfferPresenter } from '../../interfaces/service-offers/presenter/service_offer.presenter'
 import Swal from 'sweetalert2'
+import { ServiceOfferCollectionPresenter } from '../../interfaces/service-offers/presenter/service_offer_collection.presenter'
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'app-service-offers',
   templateUrl: './service_offers.component.html',
   styleUrls: ['./service_offers.component.css'],
 })
-export class ServiceOffersComponent {
-  title: string;
-  service_brief: string;
-  contact_information: string;
-  category: string;
+export class ServiceOffersComponent implements OnInit {
+  public readonly new_service_offer: ServiceOfferDetails = {
+    title: '',
+    service_brief: '',
+    contact_information: '',
+    category: ''
+  };
 
-  displayCreateServiceOfferModal: boolean = false;
+  public service_offers: Array<ServiceOfferPresenter> = [];
+
+  public categories: string = '';
+
+  public displayCreateServiceOfferModal: boolean = false;
 
   constructor(
     private readonly service_offers_service: ServiceOffersService
   ) {
+  }
+
+  ngOnInit() {
+    this.service_offers_service
+      .queryAllServiceOfferCollection()
+      .subscribe((service_offer_collection: ServiceOfferCollectionPresenter) => {
+        this.service_offers = service_offer_collection.service_offers;
+      });
   }
 
   public showCreateServiceOfferModalDialog() {
@@ -31,19 +47,16 @@ export class ServiceOffersComponent {
   }
 
   public createServiceOffer() {
-    const service_offer: ServiceOfferDetails = {
-      title: this.title,
-      service_brief: this.service_brief,
-      contact_information: this.contact_information,
-      category: this.category
-    };
-
     this.service_offers_service
-      .createServiceOffer(service_offer)
+      .createServiceOffer(this.new_service_offer)
       .subscribe(
         (created_service_offer: ServiceOfferPresenter) => {
           this.hideCreateServiceOfferModalDialog();
           this.service_offers_service.createServiceOfferInStore(created_service_offer);
+          this.new_service_offer.title = '';
+          this.new_service_offer.service_brief = '';
+          this.new_service_offer.contact_information = '';
+          this.new_service_offer.category = '';
           Swal.fire({
             customClass: {
               container: 'my-swal'
@@ -66,5 +79,14 @@ export class ServiceOffersComponent {
           );
         }
       );
+  }
+
+  public queryServiceOfferCollection() {
+    const result: Observable<ServiceOfferCollectionPresenter> = this.categories ?
+      this.service_offers_service.queryServiceOfferCollectionByCategory(this.categories)
+      : this.service_offers_service.queryAllServiceOfferCollection();
+    result.subscribe((service_offer_collection: ServiceOfferCollectionPresenter) => {
+      this.service_offers = service_offer_collection.service_offers;
+    });
   }
 }

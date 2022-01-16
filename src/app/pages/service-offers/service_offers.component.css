@@ -1,0 +1,14 @@
+.test-service-offers {
+    font-family: 'Poppins', sans-serif;
+    color: #3f3f46;
+}
+.service-offers-container {
+    max-height: 65vh;
+    overflow-y: scroll;
+}
+.service-offers-label {
+    font-family: "Poppins", sans-serif;
+}
+.simple-card {
+    height: min-content;
+}

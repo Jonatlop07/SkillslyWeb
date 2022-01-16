@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core'
 import { ServiceOfferPresenter } from '../../../interfaces/service-offers/presenter/service_offer.presenter'
 import { ServiceOffersService } from '../../../services/service_offers.service'
 import Swal from 'sweetalert2'
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-service-offer',
@@ -89,5 +90,14 @@ export class ServiceOfferComponent implements OnInit {
           'error'
         );
       });;
+  }
+
+  public getTime() {
+    moment.locale('es');
+    return moment(this.service_offer.created_at).fromNow();
+  }
+
+  public userIsOwner() {
+    return this.service_offers_service.isServiceOwner(this.service_offer.owner_id);
   }
 }

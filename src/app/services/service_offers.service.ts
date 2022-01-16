@@ -29,6 +29,32 @@ export class ServiceOffersService {
     private readonly store: Store
   ) {}
 
+  private getServiceOfferCollection(categories?: string): Observable<ServiceOfferCollectionPresenter> {
+    console.log(categories)
+    let params = new HttpParams();
+    if (categories) {
+      params = params.append('categories', JSON.stringify(categories));
+    }
+    params = params.append('limit', 20);
+    params = params.append('offset', 0);
+    console.log(params.get('categories'))
+    return this.http.get<ServiceOfferCollectionPresenter>(
+      `${this.API_URL}/service-offers`,
+      {
+        params,
+        ...this.jwt_service.getHttpOptions()
+      }
+    );
+  }
+
+  public queryServiceOfferCollectionByCategory(category: string): Observable<ServiceOfferCollectionPresenter> {
+    return this.getServiceOfferCollection(category);
+  }
+
+  public queryAllServiceOfferCollection() {
+    return this.getServiceOfferCollection();
+  }
+
   public createServiceOffer(service_offer_details: ServiceOfferDetails): Observable<ServiceOfferPresenter> {
     return this.http.post<ServiceOfferPresenter>(
       `${this.API_URL}/service-offers`,
@@ -95,5 +121,9 @@ export class ServiceOffersService {
       `${this.API_URL}/service-offers/${encodeURIComponent(service_offer_id)}`,
       this.jwt_service.getHttpOptions()
     );
+  }
+
+  public isServiceOwner(owner_id: string) {
+    return owner_id === this.jwt_service.getUserId();
   }
 }
