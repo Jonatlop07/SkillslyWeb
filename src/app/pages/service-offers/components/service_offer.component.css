@@ -1,0 +1,11 @@
+.see-service-offer-btn {
+    color: var(--app-primary-color);
+}
+
+.edit-service-offer-btn {
+    color: var(--app-secondary-color);
+}
+
+.delete-service-offer-btn {
+    color: var(--app-alternative-color);
+}

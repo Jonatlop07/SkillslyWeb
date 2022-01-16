@@ -43,6 +43,9 @@ import { GroupCreateComponent } from './groups/group-create/group-create.compone
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { GroupUpdateComponent } from './groups/group-update/group-update.component';
 import { EventUpdateComponent } from './user/events/event-update/event-update.component';
+import { ServiceOffersComponent } from './service-offers/service_offers.component'
+import { MyServiceOffersComponent } from './profile/components/my-service-offers/my_service_offers.component'
+import { ServiceOfferComponent } from './service-offers/components/service_offer.component'
 
 @NgModule({
   declarations: [
@@ -71,6 +74,9 @@ import { EventUpdateComponent } from './user/events/event-update/event-update.co
     GroupCreateComponent,
     GroupUpdateComponent,
     EventUpdateComponent,
+    ServiceOffersComponent,
+    MyServiceOffersComponent,
+    ServiceOfferComponent
   ],
   imports: [
     ConfirmPopupModule,
