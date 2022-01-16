@@ -5,6 +5,7 @@
     --app-main-bg-color: #f2f8ff;
     --app-secondary-color: #00887A;
     --app-alternative-color: #fc6662;
+    font-family: "Poppins", sans-serif !important;
 }
 
 html,
@@ -14,7 +15,7 @@ body {
 
 body {
     margin: 0;
-    font-family: Roboto, sans-serif;
+    font-family: "Poppins", sans-serif !important;
 }
 
 .card {

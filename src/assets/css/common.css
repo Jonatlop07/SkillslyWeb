@@ -1,0 +1,11 @@
+.button-add {
+    background-color: #00887a !important;
+    color: white;
+    border: 1px solid #00887a;
+}
+.button-add:focus {
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #00887a, 0 1px 2px 0 rgb(0 0 0 / 0%);
+}
+.button-add:hover {
+    border: 1px solid #00887a;
+}

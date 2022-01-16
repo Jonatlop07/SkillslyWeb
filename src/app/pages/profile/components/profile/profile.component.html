@@ -1,6 +1,9 @@
 <div class="h-100 bg-profile">
-  <div class="row d-flex justify-content-center">
-    <div class="col-lg-5">
+  <div class="row d-flex profile-row">
+    <div class="col-md-4">
+      <app-my-service-offers class="w-auto"></app-my-service-offers>
+    </div>
+    <div class="col-md-4">
       <div class="box">
         <p-card
           header="Tu perfil de usuario"
@@ -24,7 +27,6 @@
               ></textarea>
               <br />
             </div>
-
             <div class="p-fluid">
               <label for="knowledgeInput" class="profile-element"
                 >Ingresa tus conocimientos 📚</label
@@ -74,7 +76,6 @@
               ></p-chips>
               <br />
             </div>
-
             <div class="p-fluid">
               <label for="interestsInput" class="profile-element"
                 >Ingresa tus intereses 💭</label
@@ -90,7 +91,6 @@
                 required
               ></p-chips>
             </div>
-
             <div class="row center-xs">
               <div class="col-lg-8">
                 <div class="box">
@@ -104,7 +104,6 @@
                     *ngIf="profileExists; else notShow"
                     type="submit"
                   ></button>
-
                   <ng-template #notShow>
                     <button
                       pButton
@@ -116,7 +115,6 @@
                       type="submit"
                     ></button>
                   </ng-template>
-
                   <button
                     pButton
                     pRipple

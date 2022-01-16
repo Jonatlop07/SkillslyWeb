@@ -8,7 +8,6 @@ import {
   StoreConversations
 } from './conversations.actions'
 import { Injectable } from '@angular/core'
-import { ConversationPresenter } from '../../../interfaces/presenter/chat/conversation.presenter'
 
 const CONVERSATIONS_STATE_TOKEN = new StateToken<ConversationsModel>('my_conversations');
 
@@ -72,7 +71,7 @@ export class MyConversationsState {
     }
     ctx.setState({
       private_conversations: state.private_conversations,
-      group_conversations: state.group_conversations
+      group_conversations: group_conversations
     })
   }
 
