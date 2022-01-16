@@ -16,6 +16,7 @@ body {
 body {
     margin: 0;
     font-family: "Poppins", sans-serif !important;
+    background-color: var(--app-main-bg-color);
 }
 
 .card {

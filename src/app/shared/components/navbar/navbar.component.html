@@ -121,6 +121,28 @@
             </li>
           </ul>
         </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span class="d-none d-md-block navbar-element"
+            >Ofertas de Servicio<i class="fa fa-angle-down"></i
+            ></span>
+            <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <button [routerLink]="['./service-offers']" class="dropdown-item">
+                Consultar servicios
+              </button>
+            </li>
+          </ul>
+        </li>
       </ul>
       <ul class="navbar-nav float-end">
         <!-- ============================================================== -->

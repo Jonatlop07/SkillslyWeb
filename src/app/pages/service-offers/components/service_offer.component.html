@@ -1,5 +1,6 @@
 <div class="card p-3">
-  <h6 class="font-medium pb-2">{{ service_offer.title }}</h6>
+  <h6 class="font-medium pb-1">{{ service_offer.title }}</h6>
+  <small class="text-muted pb-3">{{ getTime() }}</small>
   <h6 class="font-light pb-2">{{ service_offer.service_brief }}</h6>
   <div class="row justify-content-sm-around">
     <button
@@ -12,6 +13,7 @@
       (click)="seeServiceOffer()"
     ></button>
     <button
+      *ngIf="userIsOwner()"
       pButton
       pRipple
       type="button"
@@ -21,6 +23,7 @@
       (click)="editServiceOffer()"
     ></button>
     <button
+      *ngIf="userIsOwner()"
       pButton
       pRipple
       type="button"

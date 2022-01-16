@@ -1,17 +1,58 @@
-<div class="bg-feed">
-  <div class="w-100">
-    <div class="row">
-      <div class="col-md-3 m-5">
-        <button
-          pButton
-          pRipple
-          label="Crear una nueva oferta de servicio"
-          icon="pi pi-plus"
-          iconPos="left"
-          class="p-button-sm button-add w-75"
-          (click)="showCreateServiceOfferModalDialog()"
-        ></button>
+<div class="h-100">
+  <div class="w-100 pt-5">
+    <div class="row justify-content-around">
+      <div class="col-md-4 p-5 card simple-card">
+        <div class="row mb-3 px-2">
+          <button
+            pButton
+            pRipple
+            label="Crear una nueva oferta de servicio"
+            icon="pi pi-plus"
+            iconPos="left"
+            class="p-button-sm button-add w-50"
+            (click)="showCreateServiceOfferModalDialog()"
+          ></button>
+        </div>
+        <div class="row align-items-center">
+          <label for="service-offers-categories" class="service-offers-label mb-3">Búsqueda por categoría 📚</label>
+          <div class="p-field col">
+            <p-chips
+              [(ngModel)]="categories"
+              separator=","
+              placeholder="Categorías"
+              id="service-offers-categories"
+              styleClass="p-inputtext-sm"
+              name="categories"
+              required
+            ></p-chips>
+          </div>
+          <div class="col">
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="Consultar"
+              class="p-button-outlined p-button-rounded"
+              icon="pi pi-info-circle"
+              (click)="queryServiceOfferCollection()"
+            ></button>
+          </div>
+        </div>
       </div>
+
+      <div class="col-md-5">
+        <div class="card justify-content-center mx-auto py-2 px-4">
+          <h2 class="card-title text-service-offers mx-auto my-4">
+            Ofertas de servicios más recientes
+          </h2>
+          <div class="my-4 p-3 service-offers-container">
+            <div *ngFor="let service_offer of service_offers">
+              <app-service-offer [input_service_offer]="service_offer"></app-service-offer>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <p-dialog
       header="Nueva oferta de servicio"
@@ -25,58 +66,58 @@
         <div class="p-grid p-fluid">
           <div class="p-field p-col-12">
             <label for="service_offer_title">Título de tu servicio</label>
-            <br />
+            <br/>
             <input
               id="service_offer_title"
               type="text"
               aria-describedby="service_offer_title"
               pInputText
-              [(ngModel)]="title"
+              [(ngModel)]="new_service_offer.title"
             />
-            <br />
+            <br/>
             <small id="username1-help">Breve frase que describa tu servicio</small>
           </div>
-          <br />
+          <br/>
           <div class="p-field p-col-12">
             <label for="service_offer_brief">Descripción de tu servicio</label>
-            <br />
+            <br/>
             <input
               id="service_offer_brief"
               type="text"
               aria-describedby="service_offer_brief"
               pInputText
-              [(ngModel)]="service_brief"
+              [(ngModel)]="new_service_offer.service_brief"
             />
-            <br />
+            <br/>
             <small id="username1-help"
             >Breve párrafo con la descripción de tu servicio</small
             >
           </div>
           <div class="p-field p-col-12">
             <label for="service_offer_contact_info">Información de contacto</label>
-            <br />
+            <br/>
             <input
               id="service_offer_contact_info"
               type="text"
               aria-describedby="service_offer_contact_info"
               pInputText
-              [(ngModel)]="contact_information"
+              [(ngModel)]="new_service_offer.contact_information"
             />
-            <br />
+            <br/>
             <small id="username1-help">Información adicional para que los interesados puedan contactarte</small>
           </div>
-          <br />
+          <br/>
           <div class="p-field p-col-12">
             <label for="service_offer_category">Categoría de tu servicio</label>
-            <br />
+            <br/>
             <input
               id="service_offer_category"
               type="text"
               aria-describedby="service_offer_category"
               pInputText
-              [(ngModel)]="category"
+              [(ngModel)]="new_service_offer.category"
             />
-            <br />
+            <br/>
             <small id="username1-help">Categoría en la que enmarcarías tu servicio</small>
           </div>
         </div>
