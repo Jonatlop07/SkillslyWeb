@@ -1,5 +1,5 @@
 .error {
-    color: #FC6662;
+    color: var(--app-alternative-color);
 }
 
 .already {
@@ -7,5 +7,30 @@
 }
 
 .title {
-    color: #77A6F7;
+    color: var(--app-primary-color);
+}
+
+.p-button {
+    width: 100% !important;
+    background-color: var(--app-secondary-color) !important;
+    border-color: var(--app-secondary-color) !important;
+}
+
+.p-inputtext:enabled:focus {
+    border-color: var(--app-secondary-color) !important;
+    box-shadow: 0 0 0 0.02rem var(--app-secondary-color) !important;
+}
+
+.p-inputtext:hover {
+    box-shadow: 0 0 0 0.02rem var(--app-secondary-color) !important;
+}
+
+.p-inputtext.ng-dirty.ng-invalid,
+.p-inputtext.ng-touched.ng-invalid {
+    border-color: var(--app-alternative-color) !important;
+}
+
+.p-float-label>.ng-invalid.ng-dirty+label,
+.p-float-label>.ng-invalid.ng-touched+label {
+    color: var(--app-alternative-color) !important;
 }
