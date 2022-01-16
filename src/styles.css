@@ -8,6 +8,7 @@ body {
 body {
     margin: 0;
     font-family: Roboto, sans-serif;
+    background-color: #f2f8ff;
 }
 
 .card {
@@ -16,10 +17,51 @@ body {
 }
 
 .p-inputtext:enabled:focus {
-    border-color: #4D80CA !important;
-    box-shadow: 0 0 0 0.02rem green !important;
+    border-color: #00887A !important;
+    box-shadow: 0 0 0 0.02rem #00887A !important;
 }
 
 .p-inputtext:hover {
-    box-shadow: 0 0 0 0.02rem green !important;
+    box-shadow: 0 0 0 0.02rem #00887A !important;
+}
+
+.p-inputtext.ng-dirty.ng-invalid,
+.p-inputtext.ng-touched.ng-invalid {
+    border-color: #FC6662 !important;
+}
+
+.p-float-label>.ng-invalid.ng-dirty+label,
+.p-float-label>.ng-invalid.ng-touched+label {
+    color: #FC6662 !important;
+}
+
+.p-button {
+    width: 100% !important;
+    background-color: #00887A !important;
+}
+
+.p-calendar {
+    width: 100% !important;
+}
+
+.p-calendar.p-calendar-w-btn .p-inputtext {
+    order: 2 !important;
+    border-top-right-radius: 3px !important;
+    border-bottom-right-radius: 3px !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-color: black !important;
+    background-color: black;
+}
+
+.p-calendar.p-calendar-w-btn .p-datepicker-trigger {
+    order: 1 !important;
+    border-top-left-radius: 3px !important;
+    border-bottom-left-radius: 3px !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-color: black !important;
+    background-color: black !important;
+    width: 100% !important;
+    color: white !important;
 }

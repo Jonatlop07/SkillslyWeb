@@ -1,92 +1,43 @@
-<div class="row justify-content-center">
-    <div class="col-xs-3 col-md-5">
-        <div class="card">
+<div class="row justify-content-center" style="height: 100%;">
+    <div class="col-md-4 align-self-center">
+        <div class="card m-md-4">
             <div class="img">
                 <p-image src="../../../assets/images/Skillsly.png" width="100%" height="50%"></p-image>
             </div>
-            <div class="login m-xs-2 m-md-2">
-                <div>
-                    <h3>Iniciar Sesión</h3>
-                </div>
-                <form class="signin-form" [formGroup]="form" (ngSubmit)="saveForm()">
-                    <div class="form-group mt-4">
+            <div class="">
+                <form class="m-md-5 mt-md-1 mb-md-1" [formGroup]="form" (ngSubmit)="saveForm()">
+                    <div class="mt-md-4">
                         <span class="p-float-label p-input-icon-left" style="width: 100%;">
                             <i class="pi pi-envelope"></i>
-                            <input style="width: 100%;" id="float-input" type="text" pInputText> 
+                            <input style="width: 100%;" id="float-input" type="text" formControlName="email" pInputText> 
                             <label for="float-input">Correo</label>
                         </span>
-                    </div>
-                    <div class="form-group">
-                        <input id="password-field" type="password" class="form-control" required="">
-                        <label class="form-control-placeholder" for="password">Password</label>
-                        <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
-                    </div>
-                    <div class="form-group d-md-flex">
-                        <div class="w-50 text-md-right">
-                            <a href="#">Forgot Password</a>
+                        <div class="error mt-md-2">
+                            <p *ngIf="invalidInput('email') || invalidForm()">El email tiene que ser válido.</p>
                         </div>
+                    </div>
+                    <div class="mt-md-4">
+                        <span class="p-float-label p-input-icon-left" style="width: 100%;">
+                            <i class="pi pi-lock"></i>
+                            <input style="width: 100%;" id="float-input" type="password" formControlName="password" pInputText> 
+                            <label for="float-input">Contraseña</label>
+                        </span>
+                        <div class="error mt-md-2">
+                            <p *ngIf="invalidInput('password') || invalidForm()">La contraseña debe contener al menos 8 cáracteres, una minúscula, una mayúscula y un número.</p>
+                        </div>
+                    </div>
+                    <div class="mt-md-3">
+                        <button pButton type="submit" label="Iniciar Sesión"></button>
+                    </div>
+                    <div class="recover mt-md-3">
+                        <a href="">¿Olvidaste tu contraseña?</a>
                     </div>
                 </form>
-                <p class="text-center">Not a member? <a data-toggle="tab" href="#signup">Sign Up</a></p>
+                <p-divider></p-divider>
+                <div class="m-md-5 mt-md-1 mb-md-3">
+                    <button pButton class="info" type="button" [routerLink]="['/register']" label="Registrarse"></button>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Login box.scss -->
-<!-- ============================================================== -->
-<div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark h-100">
-    <div class="auth-box bg-dark border-top border-secondary">
-        <div id="loginform">
-            <div class="text-center pt-3 pb-3">
-                <span class="db"><img src="../assets/images/logo.png" alt="logo"
-              /></span>
-            </div>
-            <!-- Form -->
-            <form class="form-horizontal mt-3" id="loginform" [formGroup]="form" (ngSubmit)="saveForm()">
-                <div class="row pb-4">
-                    <div class="col-12">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text bg-success text-white h-100" id="basic-addon1"><i class="mdi mdi-account fs-4"></i></span>
-                            </div>
-                            <input type="text" class="form-control form-control-lg" formControlName="email" placeholder="Tu email" aria-label="Username" aria-describedby="basic-addon1" required="" />
-                        </div>
-                        <div class="col text-danger">
-                            <p *ngIf="invalidInput('email') || invalidForm()">* El email es obligatorio y tiene que ser válido</p>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text bg-warning text-white h-100" id="basic-addon2"><i class="mdi mdi-lock fs-4"></i></span>
-                            </div>
-                            <input type="password" class="form-control form-control-lg" formControlName="password" placeholder="Tu contraseña" aria-label="Password" aria-describedby="basic-addon1" required="" />
-                        </div>
-                        <div class="col text-danger">
-                            <p *ngIf="invalidInput('password') || invalidForm()">* La contraseña es obligatoria y debe contener:</p>
-                            <ul _ngcontent-cmx-c54="" *ngIf="invalidInput('password') || invalidForm()">
-                                <li _ngcontent-cmx-c54="">Al menos una minúscula</li>
-                                <li _ngcontent-cmx-c54="">Al menos una mayúscula</li>
-                                <li _ngcontent-cmx-c54="">Al menos un número</li>
-                                <li _ngcontent-cmx-c54="">Mínimo 8 carácteres</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row border-top border-secondary">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <div class="pt-3">
-                                <button class="btn btn-info ml-3" id="to-recover" [routerLink]="['/register']" type="button"> <i class="mdi mdi-arrow-up fs-4 me-1"> </i>Registrarse</button>
-                                <button class="btn btn-success float-end text-white" type="submit">Iniciar sesión</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- ============================================================== -->
-<!-- Login box.scss -->
