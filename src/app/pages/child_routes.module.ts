@@ -18,6 +18,7 @@ import { GroupComponent } from './groups/group/group.component';
 import { GroupUpdateComponent } from './groups/group-update/group-update.component';
 import { EventUpdateComponent } from './user/events/event-update/event-update.component';
 import { ServiceOffersComponent } from './service-offers/service_offers.component'
+import { ServiceRequestsComponent } from './service-requests/service_requests.component'
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent },
@@ -41,7 +42,8 @@ const routes: Routes = [
   { path: 'groups', component: GroupsQueryComponent },
   { path: 'group/:groupId', component: GroupComponent },
   { path: 'group/:groupId/admin', component: GroupUpdateComponent },
-  { path: 'service-offers', component: ServiceOffersComponent }
+  { path: 'service-offers', component: ServiceOffersComponent },
+  { path: 'service-requests', component: ServiceRequestsComponent }
 ];
 
 @NgModule({

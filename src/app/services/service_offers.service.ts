@@ -32,7 +32,7 @@ export class ServiceOffersService {
   private getServiceOfferCollection(categories?: string): Observable<ServiceOfferCollectionPresenter> {
     console.log(categories)
     let params = new HttpParams();
-    if (categories) {
+    if (categories && categories.length > 0) {
       params = params.append('categories', JSON.stringify(categories));
     }
     params = params.append('limit', 20);
