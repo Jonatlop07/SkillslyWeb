@@ -44,8 +44,13 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { GroupUpdateComponent } from './groups/group-update/group-update.component';
 import { EventUpdateComponent } from './user/events/event-update/event-update.component';
 import { ServiceOffersComponent } from './service-offers/service_offers.component'
-import { MyServiceOffersComponent } from './profile/components/my-service-offers/my_service_offers.component'
+import {
+  MyServiceRequestsComponent
+} from './profile/components/my-service-requests/my_service_requests.component'
 import { ServiceOfferComponent } from './service-offers/components/service_offer.component'
+import { ServiceRequestComponent } from './service-requests/components/service_request.component'
+import { ServiceRequestsComponent } from './service-requests/service_requests.component'
+import { MyServiceOffersComponent } from './profile/components/my-service-offers/my_service_offers.component'
 
 @NgModule({
   declarations: [
@@ -76,7 +81,10 @@ import { ServiceOfferComponent } from './service-offers/components/service_offer
     EventUpdateComponent,
     ServiceOffersComponent,
     MyServiceOffersComponent,
-    ServiceOfferComponent
+    ServiceOfferComponent,
+    ServiceRequestsComponent,
+    MyServiceRequestsComponent,
+    ServiceRequestComponent
   ],
   imports: [
     ConfirmPopupModule,

@@ -1,0 +1,11 @@
+.see-service-request-btn {
+    color: var(--app-primary-color);
+}
+
+.edit-service-request-btn {
+    color: var(--app-secondary-color);
+}
+
+.delete-service-request-btn {
+    color: var(--app-alternative-color);
+}
