@@ -5,6 +5,7 @@ export interface PostsModel {
 }
 export interface PostModel {
   user_id: string;
+  user_name: string;
   post_id: string;
   content: PostContentData[];
   privacy: string;

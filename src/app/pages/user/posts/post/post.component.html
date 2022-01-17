@@ -10,7 +10,7 @@
       /> -->
       </div>
       <div class="align-self-center">
-        <h5 class="font-medium">{{ post.user_id }}</h5>
+        <h5 class="font-medium"> {{ post.user_name }} </h5>
       </div>
     </div>
     <div class="d-flex">
@@ -126,7 +126,7 @@
           <div class="comment-widgets scrollable">
             <div
               *ngFor="let reactor of reactors['interested'].reactors"
-              class="d-flex flex-row comment-row mt-0 reaction-item" 
+              class="d-flex flex-row comment-row mt-0 reaction-item"
             >
               <div class="comment-text w-100">
                 <h6 class="font-medium">{{ reactor.name }}</h6>

@@ -9,6 +9,7 @@ export interface QueryPostPresenter {
 }
 export interface PermanentPostPresenter{
     user_id: string;
+    user_name: string;
     post_id: string;
     content: PostContentData[];
     privacy: string;
