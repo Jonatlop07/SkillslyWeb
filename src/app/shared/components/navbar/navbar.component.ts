@@ -4,15 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserNotificationsService } from '../../../services/user_notifications.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Store } from '@ngxs/store';
-import { AppendGroupConversation } from '../../state/conversations/conversations.actions';
-import { ConversationPresenter } from '../../../interfaces/presenter/chat/conversation.presenter';
-import { User } from '../../../interfaces/user.interface';
-import {
-  AppendReceivedFollowRequest,
-  DeleteSentFollowRequest,
-} from '../../state/follow_requests/follow_requests.actions';
-
+import UserNotification from '../../../interfaces/notifications/user_notification'
+import { NotificationModel } from '../../../models/notification.model'
 
 @Component({
   selector: 'app-navbar',
@@ -24,42 +17,37 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject<void>();
 
+  public notifications: Array<NotificationModel>;
+
   constructor(
     private readonly authService: AuthService,
     private readonly notification_service: UserNotificationsService,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly store: Store
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
+    this.notification_service
+      .getNotificationsFromStore()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe((notification_collection) => {
+        this.notifications = notification_collection.notifications;
+      });
     this.notification_service.join();
     this.notification_service
-      .onFollowRequestReceived()
+      .onNotificationArrives()
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe((follow_request: User) => {
-        this.store.dispatch(new AppendReceivedFollowRequest(follow_request));
-      });
-    this.notification_service
-      .onFollowRequestAccepted()
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe((follow_request: User) => {
-        this.store.dispatch(new DeleteSentFollowRequest(follow_request));
-      });
-    this.notification_service
-      .onFollowRequestDeleted()
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe((follow_request: User) => {
-        this.store.dispatch(new DeleteSentFollowRequest(follow_request));
-      });
-    this.notification_service
-      .onAddedToNewGroupConversation()
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe((new_group_conversation: ConversationPresenter) => {
-        this.store.dispatch(
-          new AppendGroupConversation(new_group_conversation)
-        );
-      });
+      .subscribe(
+        (notification: UserNotification) => {
+          console.log(notification)
+          if (notification.action_details)
+            this.notification_service.storeNotification({
+              data: notification.data,
+              action_details: notification.action_details
+            });
+        }
+      );
   }
 
   ngOnDestroy() {

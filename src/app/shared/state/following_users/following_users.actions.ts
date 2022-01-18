@@ -5,3 +5,9 @@ export class StoreFollowingUsers {
 
   constructor(public readonly following_users: Array<User>) {}
 }
+
+export class AppendFollowingUser {
+  static readonly type = '[Notification] Append Following User';
+
+  constructor(public readonly following_user: User) {}
+}
