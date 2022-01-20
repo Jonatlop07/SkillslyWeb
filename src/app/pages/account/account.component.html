@@ -1,119 +1,166 @@
-  <div class="bg-primary bg-gradient py-5 h-100">
-  <div class="col-md-12 d-flex no-block justify-content-center align-items-center">
-    <div class="card w-50">
-      <form class="form-horizontal" *ngIf="form" [formGroup]="form" (ngSubmit)="submitUserAccountData()">
-        <div class="card-body">
-          <h4 class="card-title">Información de la cuenta</h4>
-          <div class="form-group row mt-4">
-            <label
-              for="name"
-              class="col-sm-3 text-end control-label col-form-label"
-            >Nombre</label>
-            <div class="col-sm-6">
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                placeholder="Tu nombre"
-                formControlName="name"
-              />
-              <div class="col text-danger">
-                <p *ngIf="invalidInput('name')">
-                  * El nombre es obligatorio, mínimo 4 carácteres
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label
-              for="email"
-              class="col-sm-3 text-end control-label col-form-label"
-            >
-              Email
-            </label>
-            <div class="col-sm-6">
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                placeholder="Tu dirección de correo electrónico"
-                formControlName="email"
-              />
-              <div class="col text-danger">
-                <p *ngIf="invalidInput('email')">
-                  * El email es obligatorio y tiene que ser válido
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label
-              for="date_of_birth"
-              class="col-sm-3 text-end control-label col-form-label"
-            >
-              Fecha de nacimiento
-            </label>
-            <div class="col-sm-6">
-              <p-calendar [maxDate]="today" formControlName="date_of_birth"
-                          dateFormat="dd/mm/yy" [yearNavigator]="true" yearRange="1930:2021" [readonlyInput]="true"
-                          inputId="monthpicker" [showIcon]="true" id="date_of_birth">
-              </p-calendar>
-            </div>
-          </div>
-          <div class="form-group row mx-5 my-4">
-            <div class="form-check mr-sm-2">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                id="customControlAutosizing1"
-                [checked]="change_password"
-                (change)="onToggleChangePassword()"
-              />
-              <label
-                class="form-check-label mb-0"
-                for="customControlAutosizing1"
-              >
-                Habilitar el cambio de contraseña
-              </label>
-            </div>
-          </div>
-          <div class="form-group row"
-               *ngIf="change_password">
-            <label
-              for="password"
-              class="col-sm-3 text-end control-label col-form-label"
-            >
-              Cambio de contraseña
-            </label>
-            <div class="col-sm-6">
-              <input
-                type="password"
-                class="form-control"
-                id="password"
-                placeholder="Tu nueva contraseña"
-                formControlName="password"
-              />
-              <div class="col text-danger mt-2">
-                <p *ngIf="invalidInput('password')">
-                  * La constraseña debe contener:
-                </p>
-                <ul _ngcontent-cmx-c54="" *ngIf="invalidInput('password') || invalidForm()">
-                  <li _ngcontent-cmx-c54="">Al menos una minúscula</li>
-                  <li _ngcontent-cmx-c54="">Al menos una mayúscula</li>
-                  <li _ngcontent-cmx-c54="">Al menos un número</li>
-                  <li _ngcontent-cmx-c54="">Mínimo 8 carácteres</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="border-top">
+<div class="bg-account h-100 ">
+  <div class="row d-flex no-block justify-content-center pt-5">
+    <div class="col-5">
+      <div class="card w-100 p-4">
+        <form
+          class="form-horizontal"
+          *ngIf="form"
+          [formGroup]="form"
+          (ngSubmit)="submitUserAccountData()"
+        >
           <div class="card-body">
-            <input type="submit" class="btn btn-primary mx-2" value="Actualizar datos">
-            <button class="button btn btn-danger mx-3" (click)="deleteUserAccount()">Eliminar cuenta</button>
+            <h4 class="card-title">Información de la cuenta</h4>
+            <div class="form-group row mt-4">
+              <label for="name" class="col-sm-3 control-label col-form-label"
+                >Nombre</label
+              >
+              <div class="col-sm-7">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  placeholder="Tu nombre"
+                  formControlName="name"
+                  pInputText
+                />
+                <div class="col text-danger">
+                  <p *ngIf="invalidInput('name')">
+                    * El nombre es obligatorio, mínimo 4 carácteres
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="email" class="col-sm-3 control-label col-form-label">
+                Correo electrónico
+              </label>
+              <div class="col-sm-7">
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Tu dirección de correo electrónico"
+                  formControlName="email"
+                  pInputText
+                />
+                <div class="col text-danger">
+                  <p *ngIf="invalidInput('email')">
+                    * El email es obligatorio y tiene que ser válido
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label
+                for="date_of_birth"
+                class="col-sm-3 control-label col-form-label"
+              >
+                Fecha de nacimiento
+              </label>
+              <div class="col-sm-7">
+                <p-calendar
+                  [maxDate]="today"
+                  formControlName="date_of_birth"
+                  dateFormat="dd/mm/yy"
+                  [yearNavigator]="true"
+                  yearRange="1930:2021"
+                  [readonlyInput]="true"
+                  inputId="monthpicker"
+                  [showIcon]="true"
+                  id="date_of_birth"
+                  inputStyleClass="p-input text-sm"
+                >
+                </p-calendar>
+              </div>
+            </div>
+            <div class="form-group row mx-1 my-4">
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="customControlAutosizing1"
+                  [checked]="change_password"
+                  (change)="onToggleChangePassword()"
+                  styleClass="p-input text-sm"
+                />
+                <label
+                  class="form-check-label mb-0"
+                  for="customControlAutosizing1"
+                >
+                  <small>Habilitar el cambio de contraseña</small>
+                </label>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="change_password">
+              <label
+                for="password"
+                class="col-sm-3 control-label col-form-label"
+              >
+                Cambio de contraseña
+              </label>
+              <div class="col-sm-6">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  placeholder="Tu nueva contraseña"
+                  formControlName="password"
+                  pInputText
+                />
+                <div class="col text-danger mt-2">
+                  <p *ngIf="invalidInput('password')">
+                    * La contraseña debe contener:
+                  </p>
+                  <ul
+                    _ngcontent-cmx-c54=""
+                    *ngIf="invalidInput('password') || invalidForm()"
+                  >
+                    <li _ngcontent-cmx-c54="">Al menos una minúscula</li>
+                    <li _ngcontent-cmx-c54="">Al menos una mayúscula</li>
+                    <li _ngcontent-cmx-c54="">Al menos un número</li>
+                    <li _ngcontent-cmx-c54="">Mínimo 8 carácteres</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </form>
+          <div class="border-top">
+            <div class="card-body">
+              <!-- <input
+                type="submit"
+                class="btn btn-primary mx-2"
+                value="Actualizar datos"
+              />
+              <button
+                class="button btn btn-danger mx-3"
+                (click)="deleteUserAccount()"
+              >
+                Eliminar cuenta
+              </button> -->
+              <div class="box">
+                <button
+                  pButton
+                  pRipple
+                  type="submit"
+                  label="Actualizar datos"
+                  class="account-button p-button-outlined p-button-rounded projects-button"
+                  icon="pi pi-send"
+                ></button>
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  label="Eliminar cuenta"
+                  icon="pi pi-trash"
+                  class="cancel-button p-button-outlined p-button-rounded p-button-secondary"
+                  [style]="{ 'margin-left': '.5em' }"
+                  (click)="deleteUserAccount()"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>

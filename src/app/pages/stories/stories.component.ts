@@ -128,7 +128,7 @@ export class StoriesComponent implements OnInit {
       confirmButtonColor: '#00887A',
       cancelButtonColor: '#fc6662',
       confirmButtonText: 'Si, eliminar!',
-      cancelButtonText: 'Cancelar',
+      cancelButtonText: 'Cancelar', 
     }).then((result) => {
       if (result.isConfirmed) {
         this.storiesService.deleteStory(temporal_post_id).subscribe(

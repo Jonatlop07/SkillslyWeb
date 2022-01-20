@@ -20,17 +20,26 @@
   border-color: transparent;
   font-family: "Poppins", sans-serif;
 }
+:host ::ng-deep .p-button {
+  color: #ffffff;
+  background: #00887a;
+  border: 1px solid #00887a;
+}
 
 :host ::ng-deep .p-button.p-button-text:hover {
   background: rgba(70, 229, 176, 0.04);
   color: #00887a;
+}
+
+:host ::ng-deep .p-button:hover {
+  background: rgba(70, 229, 176, 0.04);
+  color: #ffffff;
   border-color: transparent;
 }
 
-:host ::ng-deep .p-button.p-button-text:focus {
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #00887a, 0 1px 2px 0 rgba(0, 0, 0, 0);
+:host ::ng-deep .p-button:focus {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #00887a, 0 1px 2px 0 rgb(0 0 0 / 0%);
 }
-
 
 :host ::ng-deep .tetx-right .p-button.p-button-outlined {
   color: #fc6662;

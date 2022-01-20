@@ -19,7 +19,7 @@
 .projects-button.p-button.p-button-rounded:hover {
   border-color: #00887a;
   color: #00887a;
-  background: rgba(70, 229, 176, 0.04);
+  background: rgba(42, 13, 13, 0.04);
 }
 .projects-button.p-button.p-button-rounded:active {
   background: rgba(70, 229, 176, 0.04);
