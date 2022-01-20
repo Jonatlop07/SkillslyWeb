@@ -1,6 +1,6 @@
 import { Action, State, StateContext, StateToken } from '@ngxs/store'
 import { FollowingUsersModel } from 'src/app/models/following_users.model';
-import { StoreFollowingUsers } from './following_users.actions'
+import { AppendFollowingUser, StoreFollowingUsers } from './following_users.actions'
 import { Injectable } from '@angular/core'
 
 const FOLLOWING_USERS_STATE_TOKEN = new StateToken<FollowingUsersModel>('following_users');
@@ -19,6 +19,17 @@ export class FollowingUsersState {
   public storeFollowingUsers(ctx: StateContext<FollowingUsersModel>, action: StoreFollowingUsers) {
     ctx.setState({
       users: action.following_users
+    })
+  }
+
+  @Action(AppendFollowingUser)
+  public appendFollowingUser(ctx: StateContext<FollowingUsersModel>, action: AppendFollowingUser) {
+    const state = ctx.getState();
+    ctx.setState({
+      users: [
+        ...state.users,
+        action.following_user
+      ]
     })
   }
 }
