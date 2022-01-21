@@ -108,6 +108,7 @@ import { MyServiceOffersComponent } from './profile/components/my-service-offers
     GalleriaModule,
     ChipModule,
     DialogModule,
+    ButtonModule
   ],
 })
 export class PagesModule {}

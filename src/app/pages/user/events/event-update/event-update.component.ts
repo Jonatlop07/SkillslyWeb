@@ -52,7 +52,7 @@ export class EventUpdateComponent implements OnInit, AfterViewInit {
   public initForm(event : EventModel): void {
     this.eventForm = this.formBuilder.group({
       name  : [event.name, [ Validators.required ]  ],
-      description: [event.description, [Validators.required ] ],
+      description: [event.description, [ Validators.required ] ],
       lat  : [event.lat, [] ],
       long : [event.long, [] ],
       date: [new Date(event.date), [ Validators.required ] ]
