@@ -7,6 +7,7 @@ import { EventService } from 'src/app/services/event.service';
 import { DeleteMyEvent } from 'src/app/shared/state/events/events.actions';
 import { environment } from 'src/environments/environment';
 import { JwtService } from '../../../../services/jwt.service';
+import * as moment from 'moment'; 
 
 @Component({
   selector: 'app-event',
@@ -18,13 +19,17 @@ export class EventComponent implements OnInit, AfterViewInit {
   @Input() event: EventModel;
   @Input() editable: boolean; 
   @Input() map_id: number;
-  mapbox = (mapboxgl as typeof mapboxgl); 
-  map: any; 
-  mapToken: string = environment.MAP_BOX_TOKEN;
-  markers: mapboxgl.Marker[]=[];
-  assistance: boolean; 
 
-
+  public mapbox = (mapboxgl as typeof mapboxgl); 
+  public map: any; 
+  public mapToken: string = environment.MAP_BOX_TOKEN;
+  public markers: mapboxgl.Marker[]=[];
+  public assistance: boolean; 
+  public day: string;
+  public month: string; 
+  public year: string; 
+  public hour: string;  
+  public mdate: string;  
   public user_name = 'nombre de usuario';
   public display = false;
 
@@ -33,9 +38,10 @@ export class EventComponent implements OnInit, AfterViewInit {
     private  jwtService:JwtService,
     private store: Store,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
+    this.getDate(this.event.date);
     this.assistance = false; 
     this.eventService.getMyAssistances().forEach( (event:EventModel) => {
       if (this.event.event_id == event.event_id) {
@@ -90,7 +96,6 @@ export class EventComponent implements OnInit, AfterViewInit {
   createAssistance(event_id: string) {
     const eventServiceResponse = this.eventService.createAssistance({event_id, user_id: this.jwtService.getUserId()});
     eventServiceResponse.subscribe((resp:any) => {
-      console.log(resp)
       this.assistance = true;
       this.eventService.getAndStoreMyAssistancesCollection();
     });
@@ -102,6 +107,15 @@ export class EventComponent implements OnInit, AfterViewInit {
       this.assistance = false;
       this.eventService.getAndStoreMyAssistancesCollection();
     });
+  }
+
+  getDate(date: Date) {
+    moment.locale('es');
+    let momentDate = moment(date).format("MMM DD YYYY, h:mm a"); 
+    this.month = momentDate.slice(0,3);
+    this.day = momentDate.slice(4,7);
+    this.year = momentDate.slice(7,12);
+    this.hour = momentDate.slice(13,21);
   }
 
 }
