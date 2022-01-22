@@ -163,13 +163,14 @@ export class UserNotificationsService {
     return this.socket.fromEvent<StatusUpdateRequestDetails>(this.status_update_request)
       .pipe(
         map((data: StatusUpdateRequestDetails) => {
+          const action = data.update_action === 'complete' ? 'finalizada' : 'cancelada';
           return {
             data,
             action_details: {
               route: './service-requests',
               message: `El usuario ${data.requester_name} ha solicitado la actualización`
                 + ` de la etapa de la solicitud de servicio '${data.service_request_title}' a: `
-                + data.update_action === 'completed' ? 'Finalizada' : 'Cancelada'
+                + `${action}`
             }
           };
         })

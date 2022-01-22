@@ -21,9 +21,9 @@ export class ServiceRequestsComponent implements OnInit {
 
   public service_requests: Array<ServiceRequestPresenter> = [];
 
-  public categories: string = '';
+  public categories = '';
 
-  public displayCreateServiceRequestModal: boolean = false;
+  public displayCreateServiceRequestModal = false;
 
   constructor(
     private readonly service_requests_service: ServiceRequestsService
