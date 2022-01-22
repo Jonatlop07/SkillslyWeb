@@ -1,41 +1,42 @@
 <div class="d-flex w-100 events-element">
-  <div
-    class="d-flex justify-content-around align-items-center w-100 p-3 event-header"
-  >
-    <div class="col-sm">
-      <h5 class="font-medium">Usuario</h5>
+    <div class="d-flex justify-content-around align-items-center w-100 p-3 event-header">
+        <div class="col-md-4 text-center">
+            <div class="card">
+                <div class="row">
+                    <div class="day">
+                        <p class="font-medium">
+                            {{day}}
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="month-year">
+                        <p class="font-medium">
+                            {{month | uppercase}} {{year}}
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="hour">
+                        <p class="font-medium">
+                            {{hour}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h5 class="font-medium">Usuario - {{event.name}}</h5>
+        </div>
+
     </div>
-    <div class="col-sm">
-      <h6 class="font-light">
-        <strong>{{ event.name }}</strong>
-      </h6>
-    </div>
-    <div class="col-sm">
-      <p class="font-light small my-auto">
-        <small>Publicado el </small>
-        {{ event.date }}
-      </p>
-    </div>
-  </div>
-  <div class="d-flex">
-    <div class="dropdown" *ngIf="editable">
-      <a
-        class="mdi mdi-settings fs-2 dropdown"
-        role="button"
-        id="dropdownMenuLink"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-        type="button"
-        id="dropdownMenuButton1"
-      >
-      </a>
-      <ul
-        class="dropdown-menu pull-left dropdown-menu-left"
-        aria-labelledby="dropdownMenuLink"
-      >
-        <li>
-          <a class="dropdown-item" (click)="deleteEvent(event.event_id)"
-            >Eliminar</a
+    <div class="d-flex">
+        <div class="dropdown" *ngIf="editable">
+            <a class="mdi mdi-settings fs-2 dropdown" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton1">
+            </a>
+            <ul class="dropdown-menu pull-left dropdown-menu-left" aria-labelledby="dropdownMenuLink">
+                <li>
+                    <a class="dropdown-item" (click)="deleteEvent(event.event_id)">Eliminar</a
           >
         </li>
         <li>
