@@ -12,7 +12,7 @@
             <h4 class="card-title">Información de la cuenta</h4>
             <div class="form-group row mt-4">
               <label for="name" class="col-sm-3 control-label col-form-label"
-                >Nombre</label
+              >Nombre</label
               >
               <div class="col-sm-7">
                 <input
@@ -126,17 +126,6 @@
           </div>
           <div class="border-top">
             <div class="card-body">
-              <!-- <input
-                type="submit"
-                class="btn btn-primary mx-2"
-                value="Actualizar datos"
-              />
-              <button
-                class="button btn btn-danger mx-3"
-                (click)="deleteUserAccount()"
-              >
-                Eliminar cuenta
-              </button> -->
               <div class="box">
                 <button
                   pButton
@@ -157,6 +146,81 @@
                   (click)="deleteUserAccount()"
                 ></button>
               </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-5">
+      <div class="card w-100 p-4">
+        <form
+          class="form-horizontal"
+          *ngIf="form"
+          [formGroup]="form"
+          (ngSubmit)="submitUserAccountData()"
+        >
+          <div class="card-body">
+            <h4 class="card-title">Tus roles</h4>
+            <ul>
+              <li *ngFor="let role of roles">
+                {{getRoleName(role)}}
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="!is_requester || !is_investor" class="card-body">
+            <h4 class="card-title">Obtener nuevos roles</h4>
+            <div>
+              <input
+                type="checkbox"
+                class="form-check-input d-inline-block mx-3"
+                id="customControlAutosizing2"
+                [checked]="obtain_requester_role"
+                (change)="onChangeObtainRequesterRoleCheckbox()"
+                [disabled]="is_requester"
+                styleClass="p-input text-sm"
+              />
+              <label
+                class="form-check-label mb-0 d-inline-block"
+                for="customControlAutosizing2"
+              >
+                Solicitante
+              </label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="form-check-input d-inline-block mx-3"
+                id="customControlAutosizing3"
+                [checked]="obtain_investor_role"
+                (change)="onChangeObtainInvestorRoleCheckbox()"
+                [disabled]="is_investor"
+                styleClass="p-input text-sm"
+              />
+              <label
+                class="form-check-label mb-0 d-inline-block"
+                for="customControlAutosizing3"
+              >
+                Inversor
+              </label>
+            </div>
+            <div class="my-4 mx-3">
+              <ngx-stripe-card
+                [options]="cardOptions"
+                [elementsOptions]="elementsOptions"
+              >
+              </ngx-stripe-card>
+            </div>
+            <div class="box">
+              <button
+                pButton
+                pRipple
+                type="button"
+                label="Obtener roles"
+                class="account-button p-button-outlined p-button-rounded projects-button"
+                icon="pi pi-send"
+                [style]="{ 'margin-left': '.5em' }"
+                (click)="obtainSpecialRoles()"
+              ></button>
             </div>
           </div>
         </form>

@@ -51,6 +51,7 @@ import { ServiceOfferComponent } from './service-offers/components/service_offer
 import { ServiceRequestComponent } from './service-requests/components/service_request.component'
 import { ServiceRequestsComponent } from './service-requests/service_requests.component'
 import { MyServiceOffersComponent } from './profile/components/my-service-offers/my_service_offers.component'
+import { NgxStripeModule } from 'ngx-stripe'
 
 @NgModule({
   declarations: [
@@ -84,7 +85,7 @@ import { MyServiceOffersComponent } from './profile/components/my-service-offers
     ServiceOfferComponent,
     ServiceRequestsComponent,
     MyServiceRequestsComponent,
-    ServiceRequestComponent
+    ServiceRequestComponent,
   ],
   imports: [
     ConfirmPopupModule,
@@ -108,7 +109,8 @@ import { MyServiceOffersComponent } from './profile/components/my-service-offers
     GalleriaModule,
     ChipModule,
     DialogModule,
-    ButtonModule
+    ButtonModule,
+    NgxStripeModule.forChild('pk_test_51KKqzTLW8alQ67QMS4GSfh6VTdVVvJH3LFlptoBZQW6yZhoB516uFllbjcmtvDUsuedzrcU12wAbnELdm5b10e6700wWxK7ASu')
   ],
 })
 export class PagesModule {}
