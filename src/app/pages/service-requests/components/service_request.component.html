@@ -1,0 +1,346 @@
+<div class="card p-3">
+  <h6 class="font-medium pb-1">{{ service_request.title }}</h6>
+  <small class="text-muted pb-3">{{ getTime() }}</small>
+  <h6 class="font-light pb-2">{{ service_request.service_brief }}</h6>
+  <div class="row justify-content-sm-around">
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Ver"
+      class="p-button-outlined p-button-rounded see-service-request-btn w-auto"
+      icon="pi pi-info-circle"
+      (click)="seeServiceRequest()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Aplicar a la solicitud"
+      class="p-button-outlined p-button-rounded edit-service-request-btn w-auto"
+      icon="pi pi-plus-circle"
+      *ngIf="canApplyToService()"
+      (click)="showApplyServiceRequestModal()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Remover solicitud"
+      class="p-button-outlined p-button-rounded delete-service-request-btn w-auto"
+      icon="pi pi-times"
+      *ngIf="canRemoveRequest()"
+      (click)="onApplyToServiceRequest()"
+    ></button>
+    <button
+      *ngIf="userIsOwner()"
+      pButton
+      pRipple
+      type="button"
+      label="Editar"
+      class="p-button-outlined p-button-rounded edit-service-request-btn w-auto"
+      icon="pi pi-user-edit"
+      (click)="editServiceRequest()"
+    ></button>
+    <button
+      *ngIf="userIsOwner()"
+      pButton
+      pRipple
+      type="button"
+      label="Eliminar"
+      class="p-button-outlined p-button-rounded delete-service-request-btn w-auto"
+      icon="pi pi-times"
+      (click)="deleteServiceRequest()"
+    ></button>
+  </div>
+  <p-dialog
+    header="Aplicar a solicitud de servicio"
+    [(visible)]="display_apply_service_request_modal"
+    [modal]="true"
+    [style]="{ width: '30vw' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <div class="card">
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-12 px-2">
+          <label for="application_message"
+            >Mensaje de aplicación al servicio</label
+          >
+          <br />
+          <input
+            id="application_message"
+            type="text"
+            aria-describedby="application_message"
+            pInputText
+            [(ngModel)]="application_message"
+          />
+          <br />
+          <small id="username1-help"
+            >Describe cómo puedes proveer una solución o cuenta un poco de tu
+            experiencia con este tipo de servicio</small
+          >
+        </div>
+        <br />
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button
+        icon="pi pi-send"
+        (click)="onApplyToServiceRequest()"
+        label="Aplicar"
+        styleClass="p-button-text"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
+  <p-dialog
+    header="Solicitud de servicio"
+    [(visible)]="display_service_request_details_modal"
+    [modal]="true"
+    [style]="{ width: '60vw' }"
+    [draggable]="false"
+    [resizable]="false"
+    class="d-flex flex-column"
+  >
+    <div class="card">
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-12">
+          <h5 class="font-medium pb-3 text-center">
+            {{ service_request.title }}
+          </h5>
+          <h6 class="font-light px-5 pb-4">
+            {{ service_request.service_brief }}
+          </h6>
+          <h6 class="font-medium px-5 pb-2">Información de contacto</h6>
+          <h6 class="font-light px-5 pb-4">
+            {{ service_request.contact_information }}
+          </h6>
+          <div *ngIf="service_request.phase === 'Execution'">
+            <h6 class="font-medium px-5 pb-2">Proveedor</h6>
+            <h6 class="font-light px-5 pb-4">
+              {{ service_request.service_provider }}
+            </h6>
+          </div>
+          <h6 class="font-medium px-5 pb-2">Categoría</h6>
+          <h6 class="font-light px-5 pb-4">{{ service_request.category }}</h6>
+          <h6 class="font-medium px-5 pb-2">
+            {{
+              service_request.phase === "Open"
+                ? "Recibiendo aplicaciones"
+                : service_request.phase === "Evaluation"
+                ? "Evaluacion de aplicante en progreso. No canceles tu aplicacion todavia!"
+                : service_request.phase === "Execution"
+                ? "Servicio en ejecucion"
+                : "Cerrado"
+            }}
+          </h6>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="userIsOwner() && service_request.phase === 'Open'">
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-12">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Aplicantes"
+            class="p-button-outlined see-service-request-btn w-auto m-2 float-end"
+            (click)="showApplicationsModal()"
+          ></button>
+          <p-dialog
+            header="Aplicantes"
+            [(visible)]="display_applications_modal"
+            [modal]="true"
+          >
+            <div class="comment-widgets scrollable">
+              <div
+                *ngFor="let application of applications; let i = index"
+                class="d-flex flex-row comment-row mt-0"
+              >
+                <div class="comment-text w-100">
+                  <h6 class="font-medium">{{ application.applicant_name }}</h6>
+                  <h6>{{ application.applicant_email }}</h6>
+                  <small>{{ application.message }}</small>
+                </div>
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  label="Aceptar"
+                  class="p-button-outlined p-button-rounded edit-service-request-btn mx-3 h-50"
+                  icon="pi pi-check"
+                  *ngIf="service_request.phase === 'Open'"
+                  (click)="
+                    onAcceptApplication(application.applicant_id, application, i)
+                  "
+                ></button>
+              </div>
+              <div *ngIf="this.applications.length < 1">No hay aplicantes para tu solicitud de servicio.</div>
+            </div>
+          </p-dialog>
+        </div>
+      </div>
+    </div>
+    <div
+      class="card"
+      *ngIf="userIsOwner() && service_request.phase === 'Evaluation'"
+    >
+      <div class="row align-items-center m-3">
+        <label
+          for="service-requests-categories"
+          class="service-requests-label mb-3"
+          >Aplicante en evaluación actual</label
+        >
+        <div class="col">
+          <h6 style="font-weight:lighter">{{ evaluated_applicant.applicant_name }} : {{ evaluated_applicant.applicant_email }}</h6>
+        </div>
+        <div class="col">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Confirmar proveedor"
+            class="p-button-outlined edit-service-request-btn mx-2"
+            icon="pi pi-check"
+            (click)="
+              onConfirmApplicant(evaluated_applicant.applicant_id)
+            "
+          ></button>
+        </div>
+        <div class="col">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Denegar evaluacion"
+            class="p-button-outlined delete-service-request-btn"
+            icon="pi pi-times"
+            (click)="
+              onDenyApplication(evaluated_applicant.applicant_id)
+            "
+          ></button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="card"
+      *ngIf="service_request.phase === 'Execution' && userIsProvider() && !service_request.provider_requested_status_update"
+    >
+      <div class="row m-3">
+        <div class="col">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Solicitar finalizacion del servicio"
+            class="p-button-outlined edit-service-request-btn mx-2"
+            icon="pi pi-check"
+            (click)="
+              onCreateUpdateRequest('complete')
+            "
+          ></button>
+        </div>
+        <div class="col">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Solicitar cancelación del servicio"
+            class="p-button-outlined delete-service-request-btn"
+            icon="pi pi-times"
+            (click)="
+            onCreateUpdateRequest('cancel')
+            "
+          ></button>
+        </div>
+      </div>
+    </div>
+  </p-dialog>
+  <p-dialog
+    header="Editar la solicitud de servicio"
+    [(visible)]="display_edit_service_request_modal"
+    [modal]="true"
+    [style]="{ width: '40vw' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <div class="card">
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-12">
+          <label for="service_request_title">Título de tu servicio</label>
+          <br />
+          <input
+            id="service_request_title"
+            type="text"
+            aria-describedby="service_request_title"
+            pInputText
+            [(ngModel)]="edited_service_request.title"
+          />
+          <br />
+          <small id="username1-help"
+            >Breve frase que describa tu servicio</small
+          >
+        </div>
+        <br />
+        <div class="p-field p-col-12">
+          <label for="service_request_brief">Descripción de tu servicio</label>
+          <br />
+          <input
+            id="service_request_brief"
+            type="text"
+            aria-describedby="service_request_brief"
+            pInputText
+            [(ngModel)]="edited_service_request.service_brief"
+          />
+          <br />
+          <small id="username1-help"
+            >Breve párrafo con la descripción de tu servicio</small
+          >
+        </div>
+        <div class="p-field p-col-12">
+          <label for="service_request_contact_info"
+            >Información de contacto</label
+          >
+          <br />
+          <input
+            id="service_request_contact_info"
+            type="text"
+            aria-describedby="service_request_contact_info"
+            pInputText
+            [(ngModel)]="edited_service_request.contact_information"
+          />
+          <br />
+          <small id="username1-help"
+            >Información adicional para que los interesados puedan
+            contactarte</small
+          >
+        </div>
+        <br />
+        <div class="p-field p-col-12">
+          <label for="service_request_category">Categoría de tu servicio</label>
+          <br />
+          <input
+            id="service_request_category"
+            type="text"
+            aria-describedby="service_request_category"
+            pInputText
+            [(ngModel)]="edited_service_request.category"
+          />
+          <br />
+          <small id="username1-help"
+            >Categoría en la que enmarcarías tu servicio</small
+          >
+        </div>
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button
+        icon="pi pi-send"
+        (click)="updateServiceRequest()"
+        label="Actualizar"
+        styleClass="p-button-text"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
+</div>

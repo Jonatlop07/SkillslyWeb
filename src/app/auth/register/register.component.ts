@@ -19,6 +19,7 @@ export class RegisterComponent implements OnInit {
   public register_form: RegisterForm;
   public today = new Date();
   public form_submitted = false;
+  public validCaptcha = false;
   public sitekey: any;
 
   constructor(
@@ -46,15 +47,13 @@ export class RegisterComponent implements OnInit {
         )
       ]],
       password: ['', [
+        Validators.required,
         Validators.pattern(
           /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
         )
       ]],
-      date_of_birth: ['01/01/2000', [
+      date_of_birth: [this.today, [
         Validators.required,
-        Validators.pattern(
-          /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/
-        )
       ]],
       recaptcha: ['', Validators.required]
     });
@@ -64,6 +63,7 @@ export class RegisterComponent implements OnInit {
     this.form_submitted = true;
     if (this.invalidForm()) {
       this.captcha.reset();
+      this.validCaptcha = false;
       return;
     }
     this.register_form = this.form.value;

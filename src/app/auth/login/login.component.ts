@@ -11,6 +11,8 @@ import { ConversationService } from '../../services/conversation.service';
 import { FollowService } from '../../services/follow.service';
 import { EventService } from 'src/app/services/event.service';
 import { RecaptchaComponent } from 'ng-recaptcha';
+import { ServiceOffersService } from '../../services/service_offers.service'
+import { ServiceRequestsService } from '../../services/service_requests.service'
 
 @Component({
   selector: 'app-login',
@@ -31,6 +33,8 @@ export class LoginComponent implements OnInit{
     private readonly conversation_service: ConversationService,
     private readonly follow_service: FollowService,
     private readonly event_service: EventService,
+    private readonly service_offers_service: ServiceOffersService,
+    private readonly service_requests_service: ServiceRequestsService,
     private readonly router: Router
   ) {
     
@@ -91,6 +95,8 @@ export class LoginComponent implements OnInit{
             this.conversation_service.getAndStoreConversations();
             this.event_service.getAndStoreMyEventsCollection();
             this.event_service.getAndStoreMyAssistancesCollection();
+            this.service_offers_service.getAndStoreMyServiceOfferCollection();
+            this.service_requests_service.getAndStoreMyServiceRequestCollection();
             this.router.navigate(['/main/feed']);
           })
         },

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DeletePostInterface } from 'src/app/interfaces/delete_post.interface';
 import { MenuItem } from 'primeng/api';
 import { Comment } from 'src/app/interfaces/presenter/comment.presenter';
@@ -9,10 +9,10 @@ import {
 import { CommentsService } from 'src/app/services/comments.service';
 import { PostService } from 'src/app/services/posts.service';
 import { ReactionService } from 'src/app/services/reaction.service';
-import { PermanentPostPresenter } from 'src/app/interfaces/presenter/post/query_post.presenter'
-import { Store } from "@ngxs/store";
-import { DeleteMyPost } from "../../../../shared/state/posts/posts.actions";
-import { Router } from '@angular/router'
+import { PermanentPostPresenter } from 'src/app/interfaces/presenter/post/query_post.presenter';
+import { Store } from '@ngxs/store';
+import { DeleteMyPost } from '../../../../shared/state/posts/posts.actions';
+import { Router } from '@angular/router';
 import { SharePostInterface } from 'src/app/interfaces/share_post.interface';
 
 @Component({
@@ -21,9 +21,11 @@ import { SharePostInterface } from 'src/app/interfaces/share_post.interface';
   styleUrls: ['./post.component.css'],
 })
 export class PostComponent implements OnInit {
-
   @Input() post: PermanentPostPresenter;
   @Input() editable: boolean;
+  @Input() group_id: string;
+  @Input() id: string;
+  @Output() toggleDelete = new EventEmitter<string>();
 
   public showComments = false;
   public postComments: Array<Comment> = [];
@@ -35,6 +37,8 @@ export class PostComponent implements OnInit {
   public display = false;
   public items: MenuItem[];
   public reactionCount = 0;
+  public owns_post = false;
+  public owns_post_or_admin = false;
   public reactors: QueryReactionsReactors = {
     likes: { reaction_count: 0, reactors: [] },
     interested: { reaction_count: 0, reactors: [] },
@@ -48,9 +52,10 @@ export class PostComponent implements OnInit {
     private postService: PostService,
     private readonly store: Store,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
+    this.owns_post = this.postService.getUserId() === this.post.user_id;
     this.getComments();
     this.items = [
       { label: 'Me gusta', icon: 'pi pi-fw pi-thumbs-up' },
@@ -67,6 +72,7 @@ export class PostComponent implements OnInit {
         console.log(error);
       }
     );
+
   }
 
   isImage(referenceType: string): boolean {
@@ -83,12 +89,16 @@ export class PostComponent implements OnInit {
   deletePost(post_id: string) {
     const deletePostInterface: DeletePostInterface = {
       post_id,
-    }
-    this.postService
-      .deletePost(deletePostInterface)
-      .subscribe(() => {
-        this.store.dispatch(new DeleteMyPost(post_id));
+      group_id: this.group_id,
+    };
+    if (this.group_id) {
+      this.postService.deletePost(deletePostInterface).subscribe(() => {
+        this.toggleDelete.emit(this.id);
       });
+    }
+    this.postService.deletePost(deletePostInterface).subscribe(() => {
+      this.store.dispatch(new DeleteMyPost(post_id));
+    });
   }
 
   updatePost(post_id: string) {
@@ -97,10 +107,11 @@ export class PostComponent implements OnInit {
 
   sharePost(post_id: string) {
     const sharePostInterface: SharePostInterface = {
-      post_id
+      post_id,
     };
-    this.postService.sharePost(sharePostInterface)
-      .subscribe(resp => console.log(resp));
+    this.postService
+      .sharePost(sharePostInterface)
+      .subscribe((resp) => console.log(resp));
   }
 
   sendComment() {
@@ -153,12 +164,9 @@ export class PostComponent implements OnInit {
   }
 
   onAddReaction(type: string, postId: string) {
-    this.reactionsService.addReaction(type, postId).subscribe(
-      () => {
-        this.onQueryReactions();
-      }
-    );
-
+    this.reactionsService.addReaction(type, postId).subscribe(() => {
+      this.onQueryReactions();
+    });
   }
 
   onQueryReactions() {

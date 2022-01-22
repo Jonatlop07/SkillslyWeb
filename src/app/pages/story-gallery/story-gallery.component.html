@@ -3,6 +3,7 @@
   [responsiveOptions]="responsiveOptions"
   [containerStyle]="{ 'max-width': '640px' }"
   [numVisible]="4"
+  class="gallery-element"
 >
   <ng-template pTemplate="item" let-item>
     <img
@@ -31,7 +32,9 @@
     >
       Test
     </h4> -->
-    <span *ngIf="validatePostTime(item) && item.description">{{item.description}}</span>
+    <span *ngIf="validatePostTime(item) && item.description">{{
+      item.description
+    }}</span>
     <br />
     <small *ngIf="validatePostTime(item)"
       >Publicada el {{ getPostTime(item.created_at) }}</small

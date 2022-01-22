@@ -16,7 +16,7 @@ export class StoriesComponent implements OnInit {
   userStories: any[] = [];
   displayModal: boolean;
   displayModalAddStory: boolean;
-  userLogged: any;
+  userLogged = {name: '', email: ''};
 
   reference: string;
   referenceType: string;
@@ -50,6 +50,7 @@ export class StoriesComponent implements OnInit {
           title: 'Exito',
           text: 'La historia ha sido creada correctamente',
           icon: 'success',
+          confirmButtonColor: '#00887A',
         }).then((result) => {
           if (result.isConfirmed) {
             window.location.reload();
@@ -120,12 +121,12 @@ export class StoriesComponent implements OnInit {
       customClass: {
         container: 'my-swal',
       },
-      title: 'Esta seguro de eliminar la historia?',
-      text: 'Una vez eliminada, no podra recuperarla!',
+      title: '¿Está seguro de eliminar la historia?',
+      text: 'Una vez eliminada no podrás recuperarla',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#00887A',
+      cancelButtonColor: '#fc6662',
       confirmButtonText: 'Si, eliminar!',
       cancelButtonText: 'Cancelar',
     }).then((result) => {
@@ -139,6 +140,7 @@ export class StoriesComponent implements OnInit {
               title: 'Exito',
               text: 'La historia ha sido eliminada correctamente',
               icon: 'success',
+              confirmButtonColor: '#00887A',
             }).then((result) => {
               if (result.isConfirmed) {
                 window.location.reload();

@@ -1,0 +1,27 @@
+<div class="box">
+  <p-card
+    *ngIf="service_offers.length > 0"
+    header="Tus ofertas de servicios"
+    subheader="A continuación te mostramos tu lista de servicios ofertados"
+    styleClass="card"
+  >
+    <div
+      *ngFor="let service_offer of service_offers"
+      class="row d-flex justify-content-center"
+    >
+      <app-service-offer
+        [input_service_offer]="service_offer"
+      >
+      </app-service-offer>
+      <div class="dropdown-divider"></div>
+    </div>
+
+  </p-card>
+  <p-card
+    *ngIf="service_offers.length === 0"
+    header="Tus ofertas de servicios"
+    subheader="Hasta el momento no tienes servicios ofertados"
+    styleClass="card"
+  >
+  </p-card>
+</div>
