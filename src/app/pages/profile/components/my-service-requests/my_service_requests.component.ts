@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ServiceRequestsService } from '../../../../services/service_requests.service';
 import { ServiceRequestPresenter } from '../../../../interfaces/service-requests/presenter/service_request.presenter';
 import { ServiceRequestCollectionPresenter } from '../../../../interfaces/service-requests/presenter/service_request_collection.presenter'
@@ -8,13 +8,14 @@ import { ServiceRequestCollectionPresenter } from '../../../../interfaces/servic
   templateUrl: './my_service_requests.component.html',
   styleUrls: ['./my_service_requests.component.css']
 })
-export class MyServiceRequestsComponent implements OnInit {
+export class MyServiceRequestsComponent implements OnInit{
   public service_requests: Array<ServiceRequestPresenter> = [];
 
   constructor(
     private readonly service_requests_service: ServiceRequestsService
   ) {
   }
+  
 
   ngOnInit() {
     this.service_requests_service
@@ -23,4 +24,5 @@ export class MyServiceRequestsComponent implements OnInit {
         this.service_requests = service_request_collection.service_requests;
       });
   }
+  
 }

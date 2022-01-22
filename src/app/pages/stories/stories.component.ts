@@ -16,7 +16,7 @@ export class StoriesComponent implements OnInit {
   userStories: any[] = [];
   displayModal: boolean;
   displayModalAddStory: boolean;
-  userLogged: any;
+  userLogged = {name: '', email: ''};
 
   reference: string;
   referenceType: string;
