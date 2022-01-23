@@ -26,6 +26,10 @@
                             <p *ngIf="invalidInput('password') || invalidForm()">La contraseña debe contener al menos 8 cáracteres, una minúscula, una mayúscula y un número.</p>
                         </div>
                     </div>
+                    <re-captcha formControlName="recaptcha" type="image" [siteKey]="sitekey" #captchaElem (resolved)="validCaptcha = true"></re-captcha>
+                    <div class="error mt-md-2">
+                        <p *ngIf="!validCaptcha && invalidForm()"> Validar captcha </p> 
+                    </div>
                     <div class="mt-md-3">
                         <button pButton type="submit" label="Iniciar Sesión"></button>
                     </div>

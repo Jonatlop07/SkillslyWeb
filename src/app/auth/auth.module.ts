@@ -8,6 +8,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { AccountService } from '../services/account.service';
+import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 import {ImageModule} from 'primeng/image';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
@@ -23,6 +24,8 @@ import {DividerModule} from 'primeng/divider';
     CalendarModule,
     PasswordModule,
     RouterModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
     ImageModule, 
     InputTextModule, 
     ButtonModule, 
