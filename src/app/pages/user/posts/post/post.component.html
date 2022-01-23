@@ -70,31 +70,74 @@
   </div>
   <div class="dropdown-divider"></div>
 
-  <div class="container w-100">
-    <div class="like">
+  <div
+    class="container flex w-100 my-1 align-items-center gap-2"
+    style="height: 46px"
+  >
+    <!-- <div class="like">
       <p-button
         icon="pi pi-thumbs-up"
         label="Like"
         styleClass="p-button-text"
         (click)="onAddReaction(reactionTypes[0], post.post_id)"
       ></p-button>
+    </div> -->
+    <div *ngIf="reactedLike; else other_content_liked" class="like">
+      <p-button
+        icon="pi pi-thumbs-up"
+        label="Unlike"
+        styleClass="p-button-text reaction-selected"
+        (click)="onAddReaction(reactionTypes[0], post.post_id)"
+      ></p-button>
     </div>
-    <div class="interest">
+
+    <ng-template #other_content_liked>
+      <p-button
+        icon="pi pi-thumbs-up"
+        label="Like"
+        styleClass="p-button-text "
+        (click)="onAddReaction(reactionTypes[0], post.post_id)"
+      ></p-button
+    ></ng-template>
+
+    <div
+      *ngIf="reactedInterested; else other_content_interested"
+      class="interest"
+    >
+      <p-button
+        icon="pi pi-bookmark"
+        label="No me interesa"
+        styleClass="p-button-text reaction-selected"
+        (click)="onAddReaction(reactionTypes[2], post.post_id)"
+      ></p-button>
+    </div>
+
+    <ng-template #other_content_interested>
       <p-button
         icon="pi pi-bookmark"
         label="Me interesa"
         styleClass="p-button-text"
         (click)="onAddReaction(reactionTypes[2], post.post_id)"
       ></p-button>
+    </ng-template>
+
+    <div *ngIf="reactedFun; else other_content_fun" class="haha">
+      <p-button
+        icon="pi pi-heart"
+        label="No me divierte "
+        styleClass="p-button-text reaction-selected"
+        (click)="onAddReaction(reactionTypes[1], post.post_id)"
+      ></p-button>
     </div>
-    <div class="haha">
+
+    <ng-template #other_content_fun>
       <p-button
         icon="pi pi-heart"
         label="Me divierte"
         styleClass="p-button-text"
         (click)="onAddReaction(reactionTypes[1], post.post_id)"
       ></p-button>
-    </div>
+    </ng-template>
 
     <div class="reactions">
       <p-button
@@ -126,7 +169,7 @@
           <div class="comment-widgets scrollable">
             <div
               *ngFor="let reactor of reactors['interested'].reactors"
-              class="d-flex flex-row comment-row mt-0 reaction-item" 
+              class="d-flex flex-row comment-row mt-0 reaction-item"
             >
               <div class="comment-text w-100">
                 <h6 class="font-medium">{{ reactor.name }}</h6>
@@ -141,7 +184,7 @@
               *ngFor="let reactor of reactors['fun'].reactors"
               class="d-flex flex-row comment-row mt-0 reaction-item"
             >
-              <div class="comment-text w-100 ">
+              <div class="comment-text w-100">
                 <h6 class="font-medium">{{ reactor.name }}</h6>
                 <span class="d-block">{{ reactor.email }} </span>
               </div>
@@ -151,6 +194,7 @@
       </p-tabView>
     </p-dialog>
   </div>
+
   <div class="dropdown-divider"></div>
   <div class="d-flex justify-content-start gap-3 my-4" style="height: 30px">
     <p-button
@@ -212,7 +256,7 @@
         <app-comment *ngFor="let comment of postComments" [comment]="comment">
         </app-comment>
         <span
-          class="clickable m-2 "
+          class="clickable m-2"
           (click)="handleMoreComments()"
           style="font-size: 13px"
           >Ver más respuestas</span
