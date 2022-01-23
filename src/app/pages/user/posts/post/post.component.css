@@ -28,15 +28,17 @@
 
 .like {
   grid-area: like;
-  width: 100%;
+  max-height: 40px;
 }
 
 .interest {
   grid-area: interest;
+  max-height: 40px;
 }
 
 .haha {
   grid-area: haha;
+  max-height: 40px;
 }
 
 .reactions {
@@ -83,4 +85,9 @@
   background: #f2f8ff;
   border-radius: 9px;
   cursor: pointer;
+}
+:host ::ng-deep .reaction-selected {
+  background-color: rgba(70, 229, 176, 0.08) !important;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #00887a, 0 1px 2px 0 rgba(0, 0, 0, 0);
+  max-height: 40px;
 }
