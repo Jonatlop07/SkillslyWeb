@@ -11,6 +11,8 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { environment } from '../environments/environment'
 import { state_list } from './shared/state/state_list';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { ToastrModule } from 'ngx-toastr'
 
 @NgModule({
   declarations: [AppComponent, NopagefoundComponent],
@@ -21,6 +23,8 @@ import { state_list } from './shared/state/state_list';
     PagesModule,
     AuthModule,
     SocketIoModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     NgxsModule.forRoot([...state_list], {
       developmentMode: !environment.production
     }),
