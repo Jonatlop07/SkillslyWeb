@@ -81,11 +81,12 @@ export class LoginComponent implements OnInit{
       .loginUser(this.loginForm)
       .subscribe(
         (result: LoginResponse) => {
-          const { id, email, roles, access_token } = result;
+          const { id, customer_id, email, roles, access_token } = result;
           const now = new Date();
           now.setSeconds(7200);
           this.authService.setSessionData({
             user_id: id,
+            customer_id,
             user_email: email,
             user_roles: roles,
             access_token,
