@@ -9,16 +9,16 @@
           <div class="comment-text p-2 justify-content-center">
             <div class="col d-flex flex-row pt-2">
               <h6 class="font-medium ">{{ user.name }}</h6>
-              <span class="text-muted ps-3" *ngIf="isFollowing[i]">Lo sigues</span>
-              <span class="text-muted" *ngIf="sameUser[i]">Eres tú</span>
             </div>
+            <span class="text-muted pt-3" *ngIf="isFollowing[i]">Lo sigues</span>
+            <span class="text-muted pt-3" *ngIf="sameUser[i]">Eres tú</span>
             <span class="d-block pt-3">{{ user.email }}</span>
           </div>
-          <div class="row comment-footer p-1 m-auto align-content-center">
-              <button type="button" (click)="searchPost(user.user_id)" class="btn btn-block btn-cyan btn-sm text-white mb-3">Ver Perfil</button>
-              <button type="button" *ngIf="!isFollowing[i] && !isPending[i] && !sameUser[i]" (click)="followUser(user,i)" class="btn btn-block btn-success btn-sm text-white">Seguir</button>
-              <button type="button" *ngIf="isPending[i]" (click)="cancelFollow(user,i,true)" class="btn btn-block btn-danger btn-sm text-white">Cancelar solicitud</button>
-              <button type="button" *ngIf="isFollowing[i]" (click)="cancelFollow(user,i,false)" class="btn btn-block btn-info btn-sm text-white">Dejar de seguir</button>
+          <div class="row comment-footer px-5 m-auto align-content-center">
+              <button type="button" (click)="searchPost(user.user_id)" class="p-ripple p-element p-button-outlined p-button p-component mb-3 justify-content-center">Ver Perfil</button>
+              <button type="button" *ngIf="!isFollowing[i] && !isPending[i] && !sameUser[i]" (click)="followUser(user,i)" class="p-ripple p-element p-button-outlined p-button p-component mb-3 justify-content-center">Seguir</button>
+              <button type="button" *ngIf="isPending[i]" (click)="cancelFollow(user,i,true)" class="p-ripple p-element p-button-outlined p-button p-component mb-3 justify-content-center">Cancelar solicitud</button>
+              <button type="button" *ngIf="isFollowing[i]" (click)="cancelFollow(user,i,false)" class="p-ripple p-element p-button-outlined p-button p-component mb-3 justify-content-center">Dejar de seguir</button>
           </div>
         </div>
       </div>

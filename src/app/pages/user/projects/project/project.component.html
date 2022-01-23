@@ -1,0 +1,63 @@
+<div class="project-card w-100 p-4 align-self-center">
+  <div class="d-flex text-project">
+    <div class="d-flex flex-fill">
+      <div class="p-2">
+      </div>
+      <div class="align-self-center">
+        <h5 class="font-medium"> {{ project.user_name }} </h5>
+      </div>
+    </div>
+    <div class="d-flex">
+      <p class="font-light small my-auto">
+        <small>Publicado el </small>
+        {{ project.created_at }}
+      </p>
+      <div class="dropdown" *ngIf="editable || owns_project">
+        <a
+          class="mdi mdi-settings fs-2 dropdown"
+          role="button"
+          id="dropdownMenuLink"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          type="button"
+          id="dropdownMenuButton1"
+        >
+        </a>
+        <ul
+          class="dropdown-menu pull-left dropdown-menu-left"
+          aria-labelledby="dropdownMenuLink"
+        >
+          <li>
+            <a
+              *ngIf="owns_project"
+              class="dropdown-item"
+            >Editar</a
+            >
+          </li>
+          <li>
+            <a
+              *ngIf="owns_project || editable"
+              class="dropdown-item"
+            >Eliminar</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="comment-text w-100">
+    <h6 class="font-light pb-2 text-project">{{ project.description }}</h6>
+    <div class="pb-3 row justify-content-center">
+      <div *ngIf="isImage(project.reference_type)">
+        <img [src]="project.reference" class="img-fluid" />
+      </div>
+      <div *ngIf="!isImage(project.reference_type) && project.reference_type">
+        <video controls>
+          <source [src]="project.reference" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  </div>
+  <div class="dropdown-divider"></div>
+
+</div>

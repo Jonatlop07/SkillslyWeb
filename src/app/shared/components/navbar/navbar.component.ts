@@ -97,4 +97,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
       relativeTo: this.activatedRoute,
     });
   }
+  searchProject() {
+    this.router.navigate(['./projects-query', this.authService.getUserId()], {
+      relativeTo: this.activatedRoute,
+    });
+  }
 }

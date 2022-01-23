@@ -1,4 +1,10 @@
 .bg-feed {
   background-color: #f2f8ff;
 }
-
+:host ::ng-deep{
+  font-family: 'Poppins', sans-serif;
+}
+.p-button {
+  height: 30px;
+  margin-left: auto;
+}

@@ -51,6 +51,8 @@ import { ServiceOfferComponent } from './service-offers/components/service_offer
 import { ServiceRequestComponent } from './service-requests/components/service_request.component'
 import { ServiceRequestsComponent } from './service-requests/service_requests.component'
 import { MyServiceOffersComponent } from './profile/components/my-service-offers/my_service_offers.component'
+import {ProjectsQueryComponent} from "./user/projects/projects-query/projects-query.component";
+import {ProjectComponent} from "./user/projects/project/project.component";
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { MyServiceOffersComponent } from './profile/components/my-service-offers
     FollowRequestComponent,
     FeedComponent,
     ProjectsCreateComponent,
+    ProjectsQueryComponent,
+    ProjectComponent,
     StoriesComponent,
     StoryComponent,
     StoryGalleryComponent,
