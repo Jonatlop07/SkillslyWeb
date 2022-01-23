@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '../../services/account.service';
-import { AccountForm } from '../../interfaces/account_form.interface';
+import { AccountForm } from '../../interfaces/user-account/account_form.interface';
 import { GetAccountDataPresenter } from '../../interfaces/presenter/user/get_account_data.presenter'
 import Swal from 'sweetalert2'
 import * as moment from 'moment'
 import { AuthService } from '../../services/auth.service'
 import { Store } from '@ngxs/store'
 import { UpdateSessionEmail } from '../../shared/state/session/session.actions'
+import { Role } from '../../interfaces/user-account/role.enum'
+import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js'
+import { StripeCardComponent, StripeService } from 'ngx-stripe'
 
 @Component({
   selector: 'app-account',
@@ -21,20 +24,54 @@ export class AccountComponent implements OnInit {
   public change_password = false;
   public today = new Date();
 
+  public roles: Array<string>;
+
+  public is_investor: boolean;
+  public is_requester: boolean;
+
+  public obtain_investor_role: boolean = false;
+  public obtain_requester_role: boolean = false;
+
+  @ViewChild(StripeCardComponent) card: StripeCardComponent;
+
+  cardOptions: StripeCardElementOptions = {
+    hidePostalCode: true,
+    style: {
+      base: {
+        iconColor: '#666EE8',
+        color: '#31325F',
+        fontWeight: '400',
+        fontFamily: '"Poppins", sans-serif',
+        fontSize: '15px',
+        '::placeholder': {
+          color: '#b1c2d7',
+        },
+      },
+    },
+  };
+
+  elementsOptions: StripeElementsOptions = {
+    locale: 'auto',
+  };
+
   constructor(
     private readonly form_builder: FormBuilder,
     private readonly account_service: AccountService,
     private readonly auth_service: AuthService,
     private readonly store: Store,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly stripe_service: StripeService
   ) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getAccountData();
+    this.roles = this.account_service.getUserRoles();
+    this.is_investor = this.roles.includes(Role.Investor);
+    this.is_requester = this.roles.includes(Role.Requester);
   }
 
-  getAccountData() {
+  public getAccountData() {
     this.account_service
       .getUserAccountData()
       .subscribe((account_data: GetAccountDataPresenter) => {
@@ -42,7 +79,7 @@ export class AccountComponent implements OnInit {
       });
   }
 
-  submitUserAccountData() {
+  public submitUserAccountData() {
     this.account_form = this.form.value;
     if (this.invalidForm()) {
       return this.getAccountData();
@@ -61,7 +98,58 @@ export class AccountComponent implements OnInit {
       });
   }
 
-  deleteUserAccount() {
+  public onChangeObtainRequesterRoleCheckbox() {
+    this.obtain_requester_role = !this.obtain_requester_role;
+  }
+
+  public onChangeObtainInvestorRoleCheckbox() {
+    this.obtain_investor_role = !this.obtain_investor_role;
+  }
+
+  public obtainSpecialRoles() {
+    this.stripe_service.createPaymentMethod({
+      type: 'card',
+      card: this.card.element
+    }).subscribe((result) => {
+      if (result.paymentMethod) {
+        this.account_service.obtainSpecialRoles({
+          obtain_requester_role: this.obtain_requester_role,
+          obtain_investor_role: this.obtain_investor_role,
+          payment_method_id: result.paymentMethod.id
+        }).subscribe(() => {
+          Swal.fire({
+            customClass: {
+              container: 'my-swal'
+            },
+            title: 'Éxito',
+            text: 'Has adquirido los roles exitosamente, te redigiremos a la seccion de inicio de sesión',
+            icon: 'success'
+          });
+          this.auth_service.logout().subscribe(() => {
+            this.router.navigate(['../login']);
+          });
+        }, (err) => {
+          const { error, message } = err.error
+          const error_description = message ?
+            'Ocurrió un error. Por favor, asegúrate de haber elegido un rol'
+            : error;
+          Swal.fire(
+            'Error',
+            error_description,
+            'error'
+          );
+        });
+      } else if (result.error) {
+        Swal.fire(
+          'Error',
+          'Error en el procesamiento del pago. Por favor, inténtalo de nuevo',
+          'error'
+        );
+      }
+    });
+  }
+
+  public deleteUserAccount() {
     this.account_service
       .deleteUserAccount()
       .subscribe(() => {
@@ -74,15 +162,15 @@ export class AccountComponent implements OnInit {
       );
   }
 
-  invalidInput(input: string): boolean {
+  public invalidInput(input: string): boolean {
     return this.form.get(input).invalid && this.form.get(input).touched;
   }
 
-  invalidForm(): boolean {
+  public invalidForm(): boolean {
     return this.form.invalid;
   }
 
-  initForm(form_data: GetAccountDataPresenter): void {
+  public initForm(form_data: GetAccountDataPresenter): void {
     this.form = this.form_builder.group({
       name: [form_data.name, [
         Validators.required,
@@ -109,7 +197,15 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  onToggleChangePassword() {
+  public onToggleChangePassword() {
     this.change_password = !this.change_password;
+  }
+
+  public getRoleName(role: string): string {
+    if (role === Role.User)
+      return 'Usuario';
+    if (role === Role.Requester)
+      return 'Solicitante';
+    return 'Inversor';
   }
 }

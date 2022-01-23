@@ -1,0 +1,117 @@
+.list-element {
+  height: 50px;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  border-bottom: 1px solid #f8f9fa;
+  border-radius: 9px;
+}
+.list-element:hover {
+  background-color: #f2f8ff;
+  cursor: pointer;
+}
+.chat-message {
+  padding: 0.5rem;
+  margin-bottom: 0.1rem;
+  background-color: #f2f8ff;
+  color: #3f3f46;
+  width: auto;
+  display: inline-block;
+  border-radius: 9px;
+}
+.chat-message-user {
+  padding: 0.5rem;
+  margin-bottom: 0.1rem;
+  background-color: #77a6f7;
+  color: #fff;
+  width: auto;
+  display: inline-block;
+  border-radius: 9px;
+}
+
+:host ::ng-deep .p-button:focus {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #00887a, 0 1px 2px 0 rgb(0 0 0 / 0%);
+}
+:host ::ng-deep .p-button {
+  color: #ffffff;
+  background: #00887a;
+  border: 1px solid #00887a;
+}
+:host ::ng-deep .p-button.p-button-text:hover {
+  background: rgba(70, 229, 176, 0.04);
+  color: #00887a;
+}
+:host ::ng-deep .p-button.p-button-text {
+  background: transparent;
+  color: #00887a;
+  border: transparent;
+  height: 40px;
+}
+
+.dropdown-menu {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border-radius: 0.3em;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-item {
+  color: #3f3f46;
+  font-size: 1em;
+  font-weight: 400;
+  border-radius: 0.3em;
+  font-family: "Poppins", sans-serif;
+}
+
+.dropdown-item-danger {
+  background-color: transparent;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: #f2f8ff;
+  font-size: 1em;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  color: #3f3f46;
+}
+
+.dropdown-item.danger:hover,
+.dropdown-item.danger:focus {
+  background-color: #fc676206;
+  font-size: 1em;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  color: #3f3f46;
+}
+
+.btn-member {
+  background-color: #00887a;
+  color: #fff;
+  border-radius: 0.3em;
+  font-family: "Poppins", sans-serif;
+}
+.btn-member:hover {
+  background-color: #005f56;
+  cursor: pointer;
+}
+.btn-member-selected {
+  background: rgba(70, 229, 176, 0.04);
+  color: #00887a;
+}
+:host ::ng-deep .p-dialog {
+  font-family: "Poppins", sans-serif;
+}
+.font-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+}
+.scrollable::-webkit-scrollbar {
+  display: none;
+}
+.scrollable {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

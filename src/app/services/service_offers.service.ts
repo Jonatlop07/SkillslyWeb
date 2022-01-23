@@ -30,14 +30,12 @@ export class ServiceOffersService {
   ) {}
 
   private getServiceOfferCollection(categories?: string): Observable<ServiceOfferCollectionPresenter> {
-    console.log(categories)
     let params = new HttpParams();
     if (categories && categories.length > 0) {
       params = params.append('categories', JSON.stringify(categories));
     }
     params = params.append('limit', 20);
     params = params.append('offset', 0);
-    console.log(params.get('categories'))
     return this.http.get<ServiceOfferCollectionPresenter>(
       `${this.API_URL}/service-offers`,
       {

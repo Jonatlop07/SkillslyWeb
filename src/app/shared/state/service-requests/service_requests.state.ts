@@ -45,9 +45,12 @@ export class MyServiceRequestsState {
     for (let i = 0; i < service_requests.length; ++i) {
       if (service_requests[i].service_request_id === action.service_request.service_request_id) {
         const service_request = service_requests[i];
-        const { title, service_brief, contact_information, category } = action.service_request;
+        const { title, service_brief, contact_information, category, phase, service_provider, applicants } = action.service_request;
         service_requests[i] = {
           ...service_request,
+          phase,
+          service_provider,
+          applicants,
           title,
           service_brief,
           contact_information,
@@ -70,4 +73,5 @@ export class MyServiceRequestsState {
       )
     })
   }
+  
 }

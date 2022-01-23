@@ -41,8 +41,12 @@
                         <p *ngIf="invalidInput('password')">La contraseña debe contener al menos 8 cáracteres, una minúscula, una mayúscula y un número.</p>
                     </div>
                 </div>
-                <div class="mt-md-4">
-                    <p-calendar placeholder="Fecha de nacimiento" [touchUI]="true" [showIcon]="true" [maxDate]="today" formControlName="date_of_birth" dateFormat="dd/mm/yy" [yearNavigator]="true" yearRange="1930:2021" [readonlyInput]="true"></p-calendar>
+                <div class="mt-md-4 mb-2">
+                    <p-calendar placeholder="Fecha de nacimiento" [touchUI]="true" [showIcon]="true" [maxDate]="today" formControlName="date_of_birth" dateFormat="dd/mm/yy" [yearNavigator]="true" yearRange="1930:2022" [readonlyInput]="true"></p-calendar>
+                </div>
+                <re-captcha formControlName="recaptcha" type="image" [siteKey]="sitekey" #captchaElem></re-captcha> 
+                <div class="error mt-md-2">
+                  <p *ngIf="!validCaptcha && invalidForm()"> Validar captcha </p>
                 </div>
                 <div class="mt-md-3">
                     <button pButton type="submit" label="Registrarse"></button>

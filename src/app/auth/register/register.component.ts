@@ -1,27 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterForm } from '../../interfaces/register_form.interface';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
+import { RecaptchaComponent } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
+
+  @ViewChild('captchaElem') captcha: RecaptchaComponent;
   public form: FormGroup;
   public register_form: RegisterForm;
   public today = new Date();
   public form_submitted = false;
+  public validCaptcha = false;
+  public sitekey: any;
 
   constructor(
     private form_builder: FormBuilder,
     private auth_service: AuthService,
     private router: Router
   ) {
+  }
+  ngOnInit(): void {
+    this.sitekey = '6Le-PfMdAAAAAIM0bEC7_TxiGoL5J-8YkcAC4R0-'
     this.initForm();
   }
 
@@ -46,16 +54,16 @@ export class RegisterComponent {
       ]],
       date_of_birth: [this.today, [
         Validators.required,
-        Validators.pattern(
-          /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/
-        )
-      ]]
+      ]],
+      recaptcha: ['', Validators.required]
     });
   }
 
   saveForm() {
     this.form_submitted = true;
     if (this.invalidForm()) {
+      this.captcha.reset();
+      this.validCaptcha = false;
       return;
     }
     this.register_form = this.form.value;

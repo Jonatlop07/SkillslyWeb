@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -10,6 +10,7 @@ import { LoginResponse } from '../../interfaces/login_response.interface'
 import { ConversationService } from '../../services/conversation.service';
 import { FollowService } from '../../services/follow.service';
 import { EventService } from 'src/app/services/event.service';
+import { RecaptchaComponent } from 'ng-recaptcha';
 import { ServiceOffersService } from '../../services/service_offers.service'
 import { ServiceRequestsService } from '../../services/service_requests.service'
 
@@ -18,10 +19,13 @@ import { ServiceRequestsService } from '../../services/service_requests.service'
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   public form: FormGroup;
   public loginForm: LoginForm;
   public formSubmitted = false;
+  public sitekey: any;
+  public validCaptcha = false;
+  @ViewChild('captchaElem') captcha: RecaptchaComponent;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +37,10 @@ export class LoginComponent {
     private readonly service_requests_service: ServiceRequestsService,
     private readonly router: Router
   ) {
+    
+  }
+  ngOnInit(): void {
+    this.sitekey = '6Le-PfMdAAAAAIM0bEC7_TxiGoL5J-8YkcAC4R0-'
     this.initForm();
   }
 
@@ -56,12 +64,15 @@ export class LoginComponent {
           ),
         ],
       ],
+      recaptcha: ['', Validators.required]
     });
   }
 
   async saveForm(): Promise<void> {
     this.formSubmitted = true;
     if (this.form.invalid) {
+      this.captcha.reset();
+      this.validCaptcha = false;
       return;
     }
     this.loginForm = this.form.value;
@@ -70,11 +81,12 @@ export class LoginComponent {
       .loginUser(this.loginForm)
       .subscribe(
         (result: LoginResponse) => {
-          const { id, email, roles, access_token } = result;
+          const { id, customer_id, email, roles, access_token } = result;
           const now = new Date();
           now.setSeconds(7200);
           this.authService.setSessionData({
             user_id: id,
+            customer_id,
             user_email: email,
             user_roles: roles,
             access_token,

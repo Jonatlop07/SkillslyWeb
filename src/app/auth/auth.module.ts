@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component'
 import { RouterModule } from '@angular/router';
 import { AccountService } from '../services/account.service';
+import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 import {ImageModule} from 'primeng/image';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
@@ -30,6 +31,8 @@ import {MessageModule} from "primeng/message";
     ButtonModule,
     DividerModule,
     MessageModule
+    RecaptchaModule,
+    RecaptchaFormsModule,
   ],
   exports: [RegisterComponent],
 })

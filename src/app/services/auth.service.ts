@@ -50,6 +50,7 @@ export class AuthService {
     return this.store.dispatch(
       new SetSessionData({
         user_id: '',
+        customer_id: '',
         user_email: '',
         user_roles: [],
         access_token: '',

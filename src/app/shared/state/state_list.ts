@@ -6,8 +6,10 @@ import { FollowersState } from "./followers/followers.state";
 import { EventsState } from './events/events.state';
 import { AssistancesState } from './events/assistances/assistances.state';
 import { MyServiceOffersState } from './service-offers/service_offers.state'
-import { MyServiceRequestsState } from './service-requests/service_requests.state'
+import { MyServiceRequestsState } from './service-requests/service_requests.state';
 import {MyProjectsState} from "./projects/projects.state";
+import { NotificationsState } from './notifications/notifications.state';
+
 
 
 export const state_list = [
@@ -20,5 +22,6 @@ export const state_list = [
   AssistancesState,
   MyServiceOffersState,
   MyServiceRequestsState,
-  MyProjectsState
+  MyProjectsState,
+  NotificationsState,
 ];

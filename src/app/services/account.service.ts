@@ -5,10 +5,14 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { GetAccountDataPresenter } from '../interfaces/presenter/user/get_account_data.presenter'
 import { UpdateUserDataPresenter } from '../interfaces/presenter/user/update_user_data.presenter'
+import { Select } from '@ngxs/store'
+import { SessionState } from '../shared/state/session/session.state'
+import { ObtainSpecialRolesData } from '../interfaces/user-account/obtain_special_roles_data'
 
 @Injectable()
 export class AccountService {
   private readonly API_URL: string = environment.API_URL;
+
   constructor(
     private readonly http: HttpClient,
     private readonly jwt_service: JwtService
@@ -34,5 +38,18 @@ export class AccountService {
       `${this.API_URL}/users/account/${this.jwt_service.getUserId()}`,
       this.jwt_service.getHttpOptions()
     );
+  }
+
+  public obtainSpecialRoles(obtain_special_roles_data: ObtainSpecialRolesData) {
+    console.log(obtain_special_roles_data);
+    return this.http.post(
+      `${this.API_URL}/users/account/roles`,
+      obtain_special_roles_data,
+      this.jwt_service.getHttpOptions()
+    );
+  }
+
+  public getUserRoles(): Array<string> {
+    return this.jwt_service.getUserRoles();
   }
 }
