@@ -30,6 +30,7 @@
         "ngx-captcha": "^11.0.0",
         "ngx-socket-io": "^4.1.0",
         "ngx-stripe": "^13.0.0",
+        "ngx-toastr": "^14.2.1",
         "primeicons": "^5.0.0",
         "primeng": "^12.2.2",
         "rxjs": "~6.6.0",
