@@ -1,0 +1,18 @@
+.bg-group {
+  background: var(--app-main-bg-color);
+}
+.p-button {
+  width: 20% !important;
+  background-color: transparent;
+  border-color: var(--app-secondary-color) !important;
+  color: var(--app-secondary-color) !important
+}
+.p-inputtext:enabled:focus {
+  border-color: var(--app-secondary-color) !important;
+  box-shadow: 0 0 0 0.02rem var(--app-secondary-color) !important;
+}
+
+.p-inputtext:hover {
+  box-shadow: 0 0 0 0.02rem var(--app-secondary-color) !important;
+}
+

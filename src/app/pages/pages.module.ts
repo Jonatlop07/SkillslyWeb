@@ -54,6 +54,7 @@ import { MyServiceOffersComponent } from './profile/components/my-service-offers
 import {ProjectsQueryComponent} from "./user/projects/projects-query/projects-query.component";
 import {ProjectComponent} from "./user/projects/project/project.component";
 import { NgxStripeModule } from 'ngx-stripe';
+import {DockModule} from "primeng/dock";
 
 
 @NgModule({
@@ -115,7 +116,8 @@ import { NgxStripeModule } from 'ngx-stripe';
     ChipModule,
     DialogModule,
     ButtonModule,
-    NgxStripeModule.forChild('pk_test_51KKqzTLW8alQ67QMS4GSfh6VTdVVvJH3LFlptoBZQW6yZhoB516uFllbjcmtvDUsuedzrcU12wAbnELdm5b10e6700wWxK7ASu')
+    NgxStripeModule.forChild('pk_test_51KKqzTLW8alQ67QMS4GSfh6VTdVVvJH3LFlptoBZQW6yZhoB516uFllbjcmtvDUsuedzrcU12wAbnELdm5b10e6700wWxK7ASu'),
+    DockModule
   ],
 })
 export class PagesModule {}

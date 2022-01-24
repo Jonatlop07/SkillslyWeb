@@ -30,7 +30,7 @@ import {MessageModule} from "primeng/message";
     InputTextModule,
     ButtonModule,
     DividerModule,
-    MessageModule
+    MessageModule,
     RecaptchaModule,
     RecaptchaFormsModule,
   ],

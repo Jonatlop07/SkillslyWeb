@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ProjectPresenter} from "../../../../interfaces/presenter/project/query_project.presenter";
 import {PostService} from "../../../../services/posts.service";
+import * as moment from "moment";
 
 
 @Component({
@@ -13,6 +14,10 @@ export class ProjectComponent implements OnInit{
   @Input() editable: boolean;
   @Input() id: string;
   public owns_project = false;
+  public day: string;
+  public month: string;
+  public year: string;
+  public hour: string;
 
   constructor(
     private projectService: PostService,
@@ -26,4 +31,5 @@ export class ProjectComponent implements OnInit{
     this.owns_project = this.projectService.getUserId() === this.project.user_id;
     console.log(this.project);
   }
+
 }

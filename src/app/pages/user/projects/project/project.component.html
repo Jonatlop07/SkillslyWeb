@@ -1,17 +1,14 @@
-<div class="project-card w-100 p-4 align-self-center">
+<div class="card project-card p-4 align-self-center ">
   <div class="d-flex text-project">
-    <div class="d-flex flex-fill">
-      <div class="p-2">
-      </div>
-      <div class="align-self-center">
-        <h5 class="font-medium"> {{ project.user_name }} </h5>
+    <div class="d-flex flex-fill justify-content-center">
+      <div class="align-self-center align-content-center justify-content-center">
+        <h3 class="font-medium"> {{ project.title }} </h3>
+        <p class="font-light small text-center">
+          {{ project.created_at }}
+        </p>
       </div>
     </div>
     <div class="d-flex">
-      <p class="font-light small my-auto">
-        <small>Publicado el </small>
-        {{ project.created_at }}
-      </p>
       <div class="dropdown" *ngIf="editable || owns_project">
         <a
           class="mdi mdi-settings fs-2 dropdown"
@@ -36,28 +33,38 @@
           </li>
           <li>
             <a
-              *ngIf="owns_project || editable"
+              *ngIf="owns_project"
               class="dropdown-item"
             >Eliminar</a
+            >
+          </li>
+          <li>
+            <a
+              *ngIf="!owns_project"
+              class="dropdown-item"
+            >No eres el propietario de este proyecto</a
             >
           </li>
         </ul>
       </div>
     </div>
   </div>
-  <div class="comment-text w-100">
+  <div class="comment-text">
+    <h6 class="font-light pb-2 text-project">Conformado por: {{ project.members }}</h6>
     <h6 class="font-light pb-2 text-project">{{ project.description }}</h6>
-    <div class="pb-3 row justify-content-center">
-      <div *ngIf="isImage(project.reference_type)">
-        <img [src]="project.reference" class="img-fluid" />
+    <div class="pb-3 row justify-content-center align-content-center">
+      <div *ngIf="isImage(project.reference_type)" class="text-center">
+        <img [src]="project.reference" class="img-fluid"  width="auto" height="auto"/>
       </div>
       <div *ngIf="!isImage(project.reference_type) && project.reference_type">
-        <video controls>
-          <source [src]="project.reference" type="video/mp4" />
+        <video controls class="text-center">
+          <source [src]="project.reference" type="video/mp4" width="auto" height="auto"/>
         </video>
       </div>
     </div>
+    <h6 class="font-light pt-2 text-project">Recursos y bibliografía:</h6>
+    <div *ngFor="let annex of project.annexes" class="col d-inline-block">
+      <p-tag class=" p-1 " href=""> {{this.annex}} </p-tag>
+    </div>
   </div>
-  <div class="dropdown-divider"></div>
-
 </div>

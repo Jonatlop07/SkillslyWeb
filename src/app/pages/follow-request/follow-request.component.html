@@ -1,28 +1,31 @@
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title mb-0">Solicitudes de Seguidores</h5>
-    </div>
-    <table class="table">
+<div class="bg-follow h-100 align-content-center align-items-center">
+  <div class="row p-3 align-self-center align-content-center justify-content-center">
+    <div class="card col-xs-6 ">
+      <h5 class="title card-title mb-0 p-2">Solicitudes de Seguidores</h5>
+      <table class="table">
         <thead>
-            <tr>
-                <th scope="col">Email</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Acciones</th>
-            </tr>
+        <tr>
+          <th scope="col">Email</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Acciones</th>
+        </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let user of pendingSentUsers; let i = index">
-                <td>{{user.email}}</td>
-                <td class="text-info">{{user.name}}</td>
-                <td>
-                    <button (click)="acceptFollowRequest(user,i)" data-toggle="tooltip" data-placement="top" title="" data-bs-original-title="Update">
-                        <i class="mdi mdi-check"></i>
-                    </button>
-                    <button (click)="rejectFollowRequest(user,i)" data-toggle="tooltip" data-placement="top" title="" data-bs-original-title="Delete">
-                        <i class="mdi mdi-close"></i>
-                    </button>
-                </td>
-            </tr>
+        <tr *ngFor="let user of pendingSentUsers; let i = index">
+          <td>{{user.email}}</td>
+          <td class="text-info">{{user.name}}</td>
+          <td class="col-4">
+            <button (click)="acceptFollowRequest(user,i)" class="btn btn-primary  " data-toggle="tooltip" data-placement="top" title="" data-bs-original-title="Update">
+              <i class=" mdi mdi-check"></i>
+            </button>
+            <button (click)="rejectFollowRequest(user,i)" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="" data-bs-original-title="Delete">
+              <i class="mdi mdi-close"></i>
+            </button>
+          </td>
+        </tr>
         </tbody>
-    </table>
+      </table>
+    </div>
+  </div>
+
 </div>

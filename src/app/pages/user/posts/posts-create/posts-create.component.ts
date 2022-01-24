@@ -67,7 +67,7 @@ export class PostsCreateComponent implements OnInit {
 
   onCancel() {
     this.postService.onToggleCreate();
-    this.router.navigate(['./main']);
+    this.router.navigate(['./main/feed']);
   }
 
   onSubmit($event: Event) {
@@ -110,5 +110,5 @@ export class PostsCreateComponent implements OnInit {
     return true;
   }
 
-  
+
 }
