@@ -44,7 +44,9 @@ export class PostComponent implements OnInit {
     interested: { reaction_count: 0, reactors: [] },
     fun: { reaction_count: 0, reactors: [] },
   };
-  public reacted = false;
+  public reactedLike = false;
+  public reactedInterested = false;
+  public reactedFun = false;
 
   constructor(
     private commentsService: CommentsService,
@@ -72,7 +74,6 @@ export class PostComponent implements OnInit {
         console.log(error);
       }
     );
-
   }
 
   isImage(referenceType: string): boolean {
@@ -192,14 +193,18 @@ export class PostComponent implements OnInit {
 
   hasReacted() {
     const email = this.postService.getIfReactorEmail();
-    if (
-      this.existsReactor(email, this.reactors['likes'].reactors) ||
-      this.existsReactor(email, this.reactors['interested'].reactors) ||
-      this.existsReactor(email, this.reactors['fun'].reactors)
+    if (this.existsReactor(email, this.reactors['likes'].reactors)) {
+      this.reactedLike = true;
+    } else if (
+      this.existsReactor(email, this.reactors['interested'].reactors)
     ) {
-      this.reacted = true;
+      this.reactedInterested = true;
+    } else if (this.existsReactor(email, this.reactors['fun'].reactors)) {
+      this.reactedFun = true;
     } else {
-      this.reacted = false;
+      this.reactedLike = false;
+      this.reactedInterested = false;
+      this.reactedFun = false;
     }
   }
 

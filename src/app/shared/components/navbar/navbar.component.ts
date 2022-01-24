@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import UserNotification from '../../../interfaces/notifications/user_notification'
 import { NotificationModel } from '../../../models/notification.model'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   selector: 'app-navbar',
@@ -24,6 +25,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private readonly notification_service: UserNotificationsService,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
+    private readonly toastr: ToastrService
   ) {
   }
 
@@ -41,11 +43,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
       .subscribe(
         (notification: UserNotification) => {
           console.log(notification)
-          if (notification.action_details)
+          if (notification.action_details) {
             this.notification_service.storeNotification({
               data: notification.data,
               action_details: notification.action_details
+            }).subscribe(() => {
+              this.toastr.info(notification.action_details.message, 'Nueva notificacion');
             });
+          }
         }
       );
   }
