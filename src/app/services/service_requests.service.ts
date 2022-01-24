@@ -200,6 +200,22 @@ export class ServiceRequestsService {
     );
   }
 
+  public updateUpdateRequest(
+    update_update_request_params: UpdateRequestPresenter
+  ) {
+    const { update_request_action, provider_id, service_request_id } =
+      update_update_request_params;
+    return this.http.post(
+      `${this.API_URL}/service-requests/status-update-requester`,
+      {
+        provider_id,
+        service_request_id,
+        update_request_action,
+      },
+      this.jwt_service.getHttpOptions()
+    );
+  }
+
   public isServiceOwner(owner_id: string) {
     return owner_id === this.jwt_service.getUserId();
   }

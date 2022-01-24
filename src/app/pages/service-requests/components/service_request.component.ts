@@ -32,7 +32,7 @@ export class ServiceRequestComponent implements OnInit {
           this.applications = res.applications;
         });
     }
-    if (this.service_request.phase === 'Evaluation' && this.userIsOwner()) {
+    if (this.userIsOwner() && (this.service_request.phase === 'Evaluation' || this.service_request.phase != 'closed')) {
       this.service_requests_service
         .getCurrentEvaluationApplicant(this.service_request.service_request_id)
         .subscribe((res: any) => {
@@ -56,6 +56,7 @@ export class ServiceRequestComponent implements OnInit {
     applicant_email: '',
     applicant_id: '',
     applicant_name: '',
+    request_phase: '',
   };
   public user_has_applied: boolean;
   public applications: Array<ApplicationPresenter> = [];
@@ -197,6 +198,7 @@ export class ServiceRequestComponent implements OnInit {
           applicant_email: application.applicant_email,
           applicant_id: application.applicant_id,
           applicant_name: application.applicant_name,
+          request_phase: ''
         };
         this.service_request.phase = res.request_phase;
         this.display_applications_modal = false;
@@ -255,6 +257,19 @@ export class ServiceRequestComponent implements OnInit {
       })
       .subscribe(() => {
         this.service_request.provider_requested_status_update = true;
+      });
+  }
+
+  public onUpdateUpdateRequest(action: string) {
+    const { service_request_id, service_provider } = this.service_request;
+    return this.service_requests_service
+      .updateUpdateRequest({
+        service_request_id,
+        provider_id: service_provider,
+        update_request_action: action,
+      })
+      .subscribe((res:any) => {
+        this.display_service_request_details_modal= false; 
       });
   }
 }
