@@ -32,8 +32,7 @@ export class ServiceRequestComponent implements OnInit {
           this.applications = res.applications;
         });
     }
-    //if (this.service_request.phase === 'Evaluation' && this.userIsOwner()) {
-    if (this.userIsOwner() && this.service_request.phase != 'closed') {
+    if (this.userIsOwner() && (this.service_request.phase === 'Evaluation' || this.service_request.phase != 'closed')) {
       this.service_requests_service
         .getCurrentEvaluationApplicant(this.service_request.service_request_id)
         .subscribe((res: any) => {
