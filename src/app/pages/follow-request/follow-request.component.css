@@ -1,0 +1,6 @@
+.bg-follow {
+  background-color: var(--app-main-bg-color);
+}
+.title {
+  color: var(--app-primary-color);
+}

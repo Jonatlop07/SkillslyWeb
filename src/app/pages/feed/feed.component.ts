@@ -33,6 +33,7 @@ export class FeedComponent implements OnInit {
     );
     postServiceResponse.subscribe((res: any) => {
       this.foundPosts = res.posts;
+      console.log(res.posts);
       this.offsetPost = this.offsetPost + this.limitPost;
     });
     const eventServiceResponse = this.eventService.getEventsOfFriendsCollection(

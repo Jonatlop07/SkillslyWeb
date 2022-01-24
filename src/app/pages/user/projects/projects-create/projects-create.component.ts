@@ -46,7 +46,7 @@ export class ProjectsCreateComponent {
     if (this.validateContent(createProjectParams)) {
       this.requireOne = false;
       this.projectService.createProject(createProjectParams);
-      //this.router.navigate(['./main']);
+      this.router.navigate(['./main']);
       return true;
     } else {
       return false;

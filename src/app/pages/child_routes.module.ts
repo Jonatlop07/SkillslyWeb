@@ -19,6 +19,7 @@ import { GroupUpdateComponent } from './groups/group-update/group-update.compone
 import { EventUpdateComponent } from './user/events/event-update/event-update.component';
 import { ServiceOffersComponent } from './service-offers/service_offers.component'
 import { ServiceRequestsComponent } from './service-requests/service_requests.component'
+import {ProjectsQueryComponent} from "./user/projects/projects-query/projects-query.component";
 
 const routes: Routes = [
   { path: 'account', component: AccountComponent },
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: 'post/update/:post_id', component: PostUpdateComponent },
   { path: 'feed', component: FeedComponent },
   { path: 'projects', component: ProjectsCreateComponent },
+  { path: 'projects-query/:user_id', component: ProjectsQueryComponent },
   { path: 'conversations', component: ChatComponent },
   { path: 'follow-requests', component: FollowRequestComponent },
   { path: 'post/update/:post_id', component: PostUpdateComponent },
