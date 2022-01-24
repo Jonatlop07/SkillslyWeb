@@ -198,11 +198,14 @@ export class ServiceRequestComponent implements OnInit {
           applicant_id: application.applicant_id,
           applicant_name: application.applicant_name,
         };
-        this.service_request.phase = res.request_phase;
         this.display_applications_modal = false;
         this.applications.splice(index, 1);
-        this.service_requests_service.updateServiceRequestInStore({
+        this.service_request = {
           ...this.service_request,
+          phase: res.request_phase
+        }
+        this.service_requests_service.updateServiceRequestInStore({
+          ...this.service_request
         });
       });
   }
@@ -215,9 +218,12 @@ export class ServiceRequestComponent implements OnInit {
         application_action: 'deny',
       })
       .subscribe((res: OnUpdateApplicationResponse) => {
-        this.service_request.phase = res.request_phase;
-        this.service_requests_service.updateServiceRequestInStore({
+        this.service_request = {
           ...this.service_request,
+          phase: res.request_phase
+        }
+        this.service_requests_service.updateServiceRequestInStore({
+          ...this.service_request
         });
       });
   }
@@ -230,10 +236,14 @@ export class ServiceRequestComponent implements OnInit {
         application_action: 'confirm',
       })
       .subscribe((res: OnUpdateApplicationResponse) => {
-        this.service_request.phase = res.request_phase;
-        this.service_request.service_provider = res.applicant_id;
-        this.service_requests_service.updateServiceRequestInStore(
-          this.service_request
+        this.service_request = {
+          ...this.service_request,
+          phase: res.request_phase,
+          service_provider: res.applicant_id
+        }
+        this.service_requests_service.updateServiceRequestInStore({
+          ...this.service_request
+        }
         );
       });
   }

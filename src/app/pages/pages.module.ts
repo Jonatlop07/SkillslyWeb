@@ -110,7 +110,7 @@ import { NgxStripeModule } from 'ngx-stripe'
     ChipModule,
     DialogModule,
     ButtonModule,
-    NgxStripeModule.forChild('pk_test_51KKqzTLW8alQ67QMS4GSfh6VTdVVvJH3LFlptoBZQW6yZhoB516uFllbjcmtvDUsuedzrcU12wAbnELdm5b10e6700wWxK7ASu')
+    NgxStripeModule.forChild('pk_test_51JYEpkBxBXjRHVrhdYSdgxe8Q2KhV2BTY6DqiIc7506h9oMPClyhN08rVlfIYY20Cf2B4rZqipQOUZaOgxhgagNx009oXaPByi')
   ],
 })
 export class PagesModule {}
