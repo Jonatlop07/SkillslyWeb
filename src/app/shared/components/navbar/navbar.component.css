@@ -11,6 +11,11 @@ span.app-title {
   font-weight: 400;
   font-family: "Poppins", sans-serif;
 }
+
+.noti-feed {
+  background-color: #f2f8ff !important; 
+}
+
 ul.dropdown-menu {
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -32,5 +37,11 @@ ul.dropdown-menu {
   font-weight: 400;
   font-family: "Poppins", sans-serif;
   color: #3f3f46;
+}
+
+.feed-card {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  border-radius: 10px;
 }
 

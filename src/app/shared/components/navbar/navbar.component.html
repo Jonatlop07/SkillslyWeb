@@ -218,10 +218,10 @@
             <i class="pi pi-bell" style="font-size: 1rem; color: white"> </i>
           </a>
           <ul
-            class="dropdown-menu dropdown-menu-end user-dd animated"
+            class="dropdown-menu dropdown-menu-end user-dd animated noti-feed"
             aria-labelledby="notificationsDropdown"
           >
-            <div *ngFor="let notification of notifications">
+            <div *ngFor="let notification of notifications" class="card">
               <a class="dropdown-item" [routerLink]="notification.action_details.route ? [notification.action_details.route] : null">
                 {{ notification.action_details.message }}
               </a>

@@ -33,7 +33,6 @@ export class ProjectsCreateComponent {
   }
 
   saveForm(form: NgForm) {
-    console.log(form.value);
     const createProjectParams: CreateProjectDataPresenter = {
       title: form.value.title,
       members: this.members,

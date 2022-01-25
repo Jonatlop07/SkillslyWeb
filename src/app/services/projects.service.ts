@@ -25,7 +25,6 @@ export class ProjectService {
   ) {}
 
   createProject(project: CreateProjectDataPresenter) {
-    console.log(project);
     return this.http
       .post(
         `${this.API_URL}/projects`,
