@@ -51,7 +51,11 @@ import { ServiceOfferComponent } from './service-offers/components/service_offer
 import { ServiceRequestComponent } from './service-requests/components/service_request.component'
 import { ServiceRequestsComponent } from './service-requests/service_requests.component'
 import { MyServiceOffersComponent } from './profile/components/my-service-offers/my_service_offers.component'
-import { NgxStripeModule } from 'ngx-stripe'
+import {ProjectsQueryComponent} from "./user/projects/projects-query/projects-query.component";
+import {ProjectComponent} from "./user/projects/project/project.component";
+import { NgxStripeModule } from 'ngx-stripe';
+import {DockModule} from "primeng/dock";
+
 
 @NgModule({
   declarations: [
@@ -68,6 +72,8 @@ import { NgxStripeModule } from 'ngx-stripe'
     FollowRequestComponent,
     FeedComponent,
     ProjectsCreateComponent,
+    ProjectsQueryComponent,
+    ProjectComponent,
     StoriesComponent,
     StoryComponent,
     StoryGalleryComponent,
@@ -110,7 +116,8 @@ import { NgxStripeModule } from 'ngx-stripe'
     ChipModule,
     DialogModule,
     ButtonModule,
-    NgxStripeModule.forChild('pk_test_51JYEpkBxBXjRHVrhdYSdgxe8Q2KhV2BTY6DqiIc7506h9oMPClyhN08rVlfIYY20Cf2B4rZqipQOUZaOgxhgagNx009oXaPByi')
+    NgxStripeModule.forChild('pk_test_51KKqzTLW8alQ67QMS4GSfh6VTdVVvJH3LFlptoBZQW6yZhoB516uFllbjcmtvDUsuedzrcU12wAbnELdm5b10e6700wWxK7ASu'),
+    DockModule
   ],
 })
 export class PagesModule {}

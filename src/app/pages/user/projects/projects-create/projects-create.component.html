@@ -9,7 +9,7 @@
             #form="ngForm"
           >
             <div class="p-fluid">
-              <label for="inputTitle" class="">Titulo del proyecto</label>
+              <label for="inputTitle" class="title">Titulo del proyecto</label>
               <br />
               <input
                 [(ngModel)]="paramsProject.title"
@@ -18,18 +18,16 @@
                 type="text"
                 pInputText
                 id="inputTitle"
-                class="col-xs-12"
                 required
               />
               <br />
             </div>
             <div class="p-fluid">
-              <label for="inputMembers">Miembros del proyecto</label>
+              <label for="inputMembers" class="title">Miembros del proyecto</label>
               <br />
               <p-chips
                 [(ngModel)]="members"
                 separator=","
-                placeholder="Pepe , Lucia ..."
                 styleClass="p-inputtext-sm"
                 name="members"
                 id="inputMembers"
@@ -38,7 +36,7 @@
               <br />
             </div>
             <div class="p-fluid">
-              <label for="Input">Descripción</label>
+              <label for="Input" class="title">Descripción</label>
               <br />
               <textarea
                 rows="3"
@@ -52,7 +50,7 @@
               <br />
             </div>
             <div class="p-fluid">
-              <label for="Input">Ingresa el link de una imagen o video</label>
+              <label for="Input" class="title">Ingresa el link de una imagen o video</label>
               <br />
               <input
                 [(ngModel)]="paramsProject.reference"
@@ -67,7 +65,7 @@
             </div>
 
             <div class="p-fluid">
-              <label for="Input">ingresa el tipo de archivo multimedia</label>
+              <label for="Input" class="title">ingresa el tipo de archivo multimedia</label>
               <br />
               <input
                 [(ngModel)]="paramsProject.reference_type"
@@ -82,7 +80,7 @@
             </div>
 
             <div class="p-fluid">
-              <label for="Input">Anexos</label>
+              <label for="Input" class="title">Anexos</label>
               <br />
               <p-chips
                 [(ngModel)]="annexes"
@@ -90,7 +88,6 @@
                 styleClass="p-inputtext-sm"
                 name="annexes"
                 id="Input"
-                class="col-xs-12"
                 required
               ></p-chips>
             </div>
@@ -103,7 +100,7 @@
                     pRipple
                     type="button"
                     label="Guardar Proyecto"
-                    class="p-button-outlined p-button-rounded projects-button"
+                    class="p-button-outlined p-button-rounded projects-button p-2"
                     icon="pi pi-envelope"
                     type="submit"
                   ></button>
@@ -113,7 +110,7 @@
                     type="button"
                     label="Cancelar"
                     icon="pi pi-times"
-                    class="p-button-outlined p-button-rounded p-button-secondary"
+                    class="p-button-outlined p-button-rounded p-button-secondary p-2"
                     [style]="{ 'margin-left': '.5em' }"
                   ></button>
                 </div>

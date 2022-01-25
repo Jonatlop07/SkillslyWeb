@@ -1,4 +1,4 @@
-<div class="bg-primary bg-gradient h-100 overflow-auto">
+<div class="bg-group bg-gradient h-100 overflow-auto">
   <div class="w-75 mx-auto pt-5">
     <div class="row">
       <div class="col-md-12">
@@ -12,18 +12,19 @@
               <div class="row">
                 <div class="col-xs-12">
                   <button
+                    pButton
+                    pRipple
                     type="submit"
-                    class="btn btn-success"
+                    class="p-button-outlined p-button-rounded p-button-primary p-2"
                     [disabled]="groupForm.invalid || !groupForm.touched"
+                    label="Crear grupo"
                   >
-                    Crear grupo
                   </button>
                   <select
-                    class="select2 form-select shadow-none float-end w-50"
+                    class="select form-select shadow-none float-end w-50"
                     id="category"
                     formControlName="category"
                   >
-                    <option value="Development" disabled>Categoria</option>
                     <option value="Development">Desarrollo de software</option>
                     <option value="Cripto">Criptografia</option>
                     <option value="Graphic Design">Diseño</option>
@@ -34,8 +35,9 @@
               </div>
               <hr />
               <div class="form-group-row">
-                <div class="col-md-12">
+                <div class="col-md-12 p-2">
                   <input
+                    pInputText
                     type="text"
                     class="form-control"
                     formControlName="name"
@@ -45,8 +47,9 @@
                     Debes poner un nombre a tu grupo para poder crearlo.
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 p-2">
                   <textarea
+                    pInputTextarea
                     type="text"
                     class="form-control"
                     formControlName="description"
@@ -58,8 +61,9 @@
                     Debes ingresar una descripción de tu grupo para poder crearlo.
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 p-2">
                   <input
+                    pInputText
                     type="text"
                     class="form-control"
                     placeholder="Imagen del grupo - debe ser un enlace"

@@ -50,13 +50,13 @@ export class SearchComponent implements OnInit {
           this.pendingUsers = resp.pendingUsers;
           this.followingUsers = resp.followingUsers;
           for (let i = 0; i<this.foundUsers.length; i++) {
-            let foundUser: SearchUserResponse = this.foundUsers[i];
+            const foundUser: SearchUserResponse = this.foundUsers[i];
             if (foundUser.user_id == this.searchService.getUserId()) {
               this.sameUser[i] = true;
             }
             if (this.pendingUsers.filter(e => e.email == foundUser.email).length > 0) {
               this.isPending[i] = true;
-            } else if(this.followingUsers.filter(e => e.email == foundUser.email).length > 0) {
+            } else if (this.followingUsers.filter(e => e.email == foundUser.email).length > 0) {
               this.isFollowing[i] = true;
             }
           }
@@ -65,8 +65,12 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  searchPost(userId: string): void {
+  searchPosts(userId: string): void {
     this.router.navigate(['../../query', userId], {relativeTo: this.activatedRoute });
+  }
+
+  searchProjects(userId: string): void {
+    this.router.navigate(['../../projects-query', userId], {relativeTo: this.activatedRoute });
   }
 
   followUser(user: SearchUserResponse, index: number): void {

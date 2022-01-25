@@ -16,7 +16,7 @@ import {SetMyPosts} from "../../../../shared/state/posts/posts.actions";
   styleUrls: ['./posts-query.component.css'],
 })
 export class PostsQueryComponent implements OnInit {
-  
+
   public post_owner: string;
   public userName: string;
   @Select(MyPostsState) my_posts$: Observable<PostsModel>;

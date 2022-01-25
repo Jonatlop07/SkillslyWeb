@@ -1,0 +1,39 @@
+.bg-posts {
+  background-color: #f2f8ff;
+}
+.p-button {
+  background-color: transparent;
+  border-color: var(--app-secondary-color) !important;
+  color: var(--app-secondary-color) !important;
+}
+
+:host ::ng-deep .posts-card , card-body{
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+  rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  border-radius: 10px;
+  font-family: "Poppins", sans-serif;
+}
+.post-element {
+  font-family: "Poppins", sans-serif;
+}
+
+.posts-button.p-button.p-button-rounded {
+  font-family: "Poppins", sans-serif;
+  border-color: #00887a;
+  color: #00887a;
+}
+.posts-button.p-button.p-button-rounded:hover {
+  border-color: #00887a;
+  color: #00887a;
+  background: rgba(42, 13, 13, 0.04);
+}
+
+.p-inputtext:enabled:focus {
+  border-color: var(--app-secondary-color) !important;
+  box-shadow: 0 0 0 0.02rem var(--app-secondary-color) !important;
+}
+
+.p-inputtext:hover {
+  box-shadow: 0 0 0 0.02rem var(--app-secondary-color) !important;
+}
+

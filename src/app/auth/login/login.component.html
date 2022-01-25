@@ -9,7 +9,7 @@
                     <div class="mt-md-4">
                         <span class="p-float-label p-input-icon-left" style="width: 100%;">
                             <i class="pi pi-envelope"></i>
-                            <input style="width: 100%;" id="float-input" type="text" formControlName="email" pInputText> 
+                            <input style="width: 100%;" id="float-input" type="text" formControlName="email" pInputText>
                             <label for="float-input">Correo</label>
                         </span>
                         <div class="error mt-md-2">
@@ -19,7 +19,7 @@
                     <div class="mt-md-4">
                         <span class="p-float-label p-input-icon-left" style="width: 100%;">
                             <i class="pi pi-lock"></i>
-                            <input style="width: 100%;" id="float-input" type="password" formControlName="password" pInputText> 
+                            <input style="width: 100%;" id="float-input" type="password" formControlName="password" pInputText>
                             <label for="float-input">Contraseña</label>
                         </span>
                         <div class="error mt-md-2">
@@ -34,7 +34,7 @@
                         <button pButton type="submit" label="Iniciar Sesión"></button>
                     </div>
                     <div class="recover mt-md-3">
-                        <a href="">¿Olvidaste tu contraseña?</a>
+                        <a [routerLink]="['/password-recovery']">¿Olvidaste tu contraseña?</a>
                     </div>
                 </form>
                 <p-divider></p-divider>

@@ -1,0 +1,11 @@
+.bg-group {
+  background: var(--app-main-bg-color);
+}
+
+.btn.btn-a {
+  width: 20% !important;
+  background-color: transparent;
+  border-color: var(--app-secondary-color) !important;
+  color: var(--app-secondary-color) !important
+}
+

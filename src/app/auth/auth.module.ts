@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PasswordModule } from 'primeng/password';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component'
 import { RouterModule } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
@@ -13,9 +14,10 @@ import {ImageModule} from 'primeng/image';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import {DividerModule} from 'primeng/divider';
+import {MessageModule} from "primeng/message";
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent],
+  declarations: [RegisterComponent, LoginComponent, PasswordRecoveryComponent],
   providers: [AccountService],
   imports: [
     CommonModule,
@@ -24,12 +26,13 @@ import {DividerModule} from 'primeng/divider';
     CalendarModule,
     PasswordModule,
     RouterModule,
+    ImageModule,
+    InputTextModule,
+    ButtonModule,
+    DividerModule,
+    MessageModule,
     RecaptchaModule,
     RecaptchaFormsModule,
-    ImageModule, 
-    InputTextModule, 
-    ButtonModule, 
-    DividerModule
   ],
   exports: [RegisterComponent],
 })

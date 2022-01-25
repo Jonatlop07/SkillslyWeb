@@ -1,71 +1,19 @@
 <div class="card p-3">
-  <h6 class="font-medium pb-1">{{ service_request.title }}</h6>
-  <small class="text-muted pb-3">{{ getTime() }}</small>
-  <h6 class="font-light pb-2">{{ service_request.service_brief }}</h6>
-  <div class="row justify-content-sm-around">
-    <button
-      pButton
-      pRipple
-      type="button"
-      label="Ver"
-      class="p-button-outlined p-button-rounded see-service-request-btn w-auto"
-      icon="pi pi-info-circle"
-      (click)="seeServiceRequest()"
-    ></button>
-    <button
-      pButton
-      pRipple
-      type="button"
-      label="Aplicar a la solicitud"
-      class="p-button-outlined p-button-rounded edit-service-request-btn w-auto"
-      icon="pi pi-plus-circle"
-      *ngIf="canApplyToService()"
-      (click)="showApplyServiceRequestModal()"
-    ></button>
-    <button
-      pButton
-      pRipple
-      type="button"
-      label="Remover solicitud"
-      class="p-button-outlined p-button-rounded delete-service-request-btn w-auto"
-      icon="pi pi-times"
-      *ngIf="canRemoveRequest()"
-      (click)="onApplyToServiceRequest()"
-    ></button>
-    <button
-      *ngIf="userIsOwner()"
-      pButton
-      pRipple
-      type="button"
-      label="Editar"
-      class="p-button-outlined p-button-rounded edit-service-request-btn w-auto"
-      icon="pi pi-user-edit"
-      (click)="editServiceRequest()"
-    ></button>
-    <button
-      *ngIf="userIsOwner()"
-      pButton
-      pRipple
-      type="button"
-      label="Eliminar"
-      class="p-button-outlined p-button-rounded delete-service-request-btn w-auto"
-      icon="pi pi-times"
-      (click)="deleteServiceRequest()"
-    ></button>
-  </div>
-  <p-dialog
-    header="Aplicar a solicitud de servicio"
-    [(visible)]="display_apply_service_request_modal"
-    [modal]="true"
-    [style]="{ width: '30vw' }"
-    [draggable]="false"
-    [resizable]="false"
-  >
-    <div class="card">
-      <div class="p-grid p-fluid">
-        <div class="p-field p-col-12 px-2">
-          <label for="application_message"
-            >Mensaje de aplicación al servicio</label
+    <h6 class="font-medium pb-1">{{ service_request.title }}</h6>
+    <small class="text-muted pb-3">{{ getTime() }}</small>
+    <h6 class="font-light pb-2">{{ service_request.service_brief }}</h6>
+    <div class="row justify-content-sm-around">
+        <button pButton pRipple type="button" label="Ver" class="p-button-outlined p-button-rounded see-service-request-btn w-auto" icon="pi pi-info-circle" (click)="seeServiceRequest()"></button>
+        <button pButton pRipple type="button" label="Aplicar a la solicitud" class="p-button-outlined p-button-rounded edit-service-request-btn w-auto" icon="pi pi-plus-circle" *ngIf="canApplyToService()" (click)="showApplyServiceRequestModal()"></button>
+        <button pButton pRipple type="button" label="Remover solicitud" class="p-button-outlined p-button-rounded delete-service-request-btn w-auto" icon="pi pi-times" *ngIf="canRemoveRequest()" (click)="onApplyToServiceRequest()"></button>
+        <button *ngIf="userIsOwner()" pButton pRipple type="button" label="Editar" class="p-button-outlined p-button-rounded edit-service-request-btn w-auto" icon="pi pi-user-edit" (click)="editServiceRequest()"></button>
+        <button *ngIf="userIsOwner()" pButton pRipple type="button" label="Eliminar" class="p-button-outlined p-button-rounded delete-service-request-btn w-auto" icon="pi pi-times" (click)="deleteServiceRequest()"></button>
+    </div>
+    <p-dialog header="Aplicar a solicitud de servicio" [(visible)]="display_apply_service_request_modal" [modal]="true" [style]="{ width: '30vw' }" [draggable]="false" [resizable]="false">
+        <div class="card">
+            <div class="p-grid p-fluid">
+                <div class="p-field p-col-12 px-2">
+                    <label for="application_message">Mensaje de aplicación al servicio</label
           >
           <br />
           <input
@@ -256,6 +204,72 @@
         </div>
       </div>
     </div>
+    <div
+      class="card"
+      *ngIf="evaluated_applicant.request_phase == 'REQUESTS_COMPLETION'"
+    >
+      <div class="row m-3">
+        <div class="col">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Aceptar finalizacion del servicio"
+            class="p-button-outlined edit-service-request-btn mx-2"
+            icon="pi pi-check"
+            (click)="
+              onUpdateUpdateRequest('complete')
+            "
+          ></button>
+        </div>
+        <div class="col">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Rechazar finalización del servicio"
+            class="p-button-outlined delete-service-request-btn"
+            icon="pi pi-times"
+            (click)="
+            onUpdateUpdateRequest('cancel')
+            "
+          ></button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="card"
+      *ngIf="evaluated_applicant.request_phase == 'REQUESTS_CANCELLING'"
+    >
+      <div class="row m-3">
+        <div class="col">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Aceptar cancelación del servicio"
+            class="p-button-outlined edit-service-request-btn mx-2"
+            icon="pi pi-check"
+            (click)="
+              onUpdateUpdateRequest('complete')
+            "
+          ></button>
+        </div>
+        <div class="col">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Rechazar cancelación del servicio"
+            class="p-button-outlined delete-service-request-btn"
+            icon="pi pi-times"
+            (click)="
+            onUpdateUpdateRequest('cancel')
+            "
+          ></button>
+        </div>
+      </div>
+    </div>
   </p-dialog>
   <p-dialog
     header="Editar la solicitud de servicio"
@@ -269,17 +283,10 @@
       <div class="p-grid p-fluid">
         <div class="p-field p-col-12">
           <label for="service_request_title">Título de tu servicio</label>
-          <br />
-          <input
-            id="service_request_title"
-            type="text"
-            aria-describedby="service_request_title"
-            pInputText
-            [(ngModel)]="edited_service_request.title"
-          />
-          <br />
-          <small id="username1-help"
-            >Breve frase que describa tu servicio</small
+                    <br />
+                    <input id="service_request_title" type="text" aria-describedby="service_request_title" pInputText [(ngModel)]="edited_service_request.title" />
+                    <br />
+                    <small id="username1-help">Breve frase que describa tu servicio</small
           >
         </div>
         <br />
