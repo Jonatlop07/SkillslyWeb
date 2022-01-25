@@ -29,7 +29,7 @@ export class ProjectsCreateComponent {
   constructor(private projectService: ProjectService, private router: Router) {}
 
   onCancel() {
-    this.router.navigate(['./main']);
+    this.router.navigate(['../main/feed']);
   }
 
   saveForm(form: NgForm) {
@@ -46,7 +46,7 @@ export class ProjectsCreateComponent {
     if (this.validateContent(createProjectParams)) {
       this.requireOne = false;
       this.projectService.createProject(createProjectParams);
-      this.router.navigate(['./main']);
+      this.router.navigate(['../main/feed']);
       return true;
     } else {
       return false;
