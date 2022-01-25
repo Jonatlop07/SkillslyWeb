@@ -29,7 +29,6 @@ export class ProjectComponent implements OnInit{
 
   ngOnInit(): void {
     this.owns_project = this.projectService.getUserId() === this.project.user_id;
-    console.log(this.project);
   }
 
 }

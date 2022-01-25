@@ -26,7 +26,7 @@ export class AuthService {
     return this.http.post(`${this.API_URL}/users/account`, {
       ...registerForm,
       is_requester: false,
-      is_investor: true
+      is_investor: false
     }, {
       headers: new HttpHeaders({
         'Content-type': 'application/json'

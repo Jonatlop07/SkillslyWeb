@@ -32,11 +32,17 @@ export class ServiceRequestComponent implements OnInit {
           this.applications = res.applications;
         });
     }
-    if (this.userIsOwner() && (this.service_request.phase === 'Evaluation' || this.service_request.phase != 'closed')) {
+    if (
+      this.userIsOwner() &&
+      (this.service_request.phase === 'Evaluation' ||
+        this.service_request.phase === 'Execution')
+    ) {
       this.service_requests_service
         .getCurrentEvaluationApplicant(this.service_request.service_request_id)
         .subscribe((res: any) => {
-          this.evaluated_applicant = res;
+          if (res) {
+            this.evaluated_applicant = res;
+          }
         });
     }
   }
@@ -79,7 +85,10 @@ export class ServiceRequestComponent implements OnInit {
       .subscribe(
         (updated_service_request: ServiceRequestPresenter) => {
           this.hideEditServiceRequestModal();
-          this.service_request = {...this.service_request, ...updated_service_request} ;
+          this.service_request = {
+            ...this.service_request,
+            ...updated_service_request,
+          };
           this.service_requests_service.updateServiceRequestInStore(
             this.service_request
           );
@@ -198,16 +207,16 @@ export class ServiceRequestComponent implements OnInit {
           applicant_email: application.applicant_email,
           applicant_id: application.applicant_id,
           applicant_name: application.applicant_name,
-          request_phase: ''
+          request_phase: '',
         };
         this.display_applications_modal = false;
         this.applications.splice(index, 1);
         this.service_request = {
           ...this.service_request,
-          phase: res.request_phase
-        }
+          phase: res.request_phase,
+        };
         this.service_requests_service.updateServiceRequestInStore({
-          ...this.service_request
+          ...this.service_request,
         });
       });
   }
@@ -222,10 +231,10 @@ export class ServiceRequestComponent implements OnInit {
       .subscribe((res: OnUpdateApplicationResponse) => {
         this.service_request = {
           ...this.service_request,
-          phase: res.request_phase
-        }
+          phase: res.request_phase,
+        };
         this.service_requests_service.updateServiceRequestInStore({
-          ...this.service_request
+          ...this.service_request,
         });
       });
   }
@@ -241,12 +250,11 @@ export class ServiceRequestComponent implements OnInit {
         this.service_request = {
           ...this.service_request,
           phase: res.request_phase,
-          service_provider: res.applicant_id
-        }
+          service_provider: res.applicant_id,
+        };
         this.service_requests_service.updateServiceRequestInStore({
-          ...this.service_request
-        }
-        );
+          ...this.service_request,
+        });
       });
   }
 
@@ -278,8 +286,15 @@ export class ServiceRequestComponent implements OnInit {
         provider_id: service_provider,
         update_request_action: action,
       })
-      .subscribe((res:any) => {
-        this.display_service_request_details_modal= false; 
+      .subscribe((res: any) => {
+        this.display_service_request_details_modal = false;
+        this.service_request = {
+          ...this.service_request,
+          phase: res.request_phase,
+        };
+        this.service_requests_service.updateServiceRequestInStore({
+          ...this.service_request,
+        });
       });
   }
 }

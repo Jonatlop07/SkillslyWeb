@@ -168,7 +168,7 @@ export class UserNotificationsService {
             data,
             action_details: {
               route: './service-requests',
-              message: `El usuario ${data.requester_name} ha solicitado la actualización`
+              message: `El usuario ${data.provider_name} ha solicitado la actualización`
                 + ` de la etapa de la solicitud de servicio '${data.service_request_title}' a: `
                 + `${action}`
             }
