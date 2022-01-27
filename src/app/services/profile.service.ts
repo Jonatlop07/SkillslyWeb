@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import Profile from '../interfaces/profile/profile';
@@ -23,9 +23,8 @@ export class ProfileService {
     );
   }
 
-  getProfile(email: string) {
+  getProfile() {
     return this.http.get(`${this.API_URL}/users/profile`, {
-      params: new HttpParams().set('user_email', email),
       ...this.jwt_service.getHttpOptions(),
     });
   }
