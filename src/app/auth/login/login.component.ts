@@ -5,8 +5,8 @@ import Swal from 'sweetalert2';
 
 import { AuthService } from 'src/app/services/auth.service';
 
-import { LoginForm } from '../../interfaces/login_form.inteface';
-import { LoginResponse } from '../../interfaces/login_response.interface'
+import { LoginForm } from '../../interfaces/login/login_form.inteface';
+import { LoginResponse } from '../../interfaces/login/login_response.interface'
 import { ConversationService } from '../../services/conversation.service';
 import { FollowService } from '../../services/follow.service';
 import { EventService } from 'src/app/services/event.service';
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit{
   public form: FormGroup;
   public loginForm: LoginForm;
   public formSubmitted = false;
-  public sitekey: any;
+  public site_key: any;
   public validCaptcha = false;
   @ViewChild('captchaElem') captcha: RecaptchaComponent;
 
@@ -37,10 +37,10 @@ export class LoginComponent implements OnInit{
     private readonly service_requests_service: ServiceRequestsService,
     private readonly router: Router
   ) {
-    
+
   }
   ngOnInit(): void {
-    this.sitekey = '6Le-PfMdAAAAAIM0bEC7_TxiGoL5J-8YkcAC4R0-'
+    this.site_key = '6Le-PfMdAAAAAIM0bEC7_TxiGoL5J-8YkcAC4R0-'
     this.initForm();
   }
 

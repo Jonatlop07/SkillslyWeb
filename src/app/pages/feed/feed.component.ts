@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { PermanentPostPresenter } from 'src/app/interfaces/presenter/post/query_post.presenter';
-import { EventModel } from 'src/app/models/events.model';
+import { PermanentPostPresenter } from 'src/app/interfaces/post/query_post.presenter';
+import { EventModel } from 'src/app/models/event_collection.model';
 import { EventService } from 'src/app/services/event.service';
 import { PostService } from 'src/app/services/posts.service';
 

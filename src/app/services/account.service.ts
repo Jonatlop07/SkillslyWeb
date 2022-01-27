@@ -3,10 +3,8 @@ import { Observable } from 'rxjs';
 import { JwtService } from './jwt.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { GetAccountDataPresenter } from '../interfaces/presenter/user/get_account_data.presenter'
-import { UpdateUserDataPresenter } from '../interfaces/presenter/user/update_user_data.presenter'
-import { Select } from '@ngxs/store'
-import { SessionState } from '../shared/state/session/session.state'
+import { AccountDataPresenter } from '../interfaces/user-account/account_data.presenter'
+import { UpdateUserDetails } from '../interfaces/user-account/update_user_details'
 import { ObtainSpecialRolesData } from '../interfaces/user-account/obtain_special_roles_data'
 
 @Injectable()
@@ -18,17 +16,17 @@ export class AccountService {
     private readonly jwt_service: JwtService
   ) {}
 
-  public getUserAccountData(): Observable<GetAccountDataPresenter> {
-    return this.http.get<GetAccountDataPresenter>(
-      `${this.API_URL}/users/account/${this.jwt_service.getUserId()}`,
+  public getUserAccountData(): Observable<AccountDataPresenter> {
+    return this.http.get<AccountDataPresenter>(
+      `${this.API_URL}/users/account/${encodeURIComponent(this.jwt_service.getUserId())}`,
       this.jwt_service.getHttpOptions()
     );
   }
 
-  public updateUserAccountData(update_user_data: UpdateUserDataPresenter): Observable<GetAccountDataPresenter> {
-    return this.http.put<GetAccountDataPresenter>(
+  public updateUserAccountData(update_user_details: UpdateUserDetails): Observable<AccountDataPresenter> {
+    return this.http.put<AccountDataPresenter>(
       `${this.API_URL}/users/account/${this.jwt_service.getUserId()}`,
-      update_user_data,
+      update_user_details,
       this.jwt_service.getHttpOptions()
     );
   }

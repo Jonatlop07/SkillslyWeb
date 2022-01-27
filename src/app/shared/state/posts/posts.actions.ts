@@ -1,9 +1,9 @@
-import { PostsModel } from "../../../models/posts.model";
+import { PostCollectionModel } from "../../../models/post_collection.model";
 
 export class SetMyPosts {
   static readonly type = '[Posts Query] Set My Posts';
 
-  constructor(public readonly posts: PostsModel) {
+  constructor(public readonly posts: PostCollectionModel) {
   }
 }
 

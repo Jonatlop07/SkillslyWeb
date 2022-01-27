@@ -6,7 +6,7 @@ import {
   QueryReactionsReactors,
   QueryReactionsResponse,
   ReactionPerType,
-} from '../interfaces/presenter/query_reactions.presenter';
+} from '../interfaces/post/query_reactions.presenter';
 import { map } from 'rxjs/operators';
 import { JwtService } from './jwt.service';
 

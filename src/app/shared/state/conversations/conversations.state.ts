@@ -1,5 +1,5 @@
 import { Action, State, StateContext, StateToken } from '@ngxs/store'
-import { ConversationsModel } from '../../../models/conversations.model'
+import { ConversationCollectionModel } from '../../../models/conversation_collection.model'
 import {
   AddMembersToGroupConversation,
   AppendGroupConversation,
@@ -9,12 +9,12 @@ import {
 } from './conversations.actions'
 import { Injectable } from '@angular/core'
 
-const CONVERSATIONS_STATE_TOKEN = new StateToken<ConversationsModel>('my_conversations');
+const CONVERSATIONS_STATE_TOKEN = new StateToken<ConversationCollectionModel>('my_conversations');
 
 @Injectable({
   providedIn: 'root'
 })
-@State<ConversationsModel>({
+@State<ConversationCollectionModel>({
   name: CONVERSATIONS_STATE_TOKEN,
   defaults: {
     private_conversations: [],
@@ -24,7 +24,7 @@ const CONVERSATIONS_STATE_TOKEN = new StateToken<ConversationsModel>('my_convers
 export class MyConversationsState {
 
   @Action(AppendPrivateConversation)
-  public appendPrivateConversation(ctx: StateContext<ConversationsModel>, action: AppendPrivateConversation) {
+  public appendPrivateConversation(ctx: StateContext<ConversationCollectionModel>, action: AppendPrivateConversation) {
     const state = ctx.getState();
     ctx.setState({
       group_conversations: state.group_conversations,
@@ -36,7 +36,7 @@ export class MyConversationsState {
   }
 
   @Action(AppendGroupConversation)
-  public appendGroupConversation(ctx: StateContext<ConversationsModel>, action: AppendGroupConversation) {
+  public appendGroupConversation(ctx: StateContext<ConversationCollectionModel>, action: AppendGroupConversation) {
     const state = ctx.getState();
     ctx.setState({
       private_conversations: state.private_conversations,
@@ -48,7 +48,7 @@ export class MyConversationsState {
   }
 
   @Action(StoreConversations)
-  public storeConversations(ctx: StateContext<ConversationsModel>, action: StoreConversations) {
+  public storeConversations(ctx: StateContext<ConversationCollectionModel>, action: StoreConversations) {
     ctx.setState({
       private_conversations: action.private_conversations,
       group_conversations: action.group_conversations
@@ -56,7 +56,7 @@ export class MyConversationsState {
   }
 
   @Action(EditGroupConversationDetails)
-  public editGroupConversationDetails(ctx: StateContext<ConversationsModel>, action: EditGroupConversationDetails) {
+  public editGroupConversationDetails(ctx: StateContext<ConversationCollectionModel>, action: EditGroupConversationDetails) {
     const state = ctx.getState();
     const group_conversations = [...state.group_conversations];
     for (let i = 0; i < group_conversations.length; ++i) {
@@ -76,7 +76,7 @@ export class MyConversationsState {
   }
 
   @Action(DeleteGroupConversation)
-  public deleteGroupConversation(ctx: StateContext<ConversationsModel>, action: DeleteGroupConversation) {
+  public deleteGroupConversation(ctx: StateContext<ConversationCollectionModel>, action: DeleteGroupConversation) {
     const state = ctx.getState();
     ctx.setState({
       ...state,
@@ -88,7 +88,7 @@ export class MyConversationsState {
   }
 
   @Action(AddMembersToGroupConversation)
-  public addMembersToGroupConversation(ctx: StateContext<ConversationsModel>, action: AddMembersToGroupConversation) {
+  public addMembersToGroupConversation(ctx: StateContext<ConversationCollectionModel>, action: AddMembersToGroupConversation) {
     const state = ctx.getState();
     const group_conversations = [...state.group_conversations];
     for (let i = 0; i < group_conversations.length; ++i) {

@@ -1,4 +1,4 @@
-import { User } from '../../../interfaces/user.interface'
+import { User } from '../../../interfaces/user/user.interface'
 
 export class AppendReceivedFollowRequest {
   static readonly type = '[Auth] Append Received Follow Request';

@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { GroupPresenter } from 'src/app/interfaces/presenter/group/groups.presenter';
+import { GroupPresenter } from 'src/app/interfaces/group/groups.presenter';
 import { GroupsService } from 'src/app/services/groups.service';
 
 

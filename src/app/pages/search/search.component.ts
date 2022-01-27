@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from '../../services/search.service';
-import { SearchUserResponse } from '../../interfaces/search_users_response.interface';
+import { SearchUserResponse } from '../../interfaces/search-user/search_users_response.interface';
 import * as moment from 'moment';
-import { SearchUserInputForm } from 'src/app/interfaces/search_users_input_form.interface';
+import { SearchUserInputForm } from 'src/app/interfaces/search-user/search_users_input_form.interface';
 import { FollowService } from '../../services/follow.service';
 
 @Component({

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { JwtService } from './jwt.service';
-import { SearchUserInputForm } from '../interfaces/search_users_input_form.interface';
+import { SearchUserInputForm } from '../interfaces/search-user/search_users_input_form.interface';
 @Injectable({
   providedIn: 'root'
 })

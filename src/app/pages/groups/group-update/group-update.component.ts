@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
-import { GroupPresenter } from 'src/app/interfaces/presenter/group/groups.presenter';
-import JoinRequest from 'src/app/interfaces/presenter/group/join_request.interface';
+import { GroupPresenter } from 'src/app/interfaces/group/groups.presenter';
+import JoinRequest from 'src/app/interfaces/group/join_request.interface';
 import { GroupsService } from 'src/app/services/groups.service';
 
 @Component({
@@ -104,7 +104,7 @@ export class GroupUpdateComponent implements OnInit {
         this.groupsService
           .deleteGroup(this.group.id)
           .subscribe(() => {
-            this.router.navigate(['../../../mygroups'], { relativeTo: this.route });
+            this.router.navigate(['../../../my-groups'], { relativeTo: this.route });
           });
       },
       reject: () => {
