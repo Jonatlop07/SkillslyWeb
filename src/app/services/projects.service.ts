@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { CreateProjectDataPresenter } from '../interfaces/presenter/project/create_project_data.presenter';
+import { CreateProjectDataPresenter } from '../interfaces/project/create_project_data.presenter';
 import { JwtService } from './jwt.service';
 import { Select } from '@ngxs/store';
 import { SessionState } from '../shared/state/session/session.state';
 import { Observable } from 'rxjs';
 import { SessionModel } from '../models/session.model';
 import {tap} from "rxjs/operators";
-import {QueryProjectPresenter} from "../interfaces/presenter/project/query_project.presenter";
+import {QueryProjectPresenter} from "../interfaces/project/query_project.presenter";
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {

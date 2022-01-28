@@ -7,14 +7,14 @@ import { SessionState } from '../shared/state/session/session.state';
 import { Observable, of } from 'rxjs';
 import { SessionModel } from '../models/session.model';
 import { tap } from 'rxjs/operators';
-import { CreateGroupPresenter } from '../interfaces/presenter/group/create_group.presenter';
+import { CreateGroupPresenter } from '../interfaces/group/create_group.presenter';
 import {
   QueryGroupsPresenter,
   QuerySingleGroupPresenter,
-} from '../interfaces/presenter/group/query_groups.presenter';
-import { QueryGroupUsersPresenter } from '../interfaces/presenter/group/query_group_users.presenter';
-import UpdateGroupUserPresenter from '../interfaces/presenter/group/update_group_user.presenter';
-import UpdateGroupPresenter from '../interfaces/presenter/group/update_group.presenter';
+} from '../interfaces/group/query_groups.presenter';
+import { QueryGroupUsersPresenter } from '../interfaces/group/query_group_users.presenter';
+import UpdateGroupUserPresenter from '../interfaces/group/update_group_user.presenter';
+import UpdateGroupPresenter from '../interfaces/group/update_group.presenter';
 
 @Injectable({ providedIn: 'root' })
 export class GroupsService {

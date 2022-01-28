@@ -1,10 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
-import { GroupPresenter } from 'src/app/interfaces/presenter/group/groups.presenter';
-import GroupUser from 'src/app/interfaces/presenter/group/group_user.interface';
-import { PermanentPostPresenter } from 'src/app/interfaces/presenter/post/query_post.presenter';
-import { PostModel } from 'src/app/models/posts.model';
+import { GroupPresenter } from 'src/app/interfaces/group/groups.presenter';
+import GroupUser from 'src/app/interfaces/group/group_user.interface';
+import { PermanentPostPresenter } from 'src/app/interfaces/post/query_post.presenter';
+import { PostModel } from 'src/app/models/post_collection.model';
 import { GroupsService } from 'src/app/services/groups.service';
 import { PostService } from 'src/app/services/posts.service';
 
@@ -51,7 +51,7 @@ export class GroupComponent implements OnInit {
     });
   }
 
-  showGroupUsers() {
+  public showGroupUsers() {
     this.limit = 5;
     this.offset = 0;
     this.groupsService
@@ -67,7 +67,7 @@ export class GroupComponent implements OnInit {
     this.display = !this.display;
   }
 
-  onRemoveUser(event: Event, user_id: string, index: number) {
+  public onRemoveUser(event: Event, user_id: string, index: number) {
     this.confirmationService.confirm({
       target: event.target,
       message: 'Estás seguro que deseas eliminar este usuario del grupo?',
@@ -89,23 +89,23 @@ export class GroupComponent implements OnInit {
     });
   }
 
-  isOwnerAndNotSelf(user_id: string) {
+  public isOwnerAndNotSelf(user_id: string) {
     return !(this.groupsService.getUserId() === user_id) && this.group.isOwner;
   }
 
-  joinGroup() {
+  public joinGroup() {
     this.groupsService.joinGroup(this.group.id).subscribe(() => {
       this.group.existsRequest = true;
     });
   }
 
-  cancelGroupRequest() {
+  public cancelGroupRequest() {
     this.groupsService.removeJoinRequest(this.group.id).subscribe(() => {
       this.group.existsRequest = false;
     });
   }
 
-  onLeaveGroup(event: Event) {
+  public onLeaveGroup(event: Event) {
     this.confirmationService.confirm({
       target: event.target,
       message: 'Estás seguro que deseas abandonar este grupo?',
@@ -113,7 +113,7 @@ export class GroupComponent implements OnInit {
       accept: () => {
         this.groupsService.leaveGroup(this.searchedGroup).subscribe(
           () => {
-            this.router.navigate(['../../mygroups'], {
+            this.router.navigate(['../../my-groups'], {
               relativeTo: this.route,
             });
           },
@@ -130,11 +130,11 @@ export class GroupComponent implements OnInit {
     });
   }
 
-  onCloseError() {
+  public onCloseError() {
     this.only_owner_error = false;
   }
 
-  loadPosts() {
+  public loadPosts() {
     this.limit = 3;
     this.offset = 0;
     this.postsService
@@ -149,12 +149,12 @@ export class GroupComponent implements OnInit {
       });
   }
 
-  onToggleCreate(post: PermanentPostPresenter) {
+  public onToggleCreate(post: PermanentPostPresenter) {
     this.posts.push(post);
     this.display_create = !this.display_create;
   }
 
-  onDeletePost(id: string) {
+  public onDeletePost(id: string) {
     this.posts.splice(parseInt(id), 1);
   }
 

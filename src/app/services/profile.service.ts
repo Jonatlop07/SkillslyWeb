@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import Profile from '../models/profile.model';
+import Profile from '../interfaces/profile/profile';
 import { JwtService } from './jwt.service';
 
 @Injectable({

@@ -2,32 +2,32 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { JwtService } from './jwt.service';
-import { CreateEventPresenter } from '../interfaces/presenter/event/create_event.presenter';
+import { CreateEventPresenter } from '../interfaces/event/create_event.presenter';
 import { Select, Store } from '@ngxs/store';
 import { Observable, of } from 'rxjs';
 import { EventsState } from '../shared/state/events/events.state';
 import { AssistancesState } from '../shared/state/events/assistances/assistances.state';
-import { EventModel, EventsModel } from '../models/events.model';
+import { EventModel, EventCollectionModel } from '../models/event_collection.model';
 import { SetMyEvents } from '../shared/state/events/events.actions';
 import { tap } from 'rxjs/operators';
 import { SetMyAssistances } from '../shared/state/events/assistances/assistances.actions';
-import { CreateAssistancePresenter } from '../interfaces/presenter/event/assistance/create_assistance.presenter';
-import { DeleteAssistancePresenter } from '../interfaces/presenter/event/assistance/delete_assistance.presenter';
+import { CreateAssistancePresenter } from '../interfaces/event/assistance/create_assistance.presenter';
+import { DeleteAssistancePresenter } from '../interfaces/event/assistance/delete_assistance.presenter';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
-  @Select(EventsState) events$: Observable<EventsModel>;
-  @Select(AssistancesState) assistance$: Observable<EventsModel>;
+  @Select(EventsState) events$: Observable<EventCollectionModel>;
+  @Select(AssistancesState) assistance$: Observable<EventCollectionModel>;
 
-  
+
   private readonly API_URL: string = environment.API_URL;
   public isChargingFeedEvents = false;
 
   constructor(
     private readonly http: HttpClient,
-    private readonly jwt_service: JwtService, 
+    private readonly jwt_service: JwtService,
     private readonly store: Store
   ) { }
 
@@ -35,9 +35,9 @@ export class EventService {
     return this.http.post(
       `${this.API_URL}/event`,
       {
-        name: event.name, 
-        description: event.description, 
-        lat: event.lat, 
+        name: event.name,
+        description: event.description,
+        lat: event.lat,
         long: event.long,
         date: event.date
       },
@@ -52,7 +52,7 @@ export class EventService {
     let params  = new HttpParams();
     params = params.append('limit', limit);
     params = params.append('offset', offset);
-    this.isChargingFeedEvents = true; 
+    this.isChargingFeedEvents = true;
     return this.http.get(
       `${this.API_URL}/event`,
       {
@@ -61,7 +61,7 @@ export class EventService {
       }
     ).pipe(
       tap(() => {
-        this.isChargingFeedEvents = false; 
+        this.isChargingFeedEvents = false;
       })
     )
   }
@@ -90,7 +90,7 @@ export class EventService {
     });
     return events;
   }
-   
+
   private storeMyEvents(events: Array<EventModel>): Observable<void> {
     return this.store.dispatch(new SetMyEvents({events}));
   }
@@ -122,7 +122,7 @@ export class EventService {
     return this.http.post(
       `${this.API_URL}/event/assistant`,
       assistance,
-      this.jwt_service.getHttpOptions(), 
+      this.jwt_service.getHttpOptions(),
     );
   }
 
@@ -143,7 +143,7 @@ export class EventService {
     });
     return assistances;
   }
-   
+
   private storeMyAssistances(events: Array<EventModel>): Observable<void> {
     return this.store.dispatch(new SetMyAssistances({events}));
   }

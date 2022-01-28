@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { RegisterForm } from '../interfaces/register_form.interface';
+import { RegisterForm } from '../interfaces/register/register_form.interface';
 import { environment } from 'src/environments/environment';
-import { LoginForm } from '../interfaces/login_form.inteface';
+import { LoginForm } from '../interfaces/login/login_form.inteface';
 import { JwtService } from './jwt.service'
-import { LoginResponse } from '../interfaces/login_response.interface'
+import { LoginResponse } from '../interfaces/login/login_response.interface'
 import { Observable } from 'rxjs'
 import { Store } from '@ngxs/store'
 import { SetSessionData } from '../shared/state/session/session.actions'

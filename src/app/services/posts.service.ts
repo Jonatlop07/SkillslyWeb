@@ -1,20 +1,20 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { toPostContent } from '../interfaces/presenter/post/post_form_data.presenter';
-import { CreatePostDataPresenter } from '../interfaces/presenter/post/create_post_data.presenter';
+import { toPostContent } from '../interfaces/post/post_form_data.presenter';
+import { CreatePostDataPresenter } from '../interfaces/post/create_post_data.presenter';
 import { JwtService } from './jwt.service';
-import { DeletePostInterface } from '../interfaces/delete_post.interface';
+import { DeletePostInterface } from '../interfaces/post/delete_post.interface';
 import {
   PermanentPostPresenter,
   QueryPostPresenter,
-} from '../interfaces/presenter/post/query_post.presenter';
-import { SharePostInterface } from '../interfaces/share_post.interface';
+} from '../interfaces/post/query_post.presenter';
+import { SharePostInterface } from '../interfaces/post/share_post.interface';
 import { Select } from '@ngxs/store';
 import { SessionState } from '../shared/state/session/session.state';
 import { Observable, of } from 'rxjs';
 import { SessionModel } from '../models/session.model';
-import { UpdatePostPresenter } from '../interfaces/presenter/post/update_post.presenter';
+import { UpdatePostPresenter } from '../interfaces/post/update_post.presenter';
 import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })

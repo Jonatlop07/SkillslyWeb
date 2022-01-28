@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core'
 import { JwtService } from './jwt.service'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment'
-import { ConversationPresenter } from '../interfaces/presenter/chat/conversation.presenter'
+import { Conversation } from '../interfaces/chat/conversation'
 import { Observable } from 'rxjs'
-import { NewConversationPresenter } from '../interfaces/presenter/chat/new_conversation.presenter'
-import { DeleteConversationPresenter } from '../interfaces/presenter/chat/delete_conversation.presenter'
-import { ConversationsPresenter } from '../interfaces/presenter/chat/conversations.presenter'
-import { MessageCollectionPresenter } from '../interfaces/presenter/chat/message_collection.presenter'
+import { NewConversationDetails } from '../interfaces/chat/new_conversation_details'
+import { DeleteConversationPresenter } from '../interfaces/chat/delete_conversation.presenter'
+import { ConversationCollectionPresenter } from '../interfaces/chat/conversation_collection.presenter'
+import { MessageCollectionPresenter } from '../interfaces/chat/message_collection.presenter'
 import { Select, Store } from '@ngxs/store'
 import {
   AddMembersToGroupConversation,
@@ -16,14 +16,14 @@ import {
   StoreConversations
 } from '../shared/state/conversations/conversations.actions'
 import { MyConversationsState } from '../shared/state/conversations/conversations.state'
-import { ConversationsModel } from '../models/conversations.model'
-import { GroupConversationDetailsPresenter } from '../interfaces/presenter/chat/group_conversation_details.presenter'
-import { AddedMembersPresenter } from '../interfaces/presenter/chat/added_members.presenter'
-import { ConversationMemberPresenter } from '../interfaces/presenter/chat/conversation_member.presenter'
+import { ConversationCollectionModel } from '../models/conversation_collection.model'
+import { GroupConversationDetails } from '../interfaces/chat/group_conversation_details'
+import { AddedMembersPresenter } from '../interfaces/chat/added_members.presenter'
+import { ConversationMemberPresenter } from '../interfaces/chat/conversation_member.presenter'
 
 @Injectable({ providedIn: 'root' })
 export class ConversationService {
-  @Select(MyConversationsState) conversations$: Observable<ConversationsModel>;
+  @Select(MyConversationsState) conversations$: Observable<ConversationCollectionModel>;
 
   private readonly API_URL: string = environment.API_URL;
 
@@ -33,33 +33,33 @@ export class ConversationService {
     private readonly store: Store
   ) {}
 
-  public getAndStoreConversations() {
+  public getAndStoreConversations(): void {
     this.http
-      .get<ConversationsPresenter>(
+      .get<ConversationCollectionPresenter>(
         `${this.API_URL}/chat`,
         this.jtw_service.getHttpOptions()
-      ).subscribe((conversations: ConversationsPresenter) => {
+      ).subscribe((conversations: ConversationCollectionPresenter) => {
         this.storeConversations(conversations).subscribe(() => {});
       });
   }
 
-  private storeConversations(conversations_presenter: ConversationsPresenter): Observable<void> {
+  private storeConversations(conversations_presenter: ConversationCollectionPresenter): Observable<void> {
     return this.store.dispatch(
       new StoreConversations(
         conversations_presenter.conversations.filter(
-          (conversation: ConversationPresenter) => conversation.is_private
+          (conversation: Conversation) => conversation.is_private
         ),
         conversations_presenter.conversations.filter(
-          (conversation: ConversationPresenter) => !conversation.is_private
+          (conversation: Conversation) => !conversation.is_private
         )
       )
     );
   }
 
   public getConversationsFromStore() {
-    let private_conversations: Array<ConversationPresenter> = [];
-    let group_conversations: Array<ConversationPresenter> = [];
-    this.conversations$.subscribe((conversations: ConversationsModel) => {
+    let private_conversations: Array<Conversation> = [];
+    let group_conversations: Array<Conversation> = [];
+    this.conversations$.subscribe((conversations: ConversationCollectionModel) => {
       private_conversations = conversations.private_conversations;
       group_conversations = conversations.group_conversations;
     });
@@ -69,8 +69,8 @@ export class ConversationService {
     }
   }
 
-  public createConversation(new_conversation: NewConversationPresenter): Observable<ConversationPresenter> {
-    return this.http.post<ConversationPresenter>(
+  public createConversation(new_conversation: NewConversationDetails): Observable<Conversation> {
+    return this.http.post<Conversation>(
       `${this.API_URL}/chat/group`,
       {
         name: new_conversation.conversation_name,
@@ -83,13 +83,13 @@ export class ConversationService {
       );
   }
 
-  public appendGroupConversation(new_conversation: ConversationPresenter): Observable<void> {
+  public appendGroupConversation(new_conversation: Conversation): Observable<void> {
     return this.store.dispatch(new AppendGroupConversation(new_conversation));
   }
 
-  public editGroupConversationDetails(conversation_id: string, conversation_details: GroupConversationDetailsPresenter)
-    : Observable<GroupConversationDetailsPresenter> {
-    return this.http.patch<GroupConversationDetailsPresenter>(
+  public editGroupConversationDetails(conversation_id: string, conversation_details: GroupConversationDetails)
+    : Observable<GroupConversationDetails> {
+    return this.http.patch<GroupConversationDetails>(
       `${this.API_URL}/chat/group/${encodeURIComponent(conversation_id)}/`,
       conversation_details,
       this.jtw_service.getHttpOptions()
@@ -128,7 +128,7 @@ export class ConversationService {
 
   public editGroupConversationDetailsInStore(
     conversation_id: string,
-    conversation_details: GroupConversationDetailsPresenter
+    conversation_details: GroupConversationDetails
   ): Observable<void> {
     return this.store.dispatch(new EditGroupConversationDetails(
       conversation_id,

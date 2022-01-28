@@ -2,16 +2,16 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '../../services/account.service';
-import { AccountForm } from '../../interfaces/user-account/account_form.interface';
-import { GetAccountDataPresenter } from '../../interfaces/presenter/user/get_account_data.presenter'
-import Swal from 'sweetalert2'
-import * as moment from 'moment'
-import { AuthService } from '../../services/auth.service'
-import { Store } from '@ngxs/store'
-import { UpdateSessionEmail } from '../../shared/state/session/session.actions'
-import { Role } from '../../interfaces/user-account/role.enum'
-import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js'
-import { StripeCardComponent, StripeService } from 'ngx-stripe'
+import { AccountFormDetails } from '../../interfaces/user-account/account_form_details.interface';
+import { AccountDataPresenter } from '../../interfaces/user-account/account_data.presenter';
+import { AuthService } from '../../services/auth.service';
+import { Store } from '@ngxs/store';
+import { UpdateSessionEmail } from '../../shared/state/session/session.actions';
+import { Role } from '../../interfaces/user-account/role.enum';
+import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
+import { StripeCardComponent, StripeService } from 'ngx-stripe';
+import Swal from 'sweetalert2';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-account',
@@ -20,7 +20,7 @@ import { StripeCardComponent, StripeService } from 'ngx-stripe'
 })
 export class AccountComponent implements OnInit {
   public form: FormGroup;
-  public account_form: AccountForm;
+  public account_form: AccountFormDetails;
   public change_password = false;
   public today = new Date();
 
@@ -34,7 +34,7 @@ export class AccountComponent implements OnInit {
 
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
-  cardOptions: StripeCardElementOptions = {
+  public cardOptions: StripeCardElementOptions = {
     hidePostalCode: true,
     style: {
       base: {
@@ -50,7 +50,7 @@ export class AccountComponent implements OnInit {
     },
   };
 
-  elementsOptions: StripeElementsOptions = {
+  public elementsOptions: StripeElementsOptions = {
     locale: 'auto',
   };
 
@@ -58,9 +58,9 @@ export class AccountComponent implements OnInit {
     private readonly form_builder: FormBuilder,
     private readonly account_service: AccountService,
     private readonly auth_service: AuthService,
+    private readonly stripe_service: StripeService,
     private readonly store: Store,
-    private readonly router: Router,
-    private readonly stripe_service: StripeService
+    private readonly router: Router
   ) {
   }
 
@@ -71,15 +71,15 @@ export class AccountComponent implements OnInit {
     this.is_requester = this.roles.includes(Role.Requester);
   }
 
-  public getAccountData() {
+  public getAccountData(): void {
     this.account_service
       .getUserAccountData()
-      .subscribe((account_data: GetAccountDataPresenter) => {
+      .subscribe((account_data: AccountDataPresenter) => {
         this.initForm(account_data);
       });
   }
 
-  public submitUserAccountData() {
+  public submitUserAccountData(): void {
     this.account_form = this.form.value;
     if (this.invalidForm()) {
       return this.getAccountData();
@@ -92,21 +92,21 @@ export class AccountComponent implements OnInit {
     ).format('DD/MM/YYYY');
     this.account_service
       .updateUserAccountData(this.account_form)
-      .subscribe((account_data: GetAccountDataPresenter) => {
+      .subscribe((account_data: AccountDataPresenter) => {
         this.initForm(account_data);
         this.store.dispatch(new UpdateSessionEmail(account_data.email));
       });
   }
 
-  public onChangeObtainRequesterRoleCheckbox() {
+  public onChangeObtainRequesterRoleCheckbox(): void {
     this.obtain_requester_role = !this.obtain_requester_role;
   }
 
-  public onChangeObtainInvestorRoleCheckbox() {
+  public onChangeObtainInvestorRoleCheckbox(): void {
     this.obtain_investor_role = !this.obtain_investor_role;
   }
 
-  public obtainSpecialRoles() {
+  public obtainSpecialRoles(): void {
     this.stripe_service.createPaymentMethod({
       type: 'card',
       card: this.card.element
@@ -125,9 +125,11 @@ export class AccountComponent implements OnInit {
             text: 'Has adquirido los roles exitosamente, te redigiremos a la seccion de inicio de sesión',
             icon: 'success'
           });
-          this.auth_service.logout().subscribe(() => {
-            this.router.navigate(['../login']);
-          });
+          this.auth_service
+            .logout()
+            .subscribe(() => {
+              this.router.navigate(['../login']);
+            });
         }, (err) => {
           const { error, message } = err.error
           const error_description = message ?
@@ -149,13 +151,13 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  public deleteUserAccount() {
+  public deleteUserAccount(): void {
     this.account_service
       .deleteUserAccount()
       .subscribe(() => {
-        this.auth_service.logout();
-        this.router.navigate(['/login']);
-      },
+          this.auth_service.logout();
+          this.router.navigate(['/login']);
+        },
         (err) => {
           Swal.fire('Error', err.error.error, 'error');
         }
@@ -170,7 +172,7 @@ export class AccountComponent implements OnInit {
     return this.form.invalid;
   }
 
-  public initForm(form_data: GetAccountDataPresenter): void {
+  public initForm(form_data: AccountDataPresenter): void {
     this.form = this.form_builder.group({
       name: [form_data.name, [
         Validators.required,
@@ -197,7 +199,7 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  public onToggleChangePassword() {
+  public onToggleChangePassword(): void {
     this.change_password = !this.change_password;
   }
 

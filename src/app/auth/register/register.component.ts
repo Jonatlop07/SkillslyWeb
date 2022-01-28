@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RegisterForm } from '../../interfaces/register_form.interface';
+import { RegisterForm } from '../../interfaces/register/register_form.interface';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
@@ -13,27 +13,27 @@ import { RecaptchaComponent } from 'ng-recaptcha';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-
   @ViewChild('captchaElem') captcha: RecaptchaComponent;
+
   public form: FormGroup;
   public register_form: RegisterForm;
   public today = new Date();
   public form_submitted = false;
   public validCaptcha = false;
-  public sitekey: any;
+  public site_key: any;
 
   constructor(
     private form_builder: FormBuilder,
     private auth_service: AuthService,
     private router: Router
-  ) {
-  }
+  ) {}
+
   ngOnInit(): void {
-    this.sitekey = '6Le-PfMdAAAAAIM0bEC7_TxiGoL5J-8YkcAC4R0-'
+    this.site_key = '6Le-PfMdAAAAAIM0bEC7_TxiGoL5J-8YkcAC4R0-'
     this.initForm();
   }
 
-  initForm(): void {
+  public initForm(): void {
     this.form = this.form_builder.group({
       name: ['', [
         Validators.required,
@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  saveForm() {
+  public saveForm(): void {
     this.form_submitted = true;
     if (this.invalidForm()) {
       this.captcha.reset();
@@ -70,19 +70,20 @@ export class RegisterComponent implements OnInit {
     this.register_form.date_of_birth = moment(
       this.form.get('date_of_birth').value
     ).format('DD/MM/YYYY');
-    const registerResponse = this.auth_service.registerUser(this.register_form);
-    registerResponse.subscribe(() => {
-      this.router.navigate(['/login']);
-    }, (err) => {
-      Swal.fire('Error', err.error.error, 'error' );
-    });
+    this.auth_service
+      .registerUser(this.register_form)
+      .subscribe(() => {
+        this.router.navigate(['/login']);
+      }, (err) => {
+        Swal.fire('Error', err.error.error, 'error' );
+      });
   }
 
-  invalidInput(input: string): boolean {
+ public invalidInput(input: string): boolean {
     return this.form.get(input).invalid && this.form.get(input).touched;
   }
 
-  invalidForm(): boolean {
+  public invalidForm(): boolean {
     return this.form.invalid && this.form_submitted;
   }
 }
