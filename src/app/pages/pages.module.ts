@@ -116,7 +116,7 @@ import {DockModule} from "primeng/dock";
     ChipModule,
     DialogModule,
     ButtonModule,
-    NgxStripeModule.forChild('pk_test_51KKqzTLW8alQ67QMS4GSfh6VTdVVvJH3LFlptoBZQW6yZhoB516uFllbjcmtvDUsuedzrcU12wAbnELdm5b10e6700wWxK7ASu'),
+    NgxStripeModule.forChild('pk_test_51KLexjInl63jmbBXjFoaqoKZcoWwi2zWO3d1zQYe5RrMehW2zammINzRyL24aqTahMZJzM5glV1xakvthJKRfJ7k00wkcfxYEl'),
     DockModule
   ],
 })
