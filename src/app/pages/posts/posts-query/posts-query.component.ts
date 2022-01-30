@@ -35,13 +35,14 @@ export class PostsQueryComponent implements OnInit {
       const queryPostParams: QueryPostPresenter = {
         user_id: this.post_owner,
       };
-      const postServiceResponse = this.postService.queryPostCollection(queryPostParams);
-      postServiceResponse.subscribe((res: any) => {
-        this.store.dispatch(new SetMyPosts({ posts: res.posts }));
-        this.my_posts$.subscribe(my_posts => {
-          this.posts = my_posts.posts;
-        })
-      });
+      this.postService
+        .queryPostCollection(queryPostParams)
+        .subscribe((res: any) => {
+          this.store.dispatch(new SetMyPosts({ posts: res.posts }));
+          this.my_posts$.subscribe(my_posts => {
+            this.posts = my_posts.posts;
+          })
+        });
     })
   }
 
