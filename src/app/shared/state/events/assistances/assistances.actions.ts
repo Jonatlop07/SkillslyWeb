@@ -1,9 +1,9 @@
-import { EventsModel } from "src/app/models/events.model";
+import { EventCollectionModel } from "src/app/models/event_collection.model";
 
 export class SetMyAssistances {
   static readonly type = '[Assistances Query] Set My Assistances';
 
-  constructor(public readonly events: EventsModel) {
+  constructor(public readonly events: EventCollectionModel) {
   }
 }
 

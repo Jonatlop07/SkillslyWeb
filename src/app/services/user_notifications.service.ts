@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core'
 import { NotificationSocket } from '../socket/notification.socket'
-import { ConversationPresenter } from '../interfaces/presenter/chat/conversation.presenter'
+import { Conversation } from '../interfaces/chat/conversation'
 import { JwtService } from './jwt.service'
-import { User } from '../interfaces/user.interface'
+import { User } from '../interfaces/user/user.interface'
 import { Observable, of } from 'rxjs'
 import UserNotification from '../interfaces/notifications/user_notification'
 import { map, mergeAll } from 'rxjs/operators'
@@ -106,9 +106,9 @@ export class UserNotificationsService {
   }
 
   private onAddedToNewGroupConversation(): Observable<UserNotification> {
-    return this.socket.fromEvent<ConversationPresenter>(this.added_to_group_conversation_event)
+    return this.socket.fromEvent<Conversation>(this.added_to_group_conversation_event)
       .pipe(
-        map((conversation: ConversationPresenter) => {
+        map((conversation: Conversation) => {
           this.store.dispatch(new AppendGroupConversation(conversation));
           return {
             data: {

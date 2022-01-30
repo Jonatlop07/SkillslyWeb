@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchUserResponse } from 'src/app/interfaces/search_users_response.interface';
+import { SearchUserResponse } from 'src/app/interfaces/search-user/search_users_response.interface';
 import { FollowService } from 'src/app/services/follow.service';
-import { ConversationPresenter } from '../../interfaces/presenter/chat/conversation.presenter'
+import { Conversation } from '../../interfaces/chat/conversation'
 
 @Component({
   selector: 'app-follow-request',
@@ -25,7 +25,7 @@ export class FollowRequestComponent implements OnInit {
 
   acceptFollowRequest(user: SearchUserResponse, index: number) : void {
     const followServiceResponse = this.followService.updateFollowRequest(user,true);
-    followServiceResponse.subscribe((new_conversation: ConversationPresenter) => {
+    followServiceResponse.subscribe((new_conversation: Conversation) => {
       this.pendingSentUsers.splice(index,1);
       this.followService.appendPrivateConversation(new_conversation);
     })

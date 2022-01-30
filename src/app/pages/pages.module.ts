@@ -13,18 +13,18 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { PostsCreateComponent } from './user/posts/posts-create/posts-create.component';
-import { PostsQueryComponent } from './user/posts/posts-query/posts-query.component';
-import { ChatComponent } from './chat/components/chat.component';
-import { PostComponent } from './user/posts/post/post.component';
-import { CommentComponent } from './user/posts/comment/comment.component';
+import { PostsCreateComponent } from './posts/posts-create/posts-create.component';
+import { PostsQueryComponent } from './posts/posts-query/posts-query.component';
+import { ChatComponent } from './chat/chat.component';
+import { PostComponent } from './posts/post/post.component';
+import { CommentComponent } from './posts/comment/comment.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { TabViewModule } from 'primeng/tabview';
 import { DialogModule } from 'primeng/dialog';
 import { FollowRequestComponent } from './follow-request/follow-request.component';
-import { PostUpdateComponent } from './user/posts/post-update/post-update.component';
+import { PostUpdateComponent } from './posts/post-update/post-update.component';
 import { FeedComponent } from './feed/feed.component';
-import { ProjectsCreateComponent } from './user/projects/projects-create/projects-create.component';
+import { ProjectsCreateComponent } from './projects/projects-create/projects-create.component';
 import { StoriesComponent } from './stories/stories.component';
 import { BadgeModule } from 'primeng/badge';
 import { StoryComponent } from './story/story.component';
@@ -33,16 +33,16 @@ import { TagModule } from 'primeng/tag';
 import { StoryGalleryComponent } from './story-gallery/story-gallery.component';
 import { GalleriaModule } from 'primeng/galleria';
 import { ChipModule } from 'primeng/chip';
-import { EventComponent } from './user/events/event/event.component';
-import { EventCreateComponent } from './user/events/event-create/event-create.component';
-import { MyEventsComponent } from './user/events/my-events/my-events.component';
+import { EventComponent } from './events/event/event.component';
+import { EventCreateComponent } from './events/event-create/event-create.component';
+import { MyEventsComponent } from './events/my-events/my-events.component';
 import { UserGroupsComponent } from './groups/user-groups/user-groups.component';
 import { GroupsQueryComponent } from './groups/groups-query/groups-query.component';
 import { GroupComponent } from './groups/group/group.component';
 import { GroupCreateComponent } from './groups/group-create/group-create.component';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { GroupUpdateComponent } from './groups/group-update/group-update.component';
-import { EventUpdateComponent } from './user/events/event-update/event-update.component';
+import { EventUpdateComponent } from './events/event-update/event-update.component';
 import { ServiceOffersComponent } from './service-offers/service_offers.component'
 import {
   MyServiceRequestsComponent
@@ -51,8 +51,8 @@ import { ServiceOfferComponent } from './service-offers/components/service_offer
 import { ServiceRequestComponent } from './service-requests/components/service_request.component'
 import { ServiceRequestsComponent } from './service-requests/service_requests.component'
 import { MyServiceOffersComponent } from './profile/components/my-service-offers/my_service_offers.component'
-import {ProjectsQueryComponent} from "./user/projects/projects-query/projects-query.component";
-import {ProjectComponent} from "./user/projects/project/project.component";
+import {ProjectsQueryComponent} from "./projects/projects-query/projects-query.component";
+import {ProjectComponent} from "./projects/project/project.component";
 import { NgxStripeModule } from 'ngx-stripe';
 import {DockModule} from "primeng/dock";
 

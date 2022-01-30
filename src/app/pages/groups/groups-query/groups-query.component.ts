@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { GroupPresenter } from 'src/app/interfaces/presenter/group/groups.presenter';
+import { GroupPresenter } from 'src/app/interfaces/group/groups.presenter';
 import { GroupsService } from 'src/app/services/groups.service';
 
 @Component({

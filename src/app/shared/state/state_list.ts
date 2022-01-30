@@ -10,8 +10,6 @@ import { MyServiceRequestsState } from './service-requests/service_requests.stat
 import {MyProjectsState} from "./projects/projects.state";
 import { NotificationsState } from './notifications/notifications.state';
 
-
-
 export const state_list = [
   SessionState,
   MyPostsState,

@@ -16,35 +16,29 @@ export class ProfileComponent implements OnInit {
   profileExists = false;
 
   getProfile() {
-    const email = this.profileService.getUserEmail();
-    if (email) {
-      this.profileService.getProfile(email).subscribe(
-        (response: any) => {
-          this.profileExists = true;
-          this.resume = response['resume'];
-          this.knowledge = response['knowledge'];
-          this.activities = response['activities'];
-          this.talents = response['talents'];
-          this.interests = response['interests'];
-        },
-        (err: any) => {
-          console.log(err);
-        }
-      );
-    }
+    this.profileService.getProfile().subscribe(
+      (response: any) => {
+        this.profileExists = true;
+        this.resume = response['resume'];
+        this.knowledge = response['knowledge'];
+        this.activities = response['activities'];
+        this.talents = response['talents'];
+        this.interests = response['interests'];
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
   }
 
   saveProfile(e: Event) {
     e.preventDefault();
-    const email = this.profileService.getUserEmail();
-
     const profileSend = {
       resume: this.resume,
       knowledge: this.knowledge,
       activities: this.activities,
       talents: this.talents,
       interests: this.interests,
-      user_email: email,
     };
 
     const showError = Swal.fire(

@@ -2,13 +2,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { JwtService } from './jwt.service';
-import { SearchUserResponse } from '../interfaces/search_users_response.interface';
-import { ConversationPresenter } from '../interfaces/presenter/chat/conversation.presenter';
+import { SearchUserResponse } from '../interfaces/search-user/search_users_response.interface';
+import { Conversation } from '../interfaces/chat/conversation';
 import { forkJoin, Observable } from 'rxjs'
 import { AppendPrivateConversation } from '../shared/state/conversations/conversations.actions'
 import { Select, Store } from '@ngxs/store'
-import { UserFollowCollectionPresenter } from '../interfaces/presenter/user/user_follow_collection.presenter'
-import { User } from '../interfaces/user.interface';
+import { UserFollowCollectionPresenter } from '../interfaces/user/user_follow_collection.presenter'
+import { User } from '../interfaces/user/user.interface';
 import { StoreFollowers } from '../shared/state/followers/followers.actions';
 import { StoreFollowingUsers } from '../shared/state/following_users/following_users.actions';
 import { FollowingUsersState } from '../shared/state/following_users/following_users.state';
@@ -74,8 +74,8 @@ export class FollowService {
     )
   }
 
-  public updateFollowRequest(user: SearchUserResponse, accept: boolean): Observable<ConversationPresenter> {
-    return this.http.put<ConversationPresenter>(
+  public updateFollowRequest(user: SearchUserResponse, accept: boolean): Observable<Conversation> {
+    return this.http.put<Conversation>(
       `${this.API_URL}/users/follow/${user.user_id}`,
       {
         accept
@@ -100,7 +100,7 @@ export class FollowService {
     return users;
   }
 
-  public appendPrivateConversation(new_conversation: ConversationPresenter): Observable<void> {
+  public appendPrivateConversation(new_conversation: Conversation): Observable<void> {
     return this.store.dispatch(new AppendPrivateConversation(new_conversation));
   }
 

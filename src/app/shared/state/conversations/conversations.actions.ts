@@ -1,25 +1,25 @@
-import { ConversationMemberPresenter } from 'src/app/interfaces/presenter/chat/conversation_member.presenter';
-import { ConversationPresenter } from '../../../interfaces/presenter/chat/conversation.presenter';
-import { GroupConversationDetailsPresenter } from '../../../interfaces/presenter/chat/group_conversation_details.presenter'
+import { ConversationMemberPresenter } from 'src/app/interfaces/chat/conversation_member.presenter';
+import { Conversation } from '../../../interfaces/chat/conversation';
+import { GroupConversationDetails } from '../../../interfaces/chat/group_conversation_details'
 
 export class AppendPrivateConversation {
   static readonly type = '[Follow Request] Append Private Conversation';
 
-  constructor(public readonly conversation: ConversationPresenter) {}
+  constructor(public readonly conversation: Conversation) {}
 }
 
 export class AppendGroupConversation {
   static readonly type = '[Chat] Append Group Conversation';
 
-  constructor(public readonly conversation: ConversationPresenter) {}
+  constructor(public readonly conversation: Conversation) {}
 }
 
 export class StoreConversations {
   static readonly type = '[Auth] Store Private and Group Conversations';
 
   constructor(
-    public readonly private_conversations: Array<ConversationPresenter>,
-    public readonly group_conversations: Array<ConversationPresenter>
+    public readonly private_conversations: Array<Conversation>,
+    public readonly group_conversations: Array<Conversation>
   ) {}
 }
 
@@ -28,7 +28,7 @@ export class EditGroupConversationDetails {
 
   constructor(
     public readonly conversation_id: string,
-    public readonly conversation_details: GroupConversationDetailsPresenter
+    public readonly conversation_details: GroupConversationDetails
   ) {
   }
 }
