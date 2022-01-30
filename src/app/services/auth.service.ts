@@ -42,6 +42,24 @@ export class AuthService {
     });
   }
 
+  public turnOnQRCode(verification_code: string) {
+    return this.http.post(
+      `${this.API_URL}/2fa/turn-on`, {
+        code: verification_code
+      },
+      this.jwt_service.getHttpOptions()
+    );
+  }
+
+  public authenticateTwoFactor(authentication_code: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(
+      `${this.API_URL}/2fa/authenticate`, {
+        code: authentication_code
+      },
+      this.jwt_service.getHttpOptions()
+    );
+  }
+
   public setSessionData(session_data: SessionModel): Observable<void> {
     return this.store.dispatch(new SetSessionData(session_data));
   }
@@ -54,7 +72,8 @@ export class AuthService {
         user_email: '',
         user_roles: [],
         access_token: '',
-        expires_date: ''
+        expires_date: '',
+        is_two_factor_auth_enabled: null
       }
     ));
   }

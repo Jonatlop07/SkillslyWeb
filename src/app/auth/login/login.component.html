@@ -53,4 +53,39 @@
       </div>
     </div>
   </div>
+
+  <p-dialog
+    header="Autenticación de doble factor"
+    [(visible)]="displaying_two_factor_auth_modal"
+    [modal]="true"
+    [style]="{ width: '40vw' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <div class="card">
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-12">
+          <label for="service_request_title">Código de verificación</label>
+          <br />
+          <input
+            id="service_request_title"
+            type="text"
+            aria-describedby="authentication_code"
+            pInputText [(ngModel)]="authentication_code"
+          />
+          <br />
+          <small id="username1-help">Número de 6 dígitos que valida tu identidad</small
+          >
+        </div>
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button
+        icon="pi pi-send"
+        (click)="submitAuthenticationCode()"
+        label="Enviar código"
+        styleClass="p-button-text"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
 </div>
