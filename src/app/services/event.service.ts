@@ -31,7 +31,7 @@ export class EventService {
     private readonly store: Store
   ) { }
 
-  public createEvent(event:CreateEventPresenter) {
+  public createEvent(event:CreateEventPresenter): Observable<Object> {
     return this.http.post(
       `${this.API_URL}/event`,
       {
@@ -45,7 +45,7 @@ export class EventService {
     );
   }
 
-  public getEventsOfFriendsCollection(limit: number,offset: number) {
+  public getEventsOfFriendsCollection(limit: number,offset: number): Observable<Object> {
     if (this.isChargingFeedEvents) {
       return of([]);
     }
@@ -66,24 +66,24 @@ export class EventService {
     )
   }
 
-  public getMyEventsCollection() {
+  public getMyEventsCollection(): Observable<Object>{
     return this.http.get(
       `${this.API_URL}/event/${this.jwt_service.getUserId()}`,
       this.jwt_service.getHttpOptions()
     );
   }
 
-  public getAndStoreMyEventsCollection() {
+  public getAndStoreMyEventsCollection(): void {
     this.http.get(
       `${this.API_URL}/event/${this.jwt_service.getUserId()}`,
       this.jwt_service.getHttpOptions()
     )
     .subscribe((my_event_collection: any) => {
-      this.storeMyEvents(my_event_collection.events)
+      this.storeMyEvents(my_event_collection.events);
     });
   }
 
-  public getMyEvents() {
+  public getMyEvents(): Array<EventModel> {
     let events: Array<EventModel> = [];
     this.events$.subscribe(e => {
       events = e.events;
@@ -95,14 +95,14 @@ export class EventService {
     return this.store.dispatch(new SetMyEvents({events}));
   }
 
-  public deleteEvent(event_id : string) {
+  public deleteEvent(event_id : string): Observable<Object> {
     return this.http.delete(
       `${this.API_URL}/event/${event_id}`,
       this.jwt_service.getHttpOptions()
     );
   }
 
-  public updateEvent(event: CreateEventPresenter, event_id : string) {
+  public updateEvent(event: CreateEventPresenter, event_id : string): Observable<Object> {
     return this.http.put(
       `${this.API_URL}/event/${event_id}`,
       event,
@@ -110,7 +110,7 @@ export class EventService {
     );
   }
 
-  public createAssistance(assistance: CreateAssistancePresenter) {
+  public createAssistance(assistance: CreateAssistancePresenter): Observable<Object> {
     return this.http.post(
       `${this.API_URL}/event/assistant/${assistance.event_id}}`,
       {},
@@ -118,7 +118,7 @@ export class EventService {
     );
   }
 
-  public deleteAssistance(assistance: DeleteAssistancePresenter) {
+  public deleteAssistance(assistance: DeleteAssistancePresenter): Observable<Object> {
     return this.http.post(
       `${this.API_URL}/event/assistant`,
       assistance,
@@ -126,7 +126,7 @@ export class EventService {
     );
   }
 
-  public getAndStoreMyAssistancesCollection() {
+  public getAndStoreMyAssistancesCollection(): void {
     this.http.get(
       `${this.API_URL}/event/assistant/my-assistant/${this.jwt_service.getUserId()}`,
       this.jwt_service.getHttpOptions()
@@ -136,7 +136,7 @@ export class EventService {
     });
   }
 
-  public getMyAssistances() {
+  public getMyAssistances(): Array<EventModel> {
     let assistances: Array<EventModel> = [];
     this.assistance$.subscribe(e => {
       assistances = e.events;

@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as mapboxgl from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
 import { CreateEventPresenter } from '../../../interfaces/event/create_event.presenter';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-event-update',
@@ -80,7 +81,7 @@ export class EventUpdateComponent implements OnInit, AfterViewInit {
     });
   }
 
-  createMarker(e:any){
+  public createMarker(e:any): void {
     if (this.markers !== null) {
       for (let i = 0; i<this.markers.length; i++) {
         let aux = new mapboxgl.Marker();
@@ -93,7 +94,7 @@ export class EventUpdateComponent implements OnInit, AfterViewInit {
     this.markers.push(marcador);
   }
 
-  onSubmit($event: Event) {
+  public onSubmit($event: Event) {
     if (this.eventForm.valid) {
       this.updateEvent = {
         name: this.eventForm.get('name').value,
@@ -103,8 +104,11 @@ export class EventUpdateComponent implements OnInit, AfterViewInit {
         date: this.eventForm.get('date').value
       };
       const eventResponse = this.event_service.updateEvent(this.updateEvent, this.event_id);
-      eventResponse.subscribe((resp:any) => this.event_service.getAndStoreMyEventsCollection());
-      this.router.navigate(['./main/my-events']);
+      eventResponse.subscribe((resp:any) => {
+        this.event_service.getAndStoreMyEventsCollection(); 
+        Swal.fire('Evento actualizado con éxito','', 'success');
+        this.router.navigate(['./main/my-events']);
+      });
       return true;
     } else {
       $event.preventDefault();
@@ -112,7 +116,7 @@ export class EventUpdateComponent implements OnInit, AfterViewInit {
     }
   }
 
-  invalidInput(input: string): boolean {
+  public invalidInput(input: string): boolean {
     return this.eventForm.get(input).invalid && this.eventForm.get(input).touched;
   }
 }

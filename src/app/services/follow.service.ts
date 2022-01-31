@@ -32,19 +32,19 @@ export class FollowService {
   ) {
   }
 
-  public getUserFollowCollection() {
+  public getUserFollowCollection(): Observable<Object> {
     return this.http.get<UserFollowCollectionPresenter>(
       `${this.API_URL}/users/follow`,
       this.jtw_service.getHttpOptions()
     );
   }
 
-  public getAndStoreUserFollowCollection() {
+  public getAndStoreUserFollowCollection(): void {
     this.http.get<UserFollowCollectionPresenter>(
       `${this.API_URL}/users/follow`,
       this.jtw_service.getHttpOptions()
     )
-      .subscribe((user_follow_collection: UserFollowCollectionPresenter) => {
+    .subscribe((user_follow_collection: UserFollowCollectionPresenter) => {
       forkJoin(
         {
           store_following_users: this.storeFollowingUsers(user_follow_collection.followingUsers),
@@ -54,7 +54,7 @@ export class FollowService {
     })
   }
 
-  public createUserFollowRequest(user: SearchUserResponse) {
+  public createUserFollowRequest(user: SearchUserResponse): Observable<Object> {
     return this.http.post(
       `${this.API_URL}/users/follow/${user.user_id}`,
       {},
@@ -62,7 +62,7 @@ export class FollowService {
     )
   }
 
-  public deleteUserFollowRequest(user: SearchUserResponse, isRequest: boolean) {
+  public deleteUserFollowRequest(user: SearchUserResponse, isRequest: boolean): Observable<Object> {
     let params = new HttpParams();
     params = params.append('isRequest', isRequest.toString());
     return this.http.delete(

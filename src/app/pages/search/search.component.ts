@@ -65,22 +65,22 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  searchPosts(userId: string): void {
+  public searchPosts(userId: string): void {
     this.router.navigate(['../../query', userId], {relativeTo: this.activatedRoute });
   }
 
-  searchProjects(userId: string): void {
+  public searchProjects(userId: string): void {
     this.router.navigate(['../../projects-query', userId], {relativeTo: this.activatedRoute });
   }
 
-  followUser(user: SearchUserResponse, index: number): void {
+  public followUser(user: SearchUserResponse, index: number): void {
     const followServiceResponse = this.followService.createUserFollowRequest(user);
     followServiceResponse.subscribe((resp:any) => {
       this.isPending[index] = true;
     })
   }
 
-  cancelFollow(user: SearchUserResponse, index:number, isRequest: boolean): void {
+  public cancelFollow(user: SearchUserResponse, index:number, isRequest: boolean): void {
     const followServiceResponse = this.followService.deleteUserFollowRequest(user, isRequest);
     followServiceResponse.subscribe((resp:any) => {
       if (isRequest) {

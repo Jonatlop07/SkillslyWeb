@@ -8,6 +8,7 @@ import { DeleteMyEvent } from 'src/app/shared/state/events/events.actions';
 import { environment } from 'src/environments/environment';
 import { JwtService } from '../../../services/jwt.service';
 import * as moment from 'moment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-event',
@@ -35,7 +36,7 @@ export class EventComponent implements OnInit, AfterViewInit {
 
   constructor(
     private eventService: EventService,
-    private  jwtService:JwtService,
+    private jwtService:JwtService,
     private store: Store,
     private router: Router
   ) {}
@@ -54,14 +55,15 @@ export class EventComponent implements OnInit, AfterViewInit {
     this.initMap();
   }
 
-  deleteEvent(event_id: string) {
+  public deleteEvent(event_id: string): void {
     const eventServiceResponse = this.eventService.deleteEvent(event_id);
     eventServiceResponse.subscribe(() => {
       this.store.dispatch(new DeleteMyEvent(event_id));
+      Swal.fire('Evento eliminado con éxito','','success');
     });
   }
 
-  updateEvent(event_id: string) {
+  public updateEvent(event_id: string): void {
     this.router.navigate(['main/events/update', event_id]);
   }
 
@@ -80,7 +82,7 @@ export class EventComponent implements OnInit, AfterViewInit {
     this.createMarker([this.event.long,this.event.lat]);
   }
 
-  createMarker(e:any){
+  public createMarker(e:any): void {
     if (this.markers !== null) {
       for (let i = 0; i<this.markers.length; i++) {
         let aux = new mapboxgl.Marker();
@@ -93,7 +95,7 @@ export class EventComponent implements OnInit, AfterViewInit {
     this.markers.push(marcador);
   }
 
-  createAssistance(event_id: string) {
+  public createAssistance(event_id: string): void {
     const eventServiceResponse = this.eventService.createAssistance({event_id, user_id: this.jwtService.getUserId()});
     eventServiceResponse.subscribe((resp:any) => {
       this.assistance = true;
@@ -101,7 +103,7 @@ export class EventComponent implements OnInit, AfterViewInit {
     });
   }
 
-  deleteAssistance(event_id:string) {
+  public deleteAssistance(event_id:string): void {
     const eventServiceResponse = this.eventService.deleteAssistance({event_id, user_id: this.jwtService.getUserId()});
     eventServiceResponse.subscribe(() => {
       this.assistance = false;
@@ -109,7 +111,7 @@ export class EventComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getDate(date: Date) {
+  public getDate(date: Date): void {
     moment.locale('es');
     let momentDate = moment(date).format("MMM DD YYYY, h:mm a");
     this.month = momentDate.slice(0,3);
