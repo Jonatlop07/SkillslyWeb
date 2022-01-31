@@ -11,13 +11,18 @@ import {
   DeleteSentFollowRequest
 } from '../shared/state/follow_requests/follow_requests.actions'
 import { Select, Store } from '@ngxs/store'
-import { AppendGroupConversation } from '../shared/state/conversations/conversations.actions'
+import { AppendGroupConversation, DeleteGroupConversation } from '../shared/state/conversations/conversations.actions'
 import { AppendFollowingUser } from '../shared/state/following_users/following_users.actions'
 import { AddNotification } from '../shared/state/notifications/notifications.actions'
 import { NotificationModel } from '../models/notification.model'
 import { NotificationsState } from '../shared/state/notifications/notifications.state'
 import { NotificationCollectionModel } from '../models/notification_collection.model'
 import { StatusUpdateRequestDetails } from '../interfaces/service-requests/status_update_request_details'
+import { AddReactionToPost, RemoveReactionFromPost } from '../shared/state/posts/posts.actions'
+import { PostReaction } from '../interfaces/post/post_reaction'
+import { SharedPermanentPost } from '../interfaces/post/shared_permanent_post.interface'
+import { ConversationDeletedDetails } from '../interfaces/chat/conversation_deleted.details'
+import { ConversationService } from './conversation.service'
 
 @Injectable({ providedIn: 'root' })
 export class UserNotificationsService {
@@ -25,6 +30,7 @@ export class UserNotificationsService {
 
   constructor(
     private readonly socket: NotificationSocket,
+    private readonly conversation_service: ConversationService,
     private readonly jwt_service: JwtService,
     private readonly store: Store
   ) {
@@ -32,8 +38,13 @@ export class UserNotificationsService {
 
   private readonly follow_request_received_event = 'follow_request_received';
   private readonly follow_request_accepted_event = 'follow_request_accepted';
+  private readonly follow_request_rejected_event = 'follow_request_rejected';
   private readonly follow_request_deleted_event = 'follow_request_deleted';
+  private readonly shared_permanent_post_event = 'shared_permanent_post';
+  private readonly permanent_post_added_reaction_event = 'permanent_post_added_reaction';
+  private readonly permanent_post_removed_reaction_event = 'permanent_post_removed_reaction';
   private readonly added_to_group_conversation_event = 'added_to_group_conversation';
+  private readonly group_conversation_deleted_event = 'group_conversation_deleted';
   private readonly service_request_deleted_event = 'service_request_deleted';
   private readonly service_request_updated_event = 'service_request_updated';
   private readonly status_update_request = 'status_update_request';
@@ -42,12 +53,17 @@ export class UserNotificationsService {
     return this.notifications$;
   }
 
-  public onNotificationArrives  () {
+  public onNotificationArrives() {
     return of(
       this.onFollowRequestAccepted(),
+      this.onFollowRequestRejected(),
       this.onFollowRequestReceived(),
       this.onFollowRequestDeleted(),
+      this.onSharedPermanentPost(),
+      this.onPermanentPostAddedReaction(),
+      this.onPermanentPostRemovedReaction(),
       this.onAddedToNewGroupConversation(),
+      this.onGroupConversationDeleted(),
       this.onServiceRequestDeleted(),
       this.onServiceRequestUpdated(),
       this.onStatusUpdateRequest()
@@ -58,6 +74,18 @@ export class UserNotificationsService {
 
   public storeNotification(notification: NotificationModel) {
     return this.store.dispatch(new AddNotification(notification));
+  }
+
+  public join() {
+    return this.socket.emitEvent('join', {
+      user_id: this.jwt_service.getUserId()
+    });
+  }
+
+  public leave() {
+    return this.socket.emitEvent('leave', {
+      user_id: this.jwt_service.getUserId()
+    });
   }
 
   private onFollowRequestReceived(): Observable<UserNotification> {
@@ -93,6 +121,18 @@ export class UserNotificationsService {
       );
   }
 
+  private onFollowRequestRejected(): Observable<UserNotification> {
+    return this.socket.fromEvent<User>(this.follow_request_rejected_event)
+      .pipe(
+        map((follow_request) => {
+          this.store.dispatch(new DeleteSentFollowRequest(follow_request));
+          return {
+            data: follow_request
+          };
+        })
+      )
+  }
+
   private onFollowRequestDeleted(): Observable<UserNotification> {
     return this.socket.fromEvent<User>(this.follow_request_deleted_event)
       .pipe(
@@ -100,6 +140,50 @@ export class UserNotificationsService {
           this.store.dispatch(new DeleteSentFollowRequest(follow_request));
           return {
             data: follow_request
+          };
+        })
+      );
+  }
+
+  private onSharedPermanentPost(): Observable<UserNotification> {
+    return this.socket.fromEvent<SharedPermanentPost>(this.shared_permanent_post_event)
+      .pipe(
+        map((shared_permanent_post: SharedPermanentPost) => {
+            return {
+              data: shared_permanent_post,
+              action_details: {
+                route: `./query/${shared_permanent_post.user_that_shares_id}`,
+                message: `${shared_permanent_post.user_that_shares_id} ha compartido una publicación tuya`
+              }
+            }
+          }
+        )
+      );
+  }
+
+  private onPermanentPostAddedReaction(): Observable<UserNotification> {
+    return this.socket.fromEvent<PostReaction>(this.permanent_post_added_reaction_event)
+      .pipe(
+        map((reaction: PostReaction) => {
+          this.store.dispatch(new AddReactionToPost(reaction));
+          return {
+            data: reaction,
+            action_details: {
+              route: './posts',
+              message: `${reaction.reactor_id} ha reaccionado con ${reaction.reaction_type} a una publicación tuya`
+            }
+          };
+        })
+      );
+  }
+
+  private onPermanentPostRemovedReaction(): Observable<UserNotification> {
+    return this.socket.fromEvent<PostReaction>(this.permanent_post_removed_reaction_event)
+      .pipe(
+        map((reaction: PostReaction) => {
+          this.store.dispatch(new RemoveReactionFromPost(reaction));
+          return {
+            data: reaction
           };
         })
       );
@@ -122,6 +206,33 @@ export class UserNotificationsService {
         })
       );
   }
+
+  private onGroupConversationDeleted(): Observable<UserNotification> {
+    return this.socket.fromEvent<ConversationDeletedDetails>(this.group_conversation_deleted_event)
+      .pipe(
+        map((conversation_deleted_details: ConversationDeletedDetails) => {
+            const conversation_to_delete: Conversation = this.conversation_service
+              .getConversationsFromStore()
+              .group_conversations.find(
+                (conversation: Conversation) =>
+                  conversation.conversation_id === conversation_deleted_details.conversation_id
+              );
+            this.store.dispatch(new DeleteGroupConversation(conversation_deleted_details.conversation_id));
+            return {
+              data: conversation_deleted_details,
+              action_details: {
+                route: '',
+                message: `
+                  ${conversation_deleted_details.user_who_deletes_id}
+                  ha eliminado la conversación grupal '${conversation_to_delete.conversation_name}'
+                `
+              }
+            };
+          }
+        )
+      );
+  }
+
 
   private onServiceRequestUpdated(): Observable<UserNotification> {
     return this.socket.fromEvent<{
@@ -175,32 +286,5 @@ export class UserNotificationsService {
           };
         })
       );
-  }
-
-  /*
-  this.socket.fromEvent<>()
-    .pipe(
-      map(() => {
-        return {
-          data: null,
-          action_details: {
-            route: '',
-            message: ''
-          }
-        };
-      })
-    );
-  * */
-
-  public join() {
-    return this.socket.emitEvent('join', {
-      user_id: this.jwt_service.getUserId()
-    });
-  }
-
-  public leave() {
-    return this.socket.emitEvent('leave', {
-      user_id: this.jwt_service.getUserId()
-    });
   }
 }
