@@ -55,6 +55,7 @@ import {ProjectsQueryComponent} from "./projects/projects-query/projects-query.c
 import {ProjectComponent} from "./projects/project/project.component";
 import { NgxStripeModule } from 'ngx-stripe';
 import {DockModule} from "primeng/dock";
+import {ProjectsUpdateComponent} from "./projects/projects-update/projects-update.component";
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import {DockModule} from "primeng/dock";
     FeedComponent,
     ProjectsCreateComponent,
     ProjectsQueryComponent,
+    ProjectsUpdateComponent,
     ProjectComponent,
     StoriesComponent,
     StoryComponent,

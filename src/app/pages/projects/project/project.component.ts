@@ -1,7 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ProjectPresenter} from "../../../interfaces/project/query_project.presenter";
-import {PostService} from "../../../services/posts.service";
-import * as moment from "moment";
+import {DeleteProjectInterface} from "../../../interfaces/project/delete_project.interface";
+import {ProjectService} from "../../../services/projects.service";
+import {Store} from "@ngxs/store";
+import {DeleteMyProject} from "../../../shared/state/projects/projects.actions";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -20,7 +23,9 @@ export class ProjectComponent implements OnInit{
   public hour: string;
 
   constructor(
-    private projectService: PostService,
+    private projectService: ProjectService,
+    private readonly store: Store,
+    private router: Router
   ) {}
 
   isImage(referenceType: string): boolean {
@@ -31,4 +36,16 @@ export class ProjectComponent implements OnInit{
     this.owns_project = this.projectService.getUserId() === this.project.user_id;
   }
 
+  deleteProject(project_id: string) {
+    const deleteProjectInterface: DeleteProjectInterface = {
+      project_id,
+    };
+    this.projectService.deleteProject(deleteProjectInterface).subscribe(() => {
+      this.store.dispatch(new DeleteMyProject(project_id));
+    });
+  }
+
+  updateProject(project_id: string) {
+    this.router.navigate(['main/project/update', project_id]);
+  }
 }

@@ -6,3 +6,9 @@ export class SetMyProjects {
   constructor(public readonly projects: ProjectCollectionModel) {
   }
 }
+export class DeleteMyProject {
+  static readonly type = '[Projects Query] Delete My Project';
+
+  constructor(public readonly project_id: string) {
+  }
+}
