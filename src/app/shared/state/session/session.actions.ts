@@ -13,4 +13,10 @@ export class UpdateSessionEmail {
   constructor(public readonly email: string) {}
 }
 
+export class SetTwoFactorAuthentication {
+  static readonly type = '[Login] Update Session Email';
+
+  constructor(public readonly is_two_factor_auth_enabled: boolean) {}
+}
+
 

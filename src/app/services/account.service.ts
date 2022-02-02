@@ -9,6 +9,8 @@ import { ObtainSpecialRolesData } from '../interfaces/user-account/obtain_specia
 
 @Injectable()
 export class AccountService {
+
+
   private readonly API_URL: string = environment.API_URL;
 
   constructor(
@@ -39,7 +41,6 @@ export class AccountService {
   }
 
   public obtainSpecialRoles(obtain_special_roles_data: ObtainSpecialRolesData) {
-    console.log(obtain_special_roles_data);
     return this.http.post(
       `${this.API_URL}/users/account/roles`,
       obtain_special_roles_data,
@@ -47,7 +48,18 @@ export class AccountService {
     );
   }
 
+  public generateAuthQRCode() {
+    return this.http.post(`${this.API_URL}/2fa/generate`, {}, {
+      responseType: 'blob',
+      ...this.jwt_service.getHttpOptions()
+    });
+  }
+
   public getUserRoles(): Array<string> {
     return this.jwt_service.getUserRoles();
+  }
+
+  public isTwoFactorAuthenticationEnabled(): boolean {
+    return this.jwt_service.isTwoFactorAuthenticationEnabled();
   }
 }
