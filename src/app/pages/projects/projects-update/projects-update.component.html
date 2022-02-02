@@ -1,0 +1,125 @@
+
+<div class="bg-projects h-100 overflow-auto">
+  <div class="p-4">
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-5 box">
+        <p-card header="Editor de Proyectos" styleClass="projects-card ">
+          <form
+            (ngSubmit)="saveForm(form)"
+            class="form-horizontal project-element"
+            #form="ngForm"
+          >
+            <div class="p-fluid">
+              <label for="inputTitle" class="title">Titulo del proyecto</label>
+              <br />
+              <input
+                [(ngModel)]="paramsProject.title"
+                styleClass="p-input text-sm"
+                name="title"
+                type="text"
+                pInputText
+                id="inputTitle"
+                required
+              />
+              <br />
+            </div>
+            <div class="p-fluid">
+              <label for="inputMembers" class="title">Miembros del proyecto</label>
+              <br />
+              <p-chips
+                [(ngModel)]="members"
+                separator=","
+                styleClass="p-inputtext-sm"
+                name="members"
+                id="inputMembers"
+                required
+              ></p-chips>
+              <br />
+            </div>
+            <div class="p-fluid">
+              <label for="Input" class="title">Descripción</label>
+              <br />
+              <textarea
+                rows="3"
+                cols="30"
+                pInputTextarea
+                [(ngModel)]="paramsProject.description"
+                name="description"
+                id="Input"
+                required
+              ></textarea>
+              <br />
+            </div>
+            <div class="p-fluid">
+              <label for="Input" class="title">Ingresa el link de una imagen o video</label>
+              <br />
+              <input
+                [(ngModel)]="paramsProject.reference"
+                styleClass="p-inputtext-sm"
+                name="reference"
+                id="Input"
+                type="text"
+                pInputText
+                required
+              />
+              <br />
+            </div>
+
+            <div class="p-fluid">
+              <label for="Input" class="title">ingresa el tipo de archivo multimedia</label>
+              <br />
+              <input
+                [(ngModel)]="paramsProject.reference_type"
+                styleClass="p-inputtext-sm"
+                name="reference_type"
+                id="Input"
+                type="text"
+                pInputText
+                required
+              />
+              <br />
+            </div>
+
+            <div class="p-fluid">
+              <label for="Input" class="title">Anexos</label>
+              <br />
+              <p-chips
+                [(ngModel)]="annexes"
+                separator=","
+                styleClass="p-inputtext-sm"
+                name="annexes"
+                id="Input"
+                required
+              ></p-chips>
+            </div>
+
+            <div class="row center-xs">
+              <div class="col-lg-8">
+                <div class="box">
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    label="Guardar Proyecto"
+                    class="p-button-outlined p-button-rounded projects-button p-2"
+                    icon="pi pi-envelope"
+                    type="submit"
+                  ></button>
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    label="Cancelar"
+                    icon="pi pi-times"
+                    class="p-button-outlined p-button-rounded p-button-secondary p-2"
+                    [style]="{ 'margin-left': '.5em' }"
+                  ></button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </p-card>
+      </div>
+    </div>
+  </div>
+</div>

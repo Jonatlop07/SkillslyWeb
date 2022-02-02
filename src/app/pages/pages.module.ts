@@ -55,6 +55,7 @@ import {ProjectsQueryComponent} from "./projects/projects-query/projects-query.c
 import {ProjectComponent} from "./projects/project/project.component";
 import { NgxStripeModule } from 'ngx-stripe';
 import {DockModule} from "primeng/dock";
+import {ProjectsUpdateComponent} from "./projects/projects-update/projects-update.component";
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import {DockModule} from "primeng/dock";
     FeedComponent,
     ProjectsCreateComponent,
     ProjectsQueryComponent,
+    ProjectsUpdateComponent,
     ProjectComponent,
     StoriesComponent,
     StoryComponent,
@@ -116,7 +118,7 @@ import {DockModule} from "primeng/dock";
     ChipModule,
     DialogModule,
     ButtonModule,
-    NgxStripeModule.forChild('pk_test_51KKqzTLW8alQ67QMS4GSfh6VTdVVvJH3LFlptoBZQW6yZhoB516uFllbjcmtvDUsuedzrcU12wAbnELdm5b10e6700wWxK7ASu'),
+    NgxStripeModule.forChild('pk_test_51KLexjInl63jmbBXjFoaqoKZcoWwi2zWO3d1zQYe5RrMehW2zammINzRyL24aqTahMZJzM5glV1xakvthJKRfJ7k00wkcfxYEl'),
     DockModule
   ],
 })

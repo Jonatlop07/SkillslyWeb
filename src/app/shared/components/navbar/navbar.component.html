@@ -221,7 +221,7 @@
             class="dropdown-menu dropdown-menu-end user-dd animated noti-feed"
             aria-labelledby="notificationsDropdown"
           >
-            <div *ngFor="let notification of notifications" class="card">
+            <div *ngFor="let notification of notifications" class="card m-2">
               <a class="dropdown-item" [routerLink]="notification.action_details.route ? [notification.action_details.route] : null">
                 {{ notification.action_details.message }}
               </a>

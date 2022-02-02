@@ -1,7 +1,7 @@
 import { Action, State, StateContext, StateToken } from "@ngxs/store";
 import { Injectable } from '@angular/core'
 import { ProjectCollectionModel } from "../../../models/project_collection.model";
-import { SetMyProjects } from "./projects.actions";
+import {DeleteMyProject, SetMyProjects} from "./projects.actions";
 
 const PROJECTS_STATE_TOKEN = new StateToken<ProjectCollectionModel>('my_projects');
 
@@ -17,6 +17,14 @@ export class MyProjectsState {
   public setMyProjects(ctx: StateContext<ProjectCollectionModel>, action: SetMyProjects) {
     ctx.setState({
       ...action.projects
+    });
+  }
+
+  @Action(DeleteMyProject)
+  public deleteMyProject(ctx: StateContext<ProjectCollectionModel>, action: DeleteMyProject) {
+    const state = ctx.getState();
+    ctx.setState({
+      projects: state.projects.filter(project => project.project_id !== action.project_id)
     });
   }
 }

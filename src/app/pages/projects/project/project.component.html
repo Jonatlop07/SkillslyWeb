@@ -28,6 +28,7 @@
             <a
               *ngIf="owns_project"
               class="dropdown-item"
+              (click)="updateProject(project.project_id)"
             >Editar</a
             >
           </li>
@@ -35,6 +36,7 @@
             <a
               *ngIf="owns_project"
               class="dropdown-item"
+              (click)="deleteProject(project.project_id)"
             >Eliminar</a
             >
           </li>
