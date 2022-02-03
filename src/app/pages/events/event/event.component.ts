@@ -58,8 +58,11 @@ export class EventComponent implements OnInit, AfterViewInit {
   public deleteEvent(event_id: string): void {
     const eventServiceResponse = this.eventService.deleteEvent(event_id);
     eventServiceResponse.subscribe(() => {
-      this.store.dispatch(new DeleteMyEvent(event_id));
-      Swal.fire('Evento eliminado con éxito','','success');
+      this.store.dispatch(new DeleteMyEvent(event_id)).subscribe(() => {
+        Swal.fire('Evento eliminado con éxito','','success').then( function () {
+          location.reload();
+        });
+      });
     });
   }
 

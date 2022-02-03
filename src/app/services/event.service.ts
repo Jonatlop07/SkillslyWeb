@@ -91,7 +91,7 @@ export class EventService {
     return events;
   }
 
-  private storeMyEvents(events: Array<EventModel>): Observable<void> {
+  public storeMyEvents(events: Array<EventModel>): Observable<void> {
     return this.store.dispatch(new SetMyEvents({events}));
   }
 

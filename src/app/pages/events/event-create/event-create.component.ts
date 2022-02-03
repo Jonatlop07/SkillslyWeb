@@ -76,7 +76,7 @@ export class EventCreateComponent implements OnInit, AfterViewInit {
     this.markers.push(marcador);
   }
 
-  public onSubmit($event: Event) {
+  public onSubmit($event: Event): boolean {
     if (this.eventForm.valid) {
       this.event = {
         name: this.eventForm.get('name').value,
@@ -87,9 +87,12 @@ export class EventCreateComponent implements OnInit, AfterViewInit {
       };
       const eventResponse = this.eventService.createEvent(this.event);
       eventResponse.subscribe((resp:any) => {
-        this.eventService.getAndStoreMyEventsCollection();
-        Swal.fire('Evento creado con éxito','', 'success');
-        this.router.navigate(['./main/my-events']);
+        const updatedEventResponse = this.eventService.getMyEventsCollection();
+        updatedEventResponse.subscribe((my_event_collection: any) => {
+          this.eventService.storeMyEvents(my_event_collection.events);
+          Swal.fire('Evento creado con éxito','', 'success');
+          this.router.navigate(['./main/my-events']);
+        });
       });
       return true;
     } else {

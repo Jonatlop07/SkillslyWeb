@@ -105,9 +105,12 @@ export class EventUpdateComponent implements OnInit, AfterViewInit {
       };
       const eventResponse = this.event_service.updateEvent(this.updateEvent, this.event_id);
       eventResponse.subscribe((resp:any) => {
-        this.event_service.getAndStoreMyEventsCollection(); 
-        Swal.fire('Evento actualizado con éxito','', 'success');
-        this.router.navigate(['./main/my-events']);
+        const updatedEventResponse = this.event_service.getMyEventsCollection();
+        updatedEventResponse.subscribe((my_event_collection: any) => {
+          this.event_service.storeMyEvents(my_event_collection.events);
+          Swal.fire('Evento actualizado con éxito','', 'success');
+          this.router.navigate(['./main/my-events']);
+        });
       });
       return true;
     } else {
