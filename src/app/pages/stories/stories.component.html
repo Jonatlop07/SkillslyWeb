@@ -104,6 +104,7 @@
               (click)="sendStory()"
               label="Enviar"
               styleClass="p-button-text"
+              [disabled]="!isValidStoryData()"
             ></p-button>
           </ng-template>
         </p-dialog>

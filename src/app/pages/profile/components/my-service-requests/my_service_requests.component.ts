@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ServiceRequestsService } from '../../../../services/service_requests.service';
 import { ServiceRequestPresenter } from '../../../../interfaces/service-requests/presenter/service_request.presenter';
 import { ServiceRequestCollectionPresenter } from '../../../../interfaces/service-requests/presenter/service_request_collection.presenter'
+import { UserDataService } from 'src/app/services/user_data.service';
 
 @Component({
   selector: 'app-my-service-requests',
@@ -12,11 +13,11 @@ export class MyServiceRequestsComponent implements OnInit{
   public service_requests: Array<ServiceRequestPresenter> = [];
 
   constructor(
-    private readonly service_requests_service: ServiceRequestsService
+    private readonly service_requests_service: ServiceRequestsService,
+    private readonly user_data_service: UserDataService
   ) {
   }
   
-
   ngOnInit() {
     this.service_requests_service
       .getMyServiceRequestsFromStore()
