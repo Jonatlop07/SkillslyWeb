@@ -79,6 +79,10 @@
                 ? "Evaluacion de aplicante en progreso. No canceles tu aplicacion todavia!"
                 : service_request.phase === "Execution"
                 ? "Servicio en ejecucion"
+                : service_request.phase == "Finished"
+                ? "Servicio finalizado"
+                : service_request.phase == "Canceled"
+                ? "Servicio cancelado"
                 : "Cerrado"
             }}
           </h6>
@@ -206,7 +210,7 @@
     </div>
     <div
       class="card"
-      *ngIf="evaluated_applicant.request_phase == 'REQUESTS_COMPLETION'"
+      *ngIf="evaluated_applicant.request_phase == 'REQUESTS_COMPLETION' && service_request.phase == 'Execution'"
     >
       <div class="row m-3">
         <div class="col">
@@ -239,7 +243,7 @@
     </div>
     <div
       class="card"
-      *ngIf="evaluated_applicant.request_phase == 'REQUESTS_CANCELLING'"
+      *ngIf="evaluated_applicant.request_phase == 'REQUESTS_CANCELLING' && service_request.phase == 'Execution'"
     >
       <div class="row m-3">
         <div class="col">

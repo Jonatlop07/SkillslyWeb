@@ -2,9 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-
 import { AuthService } from 'src/app/services/auth.service';
-
 import { LoginForm } from '../../interfaces/login/login_form.inteface';
 import { LoginResponse } from '../../interfaces/login/login_response.interface'
 import { ConversationService } from '../../services/conversation.service';

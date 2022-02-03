@@ -5,6 +5,7 @@ import { EventService } from 'src/app/services/event.service';
 import * as mapboxgl from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
 import { CreateEventPresenter } from '../../../interfaces/event/create_event.presenter';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-event-create',
@@ -62,7 +63,7 @@ export class EventCreateComponent implements OnInit, AfterViewInit {
     });
   }
 
-  createMarker(e:any){
+  public createMarker(e:any): void {
     if (this.markers !== null) {
       for (let i = 0; i<this.markers.length; i++) {
         let aux = new mapboxgl.Marker();
@@ -75,7 +76,7 @@ export class EventCreateComponent implements OnInit, AfterViewInit {
     this.markers.push(marcador);
   }
 
-  onSubmit($event: Event) {
+  public onSubmit($event: Event): boolean {
     if (this.eventForm.valid) {
       this.event = {
         name: this.eventForm.get('name').value,
@@ -85,8 +86,14 @@ export class EventCreateComponent implements OnInit, AfterViewInit {
         date: this.eventForm.get('date').value
       };
       const eventResponse = this.eventService.createEvent(this.event);
-      eventResponse.subscribe((resp:any) => this.eventService.getAndStoreMyEventsCollection());
-      this.router.navigate(['./main/my-events']);
+      eventResponse.subscribe((resp:any) => {
+        const updatedEventResponse = this.eventService.getMyEventsCollection();
+        updatedEventResponse.subscribe((my_event_collection: any) => {
+          this.eventService.storeMyEvents(my_event_collection.events);
+          Swal.fire('Evento creado con éxito','', 'success');
+          this.router.navigate(['./main/my-events']);
+        });
+      });
       return true;
     } else {
       $event.preventDefault();
@@ -94,7 +101,7 @@ export class EventCreateComponent implements OnInit, AfterViewInit {
     }
   }
 
-  invalidInput(input: string): boolean {
+  public invalidInput(input: string): boolean {
     return this.eventForm.get(input).invalid && this.eventForm.get(input).touched;
   }
 
