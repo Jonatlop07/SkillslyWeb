@@ -21,9 +21,9 @@ export class ServiceOffersComponent implements OnInit {
 
   public service_offers: Array<ServiceOfferPresenter> = [];
 
-  public categories: string = '';
+  public categories = '';
 
-  public displayCreateServiceOfferModal: boolean = false;
+  public displayCreateServiceOfferModal = false;
 
   constructor(
     private readonly service_offers_service: ServiceOffersService
@@ -47,6 +47,9 @@ export class ServiceOffersComponent implements OnInit {
   }
 
   public createServiceOffer() {
+    if (!this.isValidOfferData()){
+      return;
+    }
     this.service_offers_service
       .createServiceOffer(this.new_service_offer)
       .subscribe(
@@ -86,7 +89,17 @@ export class ServiceOffersComponent implements OnInit {
       this.service_offers_service.queryServiceOfferCollectionByCategory(this.categories)
       : this.service_offers_service.queryAllServiceOfferCollection();
     result.subscribe((service_offer_collection: ServiceOfferCollectionPresenter) => {
+      console.log(service_offer_collection)
       this.service_offers = service_offer_collection.service_offers;
     });
+  }
+
+  public isValidOfferData() {
+    return (
+      this.new_service_offer.title &&
+      this.new_service_offer.category &&
+      this.new_service_offer.service_brief &&
+      this.new_service_offer.contact_information
+    );
   }
 }

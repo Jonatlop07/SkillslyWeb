@@ -6,6 +6,9 @@ import * as moment from 'moment';
 import { ApplicationPresenter } from 'src/app/interfaces/service-requests/presenter/applications.presenter';
 import { ApplicantPresenter } from 'src/app/interfaces/service-requests/presenter/applicant.presenter';
 import { OnUpdateApplicationResponse } from 'src/app/interfaces/service-requests/on_update_application.response';
+import { fireAlert } from 'src/app/shared/swal_fire_alerts';
+import { UserDataService } from 'src/app/services/user_data.service';
+import { UserDataPresenter } from 'src/app/interfaces/user/user_data.presenter';
 
 @Component({
   selector: 'app-service-request',
@@ -14,7 +17,8 @@ import { OnUpdateApplicationResponse } from 'src/app/interfaces/service-requests
 })
 export class ServiceRequestComponent implements OnInit {
   constructor(
-    private readonly service_requests_service: ServiceRequestsService
+    private readonly service_requests_service: ServiceRequestsService,
+    private readonly user_data_service: UserDataService
   ) {}
 
   ngOnInit() {
@@ -22,9 +26,12 @@ export class ServiceRequestComponent implements OnInit {
     this.edited_service_request = {
       ...this.service_request,
     };
-    this.user_has_applied = this.service_request.applicants.includes(
-      this.service_requests_service.getUserData()
-    );
+
+    this.user_has_applied = this.service_request.applicants
+      ? this.service_request.applicants.includes(
+          this.service_requests_service.getUserData()
+        )
+      : false;
     if (this.userIsOwner()) {
       this.service_requests_service
         .getApplications(this.service_request.service_request_id)
@@ -44,6 +51,9 @@ export class ServiceRequestComponent implements OnInit {
             this.evaluated_applicant = res;
           }
         });
+    }
+    if (this.input_service_request.service_provider){
+      this.getProviderName(this.input_service_request.service_provider)
     }
   }
 
@@ -66,6 +76,7 @@ export class ServiceRequestComponent implements OnInit {
   };
   public user_has_applied: boolean;
   public applications: Array<ApplicationPresenter> = [];
+  public provider_email = '';
 
   public seeServiceRequest() {
     this.display_service_request_details_modal = true;
@@ -120,14 +131,11 @@ export class ServiceRequestComponent implements OnInit {
           this.service_requests_service.deleteServiceRequestInStore(
             this.service_request.service_request_id
           );
-          Swal.fire({
-            customClass: {
-              container: 'my-swal',
-            },
-            title: 'Éxito',
-            text: 'La solicitud de servicio ha sido eliminada exitosamente',
-            icon: 'success',
-          });
+          fireAlert(
+            'Éxito',
+            'La solicitud de servicio ha sido eliminada exitosamente',
+            'success'
+          );
         },
         (err) => {
           const { error } = err.error;
@@ -202,23 +210,34 @@ export class ServiceRequestComponent implements OnInit {
         request_id: this.service_request.service_request_id,
         application_action: 'accept',
       })
-      .subscribe((res: OnUpdateApplicationResponse) => {
-        this.evaluated_applicant = {
-          applicant_email: application.applicant_email,
-          applicant_id: application.applicant_id,
-          applicant_name: application.applicant_name,
-          request_phase: '',
-        };
-        this.display_applications_modal = false;
-        this.applications.splice(index, 1);
-        this.service_request = {
-          ...this.service_request,
-          phase: res.request_phase,
-        };
-        this.service_requests_service.updateServiceRequestInStore({
-          ...this.service_request,
-        });
-      });
+      .subscribe(
+        (res: OnUpdateApplicationResponse) => {
+          this.evaluated_applicant = {
+            applicant_email: application.applicant_email,
+            applicant_id: application.applicant_id,
+            applicant_name: application.applicant_name,
+            request_phase: '',
+          };
+          this.display_applications_modal = false;
+          this.applications.splice(index, 1);
+          this.service_request = {
+            ...this.service_request,
+            phase: res.request_phase,
+          };
+          this.service_requests_service.updateServiceRequestInStore({
+            ...this.service_request,
+          });
+          fireAlert(
+            'Éxito',
+            'Se ha aceptado al aplicante y ahora pasará a evaluación',
+            'success'
+          );
+        },
+        (err) => {
+          const { error } = err.error;
+          Swal.fire('Error', error, 'error');
+        }
+      );
   }
 
   public onDenyApplication(applicant_id: string) {
@@ -228,15 +247,26 @@ export class ServiceRequestComponent implements OnInit {
         request_id: this.service_request.service_request_id,
         application_action: 'deny',
       })
-      .subscribe((res: OnUpdateApplicationResponse) => {
-        this.service_request = {
-          ...this.service_request,
-          phase: res.request_phase,
-        };
-        this.service_requests_service.updateServiceRequestInStore({
-          ...this.service_request,
-        });
-      });
+      .subscribe(
+        (res: OnUpdateApplicationResponse) => {
+          this.service_request = {
+            ...this.service_request,
+            phase: res.request_phase,
+          };
+          this.service_requests_service.updateServiceRequestInStore({
+            ...this.service_request,
+          });
+          fireAlert(
+            'Éxito',
+            'Se ha denegado al aplicante como proveedor del servicio',
+            'success'
+          );
+        },
+        (err) => {
+          const { error } = err.error;
+          Swal.fire('Error', error, 'error');
+        }
+      );
   }
 
   public onConfirmApplicant(applicant_id: string) {
@@ -246,16 +276,27 @@ export class ServiceRequestComponent implements OnInit {
         request_id: this.service_request.service_request_id,
         application_action: 'confirm',
       })
-      .subscribe((res: OnUpdateApplicationResponse) => {
-        this.service_request = {
-          ...this.service_request,
-          phase: res.request_phase,
-          service_provider: res.applicant_id,
-        };
-        this.service_requests_service.updateServiceRequestInStore({
-          ...this.service_request,
-        });
-      });
+      .subscribe(
+        (res: OnUpdateApplicationResponse) => {
+          this.service_request = {
+            ...this.service_request,
+            phase: res.request_phase,
+            service_provider: res.applicant_id,
+          };
+          this.service_requests_service.updateServiceRequestInStore({
+            ...this.service_request,
+          });
+          fireAlert(
+            'Éxito',
+            'Se ha aceptado al aplicante como proveedor del servicio',
+            'success'
+          );
+        },
+        (err) => {
+          const { error } = err.error;
+          Swal.fire('Error', error, 'error');
+        }
+      );
   }
 
   public userIsProvider() {
@@ -273,9 +314,20 @@ export class ServiceRequestComponent implements OnInit {
         provider_id: service_provider,
         update_request_action: action,
       })
-      .subscribe(() => {
-        this.service_request.provider_requested_status_update = true;
-      });
+      .subscribe(
+        () => {
+          this.service_request.provider_requested_status_update = true;
+          fireAlert(
+            'Éxito',
+            'Se ha solicitado la actualización de la solicitud de servicio',
+            'success'
+          );
+        },
+        (err) => {
+          const { error } = err.error;
+          Swal.fire('Error', error, 'error');
+        }
+      );
   }
 
   public onUpdateUpdateRequest(action: string) {
@@ -296,5 +348,17 @@ export class ServiceRequestComponent implements OnInit {
           ...this.service_request,
         });
       });
+  }
+
+  public getProviderName(service_provider: string) {
+    return this.user_data_service.getUserData(service_provider).subscribe(
+      (data: UserDataPresenter) => {
+        this.provider_email = data.email;
+      },
+      (err) => {
+        const { error } = err.error;
+        Swal.fire('Error', error, 'error');
+      }
+    );
   }
 }

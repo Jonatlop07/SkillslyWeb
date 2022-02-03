@@ -16,7 +16,7 @@ export class StoriesComponent implements OnInit {
   userStories: any[] = [];
   displayModal: boolean;
   displayModalAddStory: boolean;
-  userLogged = {name: '', email: ''};
+  userLogged = { name: '', email: '' };
 
   reference: string;
   referenceType: string;
@@ -41,6 +41,9 @@ export class StoriesComponent implements OnInit {
       reference: this.reference,
       referenceType: this.referenceType,
     };
+    if (!this.isValidStoryData()){
+      return;
+    }
     this.storiesService.sendStory(story).subscribe(
       () => {
         Swal.fire({
@@ -128,7 +131,7 @@ export class StoriesComponent implements OnInit {
       confirmButtonColor: '#00887A',
       cancelButtonColor: '#fc6662',
       confirmButtonText: 'Si, eliminar!',
-      cancelButtonText: 'Cancelar', 
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
         this.storiesService.deleteStory(temporal_post_id).subscribe(
@@ -155,5 +158,9 @@ export class StoriesComponent implements OnInit {
     });
 
     // this.displayModal = false;
+  }
+
+  public isValidStoryData() {
+    return this.reference && this.referenceType;
   }
 }
