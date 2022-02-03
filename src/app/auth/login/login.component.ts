@@ -2,9 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-
 import { AuthService } from 'src/app/services/auth.service';
-
 import { LoginForm } from '../../interfaces/login/login_form.inteface';
 import { LoginResponse } from '../../interfaces/login/login_response.interface'
 import { ConversationService } from '../../services/conversation.service';
@@ -26,6 +24,9 @@ export class LoginComponent implements OnInit{
   public site_key: any;
   public validCaptcha = false;
   @ViewChild('captchaElem') captcha: RecaptchaComponent;
+
+  public authentication_code: string = '';
+  public displaying_two_factor_auth_modal: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -81,30 +82,70 @@ export class LoginComponent implements OnInit{
       .loginUser(this.loginForm)
       .subscribe(
         (result: LoginResponse) => {
-          const { id, customer_id, email, roles, access_token } = result;
-          const now = new Date();
-          now.setSeconds(7200);
-          this.authService.setSessionData({
-            user_id: id,
-            customer_id,
-            user_email: email,
-            user_roles: roles,
-            access_token,
-            expires_date: now.getTime().toString()
-          }).subscribe(() => {
-            this.follow_service.getAndStoreUserFollowCollection();
-            this.conversation_service.getAndStoreConversations();
-            this.event_service.getAndStoreMyEventsCollection();
-            this.event_service.getAndStoreMyAssistancesCollection();
-            this.service_offers_service.getAndStoreMyServiceOfferCollection();
-            this.service_requests_service.getAndStoreMyServiceRequestCollection();
-            this.router.navigate(['/main/feed']);
-          })
+          if (!result.id) {
+            const { access_token } = result;
+            const now = new Date();
+            now.setSeconds(7200);
+            this.authService.setSessionData({
+              user_id: null,
+              customer_id: null,
+              user_email: null,
+              user_roles: null,
+              access_token,
+              expires_date: now.getTime().toString(),
+              is_two_factor_auth_enabled: result.is_two_factor_auth_enabled
+            }).subscribe(() => {
+              this.displaying_two_factor_auth_modal = true;
+            });
+          } else {
+            this.effectuateLogin(result);
+          }
         },
         (err) => {
           Swal.fire('Error', err.error.error, 'error');
         }
       );
+  }
+
+  public submitAuthenticationCode() {
+    this.authService
+      .turnOnQRCode(this.authentication_code)
+      .subscribe(() => {
+        this.authService
+          .authenticateTwoFactor(this.authentication_code)
+          .subscribe(
+          (result: LoginResponse) => {
+            this.effectuateLogin(result);
+          },
+          (err) => {
+            Swal.fire('Error', err.error.error, 'error');
+          }
+        );
+      });
+
+  }
+
+  private effectuateLogin(result: LoginResponse) {
+    const { id, customer_id, email, roles, access_token } = result;
+    const now = new Date();
+    now.setSeconds(7200);
+    this.authService.setSessionData({
+      user_id: id,
+      customer_id,
+      user_email: email,
+      user_roles: roles,
+      access_token,
+      expires_date: now.getTime().toString(),
+      is_two_factor_auth_enabled: result.is_two_factor_auth_enabled
+    }).subscribe(() => {
+      this.follow_service.getAndStoreUserFollowCollection();
+      this.conversation_service.getAndStoreConversations();
+      this.event_service.getAndStoreMyEventsCollection();
+      this.event_service.getAndStoreMyAssistancesCollection();
+      this.service_offers_service.getAndStoreMyServiceOfferCollection();
+      this.service_requests_service.getAndStoreMyServiceRequestCollection();
+      this.router.navigate(['/main/feed']);
+    })
   }
 
   invalidInput(input: string): boolean {

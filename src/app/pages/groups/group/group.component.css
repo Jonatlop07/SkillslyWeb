@@ -1,5 +1,8 @@
 .bg-group {
-  background: var(--app-main-bg-color);
+  background-color: var(--app-main-bg-color);
+}
+.bg-modal{
+  background-color: var(--app-primary-color);
 }
 
 .btn.btn-a {

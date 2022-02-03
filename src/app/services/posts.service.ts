@@ -31,7 +31,7 @@ export class PostService {
     private readonly jwtService: JwtService
   ) {}
 
-  createPost(post: CreatePostDataPresenter, group_id: string) {
+  public createPost(post: CreatePostDataPresenter, group_id: string) {
     const content = toPostContent(post.content);
     return this.http
       .post(
@@ -45,7 +45,7 @@ export class PostService {
       );
   }
 
-  queryPostCollection(queryPostParams: QueryPostPresenter) {
+  public queryPostCollection(queryPostParams: QueryPostPresenter) {
     const { user_id, group_id, limit, offset } = queryPostParams;
     this.isChargingPosts = true;
     return this.http.post(
@@ -57,7 +57,7 @@ export class PostService {
     }));
   }
 
-  getPostsOfFriendsCollection(limit: number, offset: number) {
+  public getPostsOfFriendsCollection(limit: number, offset: number): Observable<Object> {
     if (this.isChargingFeedPosts) {
       return of([]);
     }
@@ -66,7 +66,7 @@ export class PostService {
     params = params.append('offset', offset);
     this.isChargingFeedPosts = true;
     return this.http
-      .get(`${this.API_URL}/permanent-posts`, {
+      .get(`${this.API_URL}/permanent-posts/posts/friends`, {
         params,
         ...this.jwtService.getHttpOptions(),
       })
@@ -77,27 +77,31 @@ export class PostService {
       );
   }
 
-  deletePost(deletePostInterface: DeletePostInterface) {
+  public deletePost(deletePostInterface: DeletePostInterface) {
     const { post_id, group_id } = deletePostInterface;
-    return this.http.put(
-      `${this.API_URL}/permanent-posts/dele/${post_id}`,
-      { group_id: group_id },
-      this.jwtService.getHttpOptions()
+    let params = new HttpParams();
+    params = params.append('group-id', group_id);
+    return this.http.delete(
+      `${this.API_URL}/permanent-posts/${encodeURIComponent(post_id)}`,
+      {
+        params,
+        ...this.jwtService.getHttpOptions()
+      }
     );
   }
 
-  queryPost(post_id: string): Observable<PermanentPostPresenter> {
+  public queryPost(post_id: string): Observable<PermanentPostPresenter> {
     return this.http.get<PermanentPostPresenter>(
-      `${this.API_URL}/permanent-posts/post/${post_id}`,
+      `${this.API_URL}/permanent-posts/${encodeURIComponent(post_id)}`,
       this.jwtService.getHttpOptions()
     );
   }
 
-  updatePermanentPost(
+  public updatePermanentPost(
     post_to_update: UpdatePostPresenter
   ): Observable<UpdatePostPresenter> {
     return this.http.put<UpdatePostPresenter>(
-      `${this.API_URL}/permanent-posts/post/${post_to_update.post_id}`,
+      `${this.API_URL}/permanent-posts/${encodeURIComponent(post_to_update.post_id)}`,
       {
         user_id: this.jwtService.getUserId(),
         content: post_to_update.content,
@@ -107,9 +111,9 @@ export class PostService {
     );
   }
 
-  sharePost(sharePostInterface: SharePostInterface) {
+  public sharePost(sharePostInterface: SharePostInterface) {
     return this.http.post(
-      `${this.API_URL}/permanent-posts/post/${sharePostInterface.post_id}/share`,
+      `${this.API_URL}/permanent-posts/${encodeURIComponent(sharePostInterface.post_id)}/share`,
       {
         user_id: this.jwtService.getUserId(),
       },

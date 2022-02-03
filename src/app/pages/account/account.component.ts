@@ -12,6 +12,7 @@ import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-
 import { StripeCardComponent, StripeService } from 'ngx-stripe';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
+import { LoginResponse } from '../../interfaces/login/login_response.interface'
 
 @Component({
   selector: 'app-account',
@@ -31,6 +32,15 @@ export class AccountComponent implements OnInit {
 
   public obtain_investor_role: boolean = false;
   public obtain_requester_role: boolean = false;
+
+  public user_account_details: AccountDataPresenter;
+
+  public is_two_factor_auth_enabled: boolean = false;
+  public displaying_two_factor_auth_modal: boolean = false;
+
+  public qr_code: any;
+
+  public authentication_code: string;
 
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
@@ -75,6 +85,8 @@ export class AccountComponent implements OnInit {
     this.account_service
       .getUserAccountData()
       .subscribe((account_data: AccountDataPresenter) => {
+        this.is_two_factor_auth_enabled = account_data.is_two_factor_auth_enabled;
+        this.user_account_details = account_data;
         this.initForm(account_data);
       });
   }
@@ -91,10 +103,32 @@ export class AccountComponent implements OnInit {
       this.form.get('date_of_birth').value
     ).format('DD/MM/YYYY');
     this.account_service
-      .updateUserAccountData(this.account_form)
+      .updateUserAccountData({
+        ...this.account_form,
+        is_two_factor_auth_enabled: this.is_two_factor_auth_enabled
+      })
       .subscribe((account_data: AccountDataPresenter) => {
+        Swal.fire({
+          customClass: {
+            container: 'my-swal'
+          },
+          title: 'Éxito',
+          text: 'Has actualizado tu cuenta exitosamente',
+          icon: 'success'
+        });
+        this.user_account_details = account_data;
         this.initForm(account_data);
         this.store.dispatch(new UpdateSessionEmail(account_data.email));
+      }, (err) => {
+        const { error, message } = err.error
+        const error_description = message ?
+          'Ocurrió un error al actualizar tus datos'
+          : error;
+        Swal.fire(
+          'Error',
+          error_description,
+          'error'
+        );
       });
   }
 
@@ -197,6 +231,89 @@ export class AccountComponent implements OnInit {
         )
       ]]
     });
+  }
+
+  public generateQRCode() {
+    this.account_service.generateAuthQRCode()
+      .subscribe((QRCode: Blob) => {
+        this.is_two_factor_auth_enabled = true;
+        this.createImageFromBlob(QRCode);
+      }, (err) => {
+        Swal.fire('Error', err.error.error, 'error');
+      });
+  }
+
+  private createImageFromBlob(image: Blob) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      this.qr_code = reader.result;
+    });
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+
+  public validateQRCode() {
+    this.displaying_two_factor_auth_modal = true;
+  }
+
+  public enableTwoFactorAuthentication() {
+    this.auth_service
+      .turnOnQRCode(this.authentication_code)
+      .subscribe(() => {
+        this.auth_service
+          .authenticateTwoFactor(this.authentication_code)
+          .subscribe(
+            (result: LoginResponse) => {
+              this.displaying_two_factor_auth_modal = false;
+              this.authenticate(result);
+              Swal.fire({
+                customClass: {
+                  container: 'my-swal'
+                },
+                title: 'Éxito',
+                text: 'El codigo que ingresaste es válido. Ya puedes usar Google Authenticator para iniciar sesión',
+                icon: 'success'
+              });
+            },
+            (err) => {
+              this.displaying_two_factor_auth_modal = false;
+              Swal.fire('Error', err.error.error, 'error');
+            }
+          );
+      }, (err) => {
+        this.displaying_two_factor_auth_modal = false;
+        Swal.fire('Error', err.error.error, 'error');
+      });
+
+  }
+
+  private authenticate(result: LoginResponse) {
+    const { id, customer_id, email, roles, access_token } = result;
+    const now = new Date();
+    now.setSeconds(7200);
+    this.auth_service.setSessionData({
+      user_id: id,
+      customer_id,
+      user_email: email,
+      user_roles: roles,
+      access_token,
+      expires_date: now.getTime().toString(),
+      is_two_factor_auth_enabled: result.is_two_factor_auth_enabled
+    }).subscribe(() => {
+    });
+  }
+
+  public disableTwoFactorAuthentication() {
+    this.account_service
+      .updateUserAccountData({
+        ...this.user_account_details,
+        is_two_factor_auth_enabled: false
+      })
+      .subscribe((account_data: AccountDataPresenter) => {
+        this.is_two_factor_auth_enabled = account_data.is_two_factor_auth_enabled;
+        this.qr_code = null;
+      });
   }
 
   public onToggleChangePassword(): void {

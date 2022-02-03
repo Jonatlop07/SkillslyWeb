@@ -131,13 +131,15 @@
                     </a>
                     <p-dialog
                       header="Crea una publicacion"
-                      [style]="{ width: '80vw', 'min-width': '300px' }"
+                      [style]="{ width: '80vw', 'min-width': '300px'}"
                       [(visible)]="display_create"
                       [modal]="true"
                     >
-                      <app-posts-create [group_id]="group.id"
-                        (toggleCreate)="onToggleCreate($event)"
-                      ></app-posts-create>
+                      <div class="bg-modal">
+                        <app-posts-create [group_id]="group.id"
+                                          (toggleCreate)="onToggleCreate($event)"
+                        ></app-posts-create>
+                      </div>
                     </p-dialog>
                   <hr />
                   <div *ngFor="let post of posts; let i=index">

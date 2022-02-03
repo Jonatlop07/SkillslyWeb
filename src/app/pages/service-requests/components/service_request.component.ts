@@ -340,12 +340,14 @@ export class ServiceRequestComponent implements OnInit {
       })
       .subscribe((res: any) => {
         this.display_service_request_details_modal = false;
+        console.log(res)
         this.service_request = {
           ...this.service_request,
-          phase: res.request_phase,
+          phase: res.phase,
         };
         this.service_requests_service.updateServiceRequestInStore({
           ...this.service_request,
+          phase: res.phase
         });
       });
   }

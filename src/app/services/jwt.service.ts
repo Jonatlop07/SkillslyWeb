@@ -80,4 +80,12 @@ export class JwtService {
     });
     return user_roles;
   }
+
+  public isTwoFactorAuthenticationEnabled(): boolean {
+    let tfa_enabled = false;
+    this.session$.subscribe((session) => {
+      tfa_enabled = session.is_two_factor_auth_enabled;
+    });
+    return tfa_enabled;
+  }
 }

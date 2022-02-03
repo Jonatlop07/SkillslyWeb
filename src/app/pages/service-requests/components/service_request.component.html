@@ -79,6 +79,10 @@
                 ? "Evaluacion de aplicante en progreso. No canceles tu aplicacion todavia!"
                 : service_request.phase === "Execution"
                 ? "Servicio en ejecucion"
+                : service_request.phase == "Finished"
+                ? "Servicio finalizado"
+                : service_request.phase == "Canceled"
+                ? "Servicio cancelado"
                 : "Cerrado"
             }}
           </h6>

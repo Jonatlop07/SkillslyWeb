@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PasswordModule } from 'primeng/password';
@@ -15,6 +15,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import {DividerModule} from 'primeng/divider';
 import {MessageModule} from "primeng/message";
+import { DialogModule } from 'primeng/dialog'
 
 @NgModule({
   declarations: [RegisterComponent, LoginComponent, PasswordRecoveryComponent],
@@ -33,6 +34,8 @@ import {MessageModule} from "primeng/message";
     MessageModule,
     RecaptchaModule,
     RecaptchaFormsModule,
+    DialogModule,
+    FormsModule
   ],
   exports: [RegisterComponent],
 })

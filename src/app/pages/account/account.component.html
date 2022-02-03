@@ -84,10 +84,10 @@
                   styleClass="p-input text-sm"
                 />
                 <label
-                  class="form-check-label mb-0"
+                  class="form-check-label mb-0 font-medium"
                   for="customControlAutosizing1"
                 >
-                  <small>Habilitar el cambio de contraseña</small>
+                  Habilitar el cambio de contraseña
                 </label>
               </div>
             </div>
@@ -224,6 +224,92 @@
             </div>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+  <p-dialog
+    header="Autenticación de doble factor"
+    [(visible)]="displaying_two_factor_auth_modal"
+    [modal]="true"
+    [style]="{ width: '40vw' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <div class="card">
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-12">
+          <label for="service_request_title">Código de verificación</label>
+          <br/>
+          <input
+            id="service_request_title"
+            type="text"
+            aria-describedby="authentication_code"
+            pInputText [(ngModel)]="authentication_code"
+          />
+          <br/>
+          <small id="username1-help">Número de 6 dígitos que valida tu identidad</small
+          >
+        </div>
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button
+        icon="pi pi-send"
+        (click)="enableTwoFactorAuthentication()"
+        label="Enviar código"
+        styleClass="p-button-text"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
+  <div class="row d-flex no-block justify-content-center pt-5">
+    <div class="col-5 mb-5">
+      <div class="card w-100 p-4">
+        <div class="form-group row mx-1 my-4">
+          <p>{{ is_two_factor_auth_enabled ?
+            'La autenticación de doble factor está habilitada. ' +
+            'Para autenticarte, obtén el código de verificación de la cuenta que agregaste en Google Authenticator mediante el código QR que escaneaste.'
+            : 'La autenticación de doble factor está deshabilitada'
+            }}
+          </p>
+          <p>Ten en cuenta que una vez generas un nuevo código QR debes registrarlo con Google Authenticator para poder
+            autenticarte</p>
+          <div class="col-md-6">
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="Nuevo Código QR (Activa la autenticación de doble factor)"
+              class="p-button-outlined p-button-rounded"
+              icon="pi pi-refresh"
+              (click)="generateQRCode()"
+            ></button>
+          </div>
+          <div class="col-md-6">
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="Deshabilitar Autenticación de Doble Factor"
+              class="p-button-outlined p-button-rounded"
+              icon="pi pi-minus-circle"
+              (click)="disableTwoFactorAuthentication()"
+            ></button>
+          </div>
+          <div class="row align-items-center" *ngIf="qr_code">
+            <img [src]="qr_code" alt="QR Code" class="w-50 mx-auto">
+          </div>
+          <div class="col-md-6" *ngIf="qr_code">
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="Validar código QR"
+              class="p-button-outlined p-button-rounded"
+              icon="pi pi-check-circle"
+              (click)="validateQRCode()"
+            ></button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

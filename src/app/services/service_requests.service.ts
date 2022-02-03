@@ -202,7 +202,7 @@ export class ServiceRequestsService {
 
   public updateUpdateRequest(
     update_update_request_params: UpdateRequestPresenter
-  ) {
+  ): Observable<Object> {
     const { update_request_action, provider_id, service_request_id } =
       update_update_request_params;
     return this.http.post(

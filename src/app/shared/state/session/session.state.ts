@@ -1,7 +1,7 @@
 import { Action, State, StateContext, StateToken } from '@ngxs/store'
 import { SessionModel } from '../../../models/session.model'
 import {
-  SetSessionData, UpdateSessionEmail
+  SetSessionData, SetTwoFactorAuthentication, UpdateSessionEmail
 } from './session.actions'
 import { Injectable } from '@angular/core'
 
@@ -27,6 +27,15 @@ export class SessionState {
     ctx.setState({
       ...state,
       user_email: action.email
-    })
+    });
+  }
+
+  @Action(SetTwoFactorAuthentication)
+  public setTwoFactorAuthentication(ctx: StateContext<SessionModel>, action: SetTwoFactorAuthentication) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      is_two_factor_auth_enabled: action.is_two_factor_auth_enabled
+    });
   }
 }
