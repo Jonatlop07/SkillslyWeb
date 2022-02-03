@@ -278,6 +278,7 @@ export class ServiceRequestComponent implements OnInit {
       })
       .subscribe(
         (res: OnUpdateApplicationResponse) => {
+          this.display_service_request_details_modal = false;
           this.service_request = {
             ...this.service_request,
             phase: res.request_phase,
