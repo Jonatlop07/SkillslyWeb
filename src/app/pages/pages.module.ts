@@ -56,6 +56,7 @@ import {ProjectComponent} from "./projects/project/project.component";
 import { NgxStripeModule } from 'ngx-stripe';
 import {DockModule} from "primeng/dock";
 import {ProjectsUpdateComponent} from "./projects/projects-update/projects-update.component";
+import { CommentInCommentComponent } from './posts/comment-in-comment/comment-in-comment.component';
 
 
 @NgModule({
@@ -94,6 +95,7 @@ import {ProjectsUpdateComponent} from "./projects/projects-update/projects-updat
     ServiceRequestsComponent,
     MyServiceRequestsComponent,
     ServiceRequestComponent,
+    CommentInCommentComponent,
   ],
   imports: [
     ConfirmPopupModule,

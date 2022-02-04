@@ -1,0 +1,21 @@
+.clickable:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.p-tooltip {
+  font-size: smaller;
+  background-color: #f5f5f5;
+}
+.comment-element {
+  font-family: "Poppins", sans-serif;
+}
+.comment {
+  background-color: rgba(70, 229, 176, 0.04);
+  padding: 10px;
+  border-radius: 9px;
+}
+.p-tooltip .p-tooltip-text {
+  background-color: red;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+}

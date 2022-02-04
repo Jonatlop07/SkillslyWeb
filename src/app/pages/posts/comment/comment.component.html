@@ -8,7 +8,7 @@
         class="rounded-circle"
       />
     </div> -->
-    <div class="col-10 comment-element">
+    <div class="comment-element">
       <div class="comment m-1">
         <span class="mb-0 font-medium p-0">{{ comment.name }}</span> ·
         <small class="font-weight-lighter" style="font-size: 12px">
@@ -20,13 +20,76 @@
       </div>
 
       <div class="px-3" style="font-size: 12px">
-        <small class="font-bold clickable"> Responder </small> ·
+        <div class="flex">
+          <small class="font-bold clickable" (click)="handleShowResponse()">
+            Responder
+          </small>
+          ·
+          <small
+            class="text-muted clickable"
+            pTooltip="{{ viewDate() }}"
+            tooltipPosition="bottom"
+            >{{ transformDate() }}
+          </small>
+        </div>
+      </div>
+
+      <div class="flex row">
         <small
-          class="text-muted clickable"
-          pTooltip="{{ viewDate() }}"
-          tooltipPosition="bottom"
-          >{{ transformDate() }}</small
+          *ngIf="commentsInComment.length === 0; else elseBlock"
+          class="font-bold"
+          style="font-size: 13px"
         >
+        </small>
+      </div>
+      <div>
+        <ng-template #elseBlock>
+          <app-comment-in-comment
+            class="mx-2"
+            *ngFor="let comment of commentsInComment"
+            [comment]="comment"
+          >
+          </app-comment-in-comment>
+        </ng-template>
+      </div>
+      <div class="mx-4 flex">
+        <span
+          *ngIf="commentsInComment.length > 0"
+          class="clickable"
+          (click)="handleMoreComments()"
+          style="font-size: 11px"
+          >Ver más respuestas</span
+        >
+        <small
+          *ngIf="page > 0"
+          class="text-muted clickable mx-2"
+          style="font-size: 11px"
+          (click)="resetComments()"
+          >Inicio</small
+        >
+      </div>
+    </div>
+
+    <div class="row py-2" *ngIf="showResponse">
+      <div class="col-auto">
+        <img
+          src="../assets/images/users/d4.jpg"
+          alt="user"
+          width="30"
+          class="rounded-circle"
+        />
+      </div>
+      <div class="col-10">
+        <input
+          type="text"
+          class="form-control w-100"
+          id="fname"
+          placeholder="Escribe un comentario ..."
+          pInputText
+          style="font-size: 13px"
+          [(ngModel)]="commentInComment"
+          (keyup.enter)="sendComment()"
+        />
       </div>
     </div>
   </div>
