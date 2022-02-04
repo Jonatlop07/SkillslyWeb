@@ -34,7 +34,7 @@
             type="image"
             [siteKey]="site_key"
             #captchaElem
-            (resolved)="validCaptcha = true">
+            (resolved)="resolved($event)">
           </re-captcha>
           <div class="error mt-md-2">
             <p *ngIf="!validCaptcha && invalidForm()"> Validar captcha </p>
