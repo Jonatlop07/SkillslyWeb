@@ -9,6 +9,8 @@ import { Observable } from 'rxjs'
 import { Store } from '@ngxs/store'
 import { SetSessionData } from '../shared/state/session/session.actions'
 import { SessionModel } from '../models/session.model'
+import {requestResetPasswordInterface} from "../interfaces/login/request_reset_password.interface";
+import {resetPasswordInterface} from "../interfaces/login/reset_password.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +57,26 @@ export class AuthService {
     return this.http.post<LoginResponse>(
       `${this.API_URL}/2fa/authenticate`, {
         code: authentication_code
+      },
+      this.jwt_service.getHttpOptions()
+    );
+  }
+
+  public requestResetPassword(request: requestResetPasswordInterface){
+    const {email} = request;
+    return this.http.patch(
+      `${this.API_URL}/auth/request-reset-password`, {
+        email: email
+      },
+      this.jwt_service.getHttpOptions()
+    );
+  }
+
+  public resetPassword(request: resetPasswordInterface){
+    const {password, token} = request;
+    return this.http.patch(
+      `${this.API_URL}/auth/reset-password/${token}`, {
+        password
       },
       this.jwt_service.getHttpOptions()
     );
