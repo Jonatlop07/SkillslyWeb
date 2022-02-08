@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
 
   public saveForm(): void {
     this.form_submitted = true;
-    if (this.invalidForm()) {
+    if (this.invalidForm() || !this.validCaptcha) {
       this.captcha.reset();
       this.validCaptcha = false;
       return;
@@ -85,5 +85,16 @@ export class RegisterComponent implements OnInit {
 
   public invalidForm(): boolean {
     return this.form.invalid && this.form_submitted;
+  }
+
+  resolved(captcha_response: string) {
+    return this.auth_service.verifyCaptcha(captcha_response).subscribe(
+      (res: any) => {
+        this.validCaptcha = res.success;
+      },
+      () => {
+        this.validCaptcha = false;
+      }
+    );
   }
 }

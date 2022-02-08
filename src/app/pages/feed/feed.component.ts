@@ -10,6 +10,7 @@ import { PostService } from 'src/app/services/posts.service';
   styleUrls: ['./feed.component.css'],
 })
 export class FeedComponent implements OnInit {
+
   public foundPosts: PermanentPostPresenter[];
   public foundEvents: EventModel[];
   public limitPost: number;
@@ -46,7 +47,7 @@ export class FeedComponent implements OnInit {
   }
 
   @HostListener('window:scroll', ['$event'])
-  onScroll() {
+  public onScroll(): void {
     const pos =
       (document.documentElement.scrollTop || document.body.scrollTop) + 1300;
     const max =

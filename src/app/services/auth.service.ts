@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { RegisterForm } from '../interfaces/register/register_form.interface';
 import { environment } from 'src/environments/environment';
 import { LoginForm } from '../interfaces/login/login_form.inteface';
@@ -106,5 +106,11 @@ export class AuthService {
 
   public getUserId(): string {
     return this.jwt_service.getUserId();
+  }
+
+  public verifyCaptcha(token: string){
+    return this.http.post(`${this.API_URL}/auth/val-captcha`, {
+      response: token
+    });
   }
 }

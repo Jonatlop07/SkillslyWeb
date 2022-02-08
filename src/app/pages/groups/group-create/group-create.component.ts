@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GroupPresenter } from 'src/app/interfaces/group/groups.presenter';
 import { GroupsService } from 'src/app/services/groups.service';
+import { fireAlert } from 'src/app/shared/swal_fire_alerts';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class GroupCreateComponent implements OnInit {
         const { id, name, description, picture } = res
         this.created_group = { id, name, description, picture };
         this.toggleCreate.emit(this.created_group);
+        fireAlert('Éxito', 'Se ha creado el grupo', 'success');
       }
     )
   }

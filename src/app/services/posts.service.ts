@@ -57,7 +57,7 @@ export class PostService {
     }));
   }
 
-  public getPostsOfFriendsCollection(limit: number, offset: number) {
+  public getPostsOfFriendsCollection(limit: number, offset: number): Observable<Object> {
     if (this.isChargingFeedPosts) {
       return of([]);
     }

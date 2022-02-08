@@ -23,7 +23,7 @@ export class FollowRequestComponent implements OnInit {
     })
   }
 
-  acceptFollowRequest(user: SearchUserResponse, index: number) : void {
+  public acceptFollowRequest(user: SearchUserResponse, index: number) : void {
     const followServiceResponse = this.followService.updateFollowRequest(user,true);
     followServiceResponse.subscribe((new_conversation: Conversation) => {
       this.pendingSentUsers.splice(index,1);
@@ -31,7 +31,7 @@ export class FollowRequestComponent implements OnInit {
     })
   }
 
-  rejectFollowRequest(user: SearchUserResponse, index: number) : void {
+  public rejectFollowRequest(user: SearchUserResponse, index: number) : void {
     const followServiceResponse = this.followService.updateFollowRequest(user,false);
     followServiceResponse.subscribe(() => {
       this.pendingSentUsers.splice(index,1);

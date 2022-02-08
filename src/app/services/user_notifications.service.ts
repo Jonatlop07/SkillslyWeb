@@ -275,7 +275,7 @@ export class UserNotificationsService {
       .pipe(
         map((data: StatusUpdateRequestDetails) => {
           const action = data.update_action === 'complete' ? 'finalizada' : 'cancelada';
-          return {
+          return {            
             data,
             action_details: {
               route: './service-requests',
