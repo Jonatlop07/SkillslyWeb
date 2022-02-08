@@ -16,9 +16,10 @@ import {ButtonModule} from 'primeng/button';
 import {DividerModule} from 'primeng/divider';
 import {MessageModule} from "primeng/message";
 import { DialogModule } from 'primeng/dialog'
+import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent, PasswordRecoveryComponent],
+  declarations: [RegisterComponent, LoginComponent, PasswordRecoveryComponent, ResetPasswordComponent],
   providers: [AccountService],
   imports: [
     CommonModule,
