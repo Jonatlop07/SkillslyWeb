@@ -72,11 +72,11 @@ export class AuthService {
     );
   }
 
-  public resetPassword(request: resetPasswordInterface){
-    const {password, token} = request;
+  public resetPassword(password: string, token: string){
+    console.log(password, token);
     return this.http.patch(
       `${this.API_URL}/auth/reset-password/${token}`, {
-        password
+        password: password,
       },
       this.jwt_service.getHttpOptions()
     );
