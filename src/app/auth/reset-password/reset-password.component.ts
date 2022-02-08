@@ -12,7 +12,7 @@ import {resetPasswordInterface} from "../../interfaces/login/reset_password.inte
 })
 export class ResetPasswordComponent {
   public form: FormGroup;
-  public resetPassword: resetPasswordInterface;
+  public password: string;
 
   constructor(
     private readonly authService: AuthService,
@@ -23,10 +23,9 @@ export class ResetPasswordComponent {
 
   }
   saveForm(): void {
-    this.resetPassword = this.form.value;
+    this.password = this.form.value.password;
     this.activatedRoute.params.subscribe(params => {
-      this.resetPassword.token = params.token;
-      this.authService.resetPassword(this.resetPassword).subscribe(() => {
+      this.authService.resetPassword(this.password, params.token).subscribe(() => {
         this.router.navigate(['/login']);
       });
     });
@@ -34,7 +33,7 @@ export class ResetPasswordComponent {
   }
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      email: [' ', [Validators.required ]]
+      password: [' ', [Validators.required ]]
     });
   }
 }
