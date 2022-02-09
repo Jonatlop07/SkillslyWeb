@@ -6,20 +6,26 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PasswordModule } from 'primeng/password';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component'
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { RouterModule } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
-import {ImageModule} from 'primeng/image';
-import {InputTextModule} from 'primeng/inputtext';
-import {ButtonModule} from 'primeng/button';
-import {DividerModule} from 'primeng/divider';
-import {MessageModule} from "primeng/message";
-import { DialogModule } from 'primeng/dialog'
-import {ResetPasswordComponent} from "./reset-password/reset-password.component";
+import { ImageModule } from 'primeng/image';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
+import { MessageModule } from 'primeng/message';
+import { DialogModule } from 'primeng/dialog';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent, PasswordRecoveryComponent, ResetPasswordComponent],
+  declarations: [
+    RegisterComponent,
+    LoginComponent,
+    PasswordRecoveryComponent,
+    ResetPasswordComponent,
+  ],
   providers: [AccountService],
   imports: [
     CommonModule,
@@ -36,7 +42,8 @@ import {ResetPasswordComponent} from "./reset-password/reset-password.component"
     RecaptchaModule,
     RecaptchaFormsModule,
     DialogModule,
-    FormsModule
+    FormsModule,
+    CheckboxModule
   ],
   exports: [RegisterComponent],
 })
