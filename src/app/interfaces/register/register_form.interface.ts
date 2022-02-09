@@ -3,4 +3,5 @@ export interface RegisterForm {
     email: string; 
     password: string; 
     date_of_birth: string;
+    accept_terms: boolean;
 }

@@ -29,33 +29,41 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.site_key = '6Le-PfMdAAAAAIM0bEC7_TxiGoL5J-8YkcAC4R0-'
+    this.site_key = '6Le-PfMdAAAAAIM0bEC7_TxiGoL5J-8YkcAC4R0-';
     this.initForm();
   }
 
   public initForm(): void {
     this.form = this.form_builder.group({
-      name: ['', [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(20)
-      ]],
-      email: ['', [
-        Validators.required,
-        Validators.pattern(
-          /^[_A-Za-z0-9-\\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/
-        )
-      ]],
-      password: ['', [
-        Validators.required,
-        Validators.pattern(
-          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
-        )
-      ]],
-      date_of_birth: [this.today, [
-        Validators.required,
-      ]],
-      recaptcha: ['', Validators.required]
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(20),
+        ],
+      ],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^[_A-Za-z0-9-\\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/
+          ),
+        ],
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
+          ),
+        ],
+      ],
+      date_of_birth: [this.today, [Validators.required]],
+      recaptcha: ['', Validators.required],
+      accept_terms: [false, Validators.requiredTrue],
     });
   }
 
@@ -70,16 +78,17 @@ export class RegisterComponent implements OnInit {
     this.register_form.date_of_birth = moment(
       this.form.get('date_of_birth').value
     ).format('DD/MM/YYYY');
-    this.auth_service
-      .registerUser(this.register_form)
-      .subscribe(() => {
+    this.auth_service.registerUser(this.register_form).subscribe(
+      () => {
         this.router.navigate(['/login']);
-      }, (err) => {
-        Swal.fire('Error', err.error.error, 'error' );
-      });
+      },
+      (err) => {
+        Swal.fire('Error', err.error.error, 'error');
+      }
+    );
   }
 
- public invalidInput(input: string): boolean {
+  public invalidInput(input: string): boolean {
     return this.form.get(input).invalid && this.form.get(input).touched;
   }
 
