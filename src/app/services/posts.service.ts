@@ -46,11 +46,11 @@ export class PostService {
   }
 
   public queryPostCollection(queryPostParams: QueryPostPresenter) {
-    const { user_id, group_id, limit, offset } = queryPostParams;
+    const { owner_id, group_id, limit, offset } = queryPostParams;
     this.isChargingPosts = true;
     return this.http.post(
       `${this.API_URL}/permanent-posts/posts`,
-      { user_id, group_id, limit, offset },
+      { owner_id, group_id, limit, offset },
       this.jwtService.getHttpOptions()
     ).pipe(tap(()=>{
       this.isChargingPosts = false;

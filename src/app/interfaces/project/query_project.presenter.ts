@@ -1,8 +1,8 @@
 export interface QueryProjectPresenter {
-  user_id: string;
+  owner_id: string;
 }
 export interface ProjectPresenter{
-  user_id: string;
+  owner_id: string;
   user_name: string;
   project_id: string;
   created_at: string;

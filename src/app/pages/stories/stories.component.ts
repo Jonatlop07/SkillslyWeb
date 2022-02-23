@@ -4,6 +4,7 @@ import Story from 'src/app/models/story.model';
 import { AccountService } from 'src/app/services/account.service';
 import { StoriesService } from 'src/app/services/stories.service';
 import Swal from 'sweetalert2';
+import { showErrorPopup } from '../../shared/pop-up/pop_up.utils'
 
 @Component({
   selector: 'app-stories',
@@ -21,8 +22,6 @@ export class StoriesComponent implements OnInit {
   reference: string;
   referenceType: string;
   description: string;
-
-  // friendsStories = Object.values(this.dataStories);
 
   constructor(
     private storiesService: StoriesService,
@@ -61,11 +60,7 @@ export class StoriesComponent implements OnInit {
         });
       },
       () => {
-        Swal.fire(
-          'Error',
-          'Ocurrió un error inesperado, intenta más tarde',
-          'error'
-        );
+        showErrorPopup('Ocurrió un error inesperado, intenta más tarde');
       }
     );
   }
@@ -97,14 +92,6 @@ export class StoriesComponent implements OnInit {
     this.accountService.getUserAccountData().subscribe((response) => {
       this.userLogged = response;
     });
-  }
-
-  getStoryUserName(user: string) {
-    return this.dataStories[user][0].name;
-  }
-
-  getStoryUserEmail(user: string) {
-    return this.dataStories[user][0].email;
   }
 
   getFormattedDate(date: string) {
@@ -156,8 +143,6 @@ export class StoriesComponent implements OnInit {
         );
       }
     });
-
-    // this.displayModal = false;
   }
 
   public isValidStoryData() {

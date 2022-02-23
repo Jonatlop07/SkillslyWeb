@@ -10,9 +10,10 @@ import { UpdateSessionEmail } from '../../shared/state/session/session.actions';
 import { Role } from '../../interfaces/user-account/role.enum';
 import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
 import { StripeCardComponent, StripeService } from 'ngx-stripe';
-import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import { LoginResponse } from '../../interfaces/login/login_response.interface'
+import AccountDataResponse from '../../interfaces/user-account/account_data.response'
+import { showErrorPopup, showSuccessPopup } from '../../shared/pop-up/pop_up.utils'
 
 @Component({
   selector: 'app-account',
@@ -84,7 +85,7 @@ export class AccountComponent implements OnInit {
   public getAccountData(): void {
     this.account_service
       .getUserAccountData()
-      .subscribe((account_data: AccountDataPresenter) => {
+      .subscribe((account_data: AccountDataResponse) => {
         this.is_two_factor_auth_enabled = account_data.is_two_factor_auth_enabled;
         this.user_account_details = account_data;
         this.initForm(account_data);
@@ -107,15 +108,8 @@ export class AccountComponent implements OnInit {
         ...this.account_form,
         is_two_factor_auth_enabled: this.is_two_factor_auth_enabled
       })
-      .subscribe((account_data: AccountDataPresenter) => {
-        Swal.fire({
-          customClass: {
-            container: 'my-swal'
-          },
-          title: 'Éxito',
-          text: 'Has actualizado tu cuenta exitosamente',
-          icon: 'success'
-        });
+      .subscribe(async (account_data: AccountDataResponse) => {
+        await showSuccessPopup('Has actualizado tu cuenta exitosamente');
         this.user_account_details = account_data;
         this.initForm(account_data);
         this.store.dispatch(new UpdateSessionEmail(account_data.email));
@@ -124,20 +118,8 @@ export class AccountComponent implements OnInit {
         const error_description = message ?
           'Ocurrió un error al actualizar tus datos'
           : error;
-        Swal.fire(
-          'Error',
-          error_description,
-          'error'
-        );
+        showErrorPopup(error_description);
       });
-  }
-
-  public onChangeObtainRequesterRoleCheckbox(): void {
-    this.obtain_requester_role = !this.obtain_requester_role;
-  }
-
-  public onChangeObtainInvestorRoleCheckbox(): void {
-    this.obtain_investor_role = !this.obtain_investor_role;
   }
 
   public obtainSpecialRoles(): void {
@@ -151,14 +133,9 @@ export class AccountComponent implements OnInit {
           obtain_investor_role: this.obtain_investor_role,
           payment_method_id: result.paymentMethod.id
         }).subscribe(() => {
-          Swal.fire({
-            customClass: {
-              container: 'my-swal'
-            },
-            title: 'Éxito',
-            text: 'Has adquirido los roles exitosamente, te redigiremos a la seccion de inicio de sesión',
-            icon: 'success'
-          });
+          showSuccessPopup(
+            'Has adquirido los roles exitosamente, te redigiremos a la seccion de inicio de sesión'
+          );
           this.auth_service
             .logout()
             .subscribe(() => {
@@ -169,18 +146,10 @@ export class AccountComponent implements OnInit {
           const error_description = message ?
             'Ocurrió un error. Por favor, asegúrate de haber elegido un rol'
             : error;
-          Swal.fire(
-            'Error',
-            error_description,
-            'error'
-          );
+          showErrorPopup(error_description);
         });
       } else if (result.error) {
-        Swal.fire(
-          'Error',
-          'Error en el procesamiento del pago. Por favor, inténtalo de nuevo',
-          'error'
-        );
+        showErrorPopup('Error en el procesamiento del pago. Por favor, inténtalo de nuevo');
       }
     });
   }
@@ -193,9 +162,92 @@ export class AccountComponent implements OnInit {
           this.router.navigate(['/login']);
         },
         (err) => {
-          Swal.fire('Error', err.error.error, 'error');
+          showErrorPopup(err.error.error);
         }
       );
+  }
+
+  public generateQRCode() {
+    this.account_service.generateAuthQRCode()
+      .subscribe((QRCode: Blob) => {
+        this.is_two_factor_auth_enabled = true;
+        this.createImageFromBlob(QRCode);
+      }, (err) => {
+        showErrorPopup(err.error.error);
+      });
+  }
+
+  private createImageFromBlob(image: Blob) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      this.qr_code = reader.result;
+    });
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+
+  public enableTwoFactorAuthentication() {
+    this.auth_service
+      .turnOnQRCode(this.authentication_code)
+      .subscribe(() => {
+        this.auth_service
+          .authenticateTwoFactor(this.authentication_code)
+          .subscribe(
+            (result: LoginResponse) => {
+              this.displaying_two_factor_auth_modal = false;
+              this.authenticate(result);
+              showSuccessPopup(
+                'El codigo que ingresaste es válido. Ya puedes usar Google Authenticator para iniciar sesión'
+              );
+            },
+            (err) => {
+              this.displaying_two_factor_auth_modal = false;
+              showErrorPopup(err.error.error);
+            }
+          );
+      }, (err) => {
+        this.displaying_two_factor_auth_modal = false;
+        showErrorPopup(err.error.error);
+      });
+
+  }
+
+  private authenticate(result: LoginResponse) {
+    const { id, customer_id, email, roles, access_token } = result;
+    const now = new Date();
+    now.setSeconds(7200);
+    this.auth_service
+      .setSessionData({
+        user_id: id,
+        customer_id,
+        user_email: email,
+        user_roles: roles,
+        access_token,
+        expires_date: now.getTime().toString(),
+        is_two_factor_auth_enabled: result.is_two_factor_auth_enabled
+      })
+      .subscribe(() => {});
+  }
+
+  public disableTwoFactorAuthentication() {
+    this.account_service
+      .updateUserAccountData({
+        ...this.user_account_details,
+        is_two_factor_auth_enabled: false
+      })
+      .subscribe((account_data: AccountDataPresenter) => {
+        this.is_two_factor_auth_enabled = account_data.is_two_factor_auth_enabled;
+        this.qr_code = null;
+      });
+  }
+
+  public onChangeObtainRequesterRoleCheckbox(): void {
+    this.obtain_requester_role = !this.obtain_requester_role;
+  }
+
+  public onChangeObtainInvestorRoleCheckbox(): void {
+    this.obtain_investor_role = !this.obtain_investor_role;
   }
 
   public invalidInput(input: string): boolean {
@@ -233,87 +285,8 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  public generateQRCode() {
-    this.account_service.generateAuthQRCode()
-      .subscribe((QRCode: Blob) => {
-        this.is_two_factor_auth_enabled = true;
-        this.createImageFromBlob(QRCode);
-      }, (err) => {
-        Swal.fire('Error', err.error.error, 'error');
-      });
-  }
-
-  private createImageFromBlob(image: Blob) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      this.qr_code = reader.result;
-    });
-    if (image) {
-      reader.readAsDataURL(image);
-    }
-  }
-
   public validateQRCode() {
     this.displaying_two_factor_auth_modal = true;
-  }
-
-  public enableTwoFactorAuthentication() {
-    this.auth_service
-      .turnOnQRCode(this.authentication_code)
-      .subscribe(() => {
-        this.auth_service
-          .authenticateTwoFactor(this.authentication_code)
-          .subscribe(
-            (result: LoginResponse) => {
-              this.displaying_two_factor_auth_modal = false;
-              this.authenticate(result);
-              Swal.fire({
-                customClass: {
-                  container: 'my-swal'
-                },
-                title: 'Éxito',
-                text: 'El codigo que ingresaste es válido. Ya puedes usar Google Authenticator para iniciar sesión',
-                icon: 'success'
-              });
-            },
-            (err) => {
-              this.displaying_two_factor_auth_modal = false;
-              Swal.fire('Error', err.error.error, 'error');
-            }
-          );
-      }, (err) => {
-        this.displaying_two_factor_auth_modal = false;
-        Swal.fire('Error', err.error.error, 'error');
-      });
-
-  }
-
-  private authenticate(result: LoginResponse) {
-    const { id, customer_id, email, roles, access_token } = result;
-    const now = new Date();
-    now.setSeconds(7200);
-    this.auth_service.setSessionData({
-      user_id: id,
-      customer_id,
-      user_email: email,
-      user_roles: roles,
-      access_token,
-      expires_date: now.getTime().toString(),
-      is_two_factor_auth_enabled: result.is_two_factor_auth_enabled
-    }).subscribe(() => {
-    });
-  }
-
-  public disableTwoFactorAuthentication() {
-    this.account_service
-      .updateUserAccountData({
-        ...this.user_account_details,
-        is_two_factor_auth_enabled: false
-      })
-      .subscribe((account_data: AccountDataPresenter) => {
-        this.is_two_factor_auth_enabled = account_data.is_two_factor_auth_enabled;
-        this.qr_code = null;
-      });
   }
 
   public onToggleChangePassword(): void {

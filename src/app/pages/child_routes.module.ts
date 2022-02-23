@@ -7,7 +7,7 @@ import { PostsCreateComponent } from './posts/posts-create/posts-create.componen
 import { PostsQueryComponent } from './posts/posts-query/posts-query.component';
 import { ChatComponent } from './chat/chat.component';
 import { FollowRequestComponent } from './follow-request/follow-request.component';
-import { PostUpdateComponent } from './posts/post-update/post-update.component';
+import { PostUpdateComponent } from './posts/post-update/post_update.component';
 import { FeedComponent } from './feed/feed.component';
 import { ProjectsCreateComponent } from './projects/projects-create/projects-create.component';
 import { EventCreateComponent } from './events/event-create/event-create.component';

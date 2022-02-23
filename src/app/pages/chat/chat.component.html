@@ -162,7 +162,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="col-lg-1"></div> -->
     <div class="col-lg-5">
       <div class="card" *ngIf="selected_conversation">
         <div class="card-body">
@@ -191,7 +190,6 @@
                 style="font-size: 17px; color: #77a6f7"
               >
               </a>
-              <!-- <i class="pi pi-ellipsis-h" style="font-size: 2rem"></i> -->
               <ul
                 class="dropdown-menu pull-left dropdown-menu-left"
                 aria-labelledby="dropdownMenuLink"
@@ -284,19 +282,6 @@
                       {{ related_user.member_name }}
                     </li>
                   </div>
-                  <!-- <div class="col-md-8">
-                    <ul class="mt-3">
-                      <li
-                        class="btn btn-info"
-                        *ngFor="
-                          let related_user of related_users_not_in_conversation
-                        "
-                        (click)="addMemberToExistingConversation(related_user)"
-                      >
-                        {{ related_user.member_name }}
-                      </li>
-                    </ul>
-                  </div> -->
                   <p class="m-0 w-50 font-text">
                     Miembros añadidos (para remover un miembro haz clic sobre
                     él):
@@ -317,7 +302,6 @@
                     </li>
                   </div>
                 </div>
-
                 <div class="dropdown-divider my-3"></div>
                 <div class="card-body p-0">
                   <button
@@ -337,7 +321,7 @@
               <!-- Chat message -->
               <li
                 [ngClass]="
-                  isNotCurrentUser(message.user_id)
+                  isNotCurrentUser(message.owner_id)
                     ? 'chat-item mt-2'
                     : 'odd chat-item'
                 "
@@ -345,14 +329,14 @@
               >
                 <div class="chat-content p-0">
                   <h6
-                    *ngIf="isNotCurrentUser(message.user_id)"
+                    *ngIf="isNotCurrentUser(message.owner_id)"
                     class="font-medium"
                   >
-                    {{ getUserName(message.user_id) }}
+                    {{ getUserName(message.owner_id) }}
                   </h6>
                   <div
                     [ngClass]="
-                      isNotCurrentUser(message.user_id)
+                      isNotCurrentUser(message.owner_id)
                         ? 'chat-message'
                         : 'chat-message-user '
                     "
@@ -371,8 +355,8 @@
                       moment(message.created_at, "YYYY/MM/DD HH:mm:ss")
                         .local()
                         .format("DD/MM/YYYY")
-                    }}</small
-                  >
+                    }}
+                  </small>
                 </div>
               </li>
             </ul>
@@ -393,12 +377,6 @@
               </div>
             </div>
             <div class="col-lg-2">
-              <!-- <a
-                class="btn-circle btn-lg btn-cyan float-end text-white"
-                href="javascript:void(0)"
-                (click)="sendMessage()"
-                ><i class="mdi mdi-send fs-3"></i
-              ></a> -->
               <p-button
                 icon="pi pi-send"
                 (click)="sendMessage()"

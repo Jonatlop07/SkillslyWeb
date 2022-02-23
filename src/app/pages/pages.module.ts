@@ -22,7 +22,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TabViewModule } from 'primeng/tabview';
 import { DialogModule } from 'primeng/dialog';
 import { FollowRequestComponent } from './follow-request/follow-request.component';
-import { PostUpdateComponent } from './posts/post-update/post-update.component';
+import { PostUpdateComponent } from './posts/post-update/post_update.component';
 import { FeedComponent } from './feed/feed.component';
 import { ProjectsCreateComponent } from './projects/projects-create/projects-create.component';
 import { StoriesComponent } from './stories/stories.component';

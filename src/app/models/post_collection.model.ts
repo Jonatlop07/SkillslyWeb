@@ -5,7 +5,7 @@ export interface PostCollectionModel {
 }
 
 export interface PostModel {
-  user_id: string;
+  owner_id: string;
   user_name: string;
   post_id: string;
   content: PostContentData[];

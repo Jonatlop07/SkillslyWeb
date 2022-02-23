@@ -3,7 +3,7 @@ export interface ProjectCollectionModel {
 }
 
 export interface ProjectModel {
-  user_id: string;
+  owner_id: string;
   user_name: string;
   project_id: string;
   created_at: string;

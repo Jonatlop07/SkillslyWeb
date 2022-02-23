@@ -20,8 +20,8 @@ export class ProjectsQueryComponent implements OnInit {
   public projects: Array<ProjectModel>
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private projectService: ProjectService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly projectService: ProjectService,
     private readonly store: Store
   ) {
   }
@@ -30,7 +30,7 @@ export class ProjectsQueryComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.project_owner = params.user_id;
       const queryProjectParams: QueryProjectPresenter = {
-        user_id: this.project_owner,
+        owner_id: this.project_owner
       };
       const projectServiceResponse = this.projectService.queryProjectCollection(queryProjectParams);
       projectServiceResponse.subscribe((res: any) => {

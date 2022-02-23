@@ -15,23 +15,21 @@ export class CommentsInCommentService {
     private readonly jwt_service: JwtService
   ) {}
 
-
-  getComments(ancestorCommentID: string, page: number, limit: number) {
+  public getComments(ancestor_comment_id: string, page: number, limit: number) {
     return this.http.get(
-      `${this.API_URL}/comments/${ancestorCommentID}/comments`,
+      `${this.API_URL}/comments/${ancestor_comment_id}/comments`,
       {
-        params: { page: page, limit: limit },
+        params: { page, limit },
         ...this.jwt_service.getHttpOptions(),
       }
     );
   }
 
-  sendComment(ancestorCommentID: string, comment: string) {
+  public sendComment(ancestor_comment_id: string, comment: string) {
     return this.http.post(
-      `${this.API_URL}/comments/${ancestorCommentID}/comment`,
+      `${this.API_URL}/comments/${ancestor_comment_id}/comment`,
       { comment: comment, timestamp: moment().format('YYYY-MM-DDTHH:mm:ss') },
       this.jwt_service.getHttpOptions()
     );
   }
-
 }

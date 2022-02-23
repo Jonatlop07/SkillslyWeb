@@ -109,6 +109,4 @@ export class PostsCreateComponent implements OnInit {
     }
     return true;
   }
-
-
 }

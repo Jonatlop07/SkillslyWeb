@@ -35,7 +35,7 @@ export class StoriesService {
   deleteStory(temporal_post_id: string) {
     const deleteBody = {
       temporal_post_id: temporal_post_id,
-      user_id: this.jwt_service.getUserId(),
+      owner_id: this.jwt_service.getUserId(),
     };
 
     return this.http.delete(`${this.API_URL}/temporal-posts`, {

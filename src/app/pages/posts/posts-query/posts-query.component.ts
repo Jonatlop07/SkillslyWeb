@@ -33,7 +33,7 @@ export class PostsQueryComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.post_owner = params.user_id;
       const queryPostParams: QueryPostPresenter = {
-        user_id: this.post_owner,
+        owner_id: this.post_owner,
       };
       this.postService
         .queryPostCollection(queryPostParams)
@@ -50,8 +50,8 @@ export class PostsQueryComponent implements OnInit {
     const sharePostInterface: SharePostInterface = {
       post_id: post_id
     };
-    this.postService.sharePost(sharePostInterface)
-      .subscribe(resp => console.log(resp));
+    this.postService
+      .sharePost(sharePostInterface)
+      .subscribe(() => {});
   }
-
 }

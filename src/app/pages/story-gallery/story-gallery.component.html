@@ -26,12 +26,6 @@
     </div>
   </ng-template>
   <ng-template pTemplate="caption" let-item>
-    <!-- <h4
-      style="margin-bottom: 0.5rem; color: #ffffff"
-      *ngIf="validatePostTime(item)"
-    >
-      Test
-    </h4> -->
     <span *ngIf="validatePostTime(item) && item.description">{{
       item.description
     }}</span>
@@ -41,6 +35,3 @@
     >
   </ng-template>
 </p-galleria>
-<!-- <div>
-  {{ images.length }}
-</div> -->

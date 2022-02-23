@@ -8,8 +8,8 @@ import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-post-update',
-  templateUrl: './post-update.component.html',
-  styleUrls: ['./post-update.component.css']
+  templateUrl: './post_update.component.html',
+  styleUrls: ['./post_update.component.css']
 })
 export class PostUpdateComponent implements OnInit {
   public post_id: string;
@@ -22,10 +22,10 @@ export class PostUpdateComponent implements OnInit {
   allowed_types = '^imagen$|^video$';
 
   constructor(
-    private activated_route: ActivatedRoute,
-    private post_service: PostService,
-    private router: Router,
-    private location: Location
+    private readonly activated_route: ActivatedRoute,
+    private readonly post_service: PostService,
+    private readonly router: Router,
+    private readonly location: Location
   ) {
   }
 
@@ -58,18 +58,18 @@ export class PostUpdateComponent implements OnInit {
   }
 
   get controls() {
-    return (<FormArray> this.post_form.get('content')).controls;
+    return (<FormArray>this.post_form.get('content')).controls;
   }
 
   onSubmit($event: Event) {
-    const controls = (<FormArray> this.post_form.get('content')).controls;
+    const controls = (<FormArray>this.post_form.get('content')).controls;
     if (this.validateContent(controls)) {
       this.incomplete_reference = false;
       this.require_one = false;
       this.post_to_update = {
         ...this.post_form.value,
         post_id: this.post.post_id,
-        user_id: this.post.user_id,
+        owner_id: this.post.owner_id,
       }
       this.post_service
         .updatePermanentPost(this.post_to_update)
@@ -85,7 +85,7 @@ export class PostUpdateComponent implements OnInit {
   }
 
   onAddContent() {
-    (<FormArray> this.post_form.get('content')).push(
+    (<FormArray>this.post_form.get('content')).push(
       new FormGroup({
         description: new FormControl(null, Validators.maxLength(250)),
         reference: new FormControl(null),
@@ -97,7 +97,7 @@ export class PostUpdateComponent implements OnInit {
   }
 
   onDeleteContent(index: number) {
-    (<FormArray> this.post_form.get('content')).removeAt(index);
+    (<FormArray>this.post_form.get('content')).removeAt(index);
   }
 
   onCancel() {

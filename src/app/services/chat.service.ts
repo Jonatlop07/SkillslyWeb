@@ -33,7 +33,7 @@ export class ChatService {
     this.socket.emitEvent(
       this.send_message_event,
       {
-        user_id: this.jtw_service.getUserId(),
+        owner_id: this.jtw_service.getUserId(),
         conversation_id: payload.conversation_id,
         message: payload.message
       }
