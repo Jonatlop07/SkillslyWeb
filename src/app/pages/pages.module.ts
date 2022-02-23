@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { PagesComponent } from './pages.component';
-import { AccountComponent } from './account/account.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { ChipsModule } from 'primeng/chips';
@@ -51,18 +50,18 @@ import { ServiceOfferComponent } from './service-offers/components/service_offer
 import { ServiceRequestComponent } from './service-requests/components/service_request.component'
 import { ServiceRequestsComponent } from './service-requests/service_requests.component'
 import { MyServiceOffersComponent } from './profile/components/my-service-offers/my_service_offers.component'
-import {ProjectsQueryComponent} from "./projects/projects-query/projects-query.component";
-import {ProjectComponent} from "./projects/project/project.component";
-import { NgxStripeModule } from 'ngx-stripe';
-import {DockModule} from "primeng/dock";
-import {ProjectsUpdateComponent} from "./projects/projects-update/projects-update.component";
+import { ProjectsQueryComponent } from "./projects/projects-query/projects-query.component";
+import { ProjectComponent } from "./projects/project/project.component";
+import { DockModule } from "primeng/dock";
+import { ProjectsUpdateComponent } from "./projects/projects-update/projects-update.component";
 import { CommentInCommentComponent } from './posts/comment-in-comment/comment-in-comment.component';
+import { NgxStripeModule } from 'ngx-stripe'
+import { UserAccountModule } from '../features/user-account/user_account.module'
 
 
 @NgModule({
   declarations: [
     PagesComponent,
-    AccountComponent,
     SearchComponent,
     ProfileComponent,
     PostsCreateComponent,
@@ -120,8 +119,9 @@ import { CommentInCommentComponent } from './posts/comment-in-comment/comment-in
     ChipModule,
     DialogModule,
     ButtonModule,
-    NgxStripeModule.forChild('pk_test_51KLexjInl63jmbBXjFoaqoKZcoWwi2zWO3d1zQYe5RrMehW2zammINzRyL24aqTahMZJzM5glV1xakvthJKRfJ7k00wkcfxYEl'),
-    DockModule
+    DockModule,
+    UserAccountModule
   ],
 })
-export class PagesModule {}
+export class PagesModule {
+}

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import Story from 'src/app/models/story.model';
-import { AccountService } from 'src/app/services/account.service';
+import { AccountService } from 'src/app/features/user-account/services/account.service';
 import { StoriesService } from 'src/app/services/stories.service';
 import Swal from 'sweetalert2';
 import { showErrorPopup } from '../../shared/pop-up/pop_up.utils'

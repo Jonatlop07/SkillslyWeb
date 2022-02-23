@@ -1,6 +1,5 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { AccountComponent } from './account/account.component';
 import { SearchComponent } from './search/search.component';
 import { ProfileComponent } from './profile/components/profile/profile.component';
 import { PostsCreateComponent } from './posts/posts-create/posts-create.component';
@@ -19,11 +18,13 @@ import { GroupUpdateComponent } from './groups/group-update/group-update.compone
 import { EventUpdateComponent } from './events/event-update/event-update.component';
 import { ServiceOffersComponent } from './service-offers/service_offers.component'
 import { ServiceRequestsComponent } from './service-requests/service_requests.component'
-import {ProjectsQueryComponent} from "./projects/projects-query/projects-query.component";
-import {ProjectsUpdateComponent} from "./projects/projects-update/projects-update.component";
+import { ProjectsQueryComponent } from "./projects/projects-query/projects-query.component";
+import { ProjectsUpdateComponent } from "./projects/projects-update/projects-update.component";
+import { routing_paths as user_account_routing_paths } from '../features/user-account/user_account.routing'
+import { UserAccountView } from '../features/user-account/views/user_account.view'
 
 const routes: Routes = [
-  { path: 'account', component: AccountComponent },
+  { path: user_account_routing_paths.user_account, component: UserAccountView },
   { path: 'search/:searchInput', component: SearchComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'posts', component: PostsCreateComponent },
@@ -54,4 +55,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ChildRoutesModule {}
+export class ChildRoutesModule {
+}

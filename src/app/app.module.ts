@@ -9,17 +9,18 @@ import { PagesModule } from './pages/pages.module';
 import { SocketIoModule } from 'ngx-socket-io';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
-import { environment } from '../environments/environment'
 import { state_list } from './shared/state/state_list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ToastrModule } from 'ngx-toastr'
+import { environment } from '../environments/environment.prod'
+import CoreModule from './core/core.module'
 
 @NgModule({
   declarations: [AppComponent, NopagefoundComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule,
+    CoreModule,
     PagesModule,
     AuthModule,
     SocketIoModule,
@@ -28,7 +29,8 @@ import { ToastrModule } from 'ngx-toastr'
     NgxsModule.forRoot([...state_list], {
       developmentMode: !environment.production
     }),
-    NgxsStoragePluginModule.forRoot()
+    NgxsStoragePluginModule.forRoot(),
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
