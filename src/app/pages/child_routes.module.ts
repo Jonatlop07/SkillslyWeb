@@ -4,7 +4,6 @@ import { SearchComponent } from './search/search.component';
 import { ProfileComponent } from './profile/components/profile/profile.component';
 import { PostsCreateComponent } from './posts/posts-create/posts-create.component';
 import { PostsQueryComponent } from './posts/posts-query/posts-query.component';
-import { ChatComponent } from './chat/chat.component';
 import { FollowRequestComponent } from './follow-request/follow-request.component';
 import { PostUpdateComponent } from './posts/post-update/post_update.component';
 import { FeedComponent } from './feed/feed.component';
@@ -22,6 +21,8 @@ import { ProjectsQueryComponent } from "./projects/projects-query/projects-query
 import { ProjectsUpdateComponent } from "./projects/projects-update/projects-update.component";
 import { routing_paths as user_account_routing_paths } from '../features/user-account/user_account.routing'
 import { UserAccountView } from '../features/user-account/views/user_account.view'
+import { routing_paths as chat_routing_paths } from '../features/chat/chat.routing'
+import ChatView from '../features/chat/views/chat.view'
 
 const routes: Routes = [
   { path: user_account_routing_paths.user_account, component: UserAccountView },
@@ -32,14 +33,13 @@ const routes: Routes = [
   { path: 'my-events', component: MyEventsComponent },
   { path: 'events/update/:event_id', component: EventUpdateComponent },
   { path: 'query/:user_id', component: PostsQueryComponent },
-  { path: 'conversations', component: ChatComponent },
   { path: 'follow-requests', component: FollowRequestComponent },
   { path: 'post/update/:post_id', component: PostUpdateComponent },
   { path: 'feed', component: FeedComponent },
   { path: 'projects', component: ProjectsCreateComponent },
   { path: 'projects-query/:user_id', component: ProjectsQueryComponent },
   { path: 'project/update/:project_id', component: ProjectsUpdateComponent },
-  { path: 'conversations', component: ChatComponent },
+  { path: chat_routing_paths.chat, component: ChatView },
   { path: 'follow-requests', component: FollowRequestComponent },
   { path: 'post/update/:post_id', component: PostUpdateComponent },
   { path: 'feed', component: FeedComponent },

@@ -1,0 +1,52 @@
+.list-element {
+    height: 50px;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    border-bottom: 1px solid #f8f9fa;
+    border-radius: 9px;
+}
+.list-element:hover {
+    background-color: #f2f8ff;
+    cursor: pointer;
+}
+
+:host ::ng-deep .p-button:focus {
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #00887a, 0 1px 2px 0 rgb(0 0 0 / 0%);
+}
+:host ::ng-deep .p-button {
+    color: #ffffff;
+    background: #00887a;
+    border: 1px solid #00887a;
+}
+:host ::ng-deep .p-button.p-button-text:hover {
+    background: rgba(70, 229, 176, 0.04);
+    color: #00887a;
+}
+:host ::ng-deep .p-button.p-button-text {
+    background: transparent;
+    color: #00887a;
+    border: transparent;
+    height: 40px;
+}
+
+.btn-member {
+    background-color: #00887a;
+    color: #fff;
+    border-radius: 0.3em;
+    font-family: "Poppins", sans-serif;
+}
+.btn-member:hover {
+    background-color: #005f56;
+    cursor: pointer;
+}
+.btn-member-selected {
+    background: rgba(70, 229, 176, 0.04);
+    color: #00887a;
+}
+:host ::ng-deep .p-dialog {
+    font-family: "Poppins", sans-serif;
+}
+.font-text {
+    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+}

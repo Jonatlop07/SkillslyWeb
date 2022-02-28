@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { JwtService } from './jwt.service';
 import { SearchUserResponse } from '../interfaces/search-user/search_users_response.interface';
-import { Conversation } from '../interfaces/chat/conversation';
+import { Conversation } from '../features/chat/types/conversation';
 import { forkJoin, Observable } from 'rxjs'
 import { AppendPrivateConversation } from '../shared/state/conversations/conversations.actions'
 import { Select, Store } from '@ngxs/store'

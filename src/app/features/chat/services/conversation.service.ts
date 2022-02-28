@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core'
-import { JwtService } from './jwt.service'
+import { JwtService } from '../../../services/jwt.service'
 import { HttpClient } from '@angular/common/http'
-import { environment } from '../../environments/environment'
-import { Conversation } from '../interfaces/chat/conversation'
+import { environment } from '../../../../environments/environment'
+import { Conversation } from '../types/conversation'
 import { Observable } from 'rxjs'
-import { NewConversationDetails } from '../interfaces/chat/new_conversation_details'
-import { DeleteConversationPresenter } from '../interfaces/chat/delete_conversation.presenter'
-import { ConversationCollectionPresenter } from '../interfaces/chat/conversation_collection.presenter'
-import { MessageCollectionPresenter } from '../interfaces/chat/message_collection.presenter'
+import { NewConversationDetails } from '../types/new_conversation_details'
+import { DeleteConversationPresenter } from '../types/delete_conversation.presenter'
+import { ConversationCollectionPresenter } from '../types/conversation_collection.presenter'
+import { MessageCollectionPresenter } from '../types/message_collection.presenter'
 import { Select, Store } from '@ngxs/store'
 import {
   AddMembersToGroupConversation,
   AppendGroupConversation,
   DeleteGroupConversation, EditGroupConversationDetails,
   StoreConversations
-} from '../shared/state/conversations/conversations.actions'
-import { MyConversationsState } from '../shared/state/conversations/conversations.state'
-import { ConversationCollectionModel } from '../models/conversation_collection.model'
-import { GroupConversationDetails } from '../interfaces/chat/group_conversation_details'
-import { AddedMembersPresenter } from '../interfaces/chat/added_members.presenter'
-import { ConversationMemberPresenter } from '../interfaces/chat/conversation_member.presenter'
+} from '../../../shared/state/conversations/conversations.actions'
+import { MyConversationsState } from '../../../shared/state/conversations/conversations.state'
+import { ConversationCollectionModel } from '../../../models/conversation_collection.model'
+import { GroupConversationDetails } from '../types/group_conversation_details'
+import { AddedMembersPresenter } from '../types/added_members.presenter'
+import { ConversationMemberPresenter } from '../types/conversation_member.presenter'
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ConversationService {
   @Select(MyConversationsState) conversations$: Observable<ConversationCollectionModel>;
 

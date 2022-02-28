@@ -14,7 +14,6 @@ import { CardModule } from 'primeng/card';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PostsCreateComponent } from './posts/posts-create/posts-create.component';
 import { PostsQueryComponent } from './posts/posts-query/posts-query.component';
-import { ChatComponent } from './chat/chat.component';
 import { PostComponent } from './posts/post/post.component';
 import { CommentComponent } from './posts/comment/comment.component';
 import { TooltipModule } from 'primeng/tooltip';
@@ -55,8 +54,8 @@ import { ProjectComponent } from "./projects/project/project.component";
 import { DockModule } from "primeng/dock";
 import { ProjectsUpdateComponent } from "./projects/projects-update/projects-update.component";
 import { CommentInCommentComponent } from './posts/comment-in-comment/comment-in-comment.component';
-import { NgxStripeModule } from 'ngx-stripe'
 import { UserAccountModule } from '../features/user-account/user_account.module'
+import { ChatModule } from '../features/chat/chat.module'
 
 
 @NgModule({
@@ -69,7 +68,6 @@ import { UserAccountModule } from '../features/user-account/user_account.module'
     PostUpdateComponent,
     PostComponent,
     CommentComponent,
-    ChatComponent,
     FollowRequestComponent,
     FeedComponent,
     ProjectsCreateComponent,
@@ -108,7 +106,6 @@ import { UserAccountModule } from '../features/user-account/user_account.module'
     InputTextModule,
     InputTextareaModule,
     FormsModule,
-    ButtonModule,
     TooltipModule,
     TabViewModule,
     DialogModule,
@@ -120,7 +117,8 @@ import { UserAccountModule } from '../features/user-account/user_account.module'
     DialogModule,
     ButtonModule,
     DockModule,
-    UserAccountModule
+    UserAccountModule,
+    ChatModule
   ],
 })
 export class PagesModule {

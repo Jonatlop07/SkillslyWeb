@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchUserResponse } from 'src/app/interfaces/search-user/search_users_response.interface';
 import { FollowService } from 'src/app/services/follow.service';
-import { Conversation } from '../../interfaces/chat/conversation'
+import { Conversation } from '../../features/chat/types/conversation'
 
 @Component({
   selector: 'app-follow-request',

@@ -1,4 +1,4 @@
-import { Conversation } from '../interfaces/chat/conversation'
+import { Conversation } from '../features/chat/types/conversation'
 
 export interface ConversationCollectionModel {
   private_conversations: Array<Conversation>;

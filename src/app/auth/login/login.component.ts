@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoginForm } from '../../interfaces/login/login_form.inteface';
 import { LoginResponse } from '../../interfaces/login/login_response.interface';
-import { ConversationService } from '../../services/conversation.service';
+import { ConversationService } from '../../features/chat/services/conversation.service';
 import { FollowService } from '../../services/follow.service';
 import { EventService } from 'src/app/services/event.service';
 import { RecaptchaComponent } from 'ng-recaptcha';

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core'
-import { ChatSocket } from '../socket/chat.socket'
-import { JwtService } from './jwt.service'
-import { MessagePresenter, SendMessagePresenter } from '../interfaces/chat/message.presenter'
+import { ChatSocket } from '../../../socket/chat.socket'
+import { JwtService } from '../../../services/jwt.service'
+import { MessagePresenter, SendMessagePresenter } from '../types/message.presenter'
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ChatService {
   constructor(
     private readonly socket: ChatSocket,
