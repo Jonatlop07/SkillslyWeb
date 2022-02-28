@@ -14,16 +14,16 @@ export class CommentsService {
     private http: HttpClient,
     private readonly jwt_service: JwtService
   ) {}
-  getComments(postID: string, page: number, limit: number) {
-    return this.http.get(`${this.API_URL}/permanent-posts/${postID}/comments`, {
+  getComments(post_id: string, page: number, limit: number) {
+    return this.http.get(`${this.API_URL}/permanent-posts/${post_id}/comments`, {
       params: { page: page, limit: limit },
       ...this.jwt_service.getHttpOptions(),
     });
   }
 
-  sendComment(postID: string, comment: string) {
+  sendComment(post_id: string, comment: string) {
     return this.http.post(
-      `${this.API_URL}/permanent-posts/${postID}/comment`,
+      `${this.API_URL}/permanent-posts/${post_id}/comment`,
       { comment: comment, timestamp: moment().format('YYYY-MM-DDTHH:mm:ss') },
       this.jwt_service.getHttpOptions()
     );

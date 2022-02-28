@@ -5,6 +5,7 @@ import { ServiceOfferPresenter } from '../../interfaces/service-offers/presenter
 import Swal from 'sweetalert2'
 import { ServiceOfferCollectionPresenter } from '../../interfaces/service-offers/presenter/service_offer_collection.presenter'
 import { Observable } from 'rxjs'
+import { showErrorPopup, showSuccessPopup } from '../../shared/pop-up/pop_up.utils'
 
 @Component({
   selector: 'app-service-offers',
@@ -60,14 +61,7 @@ export class ServiceOffersComponent implements OnInit {
           this.new_service_offer.service_brief = '';
           this.new_service_offer.contact_information = '';
           this.new_service_offer.category = '';
-          Swal.fire({
-            customClass: {
-              container: 'my-swal'
-            },
-            title: 'Éxito',
-            text: 'La oferta de servicio ha sido creada correctamente',
-            icon: 'success'
-          });
+          showSuccessPopup('La oferta de servicio ha sido creada correctamente');
         },
         (err) => {
           this.hideCreateServiceOfferModalDialog();
@@ -75,11 +69,7 @@ export class ServiceOffersComponent implements OnInit {
           const error_description = message ?
             'Datos inválidos. Asegúrate de diligenciar todos los campos requeridos y con el formato correcto.'
             : error;
-          Swal.fire(
-            'Error',
-            error_description,
-            'error'
-          );
+          showErrorPopup(error_description);
         }
       );
   }

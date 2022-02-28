@@ -1,0 +1,62 @@
+<div class="card">
+  <div class="card-body">
+    <h3 class="">Tus conversaciones privadas</h3>
+    <p *ngIf="private_conversations.size === 0">
+      No tienes conversaciones privadas en este momento
+    </p>
+    <div class="scrollable">
+      <div
+        *ngFor="let conversation of private_conversations | keyvalue"
+        class="d-flex flex-row align-items-center list-element m-0 p-2"
+        (click)="selectConversation(conversation.value)"
+      >
+        <div>
+          <img
+            src="../../../../../assets/images/users/user.png"
+            alt="user"
+            width="27"
+            class="rounded-circle"
+          />
+        </div>
+        <div class="w-100 mx-3">
+          <h6 class="font-light">
+            {{
+            getPrivateConversationName(
+              conversation.value.conversation_id
+            )
+            }}
+          </h6>
+        </div>
+        <div class="dropdown-divider"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <h3 class="">Tus conversaciones grupales</h3>
+    <div class="comment-widgets scrollable">
+      <p *ngIf="group_conversations.size === 0">
+        No tienes conversaciones grupales en este momento
+      </p>
+      <div
+        *ngFor="let conversation of group_conversations | keyvalue"
+        class="d-flex flex-row align-items-center list-element m-0 p-2"
+        (click)="selectConversation(conversation.value)"
+      >
+        <div>
+          <img
+            src="../../../../../assets/images/users/user.png"
+            alt="user"
+            width="27"
+            class="rounded-circle"
+          />
+        </div>
+        <div class="w-100 mx-3">
+          <h6 class="font-light">
+            {{ conversation.value.conversation_name }}
+          </h6>
+        </div>
+        <div class="dropdown-divider"></div>
+      </div>
+    </div>
+  </div>
+</div>

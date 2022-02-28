@@ -9,11 +9,13 @@ import { MyServiceOffersState } from './service-offers/service_offers.state'
 import { MyServiceRequestsState } from './service-requests/service_requests.state';
 import {MyProjectsState} from "./projects/projects.state";
 import { NotificationsState } from './notifications/notifications.state';
+import { SelectedConversationState } from './conversations/selected_conversation.state'
 
 export const state_list = [
   SessionState,
   MyPostsState,
   MyConversationsState,
+  SelectedConversationState,
   FollowingUsersState,
   FollowersState,
   EventsState,

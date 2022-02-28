@@ -8,7 +8,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { RouterModule } from '@angular/router';
-import { AccountService } from '../services/account.service';
+import { AccountService } from '../features/user-account/services/account.service';
 import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 import { ImageModule } from 'primeng/image';
 import { InputTextModule } from 'primeng/inputtext';

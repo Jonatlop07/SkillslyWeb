@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Comment } from 'src/app/interfaces/comments/comment.presenter';
 import { CommentsInCommentService } from 'src/app/services/comments-in-comment.service';
+import { showErrorPopup } from '../../../shared/pop-up/pop_up.utils'
 
 @Component({
   selector: 'app-comment',
@@ -16,7 +17,7 @@ export class CommentComponent implements OnInit {
   public limit = 2;
   public commentInComment: string;
 
-  constructor(private CommentsInCommentService: CommentsInCommentService) {}
+  constructor(private comments_in_comment_service: CommentsInCommentService) {}
 
   ngOnInit(): void {
     this.getComments();
@@ -37,7 +38,7 @@ export class CommentComponent implements OnInit {
   }
 
   getComments(page = this.page, limit = this.limit) {
-    this.CommentsInCommentService.getComments(
+    this.comments_in_comment_service.getComments(
       this.comment.id,
       page,
       limit
@@ -46,16 +47,14 @@ export class CommentComponent implements OnInit {
         this.commentsInComment = comments;
       },
       (err) => {
-        if (err.status === 404) {
-          this.commentsInComment = [];
-        }
+        showErrorPopup(err.error.message);
       }
     );
   }
 
   sendComment() {
     if (this.commentInComment) {
-      this.CommentsInCommentService.sendComment(
+      this.comments_in_comment_service.sendComment(
         this.comment.id,
         this.commentInComment
       ).subscribe(
@@ -64,18 +63,16 @@ export class CommentComponent implements OnInit {
           this.ngOnInit();
         },
         (err) => {
-          console.log(err.status);
+          showErrorPopup('Ocurrió un error al enviar tu comentario')
         }
       );
     }
   }
 
   handleMoreComments() {
-    console.log('hola');
     this.limit = 10;
     this.getComments();
     this.page += 1;
-    console.log(this.page);
   }
 
   resetComments() {

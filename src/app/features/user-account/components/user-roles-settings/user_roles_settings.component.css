@@ -1,0 +1,52 @@
+.form-check-input:checked {
+    background-color: #00887a;
+    border-color: #00887a;
+}
+:host ::ng-deep .p-calendar.p-calendar-w-btn .p-datepicker-trigger {
+    background-color: #00887a !important;
+    border-color: #00887a !important;
+    height: 40px;
+}
+:host ::ng-deep .p-button:focus {
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #00887a, 0 1px 2px 0 rgba(0, 0, 0, 0);
+}
+:host ::ng-deep .p-calendar-w-btn .p-inputtext {
+    height: 40px;
+}
+
+.account-button.p-button.p-button-rounded {
+    font-family: "Poppins", sans-serif;
+    border-color: #00887a;
+    color: #00887a;
+}
+.account-button.p-button.p-button-rounded:hover {
+    border-color: #00887a;
+    color: #00887a;
+    background: rgba(70, 229, 176, 0.04);
+}
+.account-button.p-button.p-button-rounded:active {
+    background: rgba(70, 229, 176, 0.04);
+}
+.account-button.p-button.p-button-rounded:focus {
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #00887a, 0 1px 2px 0 rgb(0 0 0 / 0%);
+}
+.cancel-button.p-button.p-button-rounded {
+    font-family: "Poppins", sans-serif;
+    border-color: #fc6662;
+    color: #fc6662;
+}
+.cancel-button.p-button.p-button-rounded:hover {
+    border-color: #fc6662;
+    color: #fc6662;
+    background: rgba(206, 142, 69, 0.04);
+}
+.cancel-button.p-button.p-button-rounded:active {
+    background: rgba(70, 229, 176, 0.04);
+}
+.cancel-button.p-button.p-button-rounded:focus {
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #fc6662, 0 1px 2px 0 rgb(0 0 0 / 0%);
+}
+
+:host ::ng-deep .p-card .p-card-title {
+    font-family: "Poppins", sans-serif;
+}

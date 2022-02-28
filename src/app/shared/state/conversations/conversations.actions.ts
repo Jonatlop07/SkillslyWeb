@@ -1,6 +1,6 @@
-import { ConversationMemberPresenter } from 'src/app/interfaces/chat/conversation_member.presenter';
-import { Conversation } from '../../../interfaces/chat/conversation';
-import { GroupConversationDetails } from '../../../interfaces/chat/group_conversation_details'
+import { ConversationMemberPresenter } from 'src/app/features/chat/types/conversation_member.presenter';
+import { Conversation } from '../../../features/chat/types/conversation';
+import { GroupConversationDetails } from '../../../features/chat/types/group_conversation_details'
 
 export class AppendPrivateConversation {
   static readonly type = '[Follow Request] Append Private Conversation';

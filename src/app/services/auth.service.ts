@@ -24,7 +24,7 @@ export class AuthService {
     private readonly jwt_service: JwtService
   ) {}
 
-  public registerUser(registerForm: RegisterForm){
+  public registerUser(registerForm: RegisterForm): Observable<any> {
     return this.http.post(`${this.API_URL}/users/account`, {
       ...registerForm,
       is_requester: false,

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { NotificationSocket } from '../socket/notification.socket'
-import { Conversation } from '../interfaces/chat/conversation'
+import { Conversation } from '../features/chat/types/conversation'
 import { JwtService } from './jwt.service'
 import { User } from '../interfaces/user/user.interface'
 import { Observable, of } from 'rxjs'
@@ -21,8 +21,8 @@ import { StatusUpdateRequestDetails } from '../interfaces/service-requests/statu
 import { AddReactionToPost, RemoveReactionFromPost } from '../shared/state/posts/posts.actions'
 import { PostReaction } from '../interfaces/post/post_reaction'
 import { SharedPermanentPost } from '../interfaces/post/shared_permanent_post.interface'
-import { ConversationDeletedDetails } from '../interfaces/chat/conversation_deleted.details'
-import { ConversationService } from './conversation.service'
+import { ConversationDeletedDetails } from '../features/chat/types/conversation_deleted.details'
+import { ConversationService } from '../features/chat/services/conversation.service'
 
 @Injectable({ providedIn: 'root' })
 export class UserNotificationsService {
@@ -275,7 +275,7 @@ export class UserNotificationsService {
       .pipe(
         map((data: StatusUpdateRequestDetails) => {
           const action = data.update_action === 'complete' ? 'finalizada' : 'cancelada';
-          return {            
+          return {
             data,
             action_details: {
               route: './service-requests',

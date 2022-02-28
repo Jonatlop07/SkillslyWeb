@@ -1,0 +1,20 @@
+<section>
+  <div class="row flex-wrap p-5">
+    <div class="col-lg-4">
+      <skl-conversation-list
+        [private-conversations]="private_conversations_index"
+        [group-conversations]="group_conversations_index"
+      ></skl-conversation-list>
+      <skl-new-conversation></skl-new-conversation>
+    </div>
+    <div class="col-lg-5">
+      <skl-conversation
+        *ngIf="selected_conversation"
+        [selected-conversation]="selected_conversation"
+        [private-conversations]="private_conversations_index"
+        [group-conversations]="group_conversations_index"
+        [related-users]="related_users"
+      ></skl-conversation>
+    </div>
+  </div>
+</section>

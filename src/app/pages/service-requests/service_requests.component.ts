@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { ServiceRequestCollectionPresenter } from '../../interfaces/service-requests/presenter/service_request_collection.presenter';
 import { UserDataService } from '../../services/user_data.service';
 import { Observable } from 'rxjs';
+import { showErrorPopup, showSuccessPopup } from '../../shared/pop-up/pop_up.utils'
 
 @Component({
   selector: 'app-service-requests',
@@ -27,8 +28,7 @@ export class ServiceRequestsComponent implements OnInit {
   public displayCreateServiceRequestModal = false;
 
   constructor(
-    private readonly service_requests_service: ServiceRequestsService,
-    private readonly user_data_service: UserDataService
+    private readonly service_requests_service: ServiceRequestsService
   ) {}
 
   ngOnInit() {
@@ -65,14 +65,7 @@ export class ServiceRequestsComponent implements OnInit {
           this.new_service_request.service_brief = '';
           this.new_service_request.contact_information = '';
           this.new_service_request.category = '';
-          Swal.fire({
-            customClass: {
-              container: 'my-swal',
-            },
-            title: 'Éxito',
-            text: 'La oferta de servicio ha sido creada correctamente',
-            icon: 'success',
-          });
+          showSuccessPopup('La oferta de servicio ha sido creada correctamente');
         },
         (err) => {
           this.hideCreateServiceRequestModalDialog();
@@ -80,7 +73,7 @@ export class ServiceRequestsComponent implements OnInit {
           const error_description = message
             ? 'Datos inválidos. Asegúrate de diligenciar todos los campos requeridos y con el formato correcto.'
             : error;
-          Swal.fire('Error', error_description, 'error');
+          showErrorPopup(error_description);
         }
       );
   }
@@ -108,26 +101,3 @@ export class ServiceRequestsComponent implements OnInit {
     );
   }
 }
-
-// this.service_requests_service
-//       .queryAllServiceRequestCollection()
-//       .pipe(
-//         map((request) => request.service_requests),
-//         switchMap((requests) => {
-//           const requests$ = requests
-//             .filter((request) => request.service_provider)
-//             .map((request) => {
-//               const provider$ = this.user_data_service.getUserData(
-//                 request.service_provider
-//               );
-//               return provider$.pipe(
-//                 map((provider) => {
-//                   request.service_provider = provider.email;
-//                   return request;
-//                 })
-//               );
-//             });
-//           return combineLatest(requests$);
-//         })
-//       )
-//       .subscribe((requests) => this.service_requests = requests);

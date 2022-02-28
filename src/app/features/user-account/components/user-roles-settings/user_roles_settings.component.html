@@ -1,0 +1,65 @@
+<div class="card w-100 p-4">
+  <div class="form-horizontal">
+    <div class="card-body">
+      <h4 class="card-title">Tus roles</h4>
+      <ul>
+        <li *ngFor="let role of roles">
+          {{getRoleName(role)}}
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="!is_requester || !is_investor" class="card-body">
+      <h4 class="card-title">Obtener nuevos roles</h4>
+      <div>
+        <input
+          type="checkbox"
+          class="form-check-input d-inline-block mx-3"
+          id="customControlAutosizing2"
+          [checked]="obtain_requester_role"
+          (change)="onChangeObtainRequesterRoleCheckbox()"
+          [disabled]="is_requester"
+        />
+        <label
+          class="form-check-label mb-0 d-inline-block"
+          for="customControlAutosizing2"
+        >
+          Solicitante
+        </label>
+      </div>
+      <div>
+        <input
+          type="checkbox"
+          class="form-check-input d-inline-block mx-3"
+          id="customControlAutosizing3"
+          [checked]="obtain_investor_role"
+          (change)="onChangeObtainInvestorRoleCheckbox()"
+          [disabled]="is_investor"
+        />
+        <label
+          class="form-check-label mb-0 d-inline-block"
+          for="customControlAutosizing3"
+        >
+          Inversor
+        </label>
+      </div>
+      <div class="my-4 mx-3">
+        <ngx-stripe-card
+          [options]="cardOptions"
+          [elementsOptions]="elementsOptions"
+        >
+        </ngx-stripe-card>
+      </div>
+      <div class="box">
+        <button
+          pButton
+          type="button"
+          label="Obtener roles"
+          class="account-button p-button-outlined p-button-rounded projects-button"
+          icon="pi pi-send"
+          [style]="{ 'margin-left': '.5em' }"
+          (click)="obtainSpecialRoles()"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>

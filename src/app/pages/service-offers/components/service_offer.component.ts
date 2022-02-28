@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { ServiceOfferPresenter } from '../../../interfaces/service-offers/presenter/service_offer.presenter'
 import { ServiceOffersService } from '../../../services/service_offers.service'
-import Swal from 'sweetalert2'
 import * as moment from 'moment'
+import { showErrorPopup, showSuccessPopup } from '../../../shared/pop-up/pop_up.utils'
 
 @Component({
   selector: 'app-service-offer',
@@ -10,7 +10,8 @@ import * as moment from 'moment'
   styleUrls: ['./service_offer.component.css']
 })
 export class ServiceOfferComponent implements OnInit {
-  constructor(private readonly service_offers_service: ServiceOffersService) {}
+  constructor(private readonly service_offers_service: ServiceOffersService) {
+  }
 
   ngOnInit() {
     this.service_offer = this.input_service_offer;
@@ -47,25 +48,14 @@ export class ServiceOfferComponent implements OnInit {
         this.hideEditServiceOfferModal();
         this.service_offer = updated_service_offer;
         this.service_offers_service.updateServiceOfferInStore(this.service_offer);
-        Swal.fire({
-          customClass: {
-            container: 'my-swal'
-          },
-          title: 'Éxito',
-          text: 'La oferta de servicio ha sido actualizada exitosamente',
-          icon: 'success'
-        });
+        showSuccessPopup('La oferta de servicio ha sido actualizada exitosamente');
       }, (err) => {
         this.hideEditServiceOfferModal();
         const { error, message } = err.error
         const error_description = message ?
           'Datos inválidos. Asegúrate de diligenciar todos los campos requeridos y con el formato correcto.'
           : error;
-        Swal.fire(
-          'Error',
-          error_description,
-          'error'
-        );
+        showErrorPopup(error_description);
       });
   }
 
@@ -74,22 +64,11 @@ export class ServiceOfferComponent implements OnInit {
       .deleteServiceOffer(this.service_offer.service_offer_id)
       .subscribe(() => {
         this.service_offers_service.deleteServiceOfferInStore(this.service_offer.service_offer_id);
-        Swal.fire({
-          customClass: {
-            container: 'my-swal'
-          },
-          title: 'Éxito',
-          text: 'La oferta de servicio ha sido eliminada exitosamente',
-          icon: 'success'
-        });
+        showSuccessPopup('La oferta de servicio ha sido eliminada exitosamente');
       }, (err) => {
         const { error } = err.error;
-        Swal.fire(
-          'Error',
-          error,
-          'error'
-        );
-      });;
+        showErrorPopup(error);
+      });
   }
 
   public getTime() {

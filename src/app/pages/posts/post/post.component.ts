@@ -38,7 +38,6 @@ export class PostComponent implements OnInit {
   public items: MenuItem[];
   public reactionCount = 0;
   public owns_post = false;
-  public owns_post_or_admin = false;
   public reactors: QueryReactionsReactors = {
     likes: { reaction_count: 0, reactors: [] },
     interested: { reaction_count: 0, reactors: [] },
@@ -57,7 +56,7 @@ export class PostComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.owns_post = this.postService.getUserId() === this.post.user_id;
+    this.owns_post = this.postService.getUserId() === this.post.owner_id;
     this.getComments();
     this.items = [
       { label: 'Me gusta', icon: 'pi pi-fw pi-thumbs-up' },
@@ -77,10 +76,7 @@ export class PostComponent implements OnInit {
   }
 
   isImage(referenceType: string): boolean {
-    if (referenceType == 'imagen') {
-      return true;
-    }
-    return false;
+    return referenceType === 'imagen';
   }
 
   handleShowComments() {

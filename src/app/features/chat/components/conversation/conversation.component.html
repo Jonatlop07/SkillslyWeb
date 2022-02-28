@@ -1,0 +1,202 @@
+<div class="card">
+  <div class="card-body">
+    <div
+      class="w-100 px-3 d-flex justify-content-between align-items-center"
+    >
+      <div class="flex-column">
+        <h3 class="m-0">Tu conversación con</h3>
+        <span style="font-size: 16px">
+          {{
+            selected_conversation.is_private
+              ? getPrivateConversationName()
+              : selected_conversation.conversation_name
+          }}
+        </span>
+      </div>
+      <div class="dropdown" *ngIf="!selected_conversation.is_private">
+        <a
+          class="pi pi-ellipsis-v dropdown"
+          role="button"
+          id="dropdownMenuLink"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          type="button"
+          id="dropdownMenuButton1"
+          style="font-size: 17px; color: #77a6f7"
+        >
+        </a>
+        <ul
+          class="dropdown-menu pull-left dropdown-menu-left"
+          aria-labelledby="dropdownMenuLink"
+        >
+          <li>
+            <a
+              class="dropdown-item"
+              (click)="toggleEditingGroupConversationDetails()"
+            >
+              Editar detalles de la conversación
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              (click)="isAddingGroupConversationMembers()"
+            >
+              Añadir miembros a la conversación
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item danger"
+              (click)="exitGroupConversation(selected_conversation.conversation_id)"
+            >
+              Salirse de la conversación
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item danger"
+              (click)="deleteGroupConversation(selected_conversation.conversation_id)
+                    "
+            >
+              Eliminar conversación
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="dropdown-divider"></div>
+    <div class="chat-box scrollable px-4" style="height: 475px">
+      <ul class="chat-list">
+        <!-- Chat message -->
+        <li
+          [ngClass]="
+                  isNotCurrentUser(message.owner_id)
+                    ? 'chat-item mt-2'
+                    : 'odd chat-item'
+                "
+          *ngFor="let message of selected_conversation.messages"
+        >
+          <div class="chat-content p-0">
+            <h6
+              *ngIf="isNotCurrentUser(message.owner_id)"
+              class="font-medium"
+            >
+              {{ getUserName(message.owner_id) }}
+            </h6>
+            <div [ngClass]="isNotCurrentUser(message.owner_id) ? 'chat-message' : 'chat-message-user '">
+              {{ message.content }}
+            </div>
+          </div>
+          <div class="chat-time m-0 font-medium">
+            {{
+              moment(message.created_at, "YYYY/MM/DD HH:mm:ss")
+                .local()
+                .format("HH:mm")
+            }}·
+            <small>
+              {{
+                moment(message.created_at, "YYYY/MM/DD HH:mm:ss")
+                  .local()
+                  .format("DD/MM/YYYY")
+              }}
+            </small>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-lg-10">
+        <div class="input-field mt-0 mb-0">
+          <textarea
+            [(ngModel)]="current_message"
+            id="textarea1"
+            placeholder="Escribe un mensaje"
+            class="form-control"
+            pInputTextarea
+            (keyup.enter)="sendMessage()"
+          ></textarea>
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <p-button
+          icon="pi pi-send"
+          (click)="sendMessage()"
+          label="Enviar"
+          styleClass="p-button-text w-100"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+</div>
+<p-dialog
+  header="Editar los detalles de la conversación"
+  [(visible)]="is_editing_group_conversation_details"
+  (onHide)="clearGroupConversationDetails()"
+>
+  <p-tabView>
+    <div class="comment-widgets scrollable">
+      <div class="mt-2 d-flex align-items-center gap-2">
+        <p class="m-0 w-50 font-text">Nuevo nombre</p>
+
+        <input
+          type="text"
+          class="form-control w-50"
+          id="edit_conversation_name"
+          [(ngModel)]="edited_conversation_name"
+          pInputText
+          style="font-size: 15px"
+        />
+      </div>
+      <div class="dropdown-divider my-3"></div>
+      <button
+        class="btn btn-member text-white font-text"
+        (click)="editGroupConversationDetails(selected_conversation.conversation_id)"
+      >
+        Efectuar el cambio
+      </button>
+    </div>
+  </p-tabView>
+</p-dialog>
+<p-dialog
+  header="Añadir miembros a la conversación"
+  [(visible)]="is_adding_group_conversation_members"
+  (onHide)="isNotAddingGroupConversationMembers()"
+>
+  <div class="row">
+    <ul class="mt-2 d-flex justify-content-start gap-2 py-2">
+      <li
+        class="btn btn-member"
+        *ngFor="let related_user of related_users_not_in_conversation | keyvalue"
+        (click)="addMemberToExistingConversation(related_user.value)"
+      >
+        {{ related_user.value.member_name }}
+      </li>
+    </ul>
+    <p class="m-0 w-50 font-text">
+      Miembros añadidos (para remover un miembro haz clic sobre
+      él):
+    </p>
+    <ul class="mt-2 d-flex justify-content-start gap-2 py-2">
+      <li
+        class="btn btn-member-selected"
+        *ngFor="let conversation_member of conversation_members_to_add | keyvalue"
+        (click)="undoAddingMemberToExistingConversation(conversation_member.value)"
+      >
+        {{ conversation_member.value.member_name }}
+      </li>
+    </ul>
+  </div>
+  <div class="dropdown-divider my-3"></div>
+  <div class="card-body p-0">
+    <button
+      type="button"
+      class="btn btn-member"
+      (click)="addMembersToExistingConversation()"
+    >
+      Añadir miembros a la conversación
+    </button>
+  </div>
+</p-dialog>

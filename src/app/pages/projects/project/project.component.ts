@@ -23,9 +23,9 @@ export class ProjectComponent implements OnInit{
   public hour: string;
 
   constructor(
-    private projectService: ProjectService,
+    private readonly projectService: ProjectService,
     private readonly store: Store,
-    private router: Router
+    private readonly router: Router
   ) {}
 
   isImage(referenceType: string): boolean {
@@ -33,7 +33,7 @@ export class ProjectComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.owns_project = this.projectService.getUserId() === this.project.user_id;
+    this.owns_project = this.projectService.getUserId() === this.project.owner_id;
   }
 
   deleteProject(project_id: string) {

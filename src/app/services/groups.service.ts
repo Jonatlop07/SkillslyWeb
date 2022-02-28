@@ -53,11 +53,11 @@ export class GroupsService {
       .post(
         `${this.API_URL}/groups`,
         {
-          user_id: user_id,
-          name: name,
-          category: category,
-          limit: limit,
-          offset: offset,
+          user_id,
+          name,
+          category,
+          limit,
+          offset
         },
         this.jwtService.getHttpOptions()
       )

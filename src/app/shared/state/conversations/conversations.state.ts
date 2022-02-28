@@ -1,4 +1,4 @@
-import { Action, State, StateContext, StateToken } from '@ngxs/store'
+import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store'
 import { ConversationCollectionModel } from '../../../models/conversation_collection.model'
 import {
   AddMembersToGroupConversation,
@@ -22,6 +22,16 @@ const CONVERSATIONS_STATE_TOKEN = new StateToken<ConversationCollectionModel>('m
   }
 })
 export class MyConversationsState {
+
+  @Selector()
+  static privateConversations(state: ConversationCollectionModel) {
+    return state.private_conversations;
+  }
+
+  @Selector()
+  static groupConversations(state: ConversationCollectionModel) {
+    return state.group_conversations;
+  }
 
   @Action(AppendPrivateConversation)
   public appendPrivateConversation(ctx: StateContext<ConversationCollectionModel>, action: AppendPrivateConversation) {

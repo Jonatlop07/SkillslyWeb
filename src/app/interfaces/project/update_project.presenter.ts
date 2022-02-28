@@ -1,5 +1,5 @@
 export interface UpdateProjectPresenter {
-  user_id?: string;
+  owner_id?: string;
   project_id?: string;
   title: string;
   members: Array<string>;
