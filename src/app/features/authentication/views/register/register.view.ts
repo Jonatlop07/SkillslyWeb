@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/service/auth.service';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
-import { RecaptchaComponent } from 'ng-recaptcha';
 import { RegisterForm } from '../../types/register_form.interface'
 import { auth_routing_paths } from '../../auth.routing'
 
@@ -16,14 +15,10 @@ import { auth_routing_paths } from '../../auth.routing'
 export class RegisterView implements OnInit {
   paths = auth_routing_paths;
 
-  @ViewChild('captchaElem') captcha: RecaptchaComponent;
-
   public form: FormGroup;
   public register_form: RegisterForm;
   public today = new Date();
   public form_submitted = false;
-  public validCaptcha = false;
-  public site_key: any;
 
   constructor(
     private form_builder: FormBuilder,
@@ -32,7 +27,6 @@ export class RegisterView implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.site_key = '6Le-PfMdAAAAAIM0bEC7_TxiGoL5J-8YkcAC4R0-';
     this.initForm();
   }
 
@@ -65,16 +59,13 @@ export class RegisterView implements OnInit {
         ],
       ],
       date_of_birth: [this.today, [Validators.required]],
-      recaptcha: ['', Validators.required],
       accept_terms: [false, Validators.requiredTrue],
     });
   }
 
   public saveForm(): void {
     this.form_submitted = true;
-    if (this.invalidForm() || !this.validCaptcha) {
-      this.captcha.reset();
-      this.validCaptcha = false;
+    if (this.invalidForm()) {
       return;
     }
     this.register_form = this.form.value;
@@ -97,16 +88,5 @@ export class RegisterView implements OnInit {
 
   public invalidForm(): boolean {
     return this.form.invalid && this.form_submitted;
-  }
-
-  resolved(captcha_response: string) {
-    return this.auth_service.verifyCaptcha(captcha_response).subscribe(
-      (res: any) => {
-        this.validCaptcha = res.success;
-      },
-      () => {
-        this.validCaptcha = false;
-      }
-    );
   }
 }

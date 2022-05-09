@@ -7,7 +7,6 @@ import { RegisterView } from './views/register/register.view'
 import { LoginView } from './views/login/login.view'
 import { PasswordRecoveryView } from './views/password-recovery/password_recovery.view'
 import { ResetPasswordView } from './views/reset-password/reset_password.view'
-import { RecaptchaModule } from 'ng-recaptcha'
 import { AuthRoutingModule } from './auth.routing'
 import { SharedModule } from '../../shared/shared.module'
 import { DialogModule } from 'primeng/dialog'
@@ -32,8 +31,7 @@ import { ImageModule } from 'primeng/image'
     DividerModule,
     MessageModule,
     DialogModule,
-    CheckboxModule,
-    RecaptchaModule,
+    CheckboxModule
   ],
   providers: []
 })
