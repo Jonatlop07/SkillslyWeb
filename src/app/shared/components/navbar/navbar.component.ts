@@ -1,15 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { UserNotificationsService } from '../../../services/user_notifications.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import UserNotification from '../../../interfaces/notifications/user_notification'
-import { NotificationModel } from '../../../models/notification.model'
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
+import { AuthService } from '../../../features/authentication/services/auth.service'
+import UserNotification from '../../notification/types/user_notification'
+import { NotificationModel } from '../../notification/model/notification.model'
+import { takeUntil } from 'rxjs/operators'
+import { Subject } from 'rxjs'
+import { NotificationService } from '../../notification/services/notification.service'
 
 @Component({
-  selector: 'app-navbar',
+  selector: 'skl-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly notification_service: UserNotificationsService,
+    private readonly notification_service: NotificationService,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly toastr: ToastrService

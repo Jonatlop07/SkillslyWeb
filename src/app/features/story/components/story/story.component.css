@@ -1,0 +1,33 @@
+.clickable:hover {
+  cursor: pointer;
+}
+:host ::ng-deep .p-dialog .p-dialog-header .p-dialog-title {
+  font-family: "Poppins", sans-serif;
+  color: #3f3f46;
+}
+:host ::ng-deep .p-galleria .p-galleria-caption {
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+}
+
+:host ::ng-deep .p-button.p-button-text {
+  background-color: transparent;
+  color: #00887a;
+  border-color: transparent;
+  font-family: "Poppins", sans-serif;
+}
+
+:host ::ng-deep .p-button.p-button-text:hover {
+  background: rgba(70, 229, 176, 0.04);
+  color: #00887a;
+  border-color: transparent;
+}
+
+:host ::ng-deep .p-button.p-button-text:focus {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #00887a, 0 1px 2px 0 rgba(0, 0, 0, 0);
+}
+
+
+.story-font {
+  font-family: "Poppins", sans-serif;
+}

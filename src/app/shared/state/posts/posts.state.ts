@@ -1,7 +1,7 @@
-import { Action, State, StateContext, StateToken } from "@ngxs/store";
-import { PostCollectionModel } from "../../../models/post_collection.model";
-import { AddReactionToPost, DeleteMyPost, RemoveReactionFromPost, SetMyPosts } from "./posts.actions";
+import { PostCollectionModel } from '../../../features/post/model/post_collection.model'
+import { AddReactionToPost, DeleteMyPost, RemoveReactionFromPost, SetMyPosts } from './posts.actions'
 import { Injectable } from '@angular/core'
+import { Action, State, StateContext, StateToken } from '@ngxs/store'
 
 const POSTS_STATE_TOKEN = new StateToken<PostCollectionModel>('my_posts');
 

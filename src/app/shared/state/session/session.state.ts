@@ -1,9 +1,7 @@
-import { Action, State, StateContext, StateToken } from '@ngxs/store'
-import { SessionModel } from '../../../models/session.model'
-import {
-  SetSessionData, SetTwoFactorAuthentication, UpdateSessionEmail
-} from './session.actions'
+import { SetSessionData, SetTwoFactorAuthentication, UpdateSessionEmail } from './session.actions'
 import { Injectable } from '@angular/core'
+import { Action, State, StateContext, StateToken } from '@ngxs/store'
+import { SessionModel } from '../../../features/authentication/model/session.model'
 
 const SESSION_STATE_TOKEN = new StateToken<SessionModel>('session');
 

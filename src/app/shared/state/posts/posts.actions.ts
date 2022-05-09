@@ -1,5 +1,5 @@
-import { PostCollectionModel } from "../../../models/post_collection.model";
-import { PostReaction } from '../../../interfaces/post/post_reaction'
+import { PostCollectionModel } from '../../../features/post/model/post_collection.model'
+import { PostReaction } from '../../../features/post/types/post_reaction'
 
 export class SetMyPosts {
   static readonly type = '[Posts Query] Set My Posts';

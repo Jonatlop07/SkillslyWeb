@@ -1,4 +1,4 @@
-import { ServiceRequestModel } from '../../../models/service_request.model'
+import { ServiceRequestModel } from '../../../features/service-request/model/service_request.model'
 
 export class SetMyServiceRequests {
   static readonly type = '[Profile] Set My Service Requests';

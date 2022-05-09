@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms'
 import { TabViewModule } from 'primeng/tabview'
 import { InputTextareaModule } from 'primeng/inputtextarea'
 import { ButtonModule } from 'primeng/button'
+import { SocialModule } from '../social/social.module'
+import { ChatRoutingModule } from './chat.routing'
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { ButtonModule } from 'primeng/button'
     InputTextModule,
     InputTextareaModule,
     ButtonModule,
+    SocialModule,
+    ChatRoutingModule,
   ],
   providers: [
     ChatService,

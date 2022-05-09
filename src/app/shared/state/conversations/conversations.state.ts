@@ -1,13 +1,11 @@
+import { ConversationCollectionModel } from 'src/app/features/chat/model/conversation_collection.model'
+import { Injectable } from '@angular/core'
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store'
-import { ConversationCollectionModel } from '../../../models/conversation_collection.model'
 import {
   AddMembersToGroupConversation,
-  AppendGroupConversation,
-  AppendPrivateConversation, DeleteGroupConversation,
-  EditGroupConversationDetails,
-  StoreConversations
+  AppendGroupConversation, AppendPrivateConversation,
+  DeleteGroupConversation, EditGroupConversationDetails, StoreConversations
 } from './conversations.actions'
-import { Injectable } from '@angular/core'
 
 const CONVERSATIONS_STATE_TOKEN = new StateToken<ConversationCollectionModel>('my_conversations');
 

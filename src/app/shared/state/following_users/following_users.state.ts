@@ -1,7 +1,7 @@
 import { Action, State, StateContext, StateToken } from '@ngxs/store'
-import { FollowingUsersModel } from 'src/app/models/following_users.model';
 import { AppendFollowingUser, StoreFollowingUsers } from './following_users.actions'
 import { Injectable } from '@angular/core'
+import { FollowingUsersModel } from '../../../features/social/model/following_users.model'
 
 const FOLLOWING_USERS_STATE_TOKEN = new StateToken<FollowingUsersModel>('following_users');
 

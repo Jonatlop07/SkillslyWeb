@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { JwtService } from '../../../services/jwt.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { UpdateUserDetails } from '../types/update_user_details'
 import { ObtainSpecialRolesData } from '../types/obtain_special_roles_data'
 import AccountDataResponse from '../types/account_data.response'
+import { JwtService } from '../../authentication/services/jwt.service'
+import { UserAccountModule } from '../user_account.module'
 
-@Injectable()
+@Injectable({
+  providedIn: UserAccountModule
+})
 export class AccountService {
   private readonly API_URL: string = environment.API_URL;
 

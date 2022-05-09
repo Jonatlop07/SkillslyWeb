@@ -1,0 +1,56 @@
+.story {
+  background: white;
+  padding: 10px 5px;
+}
+.stories-card,
+.my-story-card {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  border-radius: 10px;
+  font-family: "Poppins", sans-serif;
+}
+:host ::ng-deep .p-dialog .p-dialog-header .p-dialog-title {
+  font-family: "Poppins", sans-serif;
+  color: #3f3f46;
+}
+
+:host ::ng-deep .p-button.p-button-text {
+  background-color: transparent;
+  color: #00887a;
+  border-color: transparent;
+  font-family: "Poppins", sans-serif;
+}
+:host ::ng-deep .p-button {
+  color: #ffffff;
+  background: #00887a;
+  border: 1px solid #00887a;
+}
+
+:host ::ng-deep .p-button.p-button-text:hover {
+  background: rgba(70, 229, 176, 0.04);
+  color: #00887a;
+}
+
+:host ::ng-deep .p-button:hover {
+  background: rgba(70, 229, 176, 0.04);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+:host ::ng-deep .p-button:focus {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #00887a, 0 1px 2px 0 rgb(0 0 0 / 0%);
+}
+
+:host ::ng-deep .tetx-right .p-button.p-button-outlined {
+  color: #fc6662;
+}
+:host ::ng-deep .tetx-right .p-button.p-button-outlined:hover {
+  background: transparent;
+}
+:host ::ng-deep .tetx-right .p-button.p-button-outlined:focus {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #fc6662, 0 1px 2px 0 rgba(0, 0, 0, 0);
+}
+
+.story-font {
+  font-family: "Poppins", sans-serif;
+}

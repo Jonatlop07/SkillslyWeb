@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthRoutingModule } from './auth/auth.routing';
-import { NopagefoundComponent } from './nopagefound/nopagefound.component';
-import { InputTextModule } from 'primeng/inputtext';
+import { NopagefoundComponent } from './no-page-found/nopagefound.component'
 import { PagesRoutingModule } from './pages/pages.routing'
+import { AuthRoutingModule, routing_paths as auth_routing_paths } from './features/authentication/auth.routing'
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: auth_routing_paths.sign_in, pathMatch: 'full' },
   { path: '**', component: NopagefoundComponent },
 ];
 
@@ -16,9 +15,7 @@ const routes: Routes = [
       preloadingStrategy: PreloadAllModules,
     }),
     AuthRoutingModule,
-    PagesRoutingModule,
-    InputTextModule,
-  ],
-  exports: [RouterModule],
+    PagesRoutingModule
+  ]
 })
 export class AppRoutingModule {}

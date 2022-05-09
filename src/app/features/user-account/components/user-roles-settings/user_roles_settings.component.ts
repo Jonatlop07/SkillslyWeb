@@ -5,7 +5,7 @@ import { AccountService } from '../../services/account.service'
 import { StripeCardComponent, StripeService } from 'ngx-stripe'
 import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js'
 import { Role } from '../../types/role.enum'
-import { AuthService } from '../../../../services/auth.service'
+import { AuthService } from '../../../authentication/services/auth.service'
 
 @Component({
   selector: 'skl-user-roles-settings',
@@ -16,8 +16,8 @@ export class UserRolesSettingsComponent implements OnInit {
   public roles: Array<string>;
   public is_investor: boolean;
   public is_requester: boolean;
-  public obtain_investor_role: boolean = false;
-  public obtain_requester_role: boolean = false;
+  public obtain_investor_role = false;
+  public obtain_requester_role = false;
 
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
@@ -76,10 +76,12 @@ export class UserRolesSettingsComponent implements OnInit {
   }
 
   public getRoleName(role: string): string {
-    if (role === Role.User)
+    if (role === Role.User) {
       return 'Usuario';
-    if (role === Role.Requester)
+    }
+    if (role === Role.Requester) {
       return 'Solicitante';
+    }
     return 'Inversor';
   }
 

@@ -3,7 +3,7 @@ import { ConversationMemberPresenter } from '../../types/conversation_member.pre
 import { NewConversationDetails } from '../../types/new_conversation_details'
 import { Conversation } from '../../types/conversation'
 import { ConversationService } from '../../services/conversation.service'
-import { FollowService } from '../../../../services/follow.service'
+import { FollowRequestService } from '../../../social/services/follow_request.service'
 
 @Component({
   selector: 'skl-new-conversation',
@@ -20,7 +20,7 @@ export class NewConversationComponent {
 
   public constructor(
     private readonly conversation_service: ConversationService,
-    private readonly follow_service: FollowService
+    private readonly follow_service: FollowRequestService
   ) {
   }
 
@@ -50,7 +50,9 @@ export class NewConversationComponent {
   }
 
   public createConversation() {
-    if (this.new_conversation_name === '') return;
+    if (this.new_conversation_name === '') {
+      return;
+    }
     this.new_conversation = {
       conversation_name: this.new_conversation_name,
       conversation_members: this.new_conversation_members.map(member => member.member_id)

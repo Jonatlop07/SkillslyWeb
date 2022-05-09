@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core'
-import { Action, State, StateContext, StateToken } from '@ngxs/store'
-import { ConversationModel } from '../../../models/conversation.model'
 import {
   DeleteSelectedConversation,
   EditSelectedConversationDetails,
-  SetSelectedConversation,
+  SetSelectedConversation
 } from './selected_conversation.actions'
+import { Injectable } from '@angular/core'
+import { Action, State, StateContext, StateToken } from '@ngxs/store'
+import { ConversationModel } from 'src/app/features/chat/model/conversation.model'
 
 const SELECTED_CONVERSATION_STATE_TOKEN = new StateToken<ConversationModel>('selected_conversation');
 

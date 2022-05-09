@@ -3,18 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserAccountView } from './views/user_account.view';
 
 export const routing_paths = {
-  user_account: 'account'
+  user_account: 'account',
 };
 
 const routes: Routes = [
   {
-    path: routing_paths.user_account,
+    path: '',
     component: UserAccountView
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)]
 })
 export class UserAccountRoutingModule {}

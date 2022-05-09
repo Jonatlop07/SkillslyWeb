@@ -1,7 +1,7 @@
-import { Action, State, StateContext, StateToken } from '@ngxs/store'
-import { NotificationCollectionModel } from '../../../models/notification_collection.model'
-import { AddNotification } from './notifications.actions'
+import { NotificationCollectionModel } from '../../notification/model/notification_collection.model'
 import { Injectable } from '@angular/core'
+import { AddNotification } from './notifications.actions'
+import { Action, State, StateContext, StateToken } from '@ngxs/store'
 
 const NOTIFICATIONS_STATE_TOKEN = new StateToken<NotificationCollectionModel>('notifications');
 
