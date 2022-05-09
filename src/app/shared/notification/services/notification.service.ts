@@ -1,40 +1,36 @@
-import { JwtService } from '../../authentication/services/jwt.service'
+import { JwtService } from '../../../features/authentication/services/jwt.service'
 import { Select, Store } from '@ngxs/store'
-import { Conversation } from '../../chat/types/conversation'
+import { Conversation } from '../../../features/chat/types/conversation'
 import { map, mergeAll } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'
 import { Injectable } from '@angular/core'
-import { ConversationService } from '../../chat/services/conversation.service'
-import { ConversationDeletedDetails } from '../../chat/types/conversation_deleted.details'
 import { NotificationCollectionModel } from '../model/notification_collection.model'
-import { AddNotification } from '../../../shared/state/notifications/notifications.actions'
+import { AddNotification } from '../../state/notifications/notifications.actions'
 import { NotificationSocket } from '../socket/notification.socket'
-import { User } from '../../user-account/types/user.interface'
-import { SharedPermanentPost } from '../../post/types/shared_permanent_post.interface'
-import { StatusUpdateRequestDetails } from '../../service-request/types/status_update_request_details'
+import { User } from '../../../features/user-account/types/user.interface'
+import { SharedPermanentPost } from '../../../features/post/types/shared_permanent_post.interface'
+import { StatusUpdateRequestDetails } from '../../../features/service-request/types/status_update_request_details'
 import { NotificationModel } from '../model/notification.model'
 import {
   AppendReceivedFollowRequest,
   DeleteSentFollowRequest
-} from '../../../shared/state/follow_requests/follow_requests.actions'
-import { AddReactionToPost, RemoveReactionFromPost } from '../../../shared/state/posts/posts.actions'
+} from '../../state/follow_requests/follow_requests.actions'
+import { AddReactionToPost, RemoveReactionFromPost } from '../../state/posts/posts.actions'
 import {
   AppendGroupConversation,
-  DeleteGroupConversation
-} from '../../../shared/state/conversations/conversations.actions'
-import { PostReaction } from '../../post/types/post_reaction'
-import { NotificationsState } from '../../../shared/state/notifications/notifications.state'
-import { AppendFollowingUser } from '../../../shared/state/following_users/following_users.actions'
+} from '../../state/conversations/conversations.actions'
+import { PostReaction } from '../../../features/post/types/post_reaction'
+import { NotificationsState } from '../../state/notifications/notifications.state'
+import { AppendFollowingUser } from '../../state/following_users/following_users.actions'
 import UserNotification from '../types/user_notification'
+import { SharedModule } from '../../shared.module'
 
-
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: SharedModule })
 export class NotificationService {
   @Select(NotificationsState) notifications$: Observable<NotificationCollectionModel>;
 
   constructor(
     private readonly socket: NotificationSocket,
-    private readonly conversation_service: ConversationService,
     private readonly jwt_service: JwtService,
     private readonly store: Store
   ) {
@@ -48,7 +44,7 @@ export class NotificationService {
   private readonly permanent_post_added_reaction_event = 'permanent_post_added_reaction';
   private readonly permanent_post_removed_reaction_event = 'permanent_post_removed_reaction';
   private readonly added_to_group_conversation_event = 'added_to_group_conversation';
-  private readonly group_conversation_deleted_event = 'group_conversation_deleted';
+  /*private readonly group_conversation_deleted_event = 'group_conversation_deleted';*/
   private readonly service_request_deleted_event = 'service_request_deleted';
   private readonly service_request_updated_event = 'service_request_updated';
   private readonly status_update_request = 'status_update_request';
@@ -67,7 +63,7 @@ export class NotificationService {
       this.onPermanentPostAddedReaction(),
       this.onPermanentPostRemovedReaction(),
       this.onAddedToNewGroupConversation(),
-      this.onGroupConversationDeleted(),
+      /*this.onGroupConversationDeleted(),*/
       this.onServiceRequestDeleted(),
       this.onServiceRequestUpdated(),
       this.onStatusUpdateRequest()
@@ -211,7 +207,7 @@ export class NotificationService {
       );
   }
 
-  private onGroupConversationDeleted(): Observable<UserNotification> {
+  /* private onGroupConversationDeleted(): Observable<UserNotification> {
     return this.socket.fromEvent<ConversationDeletedDetails>(this.group_conversation_deleted_event)
       .pipe(
         map((conversation_deleted_details: ConversationDeletedDetails) => {
@@ -235,7 +231,7 @@ export class NotificationService {
           }
         )
       );
-  }
+  }*/
 
 
   private onServiceRequestUpdated(): Observable<UserNotification> {

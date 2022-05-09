@@ -8,13 +8,12 @@ export const routing_paths = {
 
 const routes: Routes = [
   {
-    path: routing_paths.chat,
+    path: '',
     component: ChatView
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)]
 })
 export class ChatRoutingModule {}

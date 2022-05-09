@@ -1,21 +1,42 @@
 <div class="card p-3">
-    <h6 class="font-medium pb-1">{{ service_request.title }}</h6>
-    <small class="text-muted pb-3">{{ getTime() }}</small>
-    <h6 class="font-light pb-2">{{ service_request.service_brief }}</h6>
-    <div class="row justify-content-sm-around">
-        <button pButton pRipple type="button" label="Ver" class="p-button-outlined p-button-rounded see-service-request-btn w-auto" icon="pi pi-info-circle" (click)="seeServiceRequest()"></button>
-        <button pButton pRipple type="button" label="Aplicar a la solicitud" class="p-button-outlined p-button-rounded edit-service-request-btn w-auto" icon="pi pi-plus-circle" *ngIf="canApplyToService()" (click)="showApplyServiceRequestModal()"></button>
-        <button pButton pRipple type="button" label="Remover solicitud" class="p-button-outlined p-button-rounded delete-service-request-btn w-auto" icon="pi pi-times" *ngIf="canRemoveRequest()" (click)="onApplyToServiceRequest()"></button>
-        <button *ngIf="userIsOwner()" pButton pRipple type="button" label="Editar" class="p-button-outlined p-button-rounded edit-service-request-btn w-auto" icon="pi pi-user-edit" (click)="editServiceRequest()"></button>
-        <button *ngIf="userIsOwner()" pButton pRipple type="button" label="Eliminar" class="p-button-outlined p-button-rounded delete-service-request-btn w-auto" icon="pi pi-times" (click)="deleteServiceRequest()"></button>
-    </div>
-    <p-dialog header="Aplicar a solicitud de servicio" [(visible)]="display_apply_service_request_modal" [modal]="true" [style]="{ width: '30vw' }" [draggable]="false" [resizable]="false">
-        <div class="card">
-            <div class="p-grid p-fluid">
-                <div class="p-field p-col-12 px-2">
-                    <label for="application_message">Mensaje de aplicación al servicio</label
-          >
-          <br />
+  <h6 class="font-medium pb-1">{{ service_request.title }}</h6>
+  <small class="text-muted pb-3">{{ getTime() }}</small>
+  <h6 class="font-light pb-2">{{ service_request.service_brief }}</h6>
+  <div class="row justify-content-sm-around">
+    <button pButton pRipple type="button" label="Ver"
+            class="p-button-outlined p-button-rounded see-service-request-btn w-auto" icon="pi pi-info-circle"
+            (click)="seeServiceRequest()">
+    </button>
+    <button pButton pRipple type="button" label="Aplicar a la solicitud"
+            class="p-button-outlined p-button-rounded edit-service-request-btn w-auto" icon="pi pi-plus-circle"
+            *ngIf="canApplyToService()" (click)="showApplyServiceRequestModal()">
+    </button>
+    <button pButton pRipple type="button" label="Remover solicitud"
+            class="p-button-outlined p-button-rounded delete-service-request-btn w-auto" icon="pi pi-times"
+            *ngIf="canRemoveRequest()" (click)="onApplyToServiceRequest()">
+    </button>
+    <button *ngIf="userIsOwner()" pButton pRipple type="button" label="Editar"
+            class="p-button-outlined p-button-rounded edit-service-request-btn w-auto" icon="pi pi-user-edit"
+            (click)="editServiceRequest()">
+    </button>
+    <button *ngIf="userIsOwner()" pButton pRipple type="button" label="Eliminar"
+            class="p-button-outlined p-button-rounded delete-service-request-btn w-auto" icon="pi pi-times"
+            (click)="deleteServiceRequest()">
+    </button>
+  </div>
+  <p-dialog
+    header="Aplicar a solicitud de servicio"
+    [(visible)]="display_apply_service_request_modal"
+    [modal]="true"
+    [style]="{ width: '30vw' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <div class="card">
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-12 px-2">
+          <label for="application_message">Mensaje de aplicación al servicio</label>
+          <br/>
           <input
             id="application_message"
             type="text"
@@ -23,13 +44,13 @@
             pInputText
             [(ngModel)]="application_message"
           />
-          <br />
-          <small id="username1-help"
-            >Describe cómo puedes proveer una solución o cuenta un poco de tu
-            experiencia con este tipo de servicio</small
-          >
+          <br/>
+          <small id="username1-help">
+            Describe cómo puedes proveer una solución o cuenta un poco de tu
+            experiencia con este tipo de servicio
+          </small>
         </div>
-        <br />
+        <br/>
       </div>
     </div>
     <ng-template pTemplate="footer">
@@ -73,17 +94,17 @@
           <h6 class="font-light px-5 pb-4">{{ service_request.category }}</h6>
           <h6 class="font-medium px-5 pb-2">
             {{
-              service_request.phase === "Open"
-                ? "Recibiendo aplicaciones"
-                : service_request.phase === "Evaluation"
+            service_request.phase === "Open"
+              ? "Recibiendo aplicaciones"
+              : service_request.phase === "Evaluation"
                 ? "Evaluacion de aplicante en progreso. No canceles tu aplicacion todavia!"
                 : service_request.phase === "Execution"
-                ? "Servicio en ejecucion"
-                : service_request.phase == "Finished"
-                ? "Servicio finalizado"
-                : service_request.phase == "Canceled"
-                ? "Servicio cancelado"
-                : "Cerrado"
+                  ? "Servicio en ejecucion"
+                  : service_request.phase == "Finished"
+                    ? "Servicio finalizado"
+                    : service_request.phase == "Canceled"
+                      ? "Servicio cancelado"
+                      : "Cerrado"
             }}
           </h6>
         </div>
@@ -140,12 +161,15 @@
     >
       <div class="row align-items-center m-3">
         <label
-          for="service-requests-categories"
           class="service-requests-label mb-3"
-          >Aplicante en evaluación actual</label
         >
+          Aplicante en evaluación actual
+        </label>
         <div class="col">
-          <h6 style="font-weight:lighter">{{ evaluated_applicant.applicant_name }} : {{ evaluated_applicant.applicant_email }}</h6>
+          <h6 style="font-weight:lighter">
+            {{ evaluated_applicant.applicant_name }}
+            : {{ evaluated_applicant.applicant_email }}
+          </h6>
         </div>
         <div class="col">
           <button
@@ -287,16 +311,17 @@
       <div class="p-grid p-fluid">
         <div class="p-field p-col-12">
           <label for="service_request_title">Título de tu servicio</label>
-                    <br />
-                    <input id="service_request_title" type="text" aria-describedby="service_request_title" pInputText [(ngModel)]="edited_service_request.title" />
-                    <br />
-                    <small id="username1-help">Breve frase que describa tu servicio</small
+          <br/>
+          <input id="service_request_title" type="text" aria-describedby="service_request_title" pInputText
+                 [(ngModel)]="edited_service_request.title"/>
+          <br/>
+          <small id="username1-help">Breve frase que describa tu servicio</small
           >
         </div>
-        <br />
+        <br/>
         <div class="p-field p-col-12">
           <label for="service_request_brief">Descripción de tu servicio</label>
-          <br />
+          <br/>
           <input
             id="service_request_brief"
             type="text"
@@ -304,16 +329,16 @@
             pInputText
             [(ngModel)]="edited_service_request.service_brief"
           />
-          <br />
+          <br/>
           <small id="username1-help"
-            >Breve párrafo con la descripción de tu servicio</small
+          >Breve párrafo con la descripción de tu servicio</small
           >
         </div>
         <div class="p-field p-col-12">
           <label for="service_request_contact_info"
-            >Información de contacto</label
+          >Información de contacto</label
           >
-          <br />
+          <br/>
           <input
             id="service_request_contact_info"
             type="text"
@@ -321,16 +346,16 @@
             pInputText
             [(ngModel)]="edited_service_request.contact_information"
           />
-          <br />
+          <br/>
           <small id="username1-help"
-            >Información adicional para que los interesados puedan
+          >Información adicional para que los interesados puedan
             contactarte</small
           >
         </div>
-        <br />
+        <br/>
         <div class="p-field p-col-12">
           <label for="service_request_category">Categoría de tu servicio</label>
-          <br />
+          <br/>
           <input
             id="service_request_category"
             type="text"
@@ -338,10 +363,10 @@
             pInputText
             [(ngModel)]="edited_service_request.category"
           />
-          <br />
-          <small id="username1-help"
-            >Categoría en la que enmarcarías tu servicio</small
-          >
+          <br/>
+          <small id="username1-help">
+            Categoría en la que enmarcarías tu servicio
+          </small>
         </div>
       </div>
     </div>

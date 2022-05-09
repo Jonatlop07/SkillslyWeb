@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { ServiceRequestsView } from './views/service-requests/service_requests.view'
+import {CreateServiceRequestView} from './views/create-service-request/create_service_request.view'
 
 export const routing_paths = {
-  service_requests: 'service-requests'
+  service_request: 'service-request',
+  create_service_request: 'create'
 };
 
 const routes: Routes = [
   {
-    path: routing_paths.service_requests,
-    component: ServiceRequestsView
+    path: routing_paths.create_service_request,
+    component: CreateServiceRequestView
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)]
 })
 export class ServiceRequestRoutingModule {}

@@ -9,7 +9,6 @@ import { FollowRequestService } from '../../services/follow_request.service'
   styleUrls: ['./follow_requests.view.css']
 })
 export class FollowRequestsView  implements OnInit {
-
   public pendingSentUsers: SearchUserResponse[];
 
   constructor(
@@ -18,23 +17,23 @@ export class FollowRequestsView  implements OnInit {
 
   ngOnInit(): void {
     const followServiceResponse = this.followService.getUserFollowCollection();
-    followServiceResponse.subscribe((resp:any) => {
+    followServiceResponse.subscribe((resp: any) => {
       this.pendingSentUsers = resp.pendingSentUsers;
     })
   }
 
   public acceptFollowRequest(user: SearchUserResponse, index: number) : void {
-    const followServiceResponse = this.followService.updateFollowRequest(user,true);
+    const followServiceResponse = this.followService.updateFollowRequest(user, true);
     followServiceResponse.subscribe((new_conversation: Conversation) => {
-      this.pendingSentUsers.splice(index,1);
+      this.pendingSentUsers.splice(index, 1);
       this.followService.appendPrivateConversation(new_conversation);
     })
   }
 
   public rejectFollowRequest(user: SearchUserResponse, index: number) : void {
-    const followServiceResponse = this.followService.updateFollowRequest(user,false);
+    const followServiceResponse = this.followService.updateFollowRequest(user, false);
     followServiceResponse.subscribe(() => {
-      this.pendingSentUsers.splice(index,1);
+      this.pendingSentUsers.splice(index, 1);
     })
   }
 }

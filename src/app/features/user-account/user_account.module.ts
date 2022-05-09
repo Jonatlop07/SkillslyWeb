@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common'
 import { NgxStripeModule } from 'ngx-stripe'
 import { DialogModule } from 'primeng/dialog'
 import { AccountService } from './services/account.service'
+import { UserDataService } from './services/user_data.service'
 
 @NgModule({
   declarations: [
@@ -29,11 +30,12 @@ import { AccountService } from './services/account.service'
     NgxStripeModule.forChild(
       'pk_test_51KKqzTLW8alQ67QMS4GSfh6VTdVVvJH3LFlptoBZQW6yZhoB516uFllbjcmtvDUsuedzrcU12wAbnELdm5b10e6700wWxK7ASu'
     ),
-    UserAccountRoutingModule,
+    UserAccountRoutingModule
   ],
   providers: [
-    AccountService
-  ]
+    AccountService,
+    UserDataService
+  ],
 })
 export class UserAccountModule {
 }

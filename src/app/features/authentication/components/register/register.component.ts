@@ -8,7 +8,7 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 import { RegisterForm } from '../../types/register_form.interface'
 
 @Component({
-  selector: 'app-register',
+  selector: 'skl-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })

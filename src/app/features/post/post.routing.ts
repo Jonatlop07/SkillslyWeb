@@ -6,9 +6,9 @@ import { EditPostView } from './views/edit-post/edit_post.view'
 
 export const routing_paths = {
   posts: 'posts',
-  create_post: 'create-post',
-  user_post_collection: 'posts/:user-id',
-  edit_post: 'edit-post'
+  create_post: 'create',
+  user_post_collection: '/:user-id',
+  edit_post: 'edit'
 };
 
 const routes: Routes = [
@@ -27,7 +27,6 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)]
 })
 export class PostRoutingModule {}

@@ -1,4 +1,4 @@
-import { NotificationCollectionModel } from '../../../features/notification/model/notification_collection.model'
+import { NotificationCollectionModel } from '../../notification/model/notification_collection.model'
 import { Injectable } from '@angular/core'
 import { AddNotification } from './notifications.actions'
 import { Action, State, StateContext, StateToken } from '@ngxs/store'

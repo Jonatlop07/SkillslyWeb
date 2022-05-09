@@ -13,6 +13,7 @@ import { ButtonModule } from 'primeng/button'
 import { RippleModule } from 'primeng/ripple'
 import { InputTextModule } from 'primeng/inputtext'
 import { TooltipModule } from 'primeng/tooltip'
+import { PostRoutingModule } from './post.routing'
 
 @NgModule({
   declarations: [
@@ -31,10 +32,14 @@ import { TooltipModule } from 'primeng/tooltip'
     RippleModule,
     InputTextModule,
     TooltipModule,
-    FormsModule
+    FormsModule,
+    PostRoutingModule
   ],
   providers: [
     PostService
+  ],
+  exports: [
+    PostComponent
   ]
 })
 export class PostModule {}

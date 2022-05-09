@@ -10,9 +10,8 @@ import { ApplicantPresenter } from '../../types/presenter/applicant.presenter'
 import { UserDataService } from '../../../user-account/services/user_data.service'
 import * as moment from 'moment'
 
-
 @Component({
-  selector: 'app-service-request',
+  selector: 'skl-service-request',
   templateUrl: './service_request.component.html',
   styleUrls: ['./service_request.component.css'],
 })

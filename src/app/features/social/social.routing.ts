@@ -4,6 +4,7 @@ import { FollowRequestsView } from './views/follow-requests/follow_requests.view
 import { SearchView } from './views/search/search.view'
 
 export const routing_paths = {
+  social: 'social',
   search: 'search/:searchInput',
   follow_requests: 'follow-requests'
 };
@@ -20,7 +21,6 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)]
 })
 export class SocialRoutingModule {}

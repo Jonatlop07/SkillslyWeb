@@ -16,6 +16,10 @@ import { RegisterComponent } from './components/register/register.component'
 import { LoginComponent } from './components/login/login.component'
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component'
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component'
+import { AuthService } from './services/auth.service'
+import { JwtService } from './services/jwt.service'
+import { RecaptchaModule } from 'ng-recaptcha'
+import { AuthRoutingModule } from './auth.routing'
 
 @NgModule({
   declarations: [
@@ -38,7 +42,14 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     MessageModule,
     DialogModule,
     FormsModule,
-    CheckboxModule
+    CheckboxModule,
+    RecaptchaModule,
+
+    AuthRoutingModule
+  ],
+  providers: [
+    AuthService,
+    JwtService
   ]
 })
 export class AuthModule {}

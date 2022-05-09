@@ -2,14 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { AuthService } from '../../../features/authentication/services/auth.service'
-import UserNotification from '../../../features/notification/types/user_notification'
-import { NotificationModel } from '../../../features/notification/model/notification.model'
+import UserNotification from '../../notification/types/user_notification'
+import { NotificationModel } from '../../notification/model/notification.model'
 import { takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs'
-import { NotificationService } from '../../../features/notification/services/notification.service'
+import { NotificationService } from '../../notification/services/notification.service'
 
 @Component({
-  selector: 'app-navbar',
+  selector: 'skl-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })

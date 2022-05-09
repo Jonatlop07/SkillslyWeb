@@ -1,7 +1,6 @@
 import { DeleteMyPost } from '../../../../shared/state/posts/posts.actions'
 import { PostService } from '../../services/posts.service'
 import { PermanentPostPresenter } from '../../types/query_post.presenter'
-import { QueryReactionsReactors } from '../../types/query_reactions.presenter'
 import { Store } from '@ngxs/store'
 import { Router } from '@angular/router'
 import { MenuItem } from 'primeng/api'
@@ -10,9 +9,10 @@ import { CommentsService } from '../../services/comments.service'
 import { SharePostInterface } from '../../types/share_post.interface'
 import { DeletePostInterface } from '../../types/delete_post.interface'
 import { routing_paths } from '../../post.routing'
+import { Comment } from '../../types/comment.presenter'
 
 @Component({
-  selector: 'app-post',
+  selector: 'skl-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css'],
 })

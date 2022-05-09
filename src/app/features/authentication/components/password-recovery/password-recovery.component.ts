@@ -5,7 +5,7 @@ import { Router } from '@angular/router'
 import { requestResetPasswordInterface } from '../../types/request_reset_password.interface'
 
 @Component({
-  selector: 'app-passwordRecovery',
+  selector: 'skl-password-recovery',
   templateUrl: './password-recovery.component.html',
   styleUrls: ['./password-recovery.component.css'],
 })

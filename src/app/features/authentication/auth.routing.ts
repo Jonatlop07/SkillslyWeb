@@ -12,7 +12,6 @@ export const routing_paths = {
   password_reset: 'password-reset/:token'
 };
 
-
 const routes: Routes = [
   { path: routing_paths.sign_up, component: RegisterComponent },
   { path: routing_paths.sign_in, component: LoginComponent },
@@ -21,7 +20,6 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  imports: [RouterModule.forChild(routes)]
 })
 export class AuthRoutingModule {}

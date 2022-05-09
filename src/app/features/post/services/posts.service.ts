@@ -13,9 +13,12 @@ import { DeletePostInterface } from '../types/delete_post.interface'
 import { PermanentPostPresenter, QueryPostPresenter } from '../types/query_post.presenter'
 import { CreatePostDataPresenter } from '../types/create_post_data.presenter'
 import { environment } from '../../../../environments/environment'
+import { PostModule } from '../post.module'
 
 
-@Injectable()
+@Injectable({
+  providedIn: PostModule
+})
 export class PostService {
   @Select(SessionState) session$: Observable<SessionModel>;
 

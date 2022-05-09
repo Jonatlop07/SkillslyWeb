@@ -5,9 +5,10 @@ import { environment } from '../../../../environments/environment'
 import { JwtService } from '../../authentication/services/jwt.service'
 import { SearchUserInputForm } from '../types/search_users_input_form.interface'
 import { SearchUserResponse } from '../types/search_users_response.interface'
+import { SocialModule } from '../social.module'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: SocialModule
 })
 export class SearchService {
 

@@ -1,22 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { showErrorPopup, showSuccessPopup } from '../../../../shared/pop-up/pop_up.utils'
 import { AccountDataPresenter } from '../../types/account_data.presenter'
 import { FormBuilder } from '@angular/forms'
 import { AccountService } from '../../services/account.service'
-import { LoginResponse } from '../../../../interfaces/login/login_response.interface'
-import { AuthService } from '../../../../services/auth.service'
+import { LoginResponse } from '../../../authentication/types/login_response.interface'
+import { AuthService } from '../../../authentication/services/auth.service'
 
 @Component({
   selector: 'skl-two-factor-auth-settings',
   templateUrl: './two_factor_auth_settings.component.html',
   styleUrls: ['./two_factor_auth_settings.component.css']
 })
-export class TwoFactorAuthSettingsComponent implements OnInit {
+export class TwoFactorAuthSettingsComponent {
   @Input('data')
   public user_account_details: AccountDataPresenter;
 
-  public is_two_factor_auth_enabled: boolean = false;
-  public displaying_two_factor_auth_modal: boolean = false;
+  public is_two_factor_auth_enabled = false;
+  public displaying_two_factor_auth_modal = false;
   public qr_code: any;
   public authentication_code: string;
 
@@ -26,8 +26,6 @@ export class TwoFactorAuthSettingsComponent implements OnInit {
     private readonly auth_service: AuthService,
   ) {
   }
-
-  public ngOnInit(): void {}
 
   public validateQRCode() {
     this.displaying_two_factor_auth_modal = true;
@@ -94,7 +92,7 @@ export class TwoFactorAuthSettingsComponent implements OnInit {
         expires_date: now.getTime().toString(),
         is_two_factor_auth_enabled: result.is_two_factor_auth_enabled
       })
-      .subscribe(() => {});
+      .subscribe();
   }
 
   private createImageFromBlob(image: Blob) {

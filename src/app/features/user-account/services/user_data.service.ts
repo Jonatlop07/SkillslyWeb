@@ -4,8 +4,11 @@ import { JwtService } from '../../authentication/services/jwt.service'
 import { UserDataPresenter } from '../types/user_data.presenter'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
+import { UserAccountModule } from '../user_account.module'
 
-@Injectable({providedIn: 'root'})
+@Injectable({
+  providedIn: UserAccountModule
+})
 export class UserDataService {
   private readonly API_URL: string = environment.API_URL;
 

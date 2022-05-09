@@ -15,9 +15,10 @@ import { FollowingUsersModel } from '../model/following_users.model'
 import { StoreFollowers } from '../../../shared/state/followers/followers.actions'
 import { AppendPrivateConversation } from '../../../shared/state/conversations/conversations.actions'
 import { environment } from '../../../../environments/environment'
+import { SocialModule } from '../social.module'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: SocialModule
 })
 export class FollowRequestService {
   @Select(FollowingUsersState) following_users$: Observable<FollowingUsersModel>;
@@ -32,7 +33,7 @@ export class FollowRequestService {
   ) {
   }
 
-  public getUserFollowCollection(): Observable<Object> {
+  public getUserFollowCollection(): Observable<UserFollowCollectionPresenter> {
     return this.http.get<UserFollowCollectionPresenter>(
       `${this.API_URL}/users/follow`,
       this.jtw_service.getHttpOptions()
@@ -50,11 +51,11 @@ export class FollowRequestService {
           store_following_users: this.storeFollowingUsers(user_follow_collection.followingUsers),
           store_followers: this.storeFollowers(user_follow_collection.followers)
         }
-      ).subscribe(({}) => {});
+      ).subscribe();
     })
   }
 
-  public createUserFollowRequest(user: SearchUserResponse): Observable<Object> {
+  public createUserFollowRequest(user: SearchUserResponse) {
     return this.http.post(
       `${this.API_URL}/users/follow/${user.user_id}`,
       {},
@@ -62,7 +63,7 @@ export class FollowRequestService {
     )
   }
 
-  public deleteUserFollowRequest(user: SearchUserResponse, isRequest: boolean): Observable<Object> {
+  public deleteUserFollowRequest(user: SearchUserResponse, isRequest: boolean) {
     let params = new HttpParams();
     params = params.append('isRequest', isRequest.toString());
     return this.http.delete(

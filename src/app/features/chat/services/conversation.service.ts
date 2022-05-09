@@ -1,28 +1,30 @@
-import { Injectable } from '@angular/core'
-import { JwtService } from '../../../services/jwt.service'
-import { HttpClient, HttpParams } from '@angular/common/http'
-import { environment } from '../../../../environments/environment'
-import { Conversation } from '../types/conversation'
-import { Observable } from 'rxjs'
-import { NewConversationDetails } from '../types/new_conversation_details'
-import { DeleteConversationPresenter } from '../types/delete_conversation.presenter'
-import { ConversationCollectionPresenter } from '../types/conversation_collection.presenter'
+import { JwtService } from '../../authentication/services/jwt.service'
 import { MessageCollectionPresenter } from '../types/message_collection.presenter'
 import { Select, Store } from '@ngxs/store'
+import { Conversation } from '../types/conversation'
+import { ConversationCollectionPresenter } from '../types/conversation_collection.presenter'
 import {
   AddMembersToGroupConversation,
-  AppendGroupConversation,
-  DeleteGroupConversation, EditGroupConversationDetails,
-  StoreConversations
+  AppendGroupConversation, DeleteGroupConversation, EditGroupConversationDetails, StoreConversations
 } from '../../../shared/state/conversations/conversations.actions'
 import { MyConversationsState } from '../../../shared/state/conversations/conversations.state'
-import { ConversationCollectionModel } from '../../../models/conversation_collection.model'
-import { GroupConversationDetails } from '../types/group_conversation_details'
-import { AddedMembersPresenter } from '../types/added_members.presenter'
-import { ConversationMemberPresenter } from '../types/conversation_member.presenter'
+import { ChatModule } from '../chat.module'
+import { Injectable } from '@angular/core'
 import { tap } from 'rxjs/operators'
+import { ConversationMemberPresenter } from '../types/conversation_member.presenter'
+import { GroupConversationDetails } from '../types/group_conversation_details'
+import { Observable } from 'rxjs'
+import { ConversationCollectionModel } from '../model/conversation_collection.model'
+import { HttpClient, HttpParams } from '@angular/common/http'
+import { DeleteConversationPresenter } from '../types/delete_conversation.presenter'
+import { AddedMembersPresenter } from '../types/added_members.presenter'
+import { NewConversationDetails } from '../types/new_conversation_details'
+import { environment } from '../../../../environments/environment'
 
-@Injectable()
+
+@Injectable({
+  providedIn: ChatModule
+})
 export class ConversationService {
   private is_charging_messages = false;
 
@@ -42,7 +44,7 @@ export class ConversationService {
         `${this.API_URL}/chat`,
         this.jtw_service.getHttpOptions()
       ).subscribe((conversations: ConversationCollectionPresenter) => {
-        this.storeConversations(conversations).subscribe(() => {});
+        this.storeConversations(conversations).subscribe();
       });
   }
 

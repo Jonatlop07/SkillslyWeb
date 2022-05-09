@@ -31,8 +31,7 @@
           </div>
           <re-captcha
             formControlName="recaptcha"
-            type="image"
-            [siteKey]="site_key"
+            type="image" [siteKey]="site_key"
             #captchaElem
             (resolved)="resolved($event)">
           </re-captcha>

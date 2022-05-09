@@ -3,7 +3,7 @@ import { PostService } from '../../features/post/services/posts.service'
 import { PermanentPostPresenter } from '../../features/post/types/query_post.presenter'
 
 @Component({
-  selector: 'app-feed',
+  selector: 'skl-feed',
   templateUrl: './feed.view.html',
   styleUrls: ['./feed.view.css'],
 })

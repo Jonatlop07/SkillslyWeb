@@ -11,7 +11,7 @@ import { RecaptchaComponent } from 'ng-recaptcha'
 import { FollowRequestService } from '../../../social/services/follow_request.service'
 
 @Component({
-  selector: 'app-login',
+  selector: 'skl-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })

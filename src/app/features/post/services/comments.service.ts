@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 import { JwtService } from '../../authentication/services/jwt.service'
+import { PostModule } from '../post.module'
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: PostModule,
 })
 export class CommentsService {
   private readonly API_URL: string = environment.API_URL;

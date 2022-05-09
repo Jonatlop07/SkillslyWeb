@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../../environments/environment'
 import { JwtService } from '../../authentication/services/jwt.service'
 import Story from '../model/story.model'
+import { StoryModule } from '../story.module'
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: StoryModule
 })
 export class StoryService {
   private readonly API_URL: string = environment.API_URL;

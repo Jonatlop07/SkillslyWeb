@@ -7,11 +7,11 @@ import { ServiceRequestCollectionPresenter } from '../../types/presenter/service
 import { Observable } from 'rxjs'
 
 @Component({
-  selector: 'skl-service-requests-view',
-  templateUrl: './service_requests.view.html',
-  styleUrls: ['./service_requests.view.css']
+  selector: 'skl-create-service-request-view',
+  templateUrl: './create_service_request.view.html',
+  styleUrls: ['./create_service_request.view.css']
 })
-export class ServiceRequestsView  implements OnInit {
+export class CreateServiceRequestView  implements OnInit {
   public readonly new_service_request: ServiceRequestDetails = {
     title: '',
     service_brief: '',

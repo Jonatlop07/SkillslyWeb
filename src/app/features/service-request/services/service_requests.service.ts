@@ -19,9 +19,11 @@ import { ServiceRequestModel } from '../model/service_request.model'
 import { ServiceRequestDetails } from '../types/service_request_details'
 import { MyServiceRequestsState } from '../../../shared/state/service-requests/service_requests.state'
 import { environment } from '../../../../environments/environment'
+import { ServiceRequestModule } from '../service_request.module'
 
-
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: ServiceRequestModule
+})
 export class ServiceRequestsService {
   @Select(MyServiceRequestsState)
   my_service_requests$: Observable<ServiceRequestCollectionModel>;
@@ -93,7 +95,7 @@ export class ServiceRequestsService {
         (service_request_collection: ServiceRequestCollectionPresenter) => {
           this.storeMyServiceRequestCollection(
             service_request_collection.service_requests
-          ).subscribe(() => {});
+          ).subscribe();
         }
       );
   }
@@ -202,7 +204,7 @@ export class ServiceRequestsService {
 
   public updateUpdateRequest(
     update_update_request_params: UpdateRequestPresenter
-  ): Observable<Object> {
+  ) {
     const { update_request_action, provider_id, service_request_id } =
       update_update_request_params;
     return this.http.post(

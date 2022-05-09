@@ -1,7 +1,7 @@
 <div class="bg-feed">
   <div class="w-100">
     <div class="row d-flex justify-content-center">
-      <app-stories class="col-9"></app-stories>
+      <skl-stories class="col-9"></skl-stories>
     </div>
     <div class="row d-flex justify-content-center">
       <div class="col-5">
@@ -21,43 +21,13 @@
                           *ngFor="let post of foundPosts"
                           class="row d-flex justify-content-center"
                         >
-                          <app-post
+                          <skl-post
                             [post]="post"
                             [editable]="false"
                             class="col-12"
                           >
-                          </app-post>
+                          </skl-post>
                           <div class="dropdown-divider"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </p-tabPanel>
-          </p-tabView>
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="feed-card">
-          <p-tabView>
-            <p-tabPanel header="Eventos" rightIcon="pi pi-calendar">
-              <div class="bg-feed">
-                <div class="w-100 p-10 mx-auto">
-                  <div class="row">
-                    <div class="card">
-                      <div class="card-body">
-                        <h2 class="card-title text-feed ">
-                          Eventos de tus amigos
-                        </h2>
-                        <div class="dropdown-divider pb-3"></div>
-                        <div *ngFor="let event of foundEvents; let i = index">
-                          <app-event
-                            [event]="event"
-                            [editable]="false"
-                            [map_id]="i"
-                          >
-                          </app-event>
                         </div>
                       </div>
                     </div>
