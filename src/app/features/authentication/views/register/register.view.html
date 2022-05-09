@@ -82,15 +82,8 @@
           >
           </p-calendar>
         </div>
-        <re-captcha
-          formControlName="recaptcha"
-          type="image"
-          [siteKey]="site_key"
-          #captchaElem
-          (resolved)="resolved($event)"
-        ></re-captcha>
         <div class="error mt-md-2">
-          <p *ngIf="!validCaptcha && invalidForm()">Validar captcha</p>
+          <p *ngIf="invalidForm()">Validar captcha</p>
         </div>
         <div class="flex my-2">
           <p-checkbox
