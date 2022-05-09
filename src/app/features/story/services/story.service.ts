@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../../environments/environment'
-import { JwtService } from '../../authentication/services/jwt.service'
+import { JwtService } from '../../../core/service/jwt.service'
 import Story from '../model/story.model'
-import { StoryModule } from '../story.module'
 
-@Injectable({
-  providedIn: StoryModule
-})
+@Injectable()
 export class StoryService {
   private readonly API_URL: string = environment.API_URL;
   constructor(

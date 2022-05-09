@@ -5,7 +5,7 @@ import { SearchUserResponse } from '../../types/search_users_response.interface'
 import { SearchService } from '../../services/search.service'
 import { FollowRequestService } from '../../services/follow_request.service'
 import * as moment from 'moment'
-import { routing_paths } from '../../../post/post.routing'
+import { post_routing_paths } from '../../../post/post.routing'
 
 @Component({
   selector: 'skl-search-view',
@@ -67,7 +67,7 @@ export class SearchView implements OnInit {
   }
 
   public searchPosts(userId: string): void {
-    this.router.navigate([`../../${routing_paths.user_post_collection}`, userId], { relativeTo: this.activatedRoute });
+    this.router.navigate([`../../${post_routing_paths.user_post_collection}`, userId], { relativeTo: this.activatedRoute });
   }
 
   public followUser(user: SearchUserResponse, index: number): void {

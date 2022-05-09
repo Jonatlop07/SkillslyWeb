@@ -5,12 +5,9 @@ import { environment } from '../../../../environments/environment';
 import { UpdateUserDetails } from '../types/update_user_details'
 import { ObtainSpecialRolesData } from '../types/obtain_special_roles_data'
 import AccountDataResponse from '../types/account_data.response'
-import { JwtService } from '../../authentication/services/jwt.service'
-import { UserAccountModule } from '../user_account.module'
+import { JwtService } from '../../../core/service/jwt.service'
 
-@Injectable({
-  providedIn: UserAccountModule
-})
+@Injectable()
 export class AccountService {
   private readonly API_URL: string = environment.API_URL;
 

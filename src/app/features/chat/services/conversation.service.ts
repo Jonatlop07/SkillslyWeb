@@ -1,4 +1,4 @@
-import { JwtService } from '../../authentication/services/jwt.service'
+import { JwtService } from '../../../core/service/jwt.service'
 import { MessageCollectionPresenter } from '../types/message_collection.presenter'
 import { Select, Store } from '@ngxs/store'
 import { Conversation } from '../types/conversation'
@@ -8,7 +8,6 @@ import {
   AppendGroupConversation, DeleteGroupConversation, EditGroupConversationDetails, StoreConversations
 } from '../../../shared/state/conversations/conversations.actions'
 import { MyConversationsState } from '../../../shared/state/conversations/conversations.state'
-import { ChatModule } from '../chat.module'
 import { Injectable } from '@angular/core'
 import { tap } from 'rxjs/operators'
 import { ConversationMemberPresenter } from '../types/conversation_member.presenter'
@@ -21,10 +20,7 @@ import { AddedMembersPresenter } from '../types/added_members.presenter'
 import { NewConversationDetails } from '../types/new_conversation_details'
 import { environment } from '../../../../environments/environment'
 
-
-@Injectable({
-  providedIn: ChatModule
-})
+@Injectable()
 export class ConversationService {
   private is_charging_messages = false;
 

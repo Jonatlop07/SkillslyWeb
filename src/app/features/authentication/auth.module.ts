@@ -1,55 +1,40 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CalendarModule } from 'primeng/calendar';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PasswordModule } from 'primeng/password';
-import { RouterModule } from '@angular/router';
-import { ImageModule } from 'primeng/image';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { MessageModule } from 'primeng/message';
-import { DialogModule } from 'primeng/dialog';
 import { CheckboxModule } from 'primeng/checkbox';
-import { RegisterComponent } from './components/register/register.component'
-import { LoginComponent } from './components/login/login.component'
-import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component'
-import { ResetPasswordComponent } from './components/reset-password/reset-password.component'
-import { AuthService } from './services/auth.service'
-import { JwtService } from './services/jwt.service'
+import { RegisterView } from './views/register/register.view'
+import { LoginView } from './views/login/login.view'
+import { PasswordRecoveryView } from './views/password-recovery/password_recovery.view'
+import { ResetPasswordView } from './views/reset-password/reset_password.view'
 import { RecaptchaModule } from 'ng-recaptcha'
 import { AuthRoutingModule } from './auth.routing'
+import { SharedModule } from '../../shared/shared.module'
+import { DialogModule } from 'primeng/dialog'
+import { CalendarModule } from 'primeng/calendar'
+import { ReactiveFormsModule } from '@angular/forms'
+import { ImageModule } from 'primeng/image'
 
 @NgModule({
   declarations: [
-    RegisterComponent,
-    LoginComponent,
-    PasswordRecoveryComponent,
-    ResetPasswordComponent,
+    RegisterView,
+    LoginView,
+    PasswordRecoveryView,
+    ResetPasswordView,
   ],
   imports: [
-    CommonModule,
+    AuthRoutingModule,
+    SharedModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     CalendarModule,
     PasswordModule,
-    RouterModule,
     ImageModule,
-    InputTextModule,
-    ButtonModule,
     DividerModule,
     MessageModule,
     DialogModule,
-    FormsModule,
     CheckboxModule,
     RecaptchaModule,
-
-    AuthRoutingModule
   ],
-  providers: [
-    AuthService,
-    JwtService
-  ]
+  providers: []
 })
 export class AuthModule {}

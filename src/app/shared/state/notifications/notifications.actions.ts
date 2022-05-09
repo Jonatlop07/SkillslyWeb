@@ -1,4 +1,4 @@
-import { NotificationModel } from '../../notification/model/notification.model'
+import { NotificationModel } from '../../../core/notification/model/notification.model'
 
 export class AddNotification {
   static readonly type = '[Notification] Add Notification';

@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import {CreateServiceRequestView} from './views/create-service-request/create_service_request.view'
+import { ServiceRequestsView } from './views/service-requests/service_requests.view'
 
-export const routing_paths = {
-  service_request: 'service-request',
-  create_service_request: 'create'
+export const service_request_routing_paths = {
+  service_request: 'service-requests'
 };
 
 const routes: Routes = [
   {
-    path: routing_paths.create_service_request,
-    component: CreateServiceRequestView
+    path: '',
+    component: ServiceRequestsView
   }
 ];
 

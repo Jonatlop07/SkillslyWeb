@@ -2,14 +2,11 @@ import { Injectable } from '@angular/core'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { environment } from '../../../../environments/environment'
-import { JwtService } from '../../authentication/services/jwt.service'
+import { JwtService } from '../../../core/service/jwt.service'
 import { SearchUserInputForm } from '../types/search_users_input_form.interface'
 import { SearchUserResponse } from '../types/search_users_response.interface'
-import { SocialModule } from '../social.module'
 
-@Injectable({
-  providedIn: SocialModule
-})
+@Injectable()
 export class SearchService {
 
   private readonly API_URL: string = environment.API_URL;

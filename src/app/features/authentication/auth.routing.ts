@@ -1,11 +1,12 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { RegisterComponent } from './components/register/register.component'
-import { LoginComponent } from './components/login/login.component'
-import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component'
-import { ResetPasswordComponent } from './components/reset-password/reset-password.component'
+import { RegisterView } from './views/register/register.view'
+import { LoginView } from './views/login/login.view'
+import { PasswordRecoveryView } from './views/password-recovery/password_recovery.view'
+import { ResetPasswordView } from './views/reset-password/reset_password.view'
 
-export const routing_paths = {
+export const auth_routing_paths = {
+  auth: 'auth',
   sign_up: 'sign-up',
   sign_in: 'sign-in',
   password_recovery: 'password-recovery',
@@ -13,13 +14,14 @@ export const routing_paths = {
 };
 
 const routes: Routes = [
-  { path: routing_paths.sign_up, component: RegisterComponent },
-  { path: routing_paths.sign_in, component: LoginComponent },
-  { path: routing_paths.password_recovery, component: PasswordRecoveryComponent },
-  { path: routing_paths.password_reset, component: ResetPasswordComponent },
+  { path: auth_routing_paths.sign_up, component: RegisterView },
+  { path: auth_routing_paths.sign_in, component: LoginView },
+  { path: auth_routing_paths.password_recovery, component: PasswordRecoveryView },
+  { path: auth_routing_paths.password_reset, component: ResetPasswordView },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class AuthRoutingModule {}
