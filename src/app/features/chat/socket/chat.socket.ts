@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { JwtService } from '../../authentication/services/jwt.service'
+import { JwtService } from '../../../core/service/jwt.service'
 import { Socket } from 'ngx-socket-io'
 import { environment } from '../../../../environments/environment'
 

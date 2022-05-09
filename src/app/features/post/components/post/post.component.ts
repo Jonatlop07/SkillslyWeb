@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { CommentsService } from '../../services/comments.service'
 import { SharePostInterface } from '../../types/share_post.interface'
 import { DeletePostInterface } from '../../types/delete_post.interface'
-import { routing_paths } from '../../post.routing'
+import { post_routing_paths } from '../../post.routing'
 import { Comment } from '../../types/comment.presenter'
 
 @Component({
@@ -68,7 +68,7 @@ export class PostComponent implements OnInit {
   }
 
   updatePost(post_id: string) {
-    this.router.navigate([routing_paths.edit_post, post_id]);
+    this.router.navigate([post_routing_paths.edit_post, post_id]);
   }
 
   sharePost(post_id: string) {

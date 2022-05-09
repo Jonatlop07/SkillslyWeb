@@ -5,7 +5,7 @@ import { AccountService } from '../../services/account.service'
 import { StripeCardComponent, StripeService } from 'ngx-stripe'
 import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js'
 import { Role } from '../../types/role.enum'
-import { AuthService } from '../../../authentication/services/auth.service'
+import { AuthService } from '../../../../core/service/auth.service'
 
 @Component({
   selector: 'skl-user-roles-settings',

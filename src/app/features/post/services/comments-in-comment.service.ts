@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { JwtService } from '../../authentication/services/jwt.service'
+import { JwtService } from '../../../core/service/jwt.service'
 import { environment } from '../../../../environments/environment'
 import * as moment from 'moment'
-import { PostModule } from '../post.module'
 
-@Injectable({
-  providedIn: PostModule,
-})
+@Injectable()
 export class CommentsInCommentService {
   private readonly API_URL: string = environment.API_URL;
 

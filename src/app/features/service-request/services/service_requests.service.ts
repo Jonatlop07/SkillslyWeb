@@ -4,7 +4,7 @@ import { Observable } from 'rxjs'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { OnUpdateApplicationResponse } from '../types/on_update_application.response'
 import { UpdateRequestPresenter } from '../types/presenter/update_request.presenter'
-import { JwtService } from '../../authentication/services/jwt.service'
+import { JwtService } from '../../../core/service/jwt.service'
 import { ServiceRequestPresenter } from '../types/presenter/service_request.presenter'
 import { ServiceRequestCollectionPresenter } from '../types/presenter/service_request_collection.presenter'
 import { ServiceRequestCollectionModel } from '../model/service_request_collection.model'
@@ -19,11 +19,8 @@ import { ServiceRequestModel } from '../model/service_request.model'
 import { ServiceRequestDetails } from '../types/service_request_details'
 import { MyServiceRequestsState } from '../../../shared/state/service-requests/service_requests.state'
 import { environment } from '../../../../environments/environment'
-import { ServiceRequestModule } from '../service_request.module'
 
-@Injectable({
-  providedIn: ServiceRequestModule
-})
+@Injectable()
 export class ServiceRequestsService {
   @Select(MyServiceRequestsState)
   my_service_requests$: Observable<ServiceRequestCollectionModel>;

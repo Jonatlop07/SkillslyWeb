@@ -9,7 +9,7 @@ import { AccountDataPresenter } from '../../types/account_data.presenter'
 import { AccountService } from '../../services/account.service'
 import { Store } from '@ngxs/store'
 import { Router } from '@angular/router'
-import { AuthService } from '../../../authentication/services/auth.service'
+import { AuthService } from '../../../../core/service/auth.service'
 
 @Component({
   selector: 'skl-account-details',

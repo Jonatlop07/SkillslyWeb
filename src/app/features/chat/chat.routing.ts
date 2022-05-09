@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import ChatView from './views/chat.view'
 
-export const routing_paths = {
+export const chat_routing_paths = {
   chat: 'chat'
 };
 

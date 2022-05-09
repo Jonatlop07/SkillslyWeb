@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router'
 import { FollowRequestsView } from './views/follow-requests/follow_requests.view'
 import { SearchView } from './views/search/search.view'
 
-export const routing_paths = {
+export const social_routing_paths = {
   social: 'social',
   search: 'search/:searchInput',
   follow_requests: 'follow-requests'
@@ -11,11 +11,11 @@ export const routing_paths = {
 
 const routes: Routes = [
   {
-    path: routing_paths.search,
+    path: social_routing_paths.search,
     component: SearchView
   },
   {
-    path: routing_paths.follow_requests,
+    path: social_routing_paths.follow_requests,
     component: FollowRequestsView
   }
 ];

@@ -1,0 +1,284 @@
+<!-- ============================================================== -->
+<!-- Topbar header - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<header class="topbar" data-navbarbg="skin5" style="height: 56px">
+  <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+    <div class="navbar-collapse collapse my-navbar">
+      <!-- ============================================================== -->
+      <!-- toggle and nav items -->
+      <!-- ============================================================== -->
+      <ul class="navbar-nav float-start me-auto">
+        <li class="nav-item d-none d-lg-block">
+          <a
+            class="nav-link sidebartoggler waves-effect waves-light"
+            routerLink="./{{paths.feed.feed}}"
+            data-sidebartype="mini-sidebar"
+          >
+            <span class="d-none d-md-block app-title"> Skillsly </span>
+            ></a
+          >
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span class="d-none d-md-block navbar-element"
+              >Publicaciones <i class="fa fa-angle-down"></i
+            ></span>
+            <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <button routerLink="./{{paths.post.posts}}/{{paths.post.create_post}}" class="dropdown-item">
+                Crear publicación
+              </button>
+            </li>
+            <li>
+              <button (click)="searchPost()" class="dropdown-item">
+                Buscar publicación
+              </button>
+            </li>
+          </ul>
+        </li>
+        <!-- <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span class="d-none d-md-block navbar-element"
+              >Proyectos <i class="fa fa-angle-down"></i
+            ></span>
+            <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <button routerLink="./{{}}" class="dropdown-item">
+                Crear proyecto
+              </button>
+            </li>
+            <li>
+              <button (click)="searchProject()" class="dropdown-item">
+                Buscar Proyecto
+              </button>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span class="d-none d-md-block navbar-element"
+              >Eventos<i class="fa fa-angle-down"></i
+            ></span>
+            <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <button [routerLink]="['./events']" class="dropdown-item">
+                Crear evento
+              </button>
+            </li>
+            <li>
+              <button [routerLink]="['./my-events']" class="dropdown-item">
+                Mis eventos
+              </button>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span class="d-none d-md-block navbar-element"
+              >Grupos<i class="fa fa-angle-down"></i
+            ></span>
+            <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <button [routerLink]="['./my-groups']" class="dropdown-item">
+                Mis grupos
+              </button>
+            </li>
+            <li>
+              <button [routerLink]="['./groups']" class="dropdown-item">
+                Buscar grupos
+              </button>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span class="d-none d-md-block navbar-element"
+            >Ofertas de Servicio<i class="fa fa-angle-down"></i
+            ></span>
+            <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <button [routerLink]="['./service-offers']" class="dropdown-item">
+                Consultar servicios
+              </button>
+            </li>
+          </ul>
+        </li>  -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span class="d-none d-md-block navbar-element"
+            >Solicitudes de Servicio<i class="fa fa-angle-down"></i
+            ></span>
+            <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <button routerLink="./{{paths.service_request.service_request}}" class="dropdown-item">
+                Consultar servicios
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav float-end">
+        <!-- ============================================================== -->
+        <!-- Search -->
+        <!-- ============================================================== -->
+        <li class="search-box mt-3">
+          <span class="p-input-icon-right">
+            <i class="pi pi-search"></i>
+            <input
+              #searchInput
+              type="text"
+              pInputText
+              class="p-inputtext-sm form-control"
+              (keyup.enter)="searchUser(searchInput.value)"
+              placeholder="Busca un usuario, luego enter"
+              style="font-size: 1em"
+            />
+          </span>
+        </li>
+
+        <!-- ============================================================== -->
+        <!-- Follow Request -->
+        <!-- ============================================================== -->
+        <li class="nav-item search-box">
+          <a
+            routerLink="./{{paths.social.social}}/{{paths.social.follow_requests}}"
+            class="nav-link waves-effect waves-dark"
+            ><i
+              class="pi pi-user-plus"
+              style="font-size: 1rem; color: white"
+            ></i
+          ></a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+            href="#"
+            id="notificationsDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="pi pi-bell" style="font-size: 1rem; color: white"> </i>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end user-dd animated noti-feed"
+            aria-labelledby="notificationsDropdown"
+          >
+            <div *ngFor="let notification of notifications" class="card m-2">
+              <a class="dropdown-item" [routerLink]="notification.action_details.route ? [notification.action_details.route] : null">
+                {{ notification.action_details.message }}
+              </a>
+            </div>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="pi pi-user" style="font-size: 1rem; color: white"> </i>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end user-dd animated"
+            aria-labelledby="navbarDropdown"
+          >
+            <!--<a class="dropdown-item" [routerLink]="['./profile']">
+              <i class="pi pi-user me-1 ms-1"></i>
+              Mi perfil</a
+            >-->
+            <a
+              routerLink="./{{paths.chat.chat}}"
+              class="dropdown-item"
+              href="javascript:void(0)"
+            >
+              <i class="pi pi-comments me-1 ms-1"></i>
+              Mis conversaciones
+            </a>
+            <!-- <a class="dropdown-item" href="javascript:void(0)">
+              <i class="pi pi-envelope me-1 ms-1"></i>
+              Inbox
+            </a> -->
+            <div class="dropdown-divider"></div>
+            <a
+              routerLink="./{{paths.user_account.user_account}}"
+              class="dropdown-item"
+              href="javascript:void(0)"
+            >
+              <i class="pi pi-cog me-1 ms-1"></i>
+              Mi cuenta
+            </a>
+
+            <button class="dropdown-item" (click)="logout()">
+              <i class="pi pi-power-off me-1 ms-1"></i>
+              Cerrar sesión
+            </button>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<!-- ============================================================== -->
+<!-- End Topbar header -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->

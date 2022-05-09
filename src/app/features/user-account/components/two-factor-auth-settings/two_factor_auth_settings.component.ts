@@ -4,7 +4,7 @@ import { AccountDataPresenter } from '../../types/account_data.presenter'
 import { FormBuilder } from '@angular/forms'
 import { AccountService } from '../../services/account.service'
 import { LoginResponse } from '../../../authentication/types/login_response.interface'
-import { AuthService } from '../../../authentication/services/auth.service'
+import { AuthService } from '../../../../core/service/auth.service'
 
 @Component({
   selector: 'skl-two-factor-auth-settings',

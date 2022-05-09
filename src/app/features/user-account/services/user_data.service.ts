@@ -1,14 +1,11 @@
 import { environment } from '../../../../environments/environment'
 import { Injectable } from '@angular/core'
-import { JwtService } from '../../authentication/services/jwt.service'
+import { JwtService } from '../../../core/service/jwt.service'
 import { UserDataPresenter } from '../types/user_data.presenter'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { UserAccountModule } from '../user_account.module'
 
-@Injectable({
-  providedIn: UserAccountModule
-})
+@Injectable()
 export class UserDataService {
   private readonly API_URL: string = environment.API_URL;
 

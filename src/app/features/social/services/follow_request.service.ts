@@ -6,7 +6,7 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import { FollowingUsersState } from '../../../shared/state/following_users/following_users.state'
 import { FollowersState } from '../../../shared/state/followers/followers.state'
 import { FollowersModel } from '../model/followers.model'
-import { JwtService } from '../../authentication/services/jwt.service'
+import { JwtService } from '../../../core/service/jwt.service'
 import { SearchUserResponse } from '../types/search_users_response.interface'
 import { User } from '../../user-account/types/user.interface'
 import { UserFollowCollectionPresenter } from '../types/user_follow_collection.presenter'
@@ -15,11 +15,8 @@ import { FollowingUsersModel } from '../model/following_users.model'
 import { StoreFollowers } from '../../../shared/state/followers/followers.actions'
 import { AppendPrivateConversation } from '../../../shared/state/conversations/conversations.actions'
 import { environment } from '../../../../environments/environment'
-import { SocialModule } from '../social.module'
 
-@Injectable({
-  providedIn: SocialModule
-})
+@Injectable()
 export class FollowRequestService {
   @Select(FollowingUsersState) following_users$: Observable<FollowingUsersModel>;
   @Select(FollowersState) followers$: Observable<FollowersModel>;

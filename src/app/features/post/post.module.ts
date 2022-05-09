@@ -6,36 +6,35 @@ import { CommentComponent } from './components/comment/comment.component'
 import { PostComponent } from './components/post/post.component'
 import { PostService } from './services/posts.service'
 import { UserPostCollectionView } from './views/user-post-collection/user_post_collection.view'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { InputTextareaModule } from 'primeng/inputtextarea'
-import { CommonModule } from '@angular/common'
-import { ButtonModule } from 'primeng/button'
+import { PostRoutingModule } from './post.routing'
+import { SharedModule } from '../../shared/shared.module'
 import { RippleModule } from 'primeng/ripple'
 import { InputTextModule } from 'primeng/inputtext'
+import { ReactiveFormsModule } from '@angular/forms'
 import { TooltipModule } from 'primeng/tooltip'
-import { PostRoutingModule } from './post.routing'
+import { CommentsService } from './services/comments.service'
+import { CommentsInCommentService } from './services/comments-in-comment.service'
 
 @NgModule({
   declarations: [
+    CommentInCommentComponent,
+    CommentComponent,
+    PostComponent,
     CreatePostView,
     EditPostView,
     UserPostCollectionView,
-    PostComponent,
-    CommentComponent,
-    CommentInCommentComponent
   ],
   imports: [
+    SharedModule,
     ReactiveFormsModule,
-    InputTextareaModule,
-    CommonModule,
-    ButtonModule,
     RippleModule,
     InputTextModule,
     TooltipModule,
-    FormsModule,
     PostRoutingModule
   ],
   providers: [
+    CommentsService,
+    CommentsInCommentService,
     PostService
   ],
   exports: [

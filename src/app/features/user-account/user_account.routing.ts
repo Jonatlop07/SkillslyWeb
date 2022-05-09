@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserAccountView } from './views/user_account.view';
 
-export const routing_paths = {
+export const  user_account_routing_paths = {
   user_account: 'account',
 };
 

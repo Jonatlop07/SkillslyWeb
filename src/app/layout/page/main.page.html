@@ -1,0 +1,6 @@
+<div [class]="current_active_theme$ | async">
+  <skl-navbar></skl-navbar>
+  <router-outlet>
+    <span class="preloader" *ngIf="loading"></span>
+  </router-outlet>
+</div>

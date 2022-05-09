@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Select } from '@ngxs/store'
 import { SessionState } from '../../../shared/state/session/session.state'
-import { JwtService } from '../../authentication/services/jwt.service'
+import { JwtService } from '../../../core/service/jwt.service'
 import { UpdatePostPresenter } from '../types/update_post.presenter'
 import { toPostContent } from '../types/post_form_data.presenter'
 import { SessionModel } from '../../authentication/model/session.model'
@@ -13,12 +13,9 @@ import { DeletePostInterface } from '../types/delete_post.interface'
 import { PermanentPostPresenter, QueryPostPresenter } from '../types/query_post.presenter'
 import { CreatePostDataPresenter } from '../types/create_post_data.presenter'
 import { environment } from '../../../../environments/environment'
-import { PostModule } from '../post.module'
 
 
-@Injectable({
-  providedIn: PostModule
-})
+@Injectable()
 export class PostService {
   @Select(SessionState) session$: Observable<SessionModel>;
 
