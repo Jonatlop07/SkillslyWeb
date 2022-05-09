@@ -1,4 +1,4 @@
-import { SessionModel } from '../../../models/session.model'
+import { SessionModel } from '../../../features/authentication/model/session.model'
 
 export class SetSessionData {
   static readonly type = '[Login] Set Session Data';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { JwtService } from '../../../services/jwt.service'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpParams } from '@angular/common/http'
 import { environment } from '../../../../environments/environment'
 import { Conversation } from '../types/conversation'
 import { Observable } from 'rxjs'
@@ -20,9 +20,12 @@ import { ConversationCollectionModel } from '../../../models/conversation_collec
 import { GroupConversationDetails } from '../types/group_conversation_details'
 import { AddedMembersPresenter } from '../types/added_members.presenter'
 import { ConversationMemberPresenter } from '../types/conversation_member.presenter'
+import { tap } from 'rxjs/operators'
 
 @Injectable()
 export class ConversationService {
+  private is_charging_messages = false;
+
   @Select(MyConversationsState) conversations$: Observable<ConversationCollectionModel>;
 
   private readonly API_URL: string = environment.API_URL;
@@ -148,14 +151,28 @@ export class ConversationService {
     );
   }
 
-  public getMessages(conversation_id: string): Observable<MessageCollectionPresenter> {
+  public getMessages(conversation_id: string, limit: number, offset: number): Observable<MessageCollectionPresenter> {
+    let pagination = new HttpParams();
+    pagination = pagination.append('limit', limit);
+    pagination = pagination.append('offset', offset);
+    this.is_charging_messages = true;
     return this.http.get<MessageCollectionPresenter>(
-      `${this.API_URL}/chat/${encodeURIComponent(conversation_id)}/messages`,
-      this.jtw_service.getHttpOptions()
+      `${this.API_URL}/chat/${encodeURIComponent(conversation_id)}/messages`, {
+        params: pagination,
+        ...this.jtw_service.getHttpOptions()
+      }
+    ).pipe(
+      tap(() => {
+        this.is_charging_messages = false;
+      })
     );
   }
 
   public getUserId(): string {
     return this.jtw_service.getUserId();
+  }
+
+  public isChargingMessages(): boolean {
+    return this.is_charging_messages;
   }
 }

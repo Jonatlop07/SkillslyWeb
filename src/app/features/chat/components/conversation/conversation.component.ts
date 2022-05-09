@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core'
 import { Store } from '@ngxs/store'
 import { Conversation } from '../../types/conversation'
 import { ConversationService } from '../../services/conversation.service'
@@ -12,8 +12,9 @@ import { AddedMembersPresenter } from '../../types/added_members.presenter'
 import { SelectedConversationPresenter } from '../../types/selected_conversation.presenter'
 import { MessagePresenter } from '../../types/message.presenter'
 import { GroupConversationDetails } from '../../types/group_conversation_details'
-import { FollowService } from '../../../../services/follow.service'
 import { showErrorPopup, showSuccessPopup } from '../../../../shared/pop-up/pop_up.utils'
+import { MessageCollectionPresenter } from '../../types/message_collection.presenter'
+import { FollowRequestService } from '../../../social/services/follow_request.service'
 
 @Component({
   selector: 'skl-conversation',
@@ -35,9 +36,14 @@ export class ConversationComponent implements OnInit {
   @Input('related-users')
   public related_users: Map<string, ConversationMemberPresenter> = new Map<string, ConversationMemberPresenter>();
 
+  @ViewChild('chat_messages') chat_messages: ElementRef;
+
   public is_editing_group_conversation_details = false;
   public is_adding_group_conversation_members = false;
   public current_message: string = '';
+
+  public message_offset = 0;
+  public message_limit = 50;
 
   public edited_conversation_name = '';
 
@@ -46,13 +52,31 @@ export class ConversationComponent implements OnInit {
 
   public constructor(
     private readonly conversation_service: ConversationService,
-    private readonly follow_service: FollowService,
+    private readonly follow_service: FollowRequestService,
     private readonly chat_service: ChatService,
     private readonly store: Store
   ) {
   }
 
   ngOnInit() {
+    this.chat_messages.nativeElement.addEventListener('scroll', this.onScroll);
+  }
+
+  onScroll() {
+    const pos =
+      (document.documentElement.scrollTop || document.body.scrollTop) + 1300;
+    const max =
+      document.documentElement.scrollHeight || document.body.scrollHeight;
+    if (pos > max) {
+      if (!this.conversation_service.isChargingMessages()) {
+        this.conversation_service
+          .getMessages(this.selected_conversation.conversation_id, this.message_limit, this.message_offset)
+          .subscribe((response: MessageCollectionPresenter) => {
+            this.selected_conversation.messages.push(...response.messages);
+            this.message_offset = this.message_offset + this.message_limit;
+          });
+      }
+    }
   }
 
   public toggleEditingGroupConversationDetails() {

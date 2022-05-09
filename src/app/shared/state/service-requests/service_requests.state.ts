@@ -6,7 +6,7 @@ import {
   SetMyServiceRequests,
   UpdateMyServiceRequest
 } from './service_requests.actions'
-import { ServiceRequestCollectionModel } from '../../../models/service_request_collection.model'
+import { ServiceRequestCollectionModel } from '../../../features/service-request/model/service_request_collection.model'
 
 const MY_SERVICE_REQUESTS_STATE_TOKEN = new StateToken<ServiceRequestCollectionModel>('my_service_requests');
 
@@ -73,5 +73,5 @@ export class MyServiceRequestsState {
       )
     })
   }
-  
+
 }

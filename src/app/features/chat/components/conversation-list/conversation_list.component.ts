@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, HostListener, Input } from '@angular/core'
 import { Conversation } from '../../types/conversation'
 import { SelectedConversationPresenter } from '../../types/selected_conversation.presenter'
 import { MessageCollectionPresenter } from '../../types/message_collection.presenter'
@@ -17,6 +17,9 @@ import { SetSelectedConversation } from '../../../../shared/state/conversations/
   styleUrls: ['./conversation_list.component.css']
 })
 export class ConversationListComponent {
+  private message_limit = 10;
+  public message_offset = 0;
+
   public selected_conversation: SelectedConversationPresenter;
 
   @Input('private-conversations')
@@ -52,7 +55,11 @@ export class ConversationListComponent {
       is_private
     };
     this.setRelatedUsersNotInConversation();
-    this.conversation_service.getMessages(this.selected_conversation.conversation_id)
+    this.conversation_service.getMessages(
+      this.selected_conversation.conversation_id,
+      this.message_limit,
+      this.message_offset
+    )
       .subscribe((message_collection: MessageCollectionPresenter) => {
           this.selected_conversation.messages = message_collection.messages
             .sort(

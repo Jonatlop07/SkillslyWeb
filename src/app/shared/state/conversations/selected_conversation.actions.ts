@@ -1,4 +1,4 @@
-import { SelectedConversationPresenter } from '../../../features/chat/types/selected_conversation.presenter'
+import { SelectedConversationPresenter } from 'src/app/features/chat/types/selected_conversation.presenter'
 
 export class SetSelectedConversation {
   static readonly type = '[Chat] Set Selected Conversation';

@@ -1,4 +1,5 @@
-import { User } from '../../../interfaces/user/user.interface'
+import { User } from 'src/app/features/user-account/types/user.interface'
+
 
 export class AppendReceivedFollowRequest {
   static readonly type = '[Auth] Append Received Follow Request';
