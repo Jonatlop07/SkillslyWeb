@@ -62,7 +62,8 @@ export class CommentComponent implements OnInit {
           this.commentInComment = '';
           this.ngOnInit();
         },
-        (err) => {
+        (error) => {
+          console.log(error);
           showErrorPopup('Ocurrió un error al enviar tu comentario')
         }
       );

@@ -1,7 +1,7 @@
 import { DeleteMyPost } from '../../../../shared/state/posts/posts.actions'
 import { PostService } from '../../services/posts.service'
 import { PermanentPostPresenter } from '../../types/query_post.presenter'
-import { QueryReactionsReactors, Reactor } from '../../types/query_reactions.presenter'
+import { QueryReactionsReactors } from '../../types/query_reactions.presenter'
 import { Store } from '@ngxs/store'
 import { Router } from '@angular/router'
 import { MenuItem } from 'primeng/api'
@@ -9,7 +9,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { CommentsService } from '../../services/comments.service'
 import { SharePostInterface } from '../../types/share_post.interface'
 import { DeletePostInterface } from '../../types/delete_post.interface'
-
+import { routing_paths } from '../../post.routing'
 
 @Component({
   selector: 'app-post',
@@ -26,22 +26,11 @@ export class PostComponent implements OnInit {
   public showComments = false;
   public postComments: Array<Comment> = [];
   public comment: string;
-  public user_name = 'nombre de usuario';
   public page = 0;
   public limit = 2;
-  public reactionTypes = ['like', 'fun', 'interested'];
   public display = false;
   public items: MenuItem[];
-  public reactionCount = 0;
   public owns_post = false;
-  public reactors: QueryReactionsReactors = {
-    likes: { reaction_count: 0, reactors: [] },
-    interested: { reaction_count: 0, reactors: [] },
-    fun: { reaction_count: 0, reactors: [] },
-  };
-  public reactedLike = false;
-  public reactedInterested = false;
-  public reactedFun = false;
 
   constructor(
     private commentsService: CommentsService,
@@ -53,11 +42,6 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
     this.owns_post = this.postService.getUserId() === this.post.owner_id;
     this.getComments();
-    this.items = [
-      { label: 'Me gusta', icon: 'pi pi-fw pi-thumbs-up' },
-      { label: 'Me interesa', icon: 'pi pi-fw pi-question-circle' },
-      { label: 'Hahaha' },
-    ];
   }
 
   isImage(referenceType: string): boolean {
@@ -84,7 +68,7 @@ export class PostComponent implements OnInit {
   }
 
   updatePost(post_id: string) {
-    this.router.navigate(['main/post/update', post_id]);
+    this.router.navigate([routing_paths.edit_post, post_id]);
   }
 
   sharePost(post_id: string) {

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { PostsView } from './views/posts/posts.view'
 import { CreatePostView } from './views/create-post/create_post.view'
 import { UserPostCollectionView } from './views/user-post-collection/user_post_collection.view'
 import { EditPostView } from './views/edit-post/edit_post.view'
@@ -13,10 +12,6 @@ export const routing_paths = {
 };
 
 const routes: Routes = [
-  {
-    path: routing_paths.posts,
-    component: PostsView
-  },
   {
     path: routing_paths.create_post,
     component: CreatePostView

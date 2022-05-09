@@ -15,7 +15,7 @@ import { CreatePostDataPresenter } from '../types/create_post_data.presenter'
 import { environment } from '../../../../environments/environment'
 
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class PostService {
   @Select(SessionState) session$: Observable<SessionModel>;
 
@@ -55,7 +55,7 @@ export class PostService {
     }));
   }
 
-  public getPostsOfFriendsCollection(limit: number, offset: number): Observable<Object> {
+  public getPostsOfFriendsCollection(limit: number, offset: number) {
     if (this.isChargingFeedPosts) {
       return of([]);
     }

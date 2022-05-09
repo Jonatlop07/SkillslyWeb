@@ -1,15 +1,15 @@
-import { Component, HostListener, Input } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { Conversation } from '../../types/conversation'
 import { SelectedConversationPresenter } from '../../types/selected_conversation.presenter'
 import { MessageCollectionPresenter } from '../../types/message_collection.presenter'
 import { MessagePresenter } from '../../types/message.presenter'
 import { ConversationMemberPresenter } from '../../types/conversation_member.presenter'
 import { ConversationService } from '../../services/conversation.service'
-import { FollowService } from '../../../../services/follow.service'
 import { ChatService } from '../../services/chat.service'
 import * as moment from 'moment';
 import { Store } from '@ngxs/store'
 import { SetSelectedConversation } from '../../../../shared/state/conversations/selected_conversation.actions'
+import { FollowRequestService } from '../../../social/services/follow_request.service'
 
 @Component({
   selector: 'skl-conversation-list',
@@ -32,16 +32,18 @@ export class ConversationListComponent {
 
   public constructor(
     private readonly conversation_service: ConversationService,
-    private readonly follow_service: FollowService,
+    private readonly follow_service: FollowRequestService,
     private readonly chat_service: ChatService,
     private readonly store: Store
   ) {
   }
 
   public selectConversation(conversation: Conversation) {
-    if (this.selected_conversation)
-      if (conversation.conversation_id !== this.selected_conversation.conversation_id)
+    if (this.selected_conversation) {
+      if (conversation.conversation_id !== this.selected_conversation.conversation_id) {
         this.chat_service.leaveConversation(this.selected_conversation.conversation_id);
+      }
+    }
     this.setSelectedConversation(conversation);
   }
 
@@ -86,9 +88,11 @@ export class ConversationListComponent {
         })
       )
       .filter((user) => {
-          for (const member of this.selected_conversation.conversation_members)
-            if (member.member_id === user.member_id)
+          for (const member of this.selected_conversation.conversation_members) {
+            if (member.member_id === user.member_id) {
               return false;
+            }
+          }
           return true;
         }
       );

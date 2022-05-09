@@ -1,0 +1,140 @@
+<div class="bg-post bg-gradient h-100 overflow-auto">
+  <div class="w-75 mx-auto pt-5">
+    <div class="row align-self-center align-content-center justify-content-center">
+      <div class="col-md-8 ">
+        <div class="card">
+          <form
+            [formGroup]="postForm"
+            (ngSubmit)="onSubmit($event)"
+            class="form-horizontal"
+          >
+            <div class="card-body posts-card">
+              <h3 class="title card-title">Publicación</h3>
+              <div class="row">
+                <div class="col-xs-12">
+                  <button
+                    pButton
+                    pRipple
+                    type="submit"
+                    class="p-button-outlined p-button-rounded post-button p-2"
+                    icon="pi pi-envelope"
+                    [disabled]="postForm.invalid || !postForm.touched"
+                    label="Guardar Publicacion"
+                  >
+                  </button>
+
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    icon="pi pi-times"
+                    class="p-button-outlined p-button-rounded p-2"
+                    [style]="{ 'margin-left': '.5em' }"
+                    (click)="onCancel()"
+                    *ngIf="!this.group_id"
+                    label="Cancelar"
+                  >
+                  </button>
+                  <select
+                    class="select2 form-select shadow-none float-end w-50"
+                    id="privacy"
+                    formControlName="privacy"
+                    *ngIf="!this.group_id"
+                  >
+                    <option value="" disabled>Privacidad</option>
+                    <option value="public">Pública</option>
+                    <option value="private">
+                      Privada (sólo tus seguidores podrán verla)
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <hr/>
+              <div class="form-group-row">
+                <div class="col-xs-12" formArrayName="content">
+                  <div
+                    class="row"
+                    *ngFor="let contentCtrl of controls; let i = index"
+                    [formGroupName]="i"
+                    style="margin-bottom: 10px"
+                  >
+                    <div class="col-xs-12 p-2">
+                      <textarea
+                        pInputTextarea
+                        type="text"
+                        class="form-control p-2"
+                        formControlName="description"
+                        placeholder="Describe tu post!"
+                        rows="6"
+                      >
+                      </textarea>
+                    </div>
+
+                    <div class="col-xs-12 p-2">
+                      <input
+                        pInputText
+                        type="text"
+                        class="form-control p-2"
+                        formControlName="reference"
+                        placeholder="Agrega enlaces a imagenes o videos"
+                      />
+                    </div>
+                    <div class="col-xs-12 p-2">
+                      <input
+                        pInputText
+                        type="text"
+                        class="form-control p-2"
+                        placeholder="Ingresa el tipo de multimedia"
+                        formControlName="reference_type"
+                      />
+                    </div>
+                    <span
+                      class="text-danger p-2"
+                      *ngIf="!contentCtrl.get('reference_type').valid"
+                    >Los tipos aceptados son: imagen o video
+                    </span>
+                    <hr/>
+
+                    <div class="text-end">
+                      <button
+                        pButton
+                        pRipple
+                        type="button"
+                        icon="pi pi-times"
+                        class="p-button-outlined p-button-rounded p-button-primary p-2"
+                        *ngIf="i !== 0"
+                        (click)="onDeleteContent(i)"
+                      >
+                      </button>
+                    </div>
+                  </div>
+                  <div *ngIf="requireOne" class="text-danger p-2">
+                    No puedes crear publicaciones sin contenido!
+                  </div>
+                  <div *ngIf="referenceIncomplete" class="text-danger p-2">
+                    Si quieres poner una imagen o video, debes poner el enlace y
+                    el tipo
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 text-end">
+                      <button
+                        pButton
+                        pRipple
+                        type="button"
+                        icon="pi pi-plus"
+                        class="p-button-outlined p-button-rounded p-button-primary p-2"
+                        label="Agregar contenido"
+                        (click)="onAddContent()"
+                      >
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
