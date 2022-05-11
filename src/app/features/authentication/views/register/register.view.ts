@@ -74,7 +74,7 @@ export class RegisterView implements OnInit {
     ).format('DD/MM/YYYY');
     this.auth_service.registerUser(this.register_form).subscribe(
       () => {
-        this.router.navigate(['/login']);
+        this.router.navigate([`${auth_routing_paths.auth}/${auth_routing_paths.sign_in}`]);
       },
       (err) => {
         Swal.fire('Error', err.error.error, 'error');

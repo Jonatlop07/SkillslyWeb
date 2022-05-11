@@ -12,9 +12,10 @@ import { state_list } from './shared/state/state_list'
 import { HttpClientModule } from '@angular/common/http'
 import { NopagefoundComponent } from './core/components/no-page-found/nopagefound.component'
 import { SharedModule } from './shared/shared.module'
-import { NavbarComponent } from './layout/navbar/navbar.component'
-import { MainPage } from './layout/page/main.page'
-import { AuthPage } from './layout/auth-page/auth.page'
+import { NavbarComponent } from './core/components/navbar/navbar.component'
+import { MainPage } from './core/components/page/main.page'
+import { AuthPage } from './core/components/auth-page/auth.page';
+import { GraphQLModule } from './graphql.module'
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AuthPage } from './layout/auth-page/auth.page'
     NgxsStoragePluginModule.forRoot(),
     CoreModule,
     SharedModule,
-    AppRoutingModule
+    AppRoutingModule,
+    GraphQLModule
   ],
   providers: [],
   bootstrap: [AppComponent]

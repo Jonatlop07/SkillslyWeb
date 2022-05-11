@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { NopagefoundComponent } from './core/components/no-page-found/nopagefound.component'
 import { auth_routing_paths } from './features/authentication/auth.routing'
-import { MainPage } from './layout/page/main.page'
+import { MainPage } from './core/components/page/main.page'
 import { AuthGuard } from './core/guards/auth.guard'
-import { AuthPage } from './layout/auth-page/auth.page'
+import { AuthPage } from './core/components/auth-page/auth.page'
 import { NoAuthGuard } from './core/guards/no_auth.guard'
 
 const routes: Routes = [

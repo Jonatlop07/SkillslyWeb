@@ -79,15 +79,13 @@ export class TwoFactorAuthSettingsComponent {
   }
 
   private authenticate(result: LoginResponse) {
-    const { id, customer_id, email, roles, access_token } = result;
+    const { id, email, access_token } = result;
     const now = new Date();
     now.setSeconds(7200);
     this.auth_service
       .setSessionData({
         user_id: id,
-        customer_id,
         user_email: email,
-        user_roles: roles,
         access_token,
         expires_date: now.getTime().toString(),
         is_two_factor_auth_enabled: result.is_two_factor_auth_enabled

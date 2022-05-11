@@ -73,14 +73,6 @@ export class JwtService {
     return new Date();
   }
 
-  public getUserRoles(): Array<string> {
-    let user_roles: Array<string> = [];
-    this.session$.subscribe((session) => {
-      user_roles = session.user_roles;
-    });
-    return user_roles;
-  }
-
   public isTwoFactorAuthenticationEnabled(): boolean {
     let tfa_enabled = false;
     this.session$.subscribe((session) => {

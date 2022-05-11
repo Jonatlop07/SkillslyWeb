@@ -2,12 +2,15 @@ import { Component } from '@angular/core'
 import AccountDataResponse from '../types/account_data.response'
 import { AccountService } from '../services/account.service'
 import { AccountDataPresenter } from '../types/account_data.presenter'
+import { Subscription } from 'rxjs'
 
 @Component({
   templateUrl: './user_account.view.html',
   styleUrls: ['./user_account.view.css']
 })
 export class UserAccountView {
+  private user_account_data_subscription: Subscription;
+
   public user_account_details: AccountDataPresenter;
 
   constructor(
@@ -19,10 +22,10 @@ export class UserAccountView {
   }
 
   public getAccountData(): void {
-    this.account_service
+    this.user_account_data_subscription = this.account_service
       .getUserAccountData()
-      .subscribe((account_data: AccountDataResponse) => {
-        this.user_account_details = account_data;
+      .subscribe(({ data }) => {
+        this.user_account_details = data.user as AccountDataResponse;
       });
   }
 }

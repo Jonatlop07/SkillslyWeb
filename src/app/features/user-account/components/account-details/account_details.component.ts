@@ -10,6 +10,7 @@ import { AccountService } from '../../services/account.service'
 import { Store } from '@ngxs/store'
 import { Router } from '@angular/router'
 import { AuthService } from '../../../../core/service/auth.service'
+import { auth_routing_paths } from '../../../authentication/auth.routing'
 
 @Component({
   selector: 'skl-account-details',
@@ -57,7 +58,8 @@ export class AccountDetailsComponent implements OnInit {
         ...this.account_form,
         is_two_factor_auth_enabled: this.user_account_details.is_two_factor_auth_enabled
       })
-      .subscribe(async (account_data: AccountDataResponse) => {
+      .subscribe(async ({ data }) => {
+        const account_data: AccountDataResponse = data.updateUserAccount;
         await showSuccessPopup('Has actualizado tu cuenta exitosamente');
         this.user_account_details = account_data;
         this.initForm(account_data);
@@ -76,7 +78,7 @@ export class AccountDetailsComponent implements OnInit {
       .deleteUserAccount()
       .subscribe(() => {
           this.auth_service.logout();
-          this.router.navigate(['/login']);
+          this.router.navigate([`/${auth_routing_paths.auth}/${auth_routing_paths.sign_in}`]);
         },
         (err) => {
           showErrorPopup(err.error.error);
