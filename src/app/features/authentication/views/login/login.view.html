@@ -36,12 +36,12 @@
             <button pButton type="submit" label="Iniciar Sesión"></button>
           </div>
           <div class="recover mt-md-3">
-            <a routerLink="../{{paths.password_recovery}}">¿Olvidaste tu contraseña?</a>
+            <a routerLink="/{{paths.auth}}/{{paths.password_recovery}}">¿Olvidaste tu contraseña?</a>
           </div>
         </form>
         <p-divider></p-divider>
         <div class="m-md-5 mt-md-1 mb-md-3">
-          <button pButton class="info" type="button" routerLink="../{{paths.sign_up}}" label="Registrarse"></button>
+          <button pButton class="info" type="button" routerLink="/{{paths.auth}}/{{paths.sign_up}}" label="Registrarse"></button>
         </div>
       </div>
     </div>

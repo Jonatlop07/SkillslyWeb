@@ -1,8 +1,8 @@
 import { OnInit, Component } from "@angular/core";
 import { map } from "rxjs/operators";
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { ThemeService } from '../../core/service/theme.service'
-import { themes } from '../../core/constants/themes'
+import { ThemeService } from '../../service/theme.service'
+import { themes } from '../../constants/themes'
 import { Event, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router'
 
 @Component({

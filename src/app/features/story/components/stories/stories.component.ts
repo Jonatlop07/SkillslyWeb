@@ -12,6 +12,7 @@ import { StoryService } from '../../services/story.service'
   styleUrls: ['./stories.component.css'],
 })
 export class StoriesComponent implements OnInit {
+
   users: Array<string>;
   dataStories: any = {};
   userStories: any[] = [];
@@ -26,7 +27,8 @@ export class StoriesComponent implements OnInit {
   constructor(
     private storyService: StoryService,
     private accountService: AccountService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.getLoggedUserInfo();
@@ -40,7 +42,7 @@ export class StoriesComponent implements OnInit {
       reference: this.reference,
       referenceType: this.referenceType,
     };
-    if (!this.isValidStoryData()){
+    if (!this.isValidStoryData()) {
       return;
     }
     this.storyService.sendStory(story).subscribe(
@@ -89,9 +91,10 @@ export class StoriesComponent implements OnInit {
   }
 
   getLoggedUserInfo() {
-    this.accountService.getUserAccountData().subscribe((response) => {
-      this.userLogged = response;
-    });
+    this.accountService.getUserAccountData()
+      .subscribe(({ data }) => {
+        this.userLogged = data.user;
+      });
   }
 
   getFormattedDate(date: string) {
@@ -102,6 +105,7 @@ export class StoriesComponent implements OnInit {
   showModalDialog() {
     this.displayModal = true;
   }
+
   showModalDialogAddStory() {
     this.displayModalAddStory = true;
   }

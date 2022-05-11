@@ -6,7 +6,7 @@ import { Router } from '@angular/router'
 import { AuthService } from '../../../../core/service/auth.service'
 import { LoginForm } from '../../types/login_form.inteface'
 import { auth_routing_paths } from '../../auth.routing'
-import { user_account_routing_paths } from '../../../user-account/user_account.routing'
+import { feed_routing_paths } from '../../../feed/feed.routing'
 
 @Component({
   selector: 'skl-login',
@@ -61,9 +61,9 @@ export class LoginView implements OnInit {
       return;
     }
     this.loginForm = this.form.value;
-
     this.authService.loginUser(this.loginForm).subscribe(
-      (result: LoginResponse) => {
+      ({ data } ) => {
+        const result: LoginResponse = data.login;
         if (!result.id) {
           const { access_token } = result;
           const now = new Date();
@@ -71,12 +71,10 @@ export class LoginView implements OnInit {
           this.authService
             .setSessionData({
               user_id: null,
-              customer_id: null,
               user_email: null,
-              user_roles: null,
               access_token,
               expires_date: now.getTime().toString(),
-              is_two_factor_auth_enabled: result.is_two_factor_auth_enabled,
+              is_two_factor_auth_enabled: false,
             })
             .subscribe(() => {
               this.displaying_two_factor_auth_modal = true;
@@ -86,7 +84,7 @@ export class LoginView implements OnInit {
         }
       },
       (err) => {
-        Swal.fire('Error', err.error.error, 'error');
+        Swal.fire('Error', err, 'error');
       }
     );
   }
@@ -107,21 +105,19 @@ export class LoginView implements OnInit {
   }
 
   private effectuateLogin(result: LoginResponse) {
-    const { id, customer_id, email, roles, access_token } = result;
+    const { id, email, access_token } = result;
     const now = new Date();
     now.setSeconds(7200);
     this.authService
       .setSessionData({
         user_id: id,
-        customer_id,
         user_email: email,
-        user_roles: roles,
         access_token,
         expires_date: now.getTime().toString(),
-        is_two_factor_auth_enabled: result.is_two_factor_auth_enabled,
+        is_two_factor_auth_enabled: false,
       })
       .subscribe(() => {
-        this.router.navigate([user_account_routing_paths.user_account]);
+        this.router.navigate([feed_routing_paths.feed]);
       });
   }
 

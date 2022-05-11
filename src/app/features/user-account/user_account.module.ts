@@ -3,7 +3,6 @@ import { UserAccountView } from './views/user_account.view'
 import { UserAccountRoutingModule } from './user_account.routing'
 import { AccountDetailsComponent } from './components/account-details/account_details.component'
 import { TwoFactorAuthSettingsComponent } from './components/two-factor-auth-settings/two_factor_auth_settings.component'
-import { UserRolesSettingsComponent } from './components/user-roles-settings/user_roles_settings.component'
 import { NgxStripeModule } from 'ngx-stripe'
 import { AccountService } from './services/account.service'
 import { UserDataService } from './services/user_data.service'
@@ -11,6 +10,7 @@ import { DialogModule } from 'primeng/dialog'
 import { CalendarModule } from 'primeng/calendar'
 import { ReactiveFormsModule } from '@angular/forms'
 import { SharedModule } from '../../shared/shared.module'
+import { UserRolesSettingsComponent } from './components/user-roles-settings/user_roles_settings.component'
 
 @NgModule({
   declarations: [
