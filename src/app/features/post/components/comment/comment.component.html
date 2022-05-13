@@ -9,31 +9,129 @@
       />
     </div> -->
     <div class="comment-element">
-      <div class="comment m-1">
-        <span class="mb-0 font-medium p-0">{{ comment.name }}</span> ·
-        <small class="font-weight-lighter" style="font-size: 12px">
-          {{ comment.email }}</small
-        >
-        <p class="mb-0 font-weight-light p-0" style="font-size: 13px">
-          {{ comment.comment }}
-        </p>
-      </div>
-
-      <div class="px-3" style="font-size: 12px">
-        <div class="flex">
-          <small class="font-bold clickable" (click)="handleShowResponse()">
-            Responder
-          </small>
-          ·
-          <small
-            class="text-muted clickable"
-            pTooltip="{{ viewDate() }}"
-            tooltipPosition="bottom"
-            >{{ transformDate() }}
-          </small>
+      <div *ngIf="!comment_updating">
+        <div class="comment m-2">
+          <div class="row">
+            <div class="col-xs-12">
+              <span class="mb-0 font-medium p-0">{{ comment.name }}</span> ·
+              <small class="font-weight-lighter" style="font-size: 12px">
+                {{ comment.email }}</small
+              >
+              <div class="dropdown float-end" *ngIf="!owns_comment">
+                <a
+                  class="pi pi-ellipsis-h dropdown"
+                  style="color: grey"
+                  role="button"
+                  id="dropdownMenuLink"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  type="button"
+                  id="dropdownMenuButton1"
+                >
+                </a>
+                <ul
+                  class="dropdown-menu pull-left dropdown-menu-left"
+                  aria-labelledby="dropdownMenuLink"
+                >
+                  <li>
+                    <a class="dropdown-item" (click)="toggleUpdateComment()"
+                      >Editar</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" (click)="deleteComment()"
+                      >Eliminar</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="p-1 row justify-content-center"
+                *ngIf="comment.media_locator"
+              >
+                <img [src]="comment.media_locator" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <p class="mb-0 font-weight-light p-0" style="font-size: 13px">
+            {{ comment.description }}
+          </p>
+        </div>
+        <div class="px-3" style="font-size: 12px">
+          <div class="flex">
+            <small class="font-bold clickable" (click)="handleShowResponse()">
+              Responder
+            </small>
+            ·
+            <small
+              class="text-muted clickable"
+              pTooltip="{{ viewDate() }}"
+              tooltipPosition="bottom"
+              >{{ transformDate() }}
+            </small>
+          </div>
         </div>
       </div>
-
+      <div *ngIf="comment_updating">
+        <div class="row py-2">
+          <div class="col-auto">
+            <img
+              src="src/assets/images/users/d4.jpg"
+              alt="user"
+              width="30"
+              class="rounded-circle"
+            />
+          </div>
+          <div
+            class="p-1 row justify-content-center"
+            *ngIf="comment.media_locator"
+          >
+            <img [src]="comment.media_locator" class="img-fluid" />
+          </div>
+          <div class="form-group-row">
+            <div
+              class="d-flex justify-content-center gap-1 my-4"
+              style="height: 30px"
+            >
+              <input
+                type="text"
+                class="form-control w-80"
+                id="description"
+                placeholder="Cambia tu comentario ..."
+                pInputText
+                style="font-size: 13px"
+                [(ngModel)]="description"
+                (keyup.enter)="sendComment()"
+              />
+              <p-button
+                icon="pi pi-camera"
+                styleClass="p-button-outlined"
+                pTooltip="Sube una imagen o video"
+                tooltipPosition="top"
+                (click)="uploader.click()"
+              >
+                <input
+                  type="file"
+                  class="custom-file-input"
+                  hidden
+                  id="media_resource"
+                  #uploader
+                  accept="image/png, image/jpeg"
+                  (change)="handleFileInput($event)"
+                />
+              </p-button>
+              <p-button
+                icon="pi pi-send"
+                styleClass="p-button-outlined"
+                pTooltip="Enviar comentario"
+                tooltipPosition="top"
+                (click)="updateComment()"
+              >
+              </p-button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="flex row">
         <small
           *ngIf="commentsInComment.length === 0; else elseBlock"
@@ -46,8 +144,9 @@
         <ng-template #elseBlock>
           <app-comment-in-comment
             class="mx-2"
-            *ngFor="let comment of commentsInComment"
+            *ngFor="let comment of commentsInComment; let i = index"
             [comment]="comment"
+            [index]="i"
           >
           </app-comment-in-comment>
         </ng-template>
@@ -79,17 +178,48 @@
           class="rounded-circle"
         />
       </div>
-      <div class="col-10">
-        <input
-          type="text"
-          class="form-control w-100"
-          id="fname"
-          placeholder="Escribe un comentario ..."
-          pInputText
-          style="font-size: 13px"
-          [(ngModel)]="commentInComment"
-          (keyup.enter)="sendComment()"
-        />
+
+      <div class="form-group-row">
+        <div
+          class="d-flex justify-content-center gap-1 my-4"
+          style="height: 30px"
+        >
+          <input
+            type="text"
+            class="form-control w-80"
+            id="description"
+            placeholder="Escribe un comentario ..."
+            pInputText
+            style="font-size: 13px"
+            [(ngModel)]="commentInComment"
+            (keyup.enter)="sendComment()"
+          />
+          <p-button
+            icon="pi pi-camera"
+            styleClass="p-button-outlined"
+            pTooltip="Sube una imagen o video"
+            tooltipPosition="top"
+            (click)="uploader.click()"
+          >
+            <input
+              type="file"
+              class="custom-file-input"
+              hidden
+              id="media_resource"
+              #uploader
+              accept="image/png, image/jpeg"
+              (change)="handleFileInput($event)"
+            />
+          </p-button>
+          <p-button
+            icon="pi pi-send"
+            styleClass="p-button-outlined"
+            pTooltip="Enviar comentario"
+            tooltipPosition="top"
+            (click)="createInnerComment()"
+          >
+          </p-button>
+        </div>
       </div>
     </div>
   </div>

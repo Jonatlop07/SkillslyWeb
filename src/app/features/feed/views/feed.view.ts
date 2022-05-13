@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { PostService } from '../../post/services/posts.service'
-import { PermanentPostPresenter } from '../../post/types/query_post.presenter'
+import { PostService } from '../../post/services/posts.service';
+import { PermanentPostPresenter } from '../../post/types/query_post.presenter';
 
 @Component({
   selector: 'skl-feed',
@@ -8,14 +8,26 @@ import { PermanentPostPresenter } from '../../post/types/query_post.presenter'
   styleUrls: ['./feed.view.css'],
 })
 export class FeedView implements OnInit {
-
   public foundPosts: PermanentPostPresenter[];
   public limitPost: number;
   public offsetPost: number;
+  public test_post = {
+    owner_id: '1',
+    user_name: 'me',
+    post_id: '1',
+    content: [
+      {
+        description: 'Mi test post',
+        reference:
+          'https://somoskudasai.com/wp-content/uploads/2022/03/kaguya-sama.jpg',
+        reference_type: 'imagen',
+      },
+    ],
+    privacy: 'public',
+    created_at: new Date().toString(),
+  };
 
-  constructor(
-    private postService: PostService
-  ) {}
+  constructor(private postService: PostService) {}
 
   ngOnInit(): void {
     this.limitPost = 15;
@@ -24,10 +36,11 @@ export class FeedView implements OnInit {
       this.limitPost,
       this.offsetPost
     );
-    postServiceResponse.subscribe((res: any) => {
-      this.foundPosts = res.posts;
-      this.offsetPost = this.offsetPost + this.limitPost;
-    });
+    this.foundPosts = [this.test_post, this.test_post, this.test_post];
+    // postServiceResponse.subscribe((res: any) => {
+    //   this.foundPosts = res.posts;
+    //   this.offsetPost = this.offsetPost + this.limitPost;
+    // });
   }
 
   @HostListener('window:scroll', ['$event'])

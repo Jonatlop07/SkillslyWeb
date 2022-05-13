@@ -1,16 +1,16 @@
-<div class="post-card  p-4 align-self-center">
+<div class="post-card p-4 align-self-center">
   <div class="d-flex text-post">
     <div class="d-flex flex-fill">
       <div class="p-2">
         <img
-        src="src/assets/images/users/user.png"
-        alt="user"
-        width="35"
-        class="rounded-circle"
-      />
+          src="src/assets/images/users/user.png"
+          alt="user"
+          width="35"
+          class="rounded-circle"
+        />
       </div>
       <div class="align-self-center">
-        <h5 class="font-medium"> {{ post.user_name }} </h5>
+        <h5 class="font-medium">{{ post.user_name }}</h5>
       </div>
     </div>
     <div class="d-flex">
@@ -70,19 +70,18 @@
   </div>
   <div class="dropdown-divider"></div>
 
-  <div
+  <!-- <div
     class="container flex w-100 my-1 align-items-center gap-2"
     style="height: 46px"
   >
-    <!-- <div class="like">
+    <div class="like">
       <p-button
         icon="pi pi-thumbs-up"
         label="Like"
         styleClass="p-button-text"
-        (click)="onAddReaction(reactionTypes[0], post.post_id)"
       ></p-button>
-    </div> -->
-  </div>
+    </div>
+  </div> -->
   <div class="dropdown-divider"></div>
   <div class="d-flex justify-content-start gap-3 my-4" style="height: 30px">
     <p-button
@@ -108,47 +107,83 @@
           class="rounded-circle"
         />
       </div>
-      <div class="col-10">
-        <input
-          type="text"
-          class="form-control w-100"
-          id="fname"
-          placeholder="Escribe un comentario ..."
-          pInputText
-          style="font-size: 13px"
-          [(ngModel)]="comment"
-          (keyup.enter)="sendComment()"
-        />
-      </div>
-    </div>
-    <div class="row card-body text-post">
-      <div class="flex">
-        <small
-          *ngIf="postComments.length === 0; else elseBlock"
-          class="font-bold"
-          style="font-size: 13px"
-        >
-          No hay comentarios
-        </small>
 
-        <small
-          *ngIf="page > 0"
-          class="text-muted clickable"
-          (click)="resetComments()"
+      <div class="col-10">
+        <div
+          class="d-flex justify-content-center gap-1 my-4"
+          style="height: 30px"
         >
-          Inicio
-        </small>
+          <input
+            type="text"
+            class="form-control w-80"
+            id="description"
+            placeholder="Escribe un comentario ..."
+            pInputText
+            style="font-size: 13px"
+            [(ngModel)]="comment"
+            (keyup.enter)="sendComment()"
+          />
+          <p-button
+            icon="pi pi-camera"
+            styleClass="p-button-outlined"
+            pTooltip="Sube una imagen o video"
+            tooltipPosition="top"
+            (click)="uploader.click()"
+          >
+            <label for="media_resource"></label>
+            <input
+              type="file"
+              class="custom-file-input"
+              hidden
+              #uploader
+              id="media_resource"
+              accept="image/png, image/jpeg"
+              (change)="handleFileInput($event)"
+            />
+          </p-button>
+          <p-button
+            icon="pi pi-send"
+            styleClass="p-button-outlined"
+            pTooltip="Enviar comentario"
+            tooltipPosition="top"
+            (click)="sendComment()"
+          >
+          </p-button>
+        </div>
       </div>
-      <ng-template #elseBlock>
-        <app-comment *ngFor="let comment of postComments" [comment]="comment">
-        </app-comment>
-        <span
-          class="clickable m-2"
-          (click)="handleMoreComments()"
-          style="font-size: 13px"
-          >Ver más respuestas</span
-        >
-      </ng-template>
+      <div class="row card-body text-post">
+        <div class="flex">
+          <small
+            *ngIf="postComments.length === 0; else elseBlock"
+            class="font-bold"
+            style="font-size: 13px"
+          >
+            No hay comentarios
+          </small>
+
+          <small
+            *ngIf="page > 0"
+            class="text-muted clickable"
+            (click)="resetComments()"
+          >
+            Inicio
+          </small>
+        </div>
+        <ng-template #elseBlock>
+          <app-comment
+            *ngFor="let comment of postComments; let i = index"
+            [comment]="comment"
+            [index]="i"
+          >
+          </app-comment>
+          <span
+            class="clickable m-2"
+            (click)="handleMoreComments()"
+            style="font-size: 13px"
+            >Ver más respuestas</span
+          >
+        </ng-template>
+      </div>
     </div>
   </div>
 </div>
