@@ -317,7 +317,7 @@
 
     // only used by resizable
     hasScroll: function (el, a) {
-      //If overflow is hidden, the element might have extra content, but the user wants to hide it
+      //If overflow is hidden, the element might have extra content_element, but the user wants to hide it
       if ($(el).css("overflow") === "hidden") {
         return false;
       }
@@ -5862,7 +5862,7 @@
     _create: function () {
       var self = this;
       this.element
-        .addClass("ui-menu ui-widget ui-widget-content ui-corner-all")
+        .addClass("ui-menu ui-widget ui-widget-content_element ui-corner-all")
         .attr({
           role: "listbox",
           "aria-activedescendant": "ui-active-menuitem",
@@ -6532,7 +6532,7 @@
           " ui-slider-" +
           this.orientation +
           " ui-widget" +
-          " ui-widget-content" +
+          " ui-widget-content_element" +
           " ui-corner-all" +
           (o.disabled ? " ui-slider-disabled ui-disabled" : "")
       );
@@ -6706,7 +6706,7 @@
             " ui-slider-vertical" +
             " ui-slider-disabled" +
             " ui-widget" +
-            " ui-widget-content" +
+            " ui-widget-content_element" +
             " ui-corner-all"
         )
         .removeData("slider")
@@ -7221,7 +7221,7 @@
 
     _create: function () {
       this.element
-        .addClass("ui-progressbar ui-widget ui-widget-content ui-corner-all")
+        .addClass("ui-progressbar ui-widget ui-widget-content_element ui-corner-all")
         .attr({
           role: "progressbar",
           "aria-valuemin": this.min,
@@ -7239,7 +7239,7 @@
 
     destroy: function () {
       this.element
-        .removeClass("ui-progressbar ui-widget ui-widget-content ui-corner-all")
+        .removeClass("ui-progressbar ui-widget ui-widget-content_element ui-corner-all")
         .removeAttr("role")
         .removeAttr("aria-valuemin")
         .removeAttr("aria-valuemax")

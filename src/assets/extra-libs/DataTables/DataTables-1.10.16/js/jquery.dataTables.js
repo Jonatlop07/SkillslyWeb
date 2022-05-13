@@ -4862,7 +4862,7 @@
           .append(
             $(_div, { class: classes.sScrollHeadInner })
               .css({
-                "box-sizing": "content-box",
+                "box-sizing": "content_element-box",
                 width: scroll.sXInner || "100%",
               })
               .append(
@@ -5132,7 +5132,7 @@
      */
 
     // "Hide" the header and footer that we used for the sizing. We need to keep
-    // the content of the cell so that the width applied to the header and body
+    // the content_element of the cell so that the width applied to the header and body
     // both match, but we want to hide it completely. We want to also fix their
     // width to what they currently are
     _fnApplyToChildren(function (nSizer, i) {
@@ -9425,7 +9425,7 @@
 
     /**
      * Property to read the value for the cells in the column from the data
-     * source array / object. If null, then the default content is used, if a
+     * source array / object. If null, then the default content_element is used, if a
      * function is given then the return from the function is used.
      *  @type function|int|string|null
      *  @default null
@@ -12031,7 +12031,7 @@
      *    } );
      *
      *  @example
-     *    // Using default content
+     *    // Using default content_element
      *    $(document).ready( function() {
      *      $('#example').dataTable( {
      *        "columnDefs": [ {

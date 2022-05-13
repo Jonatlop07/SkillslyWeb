@@ -24,7 +24,7 @@ export class MyPostsState {
   public deleteMyPost(ctx: StateContext<PostCollectionModel>, action: DeleteMyPost) {
     const state = ctx.getState();
     ctx.setState({
-      posts: state.posts.filter(post => post.post_id !== action.post_id)
+      posts: state.posts.filter(post => post.id !== action.id)
     });
   }
 

@@ -272,7 +272,7 @@
     plot.showTooltip = function (target, position) {
       var $tip = that.getDomElement();
 
-      // convert tooltip content template to real tipText
+      // convert tooltip content_element template to real tipText
       var tipText = that.stringFormat(that.tooltipOptions.content, target);
       if (tipText === "") return;
 
@@ -326,10 +326,10 @@
   };
 
   /**
-   * core function, create tooltip content
-   * @param  {string} content - template with tooltip content
+   * core function, create tooltip content_element
+   * @param  {string} content - template with tooltip content_element
    * @param  {object} item - Flot item
-   * @return {string} real tooltip content for current item
+   * @return {string} real tooltip content_element for current item
    */
   FlotTooltip.prototype.stringFormat = function (content, item) {
     var percentPattern = /%p\.{0,1}(\d{0,})/;
@@ -369,12 +369,12 @@
       item.series.label = item.series.originSeries.label;
     }
 
-    // if it is a function callback get the content string
+    // if it is a function callback get the content_element string
     if (typeof content === "function") {
       content = content(item.series.label, x, y, item);
     }
 
-    // the case where the passed content is equal to false
+    // the case where the passed content_element is equal to false
     if (typeof content === "boolean" && !content) {
       return "";
     }
@@ -583,7 +583,7 @@
         precision = RegExp.$1;
         value = value.toFixed(precision);
 
-        // only replace content if precision exists, in other case use thickformater
+        // only replace content_element if precision exists, in other case use thickformater
         content = content.replace(pattern, value);
       }
     }

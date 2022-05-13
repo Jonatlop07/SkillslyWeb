@@ -1,4 +1,4 @@
 export interface DeletePostInterface {
-    post_id: string;
+    id: string;
     group_id?: string;
 }

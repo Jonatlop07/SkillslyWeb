@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { QueryPostPresenter } from '../../types/query_post.presenter'
+import { QueryPostPresenter} from '../../types/query_post.presenter'
 import { ActivatedRoute } from '@angular/router'
 import { PostCollectionModel, PostModel } from '../../model/post_collection.model'
 import { PostService } from '../../services/posts.service'
@@ -17,7 +17,6 @@ import { MyPostsState } from '../../../../shared/state/posts/posts.state'
 export class UserPostCollectionView {
 
   public post_owner: string;
-  public userName: string;
   @Select(MyPostsState) my_posts$: Observable<PostCollectionModel>;
   public posts: Array<PostModel>
 
@@ -35,19 +34,20 @@ export class UserPostCollectionView {
         owner_id: this.post_owner,
       };
       this.postService
-        .queryPostCollection(queryPostParams)
-        .subscribe((res: any) => {
-          this.store.dispatch(new SetMyPosts({ posts: res.posts }));
+        .getPostCollection(queryPostParams)
+        .subscribe(({data}) => {
+          this.store.dispatch(new SetMyPosts({ posts: data.postsByOwnerId }));
           this.my_posts$.subscribe(my_posts => {
             this.posts = my_posts.posts;
           })
+          console.log();
         });
     })
   }
 
   sharePost(post_id: string): void {
     const sharePostInterface: SharePostInterface = {
-      post_id: post_id
+      id: post_id
     };
     this.postService
       .sharePost(sharePostInterface)

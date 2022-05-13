@@ -1,14 +1,15 @@
-import { PostContentData } from '../types/create_post_data.presenter'
+import {ContentElementPresenter} from "../types/query_post.presenter";
 
 export interface PostCollectionModel {
   posts: Array<PostModel>
 }
 
 export interface PostModel {
+  id: string;
   owner_id: string;
-  user_name: string;
-  post_id: string;
-  content: PostContentData[];
-  privacy: string;
   created_at: string;
+  updated_at: string;
+  description: string;
+  privacy: string;
+  content_element: ContentElementPresenter[];
 }

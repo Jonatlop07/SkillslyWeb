@@ -1,10 +1,11 @@
 export interface PostContentData {
-  description?: string;
-  reference?: string;
-  reference_type?: string;
+  description: string;
+  media: File;
+  media_type: string;
 }
 
 export interface CreatePostDataPresenter {
-  content: PostContentData[];
+  description: string,
+  content_element: PostContentData[];
   privacy: string;
 }

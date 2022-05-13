@@ -16,7 +16,7 @@ export class CreatePostView {
   allowedTypes = '^imagen$|^video$';
   postForm: FormGroup;
   requireOne = false;
-  referenceIncomplete = false;
+  mediaIncomplete = false;
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
@@ -25,11 +25,12 @@ export class CreatePostView {
 
   private initForm() {
     this.postForm = new FormGroup({
-      content: new FormArray([
+      description: new FormControl(),
+      content_element: new FormArray([
         new FormGroup({
           description: new FormControl(null, Validators.maxLength(250)),
-          reference: new FormControl(null),
-          reference_type: new FormControl(null, [
+          media: new FormControl(null),
+          media_type: new FormControl(null, [
             Validators.pattern(`${this.allowedTypes}`),
           ]),
         }),
@@ -39,15 +40,15 @@ export class CreatePostView {
   }
 
   get controls() {
-    return (<FormArray> this.postForm.get('content')).controls;
+    return (<FormArray> this.postForm.get('content_element')).controls;
   }
 
   onAddContent() {
-    (<FormArray> this.postForm.get('content')).push(
+    (<FormArray> this.postForm.get('content_element')).push(
       new FormGroup({
         description: new FormControl(null, Validators.maxLength(250)),
-        reference: new FormControl(null),
-        reference_type: new FormControl(null, [
+        media: new FormControl(null),
+        media_type: new FormControl(null, [
           Validators.pattern(`${this.allowedTypes}`),
         ]),
       })
@@ -55,24 +56,25 @@ export class CreatePostView {
   }
 
   onDeleteContent(index: number) {
-    (<FormArray> this.postForm.get('content')).removeAt(index);
+    (<FormArray> this.postForm.get('content_element')).removeAt(index);
   }
 
   onCancel() {
     this.postService.onToggleCreate();
-    this.router.navigate(['./main/feed']);
+    this.router.navigate(['./feed']);
   }
 
   onSubmit($event: Event) {
-    const controls = (<FormArray> this.postForm.get('content')).controls;
+    const controls = (<FormArray> this.postForm.get('content_element')).controls;
     if (this.validateContent(controls)) {
-      this.referenceIncomplete = false;
+      this.mediaIncomplete = false;
       this.requireOne = false;
-      this.postService.createPost(this.postForm.value, this.group_id).subscribe((res:any) => {
+      console.log(this.postForm.value);
+      this.postService.createPost(this.postForm.value).subscribe((res:any) => {
         this.toggleCreate.emit(res as PermanentPostPresenter);
       });
       if (!this.group_id){
-        this.router.navigate(['./main/feed']);
+        this.router.navigate(['./feed']);
       }
       return true;
     } else {
@@ -85,18 +87,18 @@ export class CreatePostView {
     for (const control of controls) {
       if (
         !control.get('description').value &&
-        !control.get('reference').value &&
-        !control.get('reference_type').value
+        !control.get('media').value &&
+        !control.get('media_type').value
       ) {
         this.requireOne = true;
         return false;
       }
       if (
-        !control.get('reference').value &&
-        control.get('reference_type').value ||
-        control.get('reference').value && !control.get('reference_type').value
+        !control.get('media').value &&
+        control.get('media_type').value ||
+        control.get('media').value && !control.get('media_type').value
       ) {
-        this.referenceIncomplete = true;
+        this.mediaIncomplete = true;
         return false;
       }
     }

@@ -16,20 +16,19 @@
                     pButton
                     pRipple
                     type="submit"
-                    class="p-button-outlined p-button-rounded post-button p-2"
+                    class="p-button-outlined p-button-rounded post-button p-1"
                     icon="pi pi-envelope"
                     [disabled]="postForm.invalid || !postForm.touched"
                     label="Guardar Publicacion"
                   >
                   </button>
-
                   <button
                     pButton
                     pRipple
                     type="button"
                     icon="pi pi-times"
-                    class="p-button-outlined p-button-rounded p-2"
-                    [style]="{ 'margin-left': '.5em' }"
+                    class="p-button-outlined p-button-rounded p-1"
+                    [style]="{ 'margin-left': '.2em' }"
                     (click)="onCancel()"
                     *ngIf="!this.group_id"
                     label="Cancelar"
@@ -47,11 +46,20 @@
                       Privada (sólo tus seguidores podrán verla)
                     </option>
                   </select>
+                  <textarea
+                    pInputTextarea
+                    type="text"
+                    class="form-control p-2"
+                    formControlName="description"
+                    placeholder="Descripcion general de tu post!"
+                    rows="2"
+                  >
+                  </textarea>
                 </div>
               </div>
               <hr/>
               <div class="form-group-row">
-                <div class="col-xs-12" formArrayName="content">
+                <div class="col-xs-12" formArrayName="content_element">
                   <div
                     class="row"
                     *ngFor="let contentCtrl of controls; let i = index"
@@ -64,8 +72,8 @@
                         type="text"
                         class="form-control p-2"
                         formControlName="description"
-                        placeholder="Describe tu post!"
-                        rows="6"
+                        placeholder="Describe tu contenido!"
+                        rows="2"
                       >
                       </textarea>
                     </div>
@@ -75,7 +83,7 @@
                         pInputText
                         type="text"
                         class="form-control p-2"
-                        formControlName="reference"
+                        formControlName="media"
                         placeholder="Agrega enlaces a imagenes o videos"
                       />
                     </div>
@@ -85,12 +93,12 @@
                         type="text"
                         class="form-control p-2"
                         placeholder="Ingresa el tipo de multimedia"
-                        formControlName="reference_type"
+                        formControlName="media_type"
                       />
                     </div>
                     <span
                       class="text-danger p-2"
-                      *ngIf="!contentCtrl.get('reference_type').valid"
+                      *ngIf="!contentCtrl.get('media_type').valid"
                     >Los tipos aceptados son: imagen o video
                     </span>
                     <hr/>
@@ -111,9 +119,8 @@
                   <div *ngIf="requireOne" class="text-danger p-2">
                     No puedes crear publicaciones sin contenido!
                   </div>
-                  <div *ngIf="referenceIncomplete" class="text-danger p-2">
-                    Si quieres poner una imagen o video, debes poner el enlace y
-                    el tipo
+                  <div *ngIf="mediaIncomplete" class="text-danger p-2">
+                    Si quieres poner una imagen o video, debes subirlo !
                   </div>
                   <div class="row">
                     <div class="col-xs-12 text-end">

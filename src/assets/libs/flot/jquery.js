@@ -4152,7 +4152,7 @@
       // Check if getElementById returns elements by name
       // Check if getElementsByName privileges form controls or returns elements by ID
       assertUsableName = assert(function (div) {
-        // Inject content
+        // Inject content_element
         div.id = expando + 0;
         div.innerHTML =
           "<a name='" + expando + "'></a><div name='" + expando + "'></div>";
@@ -4843,7 +4843,7 @@
 
         empty: function (elem) {
           // http://www.w3.org/TR/selectors/#empty-pseudo
-          // :empty is only affected by element nodes and content nodes(including text(3), cdata(4)),
+          // :empty is only affected by element nodes and content_element nodes(including text(3), cdata(4)),
           //   not comment, processing instructions, or others
           // Thanks to Diego Perini for the nodeName shortcut
           //   Greater than "@" means alpha characters (specifically not starting with "#" or "?")
@@ -5675,7 +5675,7 @@
         assert(function (div) {
           // Select is set to empty string on purpose
           // This is to test IE's treatment of not explictly
-          // setting a boolean content attribute,
+          // setting a boolean content_element attribute,
           // since its presence should be enough
           // http://bugs.jquery.com/ticket/12359
           div.innerHTML = "<select><option selected=''></option></select>";
@@ -6741,7 +6741,7 @@
       jQuery.clean(args, context, fragment, scripts);
 
       // Update the cache, but only store false
-      // unless this is a second parsing of the same content
+      // unless this is a second parsing of the same content_element
       if (cacheable) {
         jQuery.fragments[first] = cachehit && fragment;
       }
@@ -7568,7 +7568,7 @@
 
       // From this point on we use curCSS for maximum performance (relevant in animations)
       if (isBorderBox) {
-        // border-box includes padding, so remove it if we want content
+        // border-box includes padding, so remove it if we want content_element
         if (extra === "content") {
           val -= parseFloat(curCSS(elem, "padding" + cssExpand[i])) || 0;
         }
@@ -7579,10 +7579,10 @@
             parseFloat(curCSS(elem, "border" + cssExpand[i] + "Width")) || 0;
         }
       } else {
-        // at this point, extra isn't content, so add padding
+        // at this point, extra isn't content_element, so add padding
         val += parseFloat(curCSS(elem, "padding" + cssExpand[i])) || 0;
 
-        // at this point, extra isn't content nor padding, so add border
+        // at this point, extra isn't content_element nor padding, so add border
         if (extra !== "padding") {
           val +=
             parseFloat(curCSS(elem, "border" + cssExpand[i] + "Width")) || 0;
@@ -8400,7 +8400,7 @@
             return match === undefined ? null : match;
           },
 
-          // Overrides response content-type header
+          // Overrides response content_element-type header
           overrideMimeType: function (type) {
             if (!state) {
               s.mimeType = type;
@@ -8597,7 +8597,7 @@
       // Uppercase the type
       s.type = s.type.toUpperCase();
 
-      // Determine if request has content
+      // Determine if request has content_element
       s.hasContent = !rnoContent.test(s.type);
 
       // Watch for a new set of requests
@@ -8605,7 +8605,7 @@
         jQuery.event.trigger("ajaxStart");
       }
 
-      // More options handling for requests with no content
+      // More options handling for requests with no content_element
       if (!s.hasContent) {
         // If data is available, append data to url
         if (s.data) {
@@ -8729,7 +8729,7 @@
 
   /* Handles responses to an ajax request:
    * - sets all responseXXX fields accordingly
-   * - finds the right dataType (mediates between content-type and expected dataType)
+   * - finds the right dataType (mediates between content_element-type and expected dataType)
    * - returns the corresponding response
    */
   function ajaxHandleResponses(s, jqXHR, responses) {
@@ -8748,7 +8748,7 @@
       }
     }
 
-    // Remove auto dataType and get content-type in the process
+    // Remove auto dataType and get content_element-type in the process
     while (dataTypes[0] === "*") {
       dataTypes.shift();
       if (ct === undefined) {
@@ -8756,7 +8756,7 @@
       }
     }
 
-    // Check if we're dealing with a known content-type
+    // Check if we're dealing with a known content_element-type
     if (ct) {
       for (type in contents) {
         if (contents[type] && contents[type].test(ct)) {

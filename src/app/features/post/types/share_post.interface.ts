@@ -1,3 +1,3 @@
 export interface SharePostInterface {
-  post_id : string
+  id : string
 }

@@ -102,7 +102,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
   searchPost() {
-    this.router.navigate(['./query', this.authService.getUserId()], {
+    this.router.navigate([`${post_routing_paths.posts}`, this.authService.getUserId()], {
       relativeTo: this.activatedRoute,
     });
   }
