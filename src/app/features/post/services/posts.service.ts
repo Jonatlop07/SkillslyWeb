@@ -11,8 +11,10 @@ import { SessionModel } from '../../authentication/model/session.model'
 import { SharePostInterface } from '../types/share_post.interface'
 import { DeletePostInterface } from '../types/delete_post.interface'
 import { PermanentPostPresenter, QueryPostPresenter } from '../types/query_post.presenter'
-import { CreatePostDataPresenter } from '../types/create_post_data.presenter'
+import { CreatePostDataPresenter, PostContentData } from '../types/create_post_data.presenter'
 import { environment } from '../../../../environments/environment'
+import {Apollo, gql} from "apollo-angular";
+import {ApolloQueryResult} from "@apollo/client/core";
 
 
 @Injectable()
@@ -20,39 +22,179 @@ export class PostService {
   @Select(SessionState) session$: Observable<SessionModel>;
 
   private readonly API_URL: string = environment.API_URL;
+
   public toggleCreate = false;
   public isChargingFeedPosts = false;
-  public  isChargingPosts = false;
+  public isChargingPosts = false;
 
   constructor(
+    private readonly apollo: Apollo,
     private readonly http: HttpClient,
-    private readonly jwtService: JwtService
+    private readonly jwt_service: JwtService
   ) {}
 
-  public createPost(post: CreatePostDataPresenter, group_id: string) {
-    const content = toPostContent(post.content);
-    return this.http
-      .post(
-        `${this.API_URL}/permanent-posts`,
-        {
-          content: content,
-          privacy: post.privacy,
-          group_id: group_id
-        },
-        this.jwtService.getHttpOptions()
-      );
+  // public getPostCollection(queryPostParams: QueryPostPresenter) {
+  //   const { owner_id, group_id, limit, offset } = queryPostParams;
+  //   this.isChargingPosts = true;
+  //   return this.http.post(
+  //     `${this.API_URL}/permanent-posts/posts`,
+  //     { owner_id, group_id, limit, offset },
+  //     this.jwtService.getHttpOptions()
+  //   ).pipe(tap(()=>{
+  //     this.isChargingPosts = false;
+  //   }));
+  // }
+  public getPostCollection(queryPostParams: QueryPostPresenter):Observable<ApolloQueryResult<any>>{
+    const { owner_id } = queryPostParams;
+    const QUERY_POSTS = gql`
+      query postsByOwnerId($owner_id: String!) {
+        postsByOwnerId(owner_id: $owner_id) {
+          id
+          owner_id
+          created_at
+          updated_at
+          description
+          content_element{
+            description
+            media_locator
+          }
+        }
+      }
+    `;
+    return this.apollo.watchQuery({
+      query: QUERY_POSTS,
+      variables: {
+        owner_id: owner_id,
+      }
+    }).valueChanges;
   }
 
-  public queryPostCollection(queryPostParams: QueryPostPresenter) {
-    const { owner_id, group_id, limit, offset } = queryPostParams;
-    this.isChargingPosts = true;
+  // public queryPost(post_id: string): Observable<PermanentPostPresenter> {
+  //   return this.http.get<PermanentPostPresenter>(
+  //     `${this.API_URL}/permanent-posts/${encodeURIComponent(post_id)}`,
+  //     this.jwt_service.getHttpOptions()
+  //   );
+  // }
+
+  public queryPost(post_id: string): Observable<ApolloQueryResult<any>> {
+    const QUERY_POST = gql`
+      query postById($pos_id: String!) {
+        postById(post_id: $post_id) {
+          id
+          owner_id
+          created_at
+          updated_at
+          description
+          content_element{
+            description
+            media_locator
+          }
+        }
+      }
+    `;
+
+    return this.apollo.watchQuery({
+      query: QUERY_POST,
+      variables: {
+        post_id: post_id
+      }
+    }).valueChanges;
+  }
+
+  // public createPost(post: CreatePostDataPresenter, group_id: string) {
+  //   const content = toPostContent(post.content_element);
+  //   return this.http
+  //     .post(
+  //       `${this.API_URL}/permanent-posts`,
+  //       {
+  //         content: content,
+  //         privacy: post.privacy,
+  //         group_id: group_id
+  //       },
+  //       this.jwt_service.getHttpOptions()
+  //     );
+  // }
+
+  public createPost(post: CreatePostDataPresenter){
+    const content_element = toPostContent(post.content_element);
+    console.log(content_element);
+    const {description, privacy} = post;
+    console.log(description);
+    console.log(privacy);
+    const CREATE_POST = gql`
+      mutation createPost(
+        $owner_id: ID!,
+        $description: String,
+        $privacy: String,
+        $content_element: [PostContentData],
+      ) {
+        createPost(
+          post_data:{
+            owner_id: $user_id,
+            description: $description,
+            privacy: $privacy,
+            content_element: $content_element,
+          }
+        ) {
+          id
+          owner_id
+          created_at
+          updated_at
+          description
+          content_element{
+            description
+            media_locator
+          }
+        }
+      }
+    `;
+    console.log(CREATE_POST);
+    return this.apollo.mutate({
+      mutation: CREATE_POST,
+      variables: {
+        owner_id: this.jwt_service.getUserId(),
+        description,
+        privacy,
+        content_element: content_element,
+      }
+    });
+  }
+
+  public deletePost(deletePostInterface: DeletePostInterface) {
+    const { id, group_id } = deletePostInterface;
+    let params = new HttpParams();
+    params = params.append('group-id', group_id);
+    return this.http.delete(
+      `${this.API_URL}/permanent-posts/${encodeURIComponent(id)}`,
+      {
+        params,
+        ...this.jwt_service.getHttpOptions()
+      }
+    );
+  }
+
+  public updatePermanentPost(
+    post_to_update: UpdatePostPresenter
+  ): Observable<UpdatePostPresenter> {
+    return this.http.put<UpdatePostPresenter>(
+      `${this.API_URL}/permanent-posts/${encodeURIComponent(post_to_update.id)}`,
+      {
+        user_id: this.jwt_service.getUserId(),
+        content: post_to_update.content_element,
+        privacy: post_to_update.privacy,
+      },
+      this.jwt_service.getHttpOptions()
+    );
+  }
+
+  public sharePost(sharePostInterface: SharePostInterface) {
     return this.http.post(
-      `${this.API_URL}/permanent-posts/posts`,
-      { owner_id, group_id, limit, offset },
-      this.jwtService.getHttpOptions()
-    ).pipe(tap(()=>{
-      this.isChargingPosts = false;
-    }));
+      `${this.API_URL}/permanent-posts/${encodeURIComponent(sharePostInterface.id)}/share`,
+      {
+        user_id: this.jwt_service.getUserId(),
+      },
+      this.jwt_service.getHttpOptions()
+    );
   }
 
   public getPostsOfFriendsCollection(limit: number, offset: number) {
@@ -66,7 +208,7 @@ export class PostService {
     return this.http
       .get(`${this.API_URL}/permanent-posts/posts/friends`, {
         params,
-        ...this.jwtService.getHttpOptions(),
+        ...this.jwt_service.getHttpOptions(),
       })
       .pipe(
         tap(() => {
@@ -75,59 +217,15 @@ export class PostService {
       );
   }
 
-  public deletePost(deletePostInterface: DeletePostInterface) {
-    const { post_id, group_id } = deletePostInterface;
-    let params = new HttpParams();
-    params = params.append('group-id', group_id);
-    return this.http.delete(
-      `${this.API_URL}/permanent-posts/${encodeURIComponent(post_id)}`,
-      {
-        params,
-        ...this.jwtService.getHttpOptions()
-      }
-    );
-  }
-
-  public queryPost(post_id: string): Observable<PermanentPostPresenter> {
-    return this.http.get<PermanentPostPresenter>(
-      `${this.API_URL}/permanent-posts/${encodeURIComponent(post_id)}`,
-      this.jwtService.getHttpOptions()
-    );
-  }
-
-  public updatePermanentPost(
-    post_to_update: UpdatePostPresenter
-  ): Observable<UpdatePostPresenter> {
-    return this.http.put<UpdatePostPresenter>(
-      `${this.API_URL}/permanent-posts/${encodeURIComponent(post_to_update.post_id)}`,
-      {
-        user_id: this.jwtService.getUserId(),
-        content: post_to_update.content,
-        privacy: post_to_update.privacy,
-      },
-      this.jwtService.getHttpOptions()
-    );
-  }
-
-  public sharePost(sharePostInterface: SharePostInterface) {
-    return this.http.post(
-      `${this.API_URL}/permanent-posts/${encodeURIComponent(sharePostInterface.post_id)}/share`,
-      {
-        user_id: this.jwtService.getUserId(),
-      },
-      this.jwtService.getHttpOptions()
-    );
-  }
-
   onToggleCreate() {
     this.toggleCreate = !this.toggleCreate;
   }
 
   getIfReactorEmail() {
-    return this.jwtService.getEmail();
+    return this.jwt_service.getEmail();
   }
 
   getUserId(){
-    return this.jwtService.getUserId();
+    return this.jwt_service.getUserId();
   }
 }

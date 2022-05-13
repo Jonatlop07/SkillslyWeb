@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { TooltipModule } from 'primeng/tooltip'
 import { CommentsService } from './services/comments.service'
 import { CommentsInCommentService } from './services/comments-in-comment.service'
+import {InputTextareaModule} from "primeng/inputtextarea";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { CommentsInCommentService } from './services/comments-in-comment.service
     RippleModule,
     InputTextModule,
     TooltipModule,
-    PostRoutingModule
+    PostRoutingModule,
+    InputTextareaModule
   ],
   providers: [
     CommentsService,

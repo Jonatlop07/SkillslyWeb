@@ -21,7 +21,7 @@
 // * Coordsize. The width and height attribute have higher priority than the
 //   width and height style values which isn't correct.
 // * Painting mode isn't implemented.
-// * Canvas width/height should is using content-box by default. IE in
+// * Canvas width/height should is using content_element-box by default. IE in
 //   Quirks mode will draw the canvas using border-box. Either change your
 //   doctype to HTML5
 //   (http://www.whatwg.org/specs/web-apps/current-work/#the-doctype)
@@ -144,9 +144,9 @@ if (!document.createElement("canvas").getContext) {
           // Add namespaces and stylesheet to document of the element.
           addNamespacesAndStylesheet(el.ownerDocument);
 
-          // Remove fallback content. There is no way to hide text nodes so we
+          // Remove fallback content_element. There is no way to hide text nodes so we
           // just remove all childNodes. We could hide all elements and remove
-          // text nodes but who really cares about the fallback content.
+          // text nodes but who really cares about the fallback content_element.
           el.innerHTML = "";
 
           // do not use inline function because that will leak memory

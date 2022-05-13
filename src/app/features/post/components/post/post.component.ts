@@ -66,7 +66,7 @@ export class PostComponent implements OnInit {
 
   deletePost(post_id: string) {
     const deletePostInterface: DeletePostInterface = {
-      post_id,
+      id: post_id,
       group_id: this.group_id,
     };
     if (this.group_id) {
@@ -85,7 +85,7 @@ export class PostComponent implements OnInit {
 
   sharePost(post_id: string) {
     const sharePostInterface: SharePostInterface = {
-      post_id,
+      id: post_id,
     };
     this.postService
       .sharePost(sharePostInterface)
@@ -96,7 +96,7 @@ export class PostComponent implements OnInit {
     console.log(typeof this.media);
     if (this.comment) {
       this.commentsService
-        .sendComment(this.post.post_id, this.comment, this.media_locator)
+        .sendComment(this.post.id, this.comment, this.media_locator)
         .subscribe(
           () => {
             this.comment = '';

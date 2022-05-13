@@ -11,7 +11,7 @@ export class SetMyPosts {
 export class DeleteMyPost {
   static readonly type = '[Posts Query] Delete My Post';
 
-  constructor(public readonly post_id: string) {
+  constructor(public readonly id: string) {
   }
 }
 

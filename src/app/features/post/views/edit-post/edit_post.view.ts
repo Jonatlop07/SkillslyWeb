@@ -12,7 +12,7 @@ import { Location } from '@angular/common'
   styleUrls: ['./edit_post.view.css']
 })
 export class EditPostView {
-  public post_id: string;
+  public id: string;
   public post: UpdatePostPresenter;
   public post_to_update: UpdatePostPresenter;
   public post_form: FormGroup;
@@ -31,11 +31,11 @@ export class EditPostView {
 
   ngOnInit(): void {
     this.activated_route.params.subscribe(params => {
-      this.post_id = params.post_id;
+      this.id = params.post_id;
       this.post_service
-        .queryPost(this.post_id)
-        .subscribe((post: PermanentPostPresenter) => {
-          this.post = post;
+        .queryPost(this.id)
+        .subscribe(({data}) => {
+          this.post = data.postById as PermanentPostPresenter;
           this.initForm(this.post);
         });
     })
@@ -44,14 +44,14 @@ export class EditPostView {
   private initForm(post_form_values: UpdatePostPresenter) {
     this.post_form = new FormGroup({
       privacy: new FormControl(post_form_values.privacy, Validators.required),
-      content: new FormArray(post_form_values.content.map(
+      content: new FormArray(post_form_values.content_element.map(
         (content_element) =>
           new FormGroup({
             description: new FormControl(content_element.description, Validators.maxLength(250)),
-            reference: new FormControl(content_element.reference),
-            reference_type: new FormControl(content_element.reference_type, [
-              Validators.pattern(`${this.allowed_types}`),
-            ]),
+            media: new FormControl(content_element.media_locator),
+            // reference_type: new FormControl(content_element.reference_type, [
+            //   Validators.pattern(`${this.allowed_types}`),
+            // ]),
           })
       )),
     });
@@ -68,7 +68,7 @@ export class EditPostView {
       this.require_one = false;
       this.post_to_update = {
         ...this.post_form.value,
-        post_id: this.post.post_id,
+        id: this.post.id,
         owner_id: this.post.owner_id,
       }
       this.post_service
@@ -89,9 +89,9 @@ export class EditPostView {
       new FormGroup({
         description: new FormControl(null, Validators.maxLength(250)),
         reference: new FormControl(null),
-        reference_type: new FormControl(null, [
-          Validators.pattern(`${this.allowed_types}`),
-        ]),
+        // reference_type: new FormControl(null, [
+        //   Validators.pattern(`${this.allowed_types}`),
+        // ]),
       })
     );
   }
@@ -108,17 +108,17 @@ export class EditPostView {
   validateContent(controls: AbstractControl[]) {
     for (const control of controls) {
       if (
-        !control.get('description').value &&
-        !control.get('reference').value &&
-        !control.get('reference_type').value
+        !control.get('description').value //&&
+        // !control.get('reference').value &&
+        // !control.get('reference_type').value
       ) {
         this.require_one = true;
         return false;
       }
       if (
-        !control.get('reference').value &&
-        control.get('reference_type').value ||
-        control.get('reference').value && !control.get('reference_type').value
+        !control.get('reference').value //&&
+        // control.get('reference_type').value ||
+        // control.get('reference').value && !control.get('reference_type').value
       ) {
         this.incomplete_reference = true;
         return false;
