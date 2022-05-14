@@ -11,21 +11,6 @@ export class FeedView implements OnInit {
   public foundPosts: PermanentPostPresenter[];
   public limitPost: number;
   public offsetPost: number;
-  public test_post = {
-    owner_id: '1',
-    user_name: 'me',
-    post_id: '1',
-    content: [
-      {
-        description: 'Mi test post',
-        reference:
-          'https://somoskudasai.com/wp-content/uploads/2022/03/kaguya-sama.jpg',
-        reference_type: 'imagen',
-      },
-    ],
-    privacy: 'public',
-    created_at: new Date().toString(),
-  };
 
   constructor(private postService: PostService) {}
 
@@ -36,11 +21,10 @@ export class FeedView implements OnInit {
       this.limitPost,
       this.offsetPost
     );
-    this.foundPosts = [this.test_post, this.test_post, this.test_post];
-    // postServiceResponse.subscribe((res: any) => {
-    //   this.foundPosts = res.posts;
-    //   this.offsetPost = this.offsetPost + this.limitPost;
-    // });
+    postServiceResponse.subscribe((res: any) => {
+      this.foundPosts = res.posts;
+      this.offsetPost = this.offsetPost + this.limitPost;
+    });
   }
 
   @HostListener('window:scroll', ['$event'])

@@ -24,11 +24,12 @@ export class CommentsService {
     limit: number
   ): Observable<ApolloQueryResult<any>> {
     const GET_COMMENTS = gql`
-      query queryComments($post_id: String!, $limit: Int, $page: Int) {
+      query queryComments($post_id: ID!, $limit: Int, $page: Int) {
         queryComments(
           post_id: $post_id
           comments_pagination: { limit: $limit, page: $page }
         ) {
+          _id
           owner_id
           description
           media_locator
@@ -57,27 +58,28 @@ export class CommentsService {
   public sendComment(
     post_id: string,
     comment: string,
-    media_locator: string
+    media_locator:string
   ): Observable<MutationResult> {
     const CREATE_COMMENT = gql`
       mutation createComment(
-        $post_id: String!
+        $post_id: ID!
         $description: String
         $media_locator: String
-        $owner_id: String!
+        $owner_id: ID!
       ) {
         createComment(
-          post_id: $post_id
+          post_id: $post_id,
           comment_details: {
-            description: $description
+            description: $description,
             media_locator: $media_locator
             owner_id: $owner_id
           }
         ) {
-          _id
-          description
-          media_locator
-          post_id
+          _id,
+          description,
+          media_locator,
+          created_at,
+          owner_id
         }
       }
     `;
@@ -100,7 +102,7 @@ export class CommentsService {
   ): Observable<MutationResult> {
     const UPDATE_COMMENT = gql`
       mutation updateComment(
-        $comment_id: String!
+        $comment_id: ID!
         $description: String
         $media_locator: String
       ) {
@@ -111,7 +113,8 @@ export class CommentsService {
             media_locator: $media_locator
           }
         ) {
-          content
+          description,
+          media_locator
         }
       }
     `;
@@ -128,7 +131,7 @@ export class CommentsService {
 
   public deleteComment(comment_id: string): Observable<MutationResult> {
     const DELETE_COMMENT = gql`
-      mutation deleteComment($comment_id: String!) {
+      mutation deleteComment($comment_id: ID!) {
         deleteComment(comment_id: $comment_id)
       }
     `;

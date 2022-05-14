@@ -22,27 +22,17 @@ export class PostComponent implements OnInit {
   @Input() group_id: string;
   @Input() id: string;
   @Output() toggleDelete = new EventEmitter<string>();
-
+  public invalid_comment_content = false;
   public showComments = false;
   public file_to_upload: File | null = null;
   public postComments: Array<Comment> = [];
   public comment: string;
   public media_locator = '';
-  public media: File;
   public page = 0;
   public limit = 2;
   public display = false;
   public items: MenuItem[];
   public owns_post = false;
-  public test_com: Comment = {
-    name: 'Pablo',
-    owner_id: '1',
-    description: 'Comments that make books and comments that make comments',
-    email: 'whyisthishere@email.com',
-    created_at: new Date().toString(),
-    _id: '1',
-    media_locator: 'https://images8.alphacoders.com/100/thumb-1920-1003525.jpg',
-  };
 
   constructor(
     private commentsService: CommentsService,
@@ -53,7 +43,7 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.owns_post = this.postService.getUserId() === this.post.owner_id;
-    this.getComments();
+    this.getComments(false);
   }
 
   isImage(referenceType: string): boolean {
@@ -93,50 +83,62 @@ export class PostComponent implements OnInit {
   }
 
   sendComment() {
-    console.log(typeof this.media);
-    if (this.comment) {
+    if (this.comment || this.media_locator) {
+      this.invalid_comment_content = false;
       this.commentsService
         .sendComment(this.post.id, this.comment, this.media_locator)
         .subscribe(
-          () => {
+          (res) => {
+            const { _id, description, media_locator, owner_id, created_at } =
+              res.data.createComment;
             this.comment = '';
-            this.getComments();
+            this.postComments = [
+              ...this.postComments,
+              {
+                _id,
+                post_id: this.post.id,
+                description,
+                media_locator,
+                owner_id,
+                created_at,
+              },
+            ];
           },
           (err) => {
             console.log(err);
           }
         );
+    } else {
+      this.invalid_comment_content = true;
     }
   }
 
   handleMoreComments() {
-    this.limit = 10;
-    this.getComments();
-    this.page += 1;
+    this.limit = 2;
+    this.page = this.page === 0 ? this.page + 2 : this.page + 1;
+    this.getComments(false);
   }
 
   resetComments() {
-    this.page -= 1;
-    if (this.page === 0) {
-      this.limit = 2;
-    } else {
-      this.limit = 10;
-    }
-    this.getComments();
+    this.page = 0;
+    this.getComments(true);
   }
 
-  getComments(page = this.page, limit = this.limit) {
-    this.postComments = [this.test_com, this.test_com, this.test_com];
-    // this.commentsService.getComments(this.post.post_id, page, limit).subscribe(
-    //   (comments: any) => {
-    //     this.postComments = comments;
-    //   },
-    //   (err) => {
-    //     if (err.status === 404) {
-    //       this.postComments = [];
-    //     }
-    //   }
-    // );
+  getComments(reset: boolean, page = this.page, limit = this.limit) {
+    this.commentsService.getComments(this.post.id, page, limit).subscribe(
+      (res: any) => {
+        if (reset) {
+          this.postComments = [...res.data.queryComments];
+        } else {
+          this.postComments.push(...res.data.queryComments);
+        }
+      },
+      (err) => {
+        if (err.status === 404) {
+          this.postComments = [];
+        }
+      }
+    );
   }
 
   showDialog() {
@@ -144,6 +146,13 @@ export class PostComponent implements OnInit {
   }
 
   public handleFileInput(event: any) {
+    //send to storage and return media locator
     this.file_to_upload = event.target.files[0];
+  }
+
+  public onDeletedComment(comment_index: number) {
+    this.postComments = this.postComments.filter(
+      (items, index) => index !== comment_index
+    );
   }
 }

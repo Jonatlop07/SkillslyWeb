@@ -13,9 +13,10 @@
         <div class="comment m-2">
           <div class="row">
             <div class="col-xs-12">
-              <span class="mb-0 font-medium p-0">{{ comment.name }}</span> ·
+              <span class="mb-0 font-medium p-0">{{ owner_email }}</span>
+              ·
               <small class="font-weight-lighter" style="font-size: 12px">
-                {{ comment.email }}</small
+                {{ owner_name }}</small
               >
               <div class="dropdown float-end" *ngIf="!owns_comment">
                 <a
@@ -45,16 +46,13 @@
                   </li>
                 </ul>
               </div>
-              <div
-                class="p-1 row justify-content-center"
-                *ngIf="comment.media_locator"
-              >
-                <img [src]="comment.media_locator" class="img-fluid" />
+              <div class="p-1 row justify-content-center" *ngIf="media_locator">
+                <img [src]="media_locator" class="img-fluid" />
               </div>
             </div>
           </div>
           <p class="mb-0 font-weight-light p-0" style="font-size: 13px">
-            {{ comment.description }}
+            {{ description }}
           </p>
         </div>
         <div class="px-3" style="font-size: 12px">
@@ -90,7 +88,7 @@
           </div>
           <div class="form-group-row">
             <div
-              class="d-flex justify-content-center gap-1 my-4"
+              class="d-flex justify-content-center gap-1 my-1"
               style="height: 30px"
             >
               <input
@@ -101,7 +99,7 @@
                 pInputText
                 style="font-size: 13px"
                 [(ngModel)]="description"
-                (keyup.enter)="sendComment()"
+                (keyup.enter)="updateComment()"
               />
               <p-button
                 icon="pi pi-camera"
@@ -129,6 +127,9 @@
               >
               </p-button>
             </div>
+            <div *ngIf="invalid_comment_content" class="text-danger">
+              No puedes crear comentarios sin contenido
+            </div>
           </div>
         </div>
       </div>
@@ -147,13 +148,14 @@
             *ngFor="let comment of commentsInComment; let i = index"
             [comment]="comment"
             [index]="i"
+            (deleted_inner_comment)="onDeleteInnerComment($event)"
           >
           </app-comment-in-comment>
         </ng-template>
       </div>
       <div class="mx-4 flex">
         <span
-          *ngIf="commentsInComment.length > 0"
+          *ngIf="commentsInComment.length >= limit"
           class="clickable"
           (click)="handleMoreComments()"
           style="font-size: 11px"
@@ -181,17 +183,17 @@
 
       <div class="form-group-row">
         <div
-          class="d-flex justify-content-center gap-1 my-4"
+          class="d-flex justify-content-center gap-1 my-1"
           style="height: 30px"
         >
           <input
             type="text"
             class="form-control w-80"
             id="description"
-            placeholder="Escribe un comentario ..."
+            placeholder="Responde a un comentario..."
             pInputText
             style="font-size: 13px"
-            [(ngModel)]="commentInComment"
+            [(ngModel)]="comment_in_comment"
             (keyup.enter)="sendComment()"
           />
           <p-button
@@ -216,9 +218,12 @@
             styleClass="p-button-outlined"
             pTooltip="Enviar comentario"
             tooltipPosition="top"
-            (click)="createInnerComment()"
+            (click)="sendComment()"
           >
           </p-button>
+        </div>
+        <div *ngIf="invalid_inner_comment_content" class="text-danger">
+          No puedes crear comentarios sin contenido
         </div>
       </div>
     </div>

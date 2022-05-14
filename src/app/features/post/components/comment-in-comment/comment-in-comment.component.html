@@ -4,9 +4,9 @@
       <div class="comment-element">
         <div *ngIf="!updating_inner_comment">
           <div class="comment m-0">
-            <span class="mb-0 font-medium p-0">{{ comment.name }}</span> ·
+            <span class="mb-0 font-medium p-0">{{ owner_name }}</span> ·
             <small class="font-weight-lighter" style="font-size: 12px">
-              {{ comment.email }}</small
+              {{ owner_email }}</small
             >
             <div class="dropdown float-end" *ngIf="!owns_inner_comment">
               <a
@@ -40,10 +40,10 @@
               class="p-1 row justify-content-center"
               *ngIf="comment.media_locator"
             >
-              <img [src]="comment.media_locator" class="img-fluid" />
+              <img [src]="inner_comment_media_locator" class="img-fluid" />
             </div>
             <p class="mb-0 font-weight-light p-0" style="font-size: 13px">
-              {{ comment.description }}
+              {{ inner_comment_description }}
             </p>
 
             <div class="" style="font-size: 12px">
@@ -74,7 +74,7 @@
       </div>
       <div class="form-group-row">
         <div
-          class="d-flex justify-content-center gap-1 my-4"
+          class="d-flex justify-content-center gap-1 my-1"
           style="height: 30px"
         >
           <input
@@ -112,6 +112,9 @@
             (click)="updateInnerComment()"
           >
           </p-button>
+        </div>
+        <div *ngIf="invalid_comment_content" class="text-danger">
+          No puedes crear comentarios sin contenido
         </div>
       </div>
     </div>

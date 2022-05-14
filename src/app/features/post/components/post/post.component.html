@@ -114,7 +114,7 @@
 
       <div class="col-10">
         <div
-          class="d-flex justify-content-center gap-1 my-4"
+          class="d-flex justify-content-center gap-1 my-1"
           style="height: 30px"
         >
           <input
@@ -154,11 +154,14 @@
           >
           </p-button>
         </div>
+        <div *ngIf="invalid_comment_content" class="text-danger">
+          No puedes crear comentarios sin contenido
+        </div>
       </div>
       <div class="row card-body text-post">
         <div class="flex">
           <small
-            *ngIf="postComments.length === 0; else elseBlock"
+            *ngIf="postComments.length === 0"
             class="font-bold"
             style="font-size: 13px"
           >
@@ -173,20 +176,22 @@
             Inicio
           </small>
         </div>
-        <ng-template #elseBlock>
+        <div *ngIf="postComments.length > 0">
           <app-comment
             *ngFor="let comment of postComments; let i = index"
             [comment]="comment"
             [index]="i"
+            (deleted_comment)="onDeletedComment($event)"
           >
           </app-comment>
           <span
+            *ngIf="postComments.length > 0"
             class="clickable m-2"
             (click)="handleMoreComments()"
             style="font-size: 13px"
-            >Ver más respuestas</span
+            >Ver más comentarios</span
           >
-        </ng-template>
+        </div>
       </div>
     </div>
   </div>

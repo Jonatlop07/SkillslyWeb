@@ -1,15 +1,21 @@
-import { Component } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
-import { UpdatePostPresenter } from '../../types/update_post.presenter'
-import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms'
-import { PostService } from '../../services/posts.service'
-import { PermanentPostPresenter } from '../../types/query_post.presenter'
-import { Location } from '@angular/common'
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UpdatePostPresenter } from '../../types/update_post.presenter';
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { PostService } from '../../services/posts.service';
+import { PermanentPostPresenter } from '../../types/query_post.presenter';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'skl-edit-post-view',
   templateUrl: './edit_post.view.html',
-  styleUrls: ['./edit_post.view.css']
+  styleUrls: ['./edit_post.view.css'],
 })
 export class EditPostView {
   public id: string;
@@ -26,43 +32,45 @@ export class EditPostView {
     private readonly post_service: PostService,
     private readonly router: Router,
     private readonly location: Location
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.activated_route.params.subscribe(params => {
+    this.activated_route.params.subscribe((params) => {
       this.id = params.post_id;
-      this.post_service
-        .queryPost(this.id)
-        .subscribe(({data}) => {
-          this.post = data.postById as PermanentPostPresenter;
-          this.initForm(this.post);
-        });
-    })
+      this.post_service.queryPost(this.id).subscribe(({ data }) => {
+        // this.post = data.postById as PermanentPostPresenter;
+        this.initForm(this.post);
+      });
+    });
   }
 
   private initForm(post_form_values: UpdatePostPresenter) {
     this.post_form = new FormGroup({
       privacy: new FormControl(post_form_values.privacy, Validators.required),
-      content: new FormArray(post_form_values.content_element.map(
-        (content_element) =>
-          new FormGroup({
-            description: new FormControl(content_element.description, Validators.maxLength(250)),
-            media: new FormControl(content_element.media_locator),
-            // reference_type: new FormControl(content_element.reference_type, [
-            //   Validators.pattern(`${this.allowed_types}`),
-            // ]),
-          })
-      )),
+      content: new FormArray(
+        post_form_values.content_element.map(
+          (content_element) =>
+            new FormGroup({
+              description: new FormControl(
+                content_element.description,
+                Validators.maxLength(250)
+              ),
+              media: new FormControl(content_element.media_locator),
+              // reference_type: new FormControl(content_element.reference_type, [
+              //   Validators.pattern(`${this.allowed_types}`),
+              // ]),
+            })
+        )
+      ),
     });
   }
 
   get controls() {
-    return (<FormArray> this.post_form.get('content')).controls;
+    return (<FormArray>this.post_form.get('content')).controls;
   }
 
   onSubmit($event: Event) {
-    const controls = (<FormArray> this.post_form.get('content')).controls;
+    const controls = (<FormArray>this.post_form.get('content')).controls;
     if (this.validateContent(controls)) {
       this.incomplete_reference = false;
       this.require_one = false;
@@ -70,7 +78,7 @@ export class EditPostView {
         ...this.post_form.value,
         id: this.post.id,
         owner_id: this.post.owner_id,
-      }
+      };
       this.post_service
         .updatePermanentPost(this.post_to_update)
         .subscribe((post: UpdatePostPresenter) => {
@@ -85,7 +93,7 @@ export class EditPostView {
   }
 
   onAddContent() {
-    (<FormArray> this.post_form.get('content')).push(
+    (<FormArray>this.post_form.get('content')).push(
       new FormGroup({
         description: new FormControl(null, Validators.maxLength(250)),
         reference: new FormControl(null),
@@ -97,7 +105,7 @@ export class EditPostView {
   }
 
   onDeleteContent(index: number) {
-    (<FormArray> this.post_form.get('content')).removeAt(index);
+    (<FormArray>this.post_form.get('content')).removeAt(index);
   }
 
   onCancel() {

@@ -24,7 +24,7 @@ export class CommentsInCommentService {
     limit: number
   ): Observable<ApolloQueryResult<any>> {
     const GET_INNER_COMMENTS = gql`
-      query queryInnerComments($comment_id: String!, $limit: Int, $page: Int) {
+      query queryInnerComments($comment_id: ID!, $limit: Int, $page: Int) {
         queryInnerComments(
           comment_id: $comment_id
           inner_comments_pagination: { limit: $limit, page: $page }
@@ -62,10 +62,10 @@ export class CommentsInCommentService {
   ): Observable<MutationResult> {
     const CREATE_INNER_COMMENT = gql`
       mutation createInnerComment(
-        $comment_id: String!
+        $comment_id: ID!
         $description: String
         $media_locator: String
-        $owner_id: String!
+        $owner_id: ID!
       ) {
         createInnerComment(
           comment_id: $comment_id
@@ -78,8 +78,9 @@ export class CommentsInCommentService {
           _id
           description
           media_locator
-          updated_at
+          created_at
           comment_id
+          owner_id
         }
       }
     `;
@@ -102,7 +103,7 @@ export class CommentsInCommentService {
   ): Observable<MutationResult> {
     const UPDATE_INNER_COMMENT = gql`
       mutation updateInnerComment(
-        $inner_comment_id: String!
+        $inner_comment_id: ID!
         $description: String
         $media_locator: String
       ) {
@@ -113,7 +114,8 @@ export class CommentsInCommentService {
             media_locator: $media_locator
           }
         ) {
-          content
+          description
+          media_locator
         }
       }
     `;
@@ -132,8 +134,8 @@ export class CommentsInCommentService {
     inner_comment_id: string
   ): Observable<MutationResult> {
     const DELETE_INNER_COMMENT = gql`
-      mutation deleteInnerComment($inner_comment_id: String!) {
-        deleteComment(inner_comment_id: $inner_comment_id)
+      mutation deleteInnerComment($inner_comment_id: ID!) {
+        deleteInnerComment(inner_comment_id: $inner_comment_id)
       }
     `;
 

@@ -6,7 +6,7 @@ import { Comment } from '../../types/comment.presenter';
 import { InnerComment } from '../../types/inner_comment.presenter';
 import { JwtService } from 'src/app/core/service/jwt.service';
 import { CommentsService } from '../../services/comments.service';
-import { Subject } from 'rxjs';
+import { UserDataService } from 'src/app/features/user-account/services/user_data.service';
 
 @Component({
   selector: 'app-comment',
@@ -16,38 +16,42 @@ import { Subject } from 'rxjs';
 export class CommentComponent implements OnInit {
   @Input() comment: Comment;
   @Input() index: number;
-  @Output() deleted_comment: EventEmitter<number>;
+  @Output() deleted_comment = new EventEmitter<number>();
   public showResponse = false;
+  public invalid_comment_content = false;
+  public invalid_inner_comment_content = false;
+  public owner_email = '';
+  public owner_name = '';
   public file_to_upload: File | null = null;
   public commentsInComment: Array<InnerComment> = [];
-  public page = 0;
+  public page = 1;
   public limit = 2;
   public owns_comment = false;
   public comment_updating = false;
-  public commentInComment: string;
+  public comment_in_comment: string;
+  public inner_comment_media_locator: string;
   public description: string;
-  public media_resource: File;
   public media_locator = '';
-  public test_com = {
-    name: 'Pablo',
-    owner_id: '1',
-    description: 'Comments that make books and comments that make comments',
-    media_locator: 'https://i.ytimg.com/vi/IOWX8kpJ8FI/maxresdefault.jpg',
-    email: 'whyisthishere@email.com',
-    created_at: new Date().toString(),
-    _id: '1',
-  };
 
   constructor(
     private comments_in_comment_service: CommentsInCommentService,
     private comment_service: CommentsService,
+    private owner_data_service: UserDataService,
     private jwt_service: JwtService
   ) {}
 
   ngOnInit(): void {
     this.description = this.comment.description || '';
+    this.media_locator = this.comment.media_locator || '';
     this.owns_comment = this.comment._id === this.jwt_service.getUserId();
-    this.getComments();
+    //getting user data from acc service for now
+    this.owner_data_service
+      .getUserNameAndEmail(this.comment.owner_id)
+      .subscribe(({ data }) => {
+        this.owner_name = data.user.name;
+        this.owner_email = data.user.email;
+      });
+    this.getComments(false);
   }
 
   transformDate() {
@@ -64,38 +68,56 @@ export class CommentComponent implements OnInit {
     this.showResponse = !this.showResponse;
   }
 
-  getComments(page = this.page, limit = this.limit) {
-    this.commentsInComment = [this.test_com, this.test_com, this.test_com];
-    // this.comments_in_comment_service
-    //   .getInnerComments(this.comment.id, page, limit)
-    //   .subscribe(
-    //     (comments: any) => {
-    //       this.commentsInComment = comments;
-    //     },
-    //     (err) => {
-    //       showErrorPopup(err.error.message);
-    //     }
-    //   );
+  getComments(reset: boolean, page = this.page, limit = this.limit) {
+    this.comments_in_comment_service
+      .getInnerComments(this.comment._id, page, limit)
+      .subscribe(
+        (res: any) => {
+          if (reset) {
+            this.commentsInComment = [...res.data.queryInnerComments];
+          } else {
+            this.commentsInComment.push(...res.data.queryInnerComments);
+          }
+        },
+        (err) => {
+          showErrorPopup(err.message);
+        }
+      );
   }
 
   sendComment() {
-    if (this.commentInComment) {
+    if (this.comment_in_comment || this.inner_comment_media_locator) {
+      this.invalid_inner_comment_content = false;
       this.comments_in_comment_service
         .sendInnerComment(
           this.comment._id,
-          this.commentInComment,
-          this.media_locator
+          this.comment_in_comment,
+          this.inner_comment_media_locator
         )
         .subscribe(
-          () => {
-            this.commentInComment = '';
-            this.getComments();
+          (res) => {
+            this.comment_in_comment = '';
+            const { _id, description, media_locator, owner_id, created_at } =
+              res.data.createInnerComment;
+            this.commentsInComment = [
+              ...this.commentsInComment,
+              {
+                _id,
+                comment_id: this.comment._id,
+                description,
+                media_locator,
+                owner_id,
+                created_at,
+              },
+            ];
           },
           (error) => {
             console.log(error);
             showErrorPopup('Ocurrió un error al enviar tu comentario');
           }
         );
+    } else {
+      this.invalid_inner_comment_content = true;
     }
   }
 
@@ -104,15 +126,17 @@ export class CommentComponent implements OnInit {
   }
 
   handleMoreComments() {
-    this.limit = 10;
-    this.getComments();
+    console.log('more ' + this.page);
+    this.limit = 2;
     this.page += 1;
+    this.getComments(false);
   }
 
   resetComments() {
-    this.page = 0;
+    console.log('reset ' + this.page);
+    this.page = 1;
     this.limit = 2;
-    this.getComments();
+    this.getComments(true);
   }
 
   public deleteComment() {
@@ -122,39 +146,24 @@ export class CommentComponent implements OnInit {
   }
 
   public updateComment() {
-    this.comment.description = this.description;
-    this.comment_service
-      .editComment(
-        this.comment._id,
-        this.comment.description,
-        this.comment.media_locator
-      )
-      .subscribe((updated_content: any) => {
-        this.comment_updating = false;
-        this.comment.description = updated_content.description;
-        this.comment.media_locator = updated_content.media_locator;
-      });
+    if (this.description || this.media_locator) {
+      this.invalid_comment_content = false;
+      this.comment_service
+        .editComment(this.comment._id, this.description, this.media_locator)
+        .subscribe((res: any) => {
+          this.comment_updating = false;
+          this.description = res.data.updateComment.description;
+          this.media_locator = res.data.updateComment.media_locator;
+        });
+    } else {
+      this.invalid_comment_content = true;
+    }
   }
 
-  public createInnerComment() {
-    if (this.comment) {
-      this.comments_in_comment_service
-        .sendInnerComment(
-          this.comment._id,
-          this.comment.description,
-          this.media_locator
-        )
-        .subscribe(
-          (created_comment: any) => {
-            console.log(created_comment);
-            this.getComments();
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
-    }
-    this.showResponse = !this.showResponse;
+  public onDeleteInnerComment(inner_comment_index: number) {
+    this.commentsInComment = this.commentsInComment.filter(
+      (comment, index) => inner_comment_index !== index
+    );
   }
 
   public handleFileInput(event: any) {

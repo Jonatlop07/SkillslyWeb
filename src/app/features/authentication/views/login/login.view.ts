@@ -1,12 +1,12 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { LoginResponse } from '../../types/login_response.interface'
-import { Component, OnInit } from '@angular/core'
-import Swal from 'sweetalert2'
-import { Router } from '@angular/router'
-import { AuthService } from '../../../../core/service/auth.service'
-import { LoginForm } from '../../types/login_form.inteface'
-import { auth_routing_paths } from '../../auth.routing'
-import { feed_routing_paths } from '../../../feed/feed.routing'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginResponse } from '../../types/login_response.interface';
+import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../../core/service/auth.service';
+import { LoginForm } from '../../types/login_form.inteface';
+import { auth_routing_paths } from '../../auth.routing';
+import { feed_routing_paths } from '../../../feed/feed.routing';
 
 @Component({
   selector: 'skl-login',
@@ -51,7 +51,7 @@ export class LoginView implements OnInit {
             /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
           ),
         ],
-      ]
+      ],
     });
   }
 
@@ -62,7 +62,7 @@ export class LoginView implements OnInit {
     }
     this.loginForm = this.form.value;
     this.authService.loginUser(this.loginForm).subscribe(
-      ({ data } ) => {
+      ({ data }) => {
         const result: LoginResponse = data.login;
         if (!result.id) {
           const { access_token } = result;
@@ -81,6 +81,7 @@ export class LoginView implements OnInit {
             });
         } else {
           this.effectuateLogin(result);
+          console.log(result.access_token);
         }
       },
       (err) => {

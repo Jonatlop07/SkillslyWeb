@@ -1,9 +1,11 @@
-import { environment } from '../../../../environments/environment'
-import { Injectable } from '@angular/core'
-import { JwtService } from '../../../core/service/jwt.service'
-import { UserDataPresenter } from '../types/user_data.presenter'
-import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { environment } from '../../../../environments/environment';
+import { Injectable } from '@angular/core';
+import { JwtService } from '../../../core/service/jwt.service';
+import { UserDataPresenter } from '../types/user_data.presenter';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { ApolloQueryResult } from '@apollo/client';
+import { Apollo, gql } from 'apollo-angular';
 
 @Injectable()
 export class UserDataService {
@@ -11,7 +13,8 @@ export class UserDataService {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly jwt_service: JwtService
+    private readonly jwt_service: JwtService,
+    private readonly apollo: Apollo
   ) {}
 
   public getUserData(user_id: string): Observable<UserDataPresenter> {
@@ -19,5 +22,24 @@ export class UserDataService {
       `${this.API_URL}/users/data/${user_id}`,
       this.jwt_service.getHttpOptions()
     );
+  }
+
+  public getUserNameAndEmail(
+    user_id: string
+  ): Observable<ApolloQueryResult<any>> {
+    const QUERY_USER = gql`
+      query user($id: String!) {
+        user(id: $id) {
+          name
+          email
+        }
+      }
+    `;
+    return this.apollo.watchQuery({
+      query: QUERY_USER,
+      variables: {
+        id: user_id,
+      },
+    }).valueChanges;
   }
 }
