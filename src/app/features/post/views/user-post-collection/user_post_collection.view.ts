@@ -29,7 +29,7 @@ export class UserPostCollectionView {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.post_owner = params.user_id;
+      this.post_owner = params.id;
       const queryPostParams: QueryPostPresenter = {
         owner_id: this.post_owner,
       };
@@ -40,7 +40,6 @@ export class UserPostCollectionView {
           this.my_posts$.subscribe(my_posts => {
             this.posts = my_posts.posts;
           })
-          console.log();
         });
     })
   }

@@ -18,15 +18,15 @@ export class FollowRequestsView  implements OnInit {
   ngOnInit(): void {
     const followServiceResponse = this.followService.getUserFollowCollection();
     followServiceResponse.subscribe((resp: any) => {
-      this.pendingSentUsers = resp.pendingSentUsers;
+      this.pendingSentUsers = resp.data.followRelationships.pending_followers;
     })
   }
 
   public acceptFollowRequest(user: SearchUserResponse, index: number) : void {
     const followServiceResponse = this.followService.updateFollowRequest(user, true);
-    followServiceResponse.subscribe((new_conversation: Conversation) => {
+    followServiceResponse.subscribe(() => {
       this.pendingSentUsers.splice(index, 1);
-      this.followService.appendPrivateConversation(new_conversation);
+      // this.followService.appendPrivateConversation(new_conversation);
     })
   }
 

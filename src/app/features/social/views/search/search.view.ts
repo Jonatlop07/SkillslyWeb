@@ -45,9 +45,9 @@ export class SearchView implements OnInit {
     });
   }
 
-  public searchPosts(userId: string): void {
+  public searchPosts(user_id: string): void {
     this.router.navigate(
-      [`../../${post_routing_paths.user_post_collection}`, userId],
+      [`../../../${post_routing_paths.posts}`, user_id],
       { relativeTo: this.activatedRoute }
     );
   }
@@ -101,11 +101,11 @@ export class SearchView implements OnInit {
         const followServiceResponse =
           this.followService.getUserFollowCollection();
         followServiceResponse.subscribe((resp: any) => {
-          this.pendingUsers = resp.pendingUsers;
-          this.followingUsers = resp.followingUsers;
+          this.pendingUsers = resp.data.followRelationships.pending_users_to_follow;
+          this.followingUsers = resp.data.followRelationships.following_users;
           for (let i = 0; i < this.foundUsers.length; i++) {
             const foundUser: SearchUserResponse = this.foundUsers[i];
-            if (foundUser.user_id == this.searchService.getUserId()) {
+            if (foundUser.id == this.searchService.getUserId()) {
               this.sameUser[i] = true;
             }
             if (

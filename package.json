@@ -20,11 +20,13 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "@apollo/client": "^3.0.0",
     "@ngxs/storage-plugin": "^3.7.3",
     "@ngxs/store": "^3.7.3",
     "@stripe/stripe-js": "^1.22.0",
     "apollo-angular": "^3.0.1",
     "flexboxgrid": "^6.3.1",
+    "graphql": "^16",
     "mapbox-gl": "^2.6.1",
     "moment": "^2.29.1",
     "ngx-socket-io": "^4.1.0",
@@ -35,9 +37,7 @@
     "rxjs": "~6.6.0",
     "sweetalert2": "^11.1.10",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4",
-    "@apollo/client": "^3.0.0",
-    "graphql": "^16"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.2.10",
@@ -46,6 +46,7 @@
     "@types/jasmine": "~3.8.0",
     "@types/mapbox-gl": "^2.6.0",
     "@types/node": "^12.11.1",
+    "@types/react": "^18.0.9",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
     "eslint": "^8.2.0",

@@ -113,7 +113,7 @@ export class NotificationService {
           return {
             data: follow_request,
             action_details: {
-              route: `./query/${follow_request.user_id}`,
+              route: `./query/${follow_request.id}`,
               message: `Ahora sigues a ${follow_request.name}`
             }
           };
