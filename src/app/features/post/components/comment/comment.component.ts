@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { showErrorPopup } from '../../../../shared/pop-up/pop_up.utils';
 import { CommentsInCommentService } from '../../services/comments-in-comment.service';
 import * as moment from 'moment';
@@ -8,7 +16,6 @@ import { JwtService } from 'src/app/core/service/jwt.service';
 import { CommentsService } from '../../services/comments.service';
 import { UserDataService } from 'src/app/features/user-account/services/user_data.service';
 import { FileUploadService } from '../../services/file_upload.service';
-import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-comment',
@@ -19,6 +26,7 @@ export class CommentComponent implements OnInit {
   @Input() comment: Comment;
   @Input() index: number;
   @Output() deleted_comment = new EventEmitter<number>();
+  @ViewChild('responseScroll') response_field: ElementRef;
   public showResponse = false;
   public invalid_comment_content = false;
   public invalid_inner_comment_content = false;
@@ -30,13 +38,18 @@ export class CommentComponent implements OnInit {
   public limit = 2;
   public owns_comment = false;
   public comment_updating = false;
-  public comment_in_comment: string;
+  public comment_in_comment = '';
   public inner_comment_media_locator: string;
+  public inner_comment_creation_media_file = '';
+  public inner_comment_creation_media_type = '';
   public description: string;
-  public media_locator = '';
+  public media_locator_image = '';
   public media_type = '';
   public shown_media = '';
   public shown_media_type = '';
+  public media_locator = '';
+  public ready_to_send = true;
+  public loaded_media = false;
 
   constructor(
     private comments_in_comment_service: CommentsInCommentService,
@@ -48,21 +61,23 @@ export class CommentComponent implements OnInit {
 
   ngOnInit(): void {
     this.description = this.comment.description || '';
-    this.media_locator = this.comment.media_locator.split(' ')[0] || '';
+    this.media_locator = this.comment.media_locator || '';
+    this.media_locator_image = this.comment.media_locator.split(' ')[0] || '';
     this.shown_media = this.comment.media_locator.split(' ')[0] || '';
-    console.log(this.media_locator);
 
     this.media_type = this.comment.media_locator.split(' ')[1] || '';
     this.shown_media_type = this.comment.media_locator.split(' ')[1] || '';
-    this.owns_comment = this.comment._id === this.jwt_service.getUserId();
-    //getting user data from acc service for now
+    this.owns_comment = this.comment.owner_id === this.jwt_service.getUserId();
+
     this.owner_data_service
       .getUserNameAndEmail(this.comment.owner_id)
       .subscribe(({ data }) => {
         this.owner_name = data.user.name;
         this.owner_email = data.user.email;
       });
-    this.getComments(false);
+    if (+this.comment.inner_comment_count > 0) {
+      this.getComments(false);
+    }
   }
 
   transformDate() {
@@ -76,7 +91,14 @@ export class CommentComponent implements OnInit {
   }
 
   handleShowResponse() {
-    this.showResponse = !this.showResponse;
+    if (!this.showResponse) {
+      this.showResponse = true;
+      setTimeout(() => {
+        this.response_field.nativeElement.scrollIntoView();
+      }, 500);
+    } else {
+      this.showResponse = !this.showResponse;
+    }
   }
 
   getComments(reset: boolean, page = this.page, limit = this.limit) {
@@ -121,6 +143,8 @@ export class CommentComponent implements OnInit {
                 created_at,
               },
             ];
+            this.inner_comment_media_locator = '';
+            this.loaded_media = false;
           },
           (error) => {
             console.log(error);
@@ -137,14 +161,12 @@ export class CommentComponent implements OnInit {
   }
 
   handleMoreComments() {
-    console.log('more ' + this.page);
     this.limit = 2;
     this.page += 1;
     this.getComments(false);
   }
 
   resetComments() {
-    console.log('reset ' + this.page);
     this.page = 1;
     this.limit = 2;
     this.getComments(true);
@@ -164,9 +186,7 @@ export class CommentComponent implements OnInit {
         .subscribe((res: any) => {
           this.comment_updating = false;
           this.description = res.data.updateComment.description;
-          console.log(res.data.updateComment.media_locator);
-          this.media_locator = this.comment.media_locator.split(' ')[0] || '';
-          this.media_type = this.comment.media_locator.split(' ')[1] || '';
+          this.setMedia(res.data.updateComment.media_locator);
         });
     } else {
       this.invalid_comment_content = true;
@@ -180,35 +200,51 @@ export class CommentComponent implements OnInit {
   }
 
   public uploadCommentImage(file: File, comment_type: string) {
+    this.ready_to_send = false;
     this.media_service.uploadImage(file).subscribe((res) => {
       console.log(res);
       if (comment_type === 'inner') {
         this.inner_comment_media_locator = `${res.media_locator} ${res.contentType}`;
-      } else {
-        this.media_locator = `${res.media_locator} ${res.contentType}`;
-      }
-    });
-  }
-
-  public uploadCommentVideo(file: File, comment_type: string) {
-    this.media_service.uploadImage(file).subscribe((res) => {
-      console.log(res);
-      if (comment_type === 'inner') {
-        this.inner_comment_media_locator = `${res.media_locator} ${res.contentType}`;
+        this.inner_comment_creation_media_file = res.media_locator;
+        this.inner_comment_creation_media_type = res.contentType;
+        this.loaded_media = true;
       } else {
         this.media_locator = `${res.media_locator} ${res.contentType}`;
         this.shown_media = res.media_locator;
         this.shown_media_type = res.contentType;
       }
+      this.ready_to_send = true;
     });
   }
 
-  public handleFileInput(event: any, comment_type: string) {
+  public uploadCommentVideo(file: File, comment_type: string) {
+    this.ready_to_send = false;
+    this.media_service.uploadVideo(file).subscribe((res) => {
+      if (comment_type === 'inner') {
+        this.inner_comment_media_locator = `${res.media_locator} ${res.contentType}`;
+        this.inner_comment_creation_media_file = res.media_locator;
+        this.inner_comment_creation_media_type = res.contentType;
+        this.loaded_media = true;
+      } else {
+        this.media_locator = `${res.media_locator} ${res.contentType}`;
+        this.shown_media = res.media_locator;
+        this.shown_media_type = res.contentType;
+      }
+      this.ready_to_send = true;
+    });
+  }
+
+  public handleFileInput(event: any, comment_type?: string) {
     this.file_to_upload = event.target.files[0];
     if (this.file_to_upload.type.startsWith('video')) {
       this.uploadCommentVideo(this.file_to_upload, comment_type);
     } else if (this.file_to_upload.type.startsWith('image')) {
       this.uploadCommentImage(this.file_to_upload, comment_type);
     }
+  }
+
+  public setMedia(media: string) {
+    this.media_locator_image = media.split(' ')[0];
+    this.media_type = media.split(' ')[1];
   }
 }

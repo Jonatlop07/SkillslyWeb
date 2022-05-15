@@ -103,6 +103,23 @@
   </div>
   <div class="container-fluid" *ngIf="showComments">
     <div class="row">
+      <div *ngIf="loaded_media">
+        <div
+          class="p-1 row justify-content-center"
+          *ngIf="media_type.includes('image')"
+        >
+          <img [src]="comment_media_file" class="img-fluid" />
+        </div>
+        <div
+          class="p-1 row justify-content-center"
+          *ngIf="media_type.includes('video')"
+        >
+          <video controls>
+            <source [src]="comment_media_file" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
       <div class="col-auto">
         <img
           src="src/assets/images/users/d4.jpg"
@@ -169,13 +186,13 @@
             No hay comentarios
           </small>
 
-          <small
+          <!-- <small
             *ngIf="page > 0"
             class="text-muted clickable"
             (click)="resetComments()"
           >
             Inicio
-          </small>
+          </small> -->
         </div>
         <div *ngIf="postComments.length > 0">
           <app-comment

@@ -24,10 +24,12 @@ export class PostComponent implements OnInit {
   @Input() id: string;
   @Output() toggleDelete = new EventEmitter<string>();
   public invalid_comment_content = false;
+  public media_type = '';
+  public comment_media_file = '';
   public showComments = false;
   public file_to_upload: File | null = null;
   public postComments: Array<Comment> = [];
-  public comment: string;
+  public comment = '';
   public media_locator = '';
   public page = 0;
   public limit = 2;
@@ -35,6 +37,7 @@ export class PostComponent implements OnInit {
   public items: MenuItem[];
   public owns_post = false;
   public ready_to_send = true;
+  public loaded_media = false;
 
   constructor(
     private commentsService: CommentsService,
@@ -106,6 +109,8 @@ export class PostComponent implements OnInit {
                 created_at,
               },
             ];
+            this.media_locator = '';
+            this.loaded_media = false;
           },
           (err) => {
             console.log(err);
@@ -151,8 +156,10 @@ export class PostComponent implements OnInit {
   public uploadCommentImage(file: File) {
     this.ready_to_send = false;
     this.media_service.uploadImage(file).subscribe((res) => {
-      console.log(res);
       this.media_locator = `${res.media_locator} ${res.contentType}`;
+      this.media_type = res.contentType;
+      this.comment_media_file = res.media_locator;
+      this.loaded_media = true;
       this.ready_to_send = true;
     });
   }
@@ -160,8 +167,10 @@ export class PostComponent implements OnInit {
   public uploadCommentVideo(file: File) {
     this.ready_to_send = false;
     this.media_service.uploadImage(file).subscribe((res) => {
-      console.log(res);
       this.media_locator = `${res.media_locator} ${res.contentType}`;
+      this.media_type = res.contentType;
+      this.comment_media_file = res.media_locator;
+      this.loaded_media = true;
       this.ready_to_send = true;
     });
   }
