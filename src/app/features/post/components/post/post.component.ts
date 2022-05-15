@@ -10,6 +10,7 @@ import { SharePostInterface } from '../../types/share_post.interface';
 import { DeletePostInterface } from '../../types/delete_post.interface';
 import { post_routing_paths } from '../../post.routing';
 import { Comment } from '../../types/comment.presenter';
+import { FileUploadService } from '../../services/file_upload.service';
 
 @Component({
   selector: 'skl-post',
@@ -37,6 +38,7 @@ export class PostComponent implements OnInit {
   constructor(
     private commentsService: CommentsService,
     private postService: PostService,
+    private media_service: FileUploadService,
     private readonly store: Store,
     private router: Router
   ) {}
@@ -145,9 +147,18 @@ export class PostComponent implements OnInit {
     this.display = !this.display;
   }
 
+  public uploadPostImage(file: File) {
+    const form_data = new FormData();
+    form_data.append('media', file, file.name);
+    this.media_service.uploadImage(file, form_data).subscribe((res) => {
+      console.log(res);
+      this.media_locator = res.media_locator;
+    });
+  }
+
   public handleFileInput(event: any) {
-    //send to storage and return media locator
     this.file_to_upload = event.target.files[0];
+    this.uploadPostImage(this.file_to_upload);
   }
 
   public onDeletedComment(comment_index: number) {
