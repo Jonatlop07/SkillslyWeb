@@ -7,6 +7,8 @@ import { InnerComment } from '../../types/inner_comment.presenter';
 import { JwtService } from 'src/app/core/service/jwt.service';
 import { CommentsService } from '../../services/comments.service';
 import { UserDataService } from 'src/app/features/user-account/services/user_data.service';
+import { FileUploadService } from '../../services/file_upload.service';
+import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-comment',
@@ -32,17 +34,26 @@ export class CommentComponent implements OnInit {
   public inner_comment_media_locator: string;
   public description: string;
   public media_locator = '';
+  public media_type = '';
+  public shown_media = '';
+  public shown_media_type = '';
 
   constructor(
     private comments_in_comment_service: CommentsInCommentService,
     private comment_service: CommentsService,
     private owner_data_service: UserDataService,
+    private media_service: FileUploadService,
     private jwt_service: JwtService
   ) {}
 
   ngOnInit(): void {
     this.description = this.comment.description || '';
-    this.media_locator = this.comment.media_locator || '';
+    this.media_locator = this.comment.media_locator.split(' ')[0] || '';
+    this.shown_media = this.comment.media_locator.split(' ')[0] || '';
+    console.log(this.media_locator);
+
+    this.media_type = this.comment.media_locator.split(' ')[1] || '';
+    this.shown_media_type = this.comment.media_locator.split(' ')[1] || '';
     this.owns_comment = this.comment._id === this.jwt_service.getUserId();
     //getting user data from acc service for now
     this.owner_data_service
@@ -153,7 +164,9 @@ export class CommentComponent implements OnInit {
         .subscribe((res: any) => {
           this.comment_updating = false;
           this.description = res.data.updateComment.description;
-          this.media_locator = res.data.updateComment.media_locator;
+          console.log(res.data.updateComment.media_locator);
+          this.media_locator = this.comment.media_locator.split(' ')[0] || '';
+          this.media_type = this.comment.media_locator.split(' ')[1] || '';
         });
     } else {
       this.invalid_comment_content = true;
@@ -166,7 +179,36 @@ export class CommentComponent implements OnInit {
     );
   }
 
-  public handleFileInput(event: any) {
+  public uploadCommentImage(file: File, comment_type: string) {
+    this.media_service.uploadImage(file).subscribe((res) => {
+      console.log(res);
+      if (comment_type === 'inner') {
+        this.inner_comment_media_locator = `${res.media_locator} ${res.contentType}`;
+      } else {
+        this.media_locator = `${res.media_locator} ${res.contentType}`;
+      }
+    });
+  }
+
+  public uploadCommentVideo(file: File, comment_type: string) {
+    this.media_service.uploadImage(file).subscribe((res) => {
+      console.log(res);
+      if (comment_type === 'inner') {
+        this.inner_comment_media_locator = `${res.media_locator} ${res.contentType}`;
+      } else {
+        this.media_locator = `${res.media_locator} ${res.contentType}`;
+        this.shown_media = res.media_locator;
+        this.shown_media_type = res.contentType;
+      }
+    });
+  }
+
+  public handleFileInput(event: any, comment_type: string) {
     this.file_to_upload = event.target.files[0];
+    if (this.file_to_upload.type.startsWith('video')) {
+      this.uploadCommentVideo(this.file_to_upload, comment_type);
+    } else if (this.file_to_upload.type.startsWith('image')) {
+      this.uploadCommentImage(this.file_to_upload, comment_type);
+    }
   }
 }

@@ -17,6 +17,7 @@ import { CommentsInCommentService } from './services/comments-in-comment.service
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AccountService } from '../user-account/services/account.service';
 import { UserDataService } from '../user-account/services/user_data.service';
+import { FileUploadService } from './services/file_upload.service';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { UserDataService } from '../user-account/services/user_data.service';
     CommentsInCommentService,
     PostService,
     UserDataService,
+    FileUploadService,
   ],
   exports: [PostComponent],
 })

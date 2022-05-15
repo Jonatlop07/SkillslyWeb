@@ -34,6 +34,7 @@ export class PostComponent implements OnInit {
   public display = false;
   public items: MenuItem[];
   public owns_post = false;
+  public ready_to_send = true;
 
   constructor(
     private commentsService: CommentsService,
@@ -147,18 +148,31 @@ export class PostComponent implements OnInit {
     this.display = !this.display;
   }
 
-  public uploadPostImage(file: File) {
-    const form_data = new FormData();
-    form_data.append('media', file, file.name);
-    this.media_service.uploadImage(file, form_data).subscribe((res) => {
+  public uploadCommentImage(file: File) {
+    this.ready_to_send = false;
+    this.media_service.uploadImage(file).subscribe((res) => {
       console.log(res);
-      this.media_locator = res.media_locator;
+      this.media_locator = `${res.media_locator} ${res.contentType}`;
+      this.ready_to_send = true;
+    });
+  }
+
+  public uploadCommentVideo(file: File) {
+    this.ready_to_send = false;
+    this.media_service.uploadImage(file).subscribe((res) => {
+      console.log(res);
+      this.media_locator = `${res.media_locator} ${res.contentType}`;
+      this.ready_to_send = true;
     });
   }
 
   public handleFileInput(event: any) {
     this.file_to_upload = event.target.files[0];
-    this.uploadPostImage(this.file_to_upload);
+    if (this.file_to_upload.type.startsWith('video')) {
+      this.uploadCommentVideo(this.file_to_upload);
+    } else if (this.file_to_upload.type.startsWith('image')) {
+      this.uploadCommentImage(this.file_to_upload);
+    }
   }
 
   public onDeletedComment(comment_index: number) {

@@ -141,12 +141,13 @@
               hidden
               #uploader
               id="media_resource"
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, video/*"
               (change)="handleFileInput($event)"
             />
           </p-button>
           <p-button
             icon="pi pi-send"
+            [disabled]="!ready_to_send"
             styleClass="p-button-outlined"
             pTooltip="Enviar comentario"
             tooltipPosition="top"

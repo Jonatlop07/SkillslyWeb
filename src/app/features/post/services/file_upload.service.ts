@@ -14,10 +14,23 @@ export class FileUploadService {
     private readonly jwt_service: JwtService
   ) {}
 
-  uploadImage(file_to_upload: File, form_data: FormData) {
+  uploadImage(file_to_upload: File) {
+    const form_data = new FormData();
+    form_data.append('media', file_to_upload, file_to_upload.name);
     return this.http.post<FileUploadResponse>(
-      `${this.API_URL}/api/v1/media/upload-image`,
-      form_data
+      `${this.API_URL}/media/image/`,
+      form_data,
+      this.jwt_service.getHttpOptions()
+    );
+  }
+
+  uploadVideo(file_to_upload: File) {
+    const form_data = new FormData();
+    form_data.append('media', file_to_upload, file_to_upload.name);
+    return this.http.post<FileUploadResponse>(
+      `${this.API_URL}/media/video/`,
+      form_data,
+      this.jwt_service.getHttpOptions()
     );
   }
 }

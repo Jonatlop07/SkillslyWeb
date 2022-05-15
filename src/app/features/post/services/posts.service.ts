@@ -1,21 +1,26 @@
-import { Injectable } from '@angular/core'
-import { tap } from 'rxjs/operators'
-import { Observable, of } from 'rxjs'
-import { HttpClient, HttpParams } from '@angular/common/http'
-import { Select } from '@ngxs/store'
-import { SessionState } from '../../../shared/state/session/session.state'
-import { JwtService } from '../../../core/service/jwt.service'
-import { UpdatePostPresenter } from '../types/update_post.presenter'
-import { toPostContent } from '../types/post_form_data.presenter'
-import { SessionModel } from '../../authentication/model/session.model'
-import { SharePostInterface } from '../types/share_post.interface'
-import { DeletePostInterface } from '../types/delete_post.interface'
-import { PermanentPostPresenter, QueryPostPresenter } from '../types/query_post.presenter'
-import { CreatePostDataPresenter, PostContentData } from '../types/create_post_data.presenter'
-import { environment } from '../../../../environments/environment'
-import {Apollo, gql} from "apollo-angular";
-import {ApolloQueryResult} from "@apollo/client/core";
-
+import { Injectable } from '@angular/core';
+import { tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Select } from '@ngxs/store';
+import { SessionState } from '../../../shared/state/session/session.state';
+import { JwtService } from '../../../core/service/jwt.service';
+import { UpdatePostPresenter } from '../types/update_post.presenter';
+import { toPostContent } from '../types/post_form_data.presenter';
+import { SessionModel } from '../../authentication/model/session.model';
+import { SharePostInterface } from '../types/share_post.interface';
+import { DeletePostInterface } from '../types/delete_post.interface';
+import {
+  PermanentPostPresenter,
+  QueryPostPresenter,
+} from '../types/query_post.presenter';
+import {
+  CreatePostDataPresenter,
+  PostContentData,
+} from '../types/create_post_data.presenter';
+import { environment } from '../../../../environments/environment';
+import { Apollo, gql } from 'apollo-angular';
+import { ApolloQueryResult } from '@apollo/client/core';
 
 @Injectable()
 export class PostService {
@@ -44,7 +49,9 @@ export class PostService {
   //     this.isChargingPosts = false;
   //   }));
   // }
-  public getPostCollection(queryPostParams: QueryPostPresenter):Observable<ApolloQueryResult<any>>{
+  public getPostCollection(
+    queryPostParams: QueryPostPresenter
+  ): Observable<ApolloQueryResult<any>> {
     const { owner_id } = queryPostParams;
     const QUERY_POSTS = gql`
       query postsByOwnerId($owner_id: String!) {
@@ -54,7 +61,7 @@ export class PostService {
           created_at
           updated_at
           description
-          content_element{
+          content_element {
             description
             media_locator
           }
@@ -65,7 +72,7 @@ export class PostService {
       query: QUERY_POSTS,
       variables: {
         owner_id: owner_id,
-      }
+      },
     }).valueChanges;
   }
 
@@ -85,7 +92,7 @@ export class PostService {
           created_at
           updated_at
           description
-          content_element{
+          content_element {
             description
             media_locator
           }
@@ -96,8 +103,8 @@ export class PostService {
     return this.apollo.watchQuery({
       query: QUERY_POST,
       variables: {
-        post_id: post_id
-      }
+        post_id: post_id,
+      },
     }).valueChanges;
   }
 
@@ -115,25 +122,25 @@ export class PostService {
   //     );
   // }
 
-  public createPost(post: CreatePostDataPresenter){
+  public createPost(post: CreatePostDataPresenter) {
     const content_element = toPostContent(post.content_element);
     console.log(content_element);
-    const {description, privacy} = post;
+    const { description, privacy } = post;
     console.log(description);
     console.log(privacy);
     const CREATE_POST = gql`
       mutation createPost(
-        $owner_id: ID!,
-        $description: String,
-        $privacy: String,
-        $content_element: [PostContentData],
+        $owner_id: ID!
+        $description: String
+        $privacy: String
+        $content_element: [PostContentData]
       ) {
         createPost(
-          post_data:{
-            owner_id: $user_id,
-            description: $description,
-            privacy: $privacy,
-            content_element: $content_element,
+          post_data: {
+            owner_id: $user_id
+            description: $description
+            privacy: $privacy
+            content_element: $content_element
           }
         ) {
           id
@@ -141,7 +148,7 @@ export class PostService {
           created_at
           updated_at
           description
-          content_element{
+          content_element {
             description
             media_locator
           }
@@ -156,7 +163,7 @@ export class PostService {
         description,
         privacy,
         content_element: content_element,
-      }
+      },
     });
   }
 
@@ -168,7 +175,7 @@ export class PostService {
       `${this.API_URL}/permanent-posts/${encodeURIComponent(id)}`,
       {
         params,
-        ...this.jwt_service.getHttpOptions()
+        ...this.jwt_service.getHttpOptions(),
       }
     );
   }
@@ -177,7 +184,9 @@ export class PostService {
     post_to_update: UpdatePostPresenter
   ): Observable<UpdatePostPresenter> {
     return this.http.put<UpdatePostPresenter>(
-      `${this.API_URL}/permanent-posts/${encodeURIComponent(post_to_update.id)}`,
+      `${this.API_URL}/permanent-posts/${encodeURIComponent(
+        post_to_update.id
+      )}`,
       {
         user_id: this.jwt_service.getUserId(),
         content: post_to_update.content_element,
@@ -189,7 +198,9 @@ export class PostService {
 
   public sharePost(sharePostInterface: SharePostInterface) {
     return this.http.post(
-      `${this.API_URL}/permanent-posts/${encodeURIComponent(sharePostInterface.id)}/share`,
+      `${this.API_URL}/permanent-posts/${encodeURIComponent(
+        sharePostInterface.id
+      )}/share`,
       {
         user_id: this.jwt_service.getUserId(),
       },
@@ -225,7 +236,7 @@ export class PostService {
     return this.jwt_service.getEmail();
   }
 
-  getUserId(){
+  getUserId() {
     return this.jwt_service.getUserId();
   }
 }
