@@ -1,8 +1,8 @@
 import { User } from '../../user-account/types/user.interface'
 
 export interface UserFollowCollectionPresenter {
-  pendingUsers: Array<User>;
-  followingUsers: Array<User>;
+  pending_followers: Array<User>;
+  following_users: Array<User>;
   followers: Array<User>;
-  pendingSentUsers: Array<User>;
+  pending_users_to_follow: Array<User>;
 }

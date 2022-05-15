@@ -94,8 +94,8 @@ export default class ChatView implements OnInit, OnDestroy {
         mergeAll()
       )
       .subscribe((state) => {
-        state.users.forEach((user: User) => this.related_users.set(user.user_id, {
-          member_id: user.user_id,
+        state.users.forEach((user: User) => this.related_users.set(user.id, {
+          member_id: user.id,
           member_name: user.name
         }))
       });
