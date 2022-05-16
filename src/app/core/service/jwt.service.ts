@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core'
-import { SessionState } from '../../shared/state/session/session.state'
-import { HttpHeaders } from '@angular/common/http'
-import { SessionModel } from '../../features/authentication/model/session.model'
-import { Select } from '@ngxs/store'
-import { Observable } from 'rxjs'
+import { Injectable } from '@angular/core';
+import { SessionState } from '../../shared/state/session/session.state';
+import { HttpHeaders } from '@angular/common/http';
+import { SessionModel } from '../../features/authentication/model/session.model';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class JwtService {
   @Select(SessionState) session$: Observable<SessionModel>;
@@ -14,17 +14,16 @@ export class JwtService {
   public getHttpOptions() {
     return {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.getToken()}`
-      })
-    }
+        Authorization: `Bearer ${this.getToken()}`,
+      }),
+    };
   }
 
   public isUserAuthenticated() {
     let auth_token;
     this.session$.subscribe((session) => {
       auth_token = session.access_token;
-    })
+    });
 
     if (auth_token && auth_token !== '') {
       return this.getExpiresDate() > new Date();
@@ -37,7 +36,7 @@ export class JwtService {
     if (this.isUserAuthenticated()) {
       this.session$.subscribe((session) => {
         user_id = session.user_id;
-      })
+      });
     }
     return user_id;
   }
@@ -47,17 +46,17 @@ export class JwtService {
     if (this.isUserAuthenticated()) {
       this.session$.subscribe((session) => {
         token = session.access_token;
-      })
+      });
     }
     return token;
   }
 
   public getEmail(): string {
     let user_email = '';
-    if (this.isUserAuthenticated()){
+    if (this.isUserAuthenticated()) {
       this.session$.subscribe((session) => {
         user_email = session.user_email;
-      })
+      });
     }
     return user_email;
   }
@@ -66,7 +65,7 @@ export class JwtService {
     let expires_date;
     this.session$.subscribe((session) => {
       expires_date = session.expires_date;
-    })
+    });
     if (expires_date) {
       return new Date(Number(expires_date));
     }

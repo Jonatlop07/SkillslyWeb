@@ -1,21 +1,23 @@
-import { Injectable } from '@angular/core'
-import { tap } from 'rxjs/operators'
-import { Observable, of } from 'rxjs'
-import { HttpClient, HttpParams } from '@angular/common/http'
-import { Select } from '@ngxs/store'
-import { SessionState } from '../../../shared/state/session/session.state'
-import { JwtService } from '../../../core/service/jwt.service'
-import { UpdatePostPresenter } from '../types/update_post.presenter'
-import { toPostContent } from '../types/post_form_data.presenter'
-import { SessionModel } from '../../authentication/model/session.model'
-import { SharePostInterface } from '../types/share_post.interface'
-import { DeletePostInterface } from '../types/delete_post.interface'
-import { PermanentPostPresenter, QueryPostPresenter } from '../types/query_post.presenter'
-import { NewPostInputData, PostContentElement } from '../types/create_post_data.presenter'
-import { environment } from '../../../../environments/environment'
-import {Apollo, gql} from "apollo-angular";
-import {ApolloQueryResult} from "@apollo/client/core";
-
+import { Injectable } from '@angular/core';
+import { tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Select } from '@ngxs/store';
+import { SessionState } from '../../../shared/state/session/session.state';
+import { JwtService } from '../../../core/service/jwt.service';
+import { UpdatePostPresenter } from '../types/update_post.presenter';
+import { SessionModel } from '../../authentication/model/session.model';
+import { SharePostInterface } from '../types/share_post.interface';
+import { DeletePostInterface } from '../types/delete_post.interface';
+import {
+  QueryPostPresenter,
+} from '../types/query_post.presenter';
+import {
+  NewPostInputData
+} from '../types/create_post_data.presenter';
+import { environment } from '../../../../environments/environment';
+import { Apollo, gql } from 'apollo-angular';
+import { ApolloQueryResult } from '@apollo/client/core';
 
 @Injectable()
 export class PostService {
@@ -44,7 +46,9 @@ export class PostService {
   //     this.isChargingPosts = false;
   //   }));
   // }
-  public getPostCollection(queryPostParams: QueryPostPresenter):Observable<ApolloQueryResult<any>>{
+  public getPostCollection(
+    queryPostParams: QueryPostPresenter
+  ): Observable<ApolloQueryResult<any>> {
     const { owner_id } = queryPostParams;
     console.log(owner_id);
     const QUERY_POSTS = gql`
@@ -55,21 +59,25 @@ export class PostService {
           created_at
           updated_at
           description
-          content_element{
+          content_element {
             description
             media_locator
           }
         }
       }
     `;
-    return this.apollo.watchQuery({
-      query: QUERY_POSTS,
-      variables: {
-        owner_id: owner_id,
-      }
-    }).valueChanges.pipe(tap(()=>{
+    return this.apollo
+      .watchQuery({
+        query: QUERY_POSTS,
+        variables: {
+          owner_id: owner_id,
+        },
+      })
+      .valueChanges.pipe(
+        tap(() => {
           this.isChargingPosts = false;
-    }));
+        })
+      );
   }
 
   // public queryPost(id: string): Observable<PermanentPostPresenter> {
@@ -88,7 +96,7 @@ export class PostService {
           created_at
           updated_at
           description
-          content_element{
+          content_element {
             description
             media_locator
           }
@@ -99,8 +107,8 @@ export class PostService {
     return this.apollo.watchQuery({
       query: QUERY_POST,
       variables: {
-        post_id: post_id
-      }
+        post_id: post_id,
+      },
     }).valueChanges;
   }
 
@@ -118,24 +126,20 @@ export class PostService {
   //     );
   // }
 
-  public createPost(post: NewPostInputData){
+  public createPost(post: NewPostInputData) {
     const newPostInputData: NewPostInputData = {
       owner_id: this.jwt_service.getUserId(),
-      ...post
-    }
+      ...post,
+    };
     const CREATE_POST = gql`
-      mutation createPost(
-        $newPostInputData: NewPostInputData!,
-      ) {
-        createPost(
-          post_data: $newPostInputData
-        ) {
+      mutation createPost($newPostInputData: NewPostInputData!) {
+        createPost(post_data: $newPostInputData) {
           id
           owner_id
           created_at
           updated_at
           description
-          content_element{
+          content_element {
             description
             media_locator
           }
@@ -146,7 +150,7 @@ export class PostService {
       mutation: CREATE_POST,
       variables: {
         newPostInputData: newPostInputData,
-      }
+      },
     });
   }
 
@@ -165,12 +169,8 @@ export class PostService {
   public deletePost(deletePostInterface: DeletePostInterface) {
     const { id } = deletePostInterface;
     const DELETE_POST = gql`
-      mutation deletePost(
-        $post_id: String!
-      ) {
-        deletePost(
-          post_id: $post_id
-        ) {
+      mutation deletePost($post_id: String!) {
+        deletePost(post_id: $post_id) {
           id
         }
       }
@@ -179,7 +179,7 @@ export class PostService {
       mutation: DELETE_POST,
       variables: {
         post_id: id,
-      }
+      },
     });
   }
 
@@ -187,7 +187,9 @@ export class PostService {
     post_to_update: UpdatePostPresenter
   ): Observable<UpdatePostPresenter> {
     return this.http.put<UpdatePostPresenter>(
-      `${this.API_URL}/permanent-posts/${encodeURIComponent(post_to_update.id)}`,
+      `${this.API_URL}/permanent-posts/${encodeURIComponent(
+        post_to_update.id
+      )}`,
       {
         user_id: this.jwt_service.getUserId(),
         content: post_to_update.content_element,
@@ -199,7 +201,9 @@ export class PostService {
 
   public sharePost(sharePostInterface: SharePostInterface) {
     return this.http.post(
-      `${this.API_URL}/permanent-posts/${encodeURIComponent(sharePostInterface.id)}/share`,
+      `${this.API_URL}/permanent-posts/${encodeURIComponent(
+        sharePostInterface.id
+      )}/share`,
       {
         user_id: this.jwt_service.getUserId(),
       },
@@ -238,8 +242,8 @@ export class PostService {
     return this.apollo.watchQuery({
       query: QUERY_USER,
       variables: {
-        id: id
-      }
+        id: id,
+      },
     }).valueChanges;
   }
 
@@ -251,7 +255,7 @@ export class PostService {
     return this.jwt_service.getEmail();
   }
 
-  getUserId(){
+  getUserId() {
     return this.jwt_service.getUserId();
   }
 }

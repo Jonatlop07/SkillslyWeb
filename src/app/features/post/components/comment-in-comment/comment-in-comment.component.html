@@ -8,7 +8,7 @@
             <small class="font-weight-lighter" style="font-size: 12px">
               {{ owner_email }}</small
             >
-            <div class="dropdown float-end" *ngIf="!owns_inner_comment">
+            <div class="dropdown float-end" *ngIf="owns_inner_comment">
               <a
                 class="pi pi-ellipsis-h dropdown"
                 style="color: grey"
@@ -38,9 +38,18 @@
             </div>
             <div
               class="p-1 row justify-content-center"
-              *ngIf="comment.media_locator"
+              *ngIf="media_type.includes('image')"
             >
-              <img [src]="inner_comment_media_locator" class="img-fluid" />
+              <img [src]="inner_comment_media_file" class="img-fluid" />
+            </div>
+            <div
+              class="p-1 row justify-content-center"
+              *ngIf="media_type.includes('video')"
+            >
+              <video controls>
+                <source [src]="inner_comment_media_file" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </div>
             <p class="mb-0 font-weight-light p-0" style="font-size: 13px">
               {{ inner_comment_description }}
@@ -69,8 +78,20 @@
           class="rounded-circle"
         />
       </div>
-      <div class="p-1 row justify-content-center" *ngIf="comment.media_locator">
-        <img [src]="comment.media_locator" class="img-fluid" />
+      <div
+        class="p-1 row justify-content-center"
+        *ngIf="media_type.includes('image')"
+      >
+        <img [src]="inner_comment_media_file" class="img-fluid" />
+      </div>
+      <div
+        class="p-1 row justify-content-center"
+        *ngIf="media_type.includes('video')"
+      >
+        <video controls>
+          <source [src]="inner_comment_media_file" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
       <div class="form-group-row">
         <div
@@ -100,7 +121,7 @@
               hidden
               #uploader
               id="media_resource"
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, video/*"
               (change)="handleFileInput($event)"
             />
           </p-button>
@@ -109,6 +130,7 @@
             styleClass="p-button-outlined"
             pTooltip="Enviar comentario"
             tooltipPosition="top"
+            [disabled]="!ready_to_send"
             (click)="updateInnerComment()"
           >
           </p-button>

@@ -10,7 +10,7 @@
         />
       </div>
       <div class="align-self-center">
-        <h5 class="font-medium">{}</h5>
+        <h5 class="font-medium">{{ post.owner_id }}</h5>
       </div>
     </div>
     <div class="d-flex">
@@ -38,7 +38,7 @@
               *ngIf="owns_post"
               class="dropdown-item"
               (click)="updatePost(post.id)"
-              >Editar</a
+            >Editar</a
             >
           </li>
           <li>
@@ -46,7 +46,7 @@
               *ngIf="owns_post || editable"
               class="dropdown-item"
               (click)="deletePost(post.id)"
-              >Eliminar</a
+            >Eliminar</a
             >
           </li>
         </ul>
@@ -103,6 +103,23 @@
   </div>
   <div class="container-fluid" *ngIf="showComments">
     <div class="row">
+      <div *ngIf="loaded_media">
+        <div
+          class="p-1 row justify-content-center"
+          *ngIf="media_type.includes('image')"
+        >
+          <img [src]="comment_media_file" class="img-fluid" />
+        </div>
+        <div
+          class="p-1 row justify-content-center"
+          *ngIf="media_type.includes('video')"
+        >
+          <video controls>
+            <source [src]="comment_media_file" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
       <div class="col-auto">
         <img
           src="src/assets/images/users/d4.jpg"
@@ -141,12 +158,13 @@
               hidden
               #uploader
               id="media_resource"
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, video/*"
               (change)="handleFileInput($event)"
             />
           </p-button>
           <p-button
             icon="pi pi-send"
+            [disabled]="!ready_to_send"
             styleClass="p-button-outlined"
             pTooltip="Enviar comentario"
             tooltipPosition="top"
@@ -168,13 +186,13 @@
             No hay comentarios
           </small>
 
-          <small
+          <!-- <small
             *ngIf="page > 0"
             class="text-muted clickable"
             (click)="resetComments()"
           >
             Inicio
-          </small>
+          </small> -->
         </div>
         <div *ngIf="postComments.length > 0">
           <app-comment
@@ -189,7 +207,7 @@
             class="clickable m-2"
             (click)="handleMoreComments()"
             style="font-size: 13px"
-            >Ver más comentarios</span
+          >Ver más comentarios</span
           >
         </div>
       </div>

@@ -18,7 +18,7 @@
               <small class="font-weight-lighter" style="font-size: 12px">
                 {{ owner_name }}</small
               >
-              <div class="dropdown float-end" *ngIf="!owns_comment">
+              <div class="dropdown float-end" *ngIf="owns_comment">
                 <a
                   class="pi pi-ellipsis-h dropdown"
                   style="color: grey"
@@ -46,8 +46,20 @@
                   </li>
                 </ul>
               </div>
-              <div class="p-1 row justify-content-center" *ngIf="media_locator">
-                <img [src]="media_locator" class="img-fluid" />
+              <div
+                class="p-1 row justify-content-center"
+                *ngIf="media_type.includes('image')"
+              >
+                <img [src]="media_locator_image" class="img-fluid" />
+              </div>
+              <div
+                class="p-1 row justify-content-center"
+                *ngIf="media_type.includes('video')"
+              >
+                <video controls>
+                  <source [src]="media_locator_image" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </div>
             </div>
           </div>
@@ -82,9 +94,18 @@
           </div>
           <div
             class="p-1 row justify-content-center"
-            *ngIf="comment.media_locator"
+            *ngIf="shown_media_type.includes('image')"
           >
-            <img [src]="comment.media_locator" class="img-fluid" />
+            <img [src]="shown_media" class="img-fluid" />
+          </div>
+          <div
+            class="p-1 row justify-content-center"
+            *ngIf="shown_media_type.includes('video')"
+          >
+            <video controls>
+              <source [src]="shown_media" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
           <div class="form-group-row">
             <div
@@ -114,7 +135,7 @@
                   hidden
                   id="media_resource"
                   #uploader
-                  accept="image/png, image/jpeg"
+                  accept="image/png, image/jpeg, video/*"
                   (change)="handleFileInput($event)"
                 />
               </p-button>
@@ -124,6 +145,7 @@
                 pTooltip="Enviar comentario"
                 tooltipPosition="top"
                 (click)="updateComment()"
+                [disabled]="!ready_to_send"
               >
               </p-button>
             </div>
@@ -161,17 +183,37 @@
           style="font-size: 11px"
           >Ver más respuestas</span
         >
-        <small
+        <!-- <small
           *ngIf="page > 0"
           class="text-muted clickable mx-2"
           style="font-size: 11px"
           (click)="resetComments()"
           >Inicio</small
-        >
+        > -->
       </div>
     </div>
 
-    <div class="row py-2" *ngIf="showResponse">
+    <div class="row py-2" *ngIf="showResponse" #responseScroll>
+      <div *ngIf="loaded_media">
+        <div
+          class="p-1 row justify-content-center"
+          *ngIf="inner_comment_creation_media_type.includes('image')"
+        >
+          <img [src]="inner_comment_creation_media_file" class="img-fluid" />
+        </div>
+        <div
+          class="p-1 row justify-content-center"
+          *ngIf="inner_comment_creation_media_type.includes('video')"
+        >
+          <video controls>
+            <source
+              [src]="inner_comment_creation_media_file"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
       <div class="col-auto">
         <img
           src="src/assets/images/users/d4.jpg"
@@ -210,7 +252,7 @@
               id="media_resource"
               #uploader
               accept="image/png, image/jpeg"
-              (change)="handleFileInput($event)"
+              (change)="handleFileInput($event, 'inner')"
             />
           </p-button>
           <p-button
@@ -218,6 +260,7 @@
             styleClass="p-button-outlined"
             pTooltip="Enviar comentario"
             tooltipPosition="top"
+            [disabled]="!ready_to_send"
             (click)="sendComment()"
           >
           </p-button>
