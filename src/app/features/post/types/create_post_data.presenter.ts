@@ -1,11 +1,12 @@
-export interface PostContentData {
+export interface PostContentElement {
   description: string;
-  media: File;
+  media_locator: string;
   media_type: string;
 }
 
-export interface CreatePostDataPresenter {
-  description: string,
-  content_element: PostContentData[];
+export interface NewPostInputData {
+  owner_id?: string;
+  description: string;
   privacy: string;
+  content_element: PostContentElement[];
 }

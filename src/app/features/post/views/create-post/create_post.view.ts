@@ -35,7 +35,7 @@ export class CreatePostView {
       content_element: new FormArray([
         new FormGroup({
           description: new FormControl(null, Validators.maxLength(250)),
-          media: new FormControl(null),
+          media_locator: new FormControl(null),
           media_type: new FormControl(null, [
             Validators.pattern(`${this.allowedTypes}`),
           ]),
@@ -53,7 +53,7 @@ export class CreatePostView {
     (<FormArray>this.postForm.get('content_element')).push(
       new FormGroup({
         description: new FormControl(null, Validators.maxLength(250)),
-        media: new FormControl(null),
+        media_locator: new FormControl(null),
         media_type: new FormControl(null, [
           Validators.pattern(`${this.allowedTypes}`),
         ]),
@@ -62,7 +62,7 @@ export class CreatePostView {
   }
 
   onDeleteContent(index: number) {
-    (<FormArray>this.postForm.get('content_element')).removeAt(index);
+    (<FormArray> this.postForm.get('content_element')).removeAt(index);
   }
 
   onCancel() {
@@ -71,16 +71,15 @@ export class CreatePostView {
   }
 
   onSubmit($event: Event) {
-    const controls = (<FormArray>this.postForm.get('content_element')).controls;
+    const controls = (<FormArray> this.postForm.get('content_element')).controls;
     if (this.validateContent(controls)) {
       this.mediaIncomplete = false;
       this.requireOne = false;
-      console.log(this.postForm.value);
       this.postService.createPost(this.postForm.value).subscribe((res: any) => {
         this.toggleCreate.emit(res as PermanentPostPresenter);
       });
       if (!this.group_id) {
-        this.router.navigate(['./feed']);
+        // this.router.navigate(['./feed']);
       }
       return true;
     } else {
@@ -93,15 +92,15 @@ export class CreatePostView {
     for (const control of controls) {
       if (
         !control.get('description').value &&
-        !control.get('media').value &&
+        !control.get('media_locator').value &&
         !control.get('media_type').value
       ) {
         this.requireOne = true;
         return false;
       }
       if (
-        (!control.get('media').value && control.get('media_type').value) ||
-        (control.get('media').value && !control.get('media_type').value)
+        (!control.get('media_locator').value && control.get('media_type').value) ||
+        (control.get('media_locator').value && !control.get('media_type').value)
       ) {
         this.mediaIncomplete = true;
         return false;

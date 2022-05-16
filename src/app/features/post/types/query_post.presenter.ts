@@ -1,4 +1,4 @@
-import { PostContentData } from './create_post_data.presenter';
+import { PostContentElement } from './create_post_data.presenter';
 
 export interface QueryPostPresenter {
   owner_id?: string;
