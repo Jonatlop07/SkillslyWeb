@@ -1,4 +1,4 @@
-import {ContentElementPresenter} from "../types/query_post.presenter";
+import {PostContentElement} from "../types/query_post.presenter";
 
 export interface PostCollectionModel {
   posts: Array<PostModel>
@@ -11,5 +11,5 @@ export interface PostModel {
   updated_at: string;
   description: string;
   privacy: string;
-  content_element: ContentElementPresenter[];
+  content_element: PostContentElement[];
 }

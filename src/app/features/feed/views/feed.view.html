@@ -18,11 +18,12 @@
                         </h2>
                         <div class="dropdown-divider pb-3"></div>
                         <div
-                          *ngFor="let post of foundPosts"
+                          *ngFor="let post of posts"
                           class="row d-flex justify-content-center"
                         >
                           <skl-post
                             [post]="post"
+                            [owner_name]="owner_name"
                             [editable]="false"
                             class="col-12"
                           >

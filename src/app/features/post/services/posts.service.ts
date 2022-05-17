@@ -5,7 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Select } from '@ngxs/store';
 import { SessionState } from '../../../shared/state/session/session.state';
 import { JwtService } from '../../../core/service/jwt.service';
-import { UpdatePostPresenter } from '../types/update_post.presenter';
+import { UpdatePostInputData } from '../types/update_post.presenter';
 import { SessionModel } from '../../authentication/model/session.model';
 import { SharePostInterface } from '../types/share_post.interface';
 import { DeletePostInterface } from '../types/delete_post.interface';
@@ -17,7 +17,7 @@ import {
 } from '../types/create_post_data.presenter';
 import { environment } from '../../../../environments/environment';
 import { Apollo, gql } from 'apollo-angular';
-import { ApolloQueryResult } from '@apollo/client/core';
+import {ApolloQueryResult, FetchResult} from '@apollo/client/core';
 
 @Injectable()
 export class PostService {
@@ -50,18 +50,23 @@ export class PostService {
     queryPostParams: QueryPostPresenter
   ): Observable<ApolloQueryResult<any>> {
     const { owner_id } = queryPostParams;
-    console.log(owner_id);
     const QUERY_POSTS = gql`
       query postsByOwnerId($owner_id: String!) {
         postsByOwnerId(owner_id: $owner_id) {
-          id
-          owner_id
-          created_at
-          updated_at
-          description
-          content_element {
-            description
-            media_locator
+          posts{
+            id,
+            owner_id,
+            created_at,
+            updated_at,
+            description,
+            content_element{
+              description,
+              media_locator,
+              media_type
+            }
+          }
+          owner{
+            name
           }
         }
       }
@@ -89,16 +94,18 @@ export class PostService {
 
   public queryPost(post_id: string): Observable<ApolloQueryResult<any>> {
     const QUERY_POST = gql`
-      query postById($pos_id: String!) {
+      query postById($post_id: ID!) {
         postById(post_id: $post_id) {
           id
           owner_id
           created_at
           updated_at
           description
+          privacy
           content_element {
             description
             media_locator
+            media_type
           }
         }
       }
@@ -131,6 +138,7 @@ export class PostService {
       owner_id: this.jwt_service.getUserId(),
       ...post,
     };
+    console.log(newPostInputData);
     const CREATE_POST = gql`
       mutation createPost($newPostInputData: NewPostInputData!) {
         createPost(post_data: $newPostInputData) {
@@ -142,6 +150,7 @@ export class PostService {
           content_element {
             description
             media_locator
+            media_type
           }
         }
       }
@@ -183,20 +192,49 @@ export class PostService {
     });
   }
 
-  public updatePermanentPost(
-    post_to_update: UpdatePostPresenter
-  ): Observable<UpdatePostPresenter> {
-    return this.http.put<UpdatePostPresenter>(
-      `${this.API_URL}/permanent-posts/${encodeURIComponent(
-        post_to_update.id
-      )}`,
-      {
-        user_id: this.jwt_service.getUserId(),
-        content: post_to_update.content_element,
-        privacy: post_to_update.privacy,
+  // public updatePermanentPost(
+  //   post_to_update: UpdatePostInputData
+  // ): Observable<UpdatePostInputData> {
+  //   return this.http.put<UpdatePostInputData>(
+  //     `${this.API_URL}/permanent-posts/${encodeURIComponent(
+  //       post_to_update.id
+  //     )}`,
+  //     {
+  //       user_id: this.jwt_service.getUserId(),
+  //       content: post_to_update.content_element,
+  //       privacy: post_to_update.privacy,
+  //     },
+  //     this.jwt_service.getHttpOptions()
+  //   );
+  // }
+
+  public updatePermanentPost(post_to_update: UpdatePostInputData): Observable<FetchResult> {
+    const updatePostInputData: UpdatePostInputData = {
+      owner_id: this.jwt_service.getUserId(),
+      ...post_to_update,
+    };
+    const UPDATE_POST = gql`
+      mutation updatePost($updatePostInputData: NewPostInputData!) {
+        updatePost(post_data: $updatePostInputData) {
+          id
+          owner_id
+          created_at
+          updated_at
+          description
+          content_element {
+            description
+            media_locator
+            media_type
+          }
+        }
+      }
+    `;
+    return this.apollo.mutate({
+      mutation: UPDATE_POST,
+      variables: {
+        updatePostInputData: updatePostInputData,
       },
-      this.jwt_service.getHttpOptions()
-    );
+    });
   }
 
   public sharePost(sharePostInterface: SharePostInterface) {

@@ -21,6 +21,7 @@ export class UserPostCollectionView {
   public post_owner: string;
   @Select(MyPostsState) my_posts$: Observable<PostCollectionModel>;
   public posts: Array<PostModel>;
+  public owner_name: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -30,7 +31,6 @@ export class UserPostCollectionView {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
-      console.log(params.id);
       this.post_owner = params.id;
       const queryPostParams: QueryPostPresenter = {
         owner_id: this.post_owner,
@@ -38,10 +38,11 @@ export class UserPostCollectionView {
       this.postService
         .getPostCollection(queryPostParams)
         .subscribe(({ data }) => {
-          this.store.dispatch(new SetMyPosts({ posts: data.postsByOwnerId }));
+          this.store.dispatch(new SetMyPosts({ posts: data.postsByOwnerId.posts }));
           this.my_posts$.subscribe((my_posts) => {
             this.posts = my_posts.posts;
           });
+          this.owner_name = data.postsByOwnerId.owner.name;
         });
     });
   }

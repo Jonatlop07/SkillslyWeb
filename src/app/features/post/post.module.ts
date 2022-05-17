@@ -15,7 +15,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { CommentsService } from './services/comments.service';
 import { CommentsInCommentService } from './services/comments-in-comment.service';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { AccountService } from '../user-account/services/account.service';
 import { UserDataService } from '../user-account/services/user_data.service';
 import { FileUploadService } from './services/file_upload.service';
 

@@ -2,7 +2,7 @@ import { DeleteMyPost } from '../../../../shared/state/posts/posts.actions';
 import { PostService } from '../../services/posts.service';
 import { PermanentPostPresenter } from '../../types/query_post.presenter';
 import { Store } from '@ngxs/store';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommentsService } from '../../services/comments.service';
@@ -19,6 +19,7 @@ import { FileUploadService } from '../../services/file_upload.service';
 })
 export class PostComponent implements OnInit {
   @Input() post: PermanentPostPresenter;
+  @Input() owner_name: string;
   @Input() editable: boolean;
   @Input() group_id: string;
   @Input() id: string;
@@ -44,7 +45,8 @@ export class PostComponent implements OnInit {
     private postService: PostService,
     private media_service: FileUploadService,
     private readonly store: Store,
-    private router: Router
+    private router: Router,
+    private readonly activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -76,7 +78,7 @@ export class PostComponent implements OnInit {
   }
 
   updatePost(post_id: string) {
-    this.router.navigate([post_routing_paths.edit_post, post_id]);
+    this.router.navigate([`../../edit/`, post_id], { relativeTo: this.activatedRoute });
   }
 
   sharePost(post_id: string) {
@@ -166,7 +168,7 @@ export class PostComponent implements OnInit {
 
   public uploadCommentVideo(file: File) {
     this.ready_to_send = false;
-    this.media_service.uploadImage(file).subscribe((res) => {
+    this.media_service.uploadVideo(file).subscribe((res) => {
       this.media_locator = `${res.media_locator} ${res.contentType}`;
       this.media_type = res.contentType;
       this.comment_media_file = res.media_locator;
