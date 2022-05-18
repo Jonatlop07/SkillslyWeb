@@ -122,10 +122,6 @@ export class CreatePostView {
 
   onSubmit($event: Event) {
     const controls = (<FormArray> this.postForm.get('content_element')).controls;
-    // this.newPostInputData={
-    //   ...this.postForm.value,
-    //   content_element: this.postContentElement,
-    // }
     const content_element: PostContentElement[] = [];
     for ( const i in this.postContentElement){
       content_element.push({

@@ -91,7 +91,7 @@ export class FollowRequestService {
 
   // public createUserFollowRequest(user: SearchUserResponse) {
   //   return this.http.post(
-  //     `${this.API_URL}/users/follow/${user.id}`,
+  //     `${this.API_URL}/users/follow/${user.post_id}`,
   //     {},
   //     this.jtw_service.getHttpOptions()
   //   )
@@ -118,7 +118,7 @@ export class FollowRequestService {
   //   let params = new HttpParams();
   //   params = params.append('isRequest', isRequest.toString());
   //   return this.http.delete(
-  //     `${this.API_URL}/users/follow/${user.id}`,
+  //     `${this.API_URL}/users/follow/${user.post_id}`,
   //     {
   //       params,
   //       ...this.jtw_service.getHttpOptions()
@@ -147,7 +147,7 @@ export class FollowRequestService {
 
   // public updateFollowRequest(user: SearchUserResponse, accept: boolean): Observable<Conversation> {
   //   return this.http.put<Conversation>(
-  //     `${this.API_URL}/users/follow/${user.id}`,
+  //     `${this.API_URL}/users/follow/${user.post_id}`,
   //     {
   //       accept
   //     },

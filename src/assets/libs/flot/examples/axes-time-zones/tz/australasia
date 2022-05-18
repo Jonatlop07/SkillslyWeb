@@ -251,8 +251,8 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # from November 29th 2009  to April 25th 2010.
 #
 # "Daylight savings to commence this month"
-# <a href="http://www.radiofiji.com.fj/fullstory.php?id=23719">
-# http://www.radiofiji.com.fj/fullstory.php?id=23719
+# <a href="http://www.radiofiji.com.fj/fullstory.php?post_id=23719">
+# http://www.radiofiji.com.fj/fullstory.php?post_id=23719
 # </a>
 # or
 # <a href="http://www.worldtimezone.com/dst_news/dst_news_fiji01.html">
@@ -273,8 +273,8 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # 2011 (last Sunday a good guess?).
 #
 # Official source:
-# <a href="http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=1096:3310-cabinet-approves-change-in-daylight-savings-dates&catid=49:cabinet-releases&Itemid=166">
-# http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=1096:3310-cabinet-approves-change-in-daylight-savings-dates&catid=49:cabinet-releases&Itemid=166
+# <a href="http://www.fiji.gov.fj/index.php?option=com_content&view=article&post_id=1096:3310-cabinet-approves-change-in-daylight-savings-dates&catid=49:cabinet-releases&Itemid=166">
+# http://www.fiji.gov.fj/index.php?option=com_content&view=article&post_id=1096:3310-cabinet-approves-change-in-daylight-savings-dates&catid=49:cabinet-releases&Itemid=166
 # </a>
 #
 # A bit more background info here:
@@ -287,8 +287,8 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # weeks earlier than expected - on March 6, 2011, not March 27, 2011...
 # Here is confirmation from Government of the Republic of the Fiji Islands,
 # Ministry of Information (fiji.gov.fj) web site:
-# <a href="http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=2608:daylight-savings&catid=71:press-releases&Itemid=155">
-# http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=2608:daylight-savings&catid=71:press-releases&Itemid=155
+# <a href="http://www.fiji.gov.fj/index.php?option=com_content&view=article&post_id=2608:daylight-savings&catid=71:press-releases&Itemid=155">
+# http://www.fiji.gov.fj/index.php?option=com_content&view=article&post_id=2608:daylight-savings&catid=71:press-releases&Itemid=155
 # </a>
 # or
 # <a href="http://www.worldtimezone.com/dst_news/dst_news_fiji04.html">
@@ -299,8 +299,8 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # Now the dates have been confirmed, and at least our start date
 # assumption was correct (end date was one week wrong).
 #
-# <a href="http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=4966:daylight-saving-starts-in-fiji&catid=71:press-releases&Itemid=155">
-# www.fiji.gov.fj/index.php?option=com_content&view=article&id=4966:daylight-saving-starts-in-fiji&catid=71:press-releases&Itemid=155
+# <a href="http://www.fiji.gov.fj/index.php?option=com_content&view=article&post_id=4966:daylight-saving-starts-in-fiji&catid=71:press-releases&Itemid=155">
+# www.fiji.gov.fj/index.php?option=com_content&view=article&post_id=4966:daylight-saving-starts-in-fiji&catid=71:press-releases&Itemid=155
 # </a>
 # which says
 # Members of the public are reminded to change their time to one hour in
@@ -311,8 +311,8 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # Another change to the Fiji DST end date. In the TZ database the end date for
 # Fiji DST 2012, is currently Feb 26. This has been changed to Jan 22.
 #
-# <a href="http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=5017:amendments-to-daylight-savings&catid=71:press-releases&Itemid=155">
-# http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=5017:amendments-to-daylight-savings&catid=71:press-releases&Itemid=155
+# <a href="http://www.fiji.gov.fj/index.php?option=com_content&view=article&post_id=5017:amendments-to-daylight-savings&catid=71:press-releases&Itemid=155">
+# http://www.fiji.gov.fj/index.php?option=com_content&view=article&post_id=5017:amendments-to-daylight-savings&catid=71:press-releases&Itemid=155
 # </a>
 # states:
 #
@@ -325,7 +325,7 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # The Minister for Labour, Industrial Relations and Employment Mr Jone Usamate
 # today confirmed that Fiji will start daylight savings at 2 am on Sunday 21st
 # October 2012 and end at 3 am on Sunday 20th January 2013.
-# http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=6702&catid=71&Itemid=155
+# http://www.fiji.gov.fj/index.php?option=com_content&view=article&post_id=6702&catid=71&Itemid=155
 #
 # From Paul Eggert (2012-08-31):
 # For now, guess a pattern of the penultimate Sundays in October and January.
@@ -567,8 +567,8 @@ Zone Pacific/Pago_Pago	 12:37:12 -	LMT	1879 Jul  5
 # From David Zuelke (2011-05-09):
 # Subject: Samoa to move timezone from east to west of international date line
 #
-# <a href="http://www.morningstar.co.uk/uk/markets/newsfeeditem.aspx?id=138501958347963">
-# http://www.morningstar.co.uk/uk/markets/newsfeeditem.aspx?id=138501958347963
+# <a href="http://www.morningstar.co.uk/uk/markets/newsfeeditem.aspx?post_id=138501958347963">
+# http://www.morningstar.co.uk/uk/markets/newsfeeditem.aspx?post_id=138501958347963
 # </a>
 
 # From Mark Sim-Smith (2011-08-17):
@@ -676,7 +676,7 @@ Zone Pacific/Guadalcanal 10:39:48 -	LMT	1912 Oct	# Honiara
 # From Paul Eggert (2012-07-25)
 # A Google Books snippet of Appendix to the Journals of the House of
 # Representatives of New Zealand, Session 1948,
-# <http://books.google.com/books?id=ZaVCAQAAIAAJ>, page 65, says Tokelau
+# <http://books.google.com/books?post_id=ZaVCAQAAIAAJ>, page 65, says Tokelau
 # was "11 hours slow on G.M.T."  Go with Thorsen and assume Shanks & Pottenger
 # are off by an hour starting in 1901.
 
@@ -989,7 +989,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # ACT: http://www.cmd.act.gov.au/mediareleases/fileread.cfm?file=86.txt
 # New South Wales: http://www.thecouriermail.news.com.au/common/story_page/0,5936,15538869%255E1702,00.html
 # South Australia: http://www.news.com.au/story/0,10117,15555031-1246,00.html
-# Tasmania: http://www.media.tas.gov.au/release.php?id=14772
+# Tasmania: http://www.media.tas.gov.au/release.php?post_id=14772
 # Victoria: I wasn't able to find anything separate, but the other articles
 # allude to it.
 # But not Queensland

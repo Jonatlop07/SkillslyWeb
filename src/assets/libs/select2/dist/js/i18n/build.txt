@@ -99,9 +99,9 @@ hy.js
 ----------------
 hy.js
 
-id.js
+post_id.js
 ----------------
-id.js
+post_id.js
 
 is.js
 ----------------

@@ -35,6 +35,7 @@ export class UserPostCollectionView {
       const queryPostParams: QueryPostPresenter = {
         owner_id: this.post_owner,
       };
+      console.log(params.id);
       this.postService
         .getPostCollection(queryPostParams)
         .subscribe(({ data }) => {

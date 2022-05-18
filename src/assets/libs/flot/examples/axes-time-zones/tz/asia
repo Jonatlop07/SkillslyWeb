@@ -171,8 +171,8 @@ Zone	Asia/Bahrain	3:22:20 -	LMT	1920		# Al Manamah
 # <a href="http://in.reuters.com/article/southAsiaNews/idINIndia-40017620090601">
 # http://in.reuters.com/article/southAsiaNews/idINIndia-40017620090601
 # </a>
-# <a href="http://bdnews24.com/details.php?id=85889&cid=2">
-# http://bdnews24.com/details.php?id=85889&cid=2
+# <a href="http://bdnews24.com/details.php?post_id=85889&cid=2">
+# http://bdnews24.com/details.php?post_id=85889&cid=2
 # </a>
 #
 # Our wrap-up:
@@ -442,8 +442,8 @@ Zone	Asia/Urumqi	5:50:20	-	LMT	1928 # or Urumchi
 # ...an example of an official website using of Urumqi time.
 #
 # The first few lines of the Google translation of
-# <a href="http://www.fjysgl.gov.cn/show.aspx?id=2379&cid=39">
-# http://www.fjysgl.gov.cn/show.aspx?id=2379&cid=39
+# <a href="http://www.fjysgl.gov.cn/show.aspx?post_id=2379&cid=39">
+# http://www.fjysgl.gov.cn/show.aspx?post_id=2379&cid=39
 # </a>
 # (retrieved 2009-10-13)
 # > Urumqi fire seven people are missing the alleged losses of at least
@@ -967,8 +967,8 @@ Zone	Asia/Tehran	3:25:44	-	LMT	1916
 # <a href="http://www.aljeeran.net/wesima_articles/news-20080305-98602.html">
 # http://www.aljeeran.net/wesima_articles/news-20080305-98602.html
 # </a>
-# <a href="http://www.aswataliraq.info/look/article.tpl?id=2047&IdLanguage=17&IdPublication=4&NrArticle=71743&NrIssue=1&NrSection=10">
-# http://www.aswataliraq.info/look/article.tpl?id=2047&IdLanguage=17&IdPublication=4&NrArticle=71743&NrIssue=1&NrSection=10
+# <a href="http://www.aswataliraq.info/look/article.tpl?post_id=2047&IdLanguage=17&IdPublication=4&NrArticle=71743&NrIssue=1&NrSection=10">
+# http://www.aswataliraq.info/look/article.tpl?post_id=2047&IdLanguage=17&IdPublication=4&NrArticle=71743&NrIssue=1&NrSection=10
 # </a>
 #
 # We have published a short article in English about the change:
@@ -1504,7 +1504,7 @@ Zone	Asia/Oral	3:25:24	-	LMT	1924 May  2 # or Ural'sk
 
 # From Paul Eggert (2005-08-15):
 # According to an article dated today in the Kyrgyzstan Development Gateway
-# <http://eng.gateway.kg/cgi-bin/page.pl?id=1&story_name=doc9979.shtml>
+# <http://eng.gateway.kg/cgi-bin/page.pl?post_id=1&story_name=doc9979.shtml>
 # Kyrgyzstan is canceling the daylight saving time system.  I take the article
 # to mean that they will leave their clocks at 6 hours ahead of UTC.
 # From Malik Abdugaliev (2005-09-21):
@@ -1709,7 +1709,7 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 # Oscar van Vlijmen (2005-05-20) reports that the Mongolian Embassy in
 # Washington, DC says there are two time zones, with DST observed.
 # He also found
-# <http://ubpost.mongolnews.mn/index.php?subaction=showcomments&id=1111634894&archive=&start_from=&ucat=1&>
+# <http://ubpost.mongolnews.mn/index.php?subaction=showcomments&post_id=1111634894&archive=&start_from=&ucat=1&>
 # which also says that there is DST, and which has a comment by "Toddius"
 # (2005-03-31 06:05 +0700) saying "Mongolia actually has 3.5 time zones.
 # The West (OLGII) is +7 GMT, most of the country is ULAT is +8 GMT
@@ -1721,7 +1721,7 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 # From Ganbold Ts. (2007-02-26):
 # Parliament of Mongolia has just changed the daylight-saving rule in February.
 # They decided not to adopt daylight-saving time....
-# http://www.mongolnews.mn/index.php?module=unuudur&sec=view&id=15742
+# http://www.mongolnews.mn/index.php?module=unuudur&sec=view&post_id=15742
 
 # From Deborah Goldsmith (2008-03-30):
 # We received a bug report claiming that the tz database UTC offset for
@@ -1741,8 +1741,8 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 # From Steffen Thorsen (2008-03-31):
 # eznis airways, which operates several domestic flights, has a flight
 # schedule here:
-# <a href="http://www.eznis.com/Container.jsp?id=112">
-# http://www.eznis.com/Container.jsp?id=112
+# <a href="http://www.eznis.com/Container.jsp?post_id=112">
+# http://www.eznis.com/Container.jsp?post_id=112
 # </a>
 # (click the English flag for English)
 #
@@ -1884,8 +1884,8 @@ Zone	Asia/Muscat	3:54:20 -	LMT	1920
 # advance clocks by one hour from May 1 will cause disturbance
 # to the working schedules rather than bringing discipline in
 # official working."
-# <a href="http://www.thenews.com.pk/daily_detail.asp?id=171280">
-# http://www.thenews.com.pk/daily_detail.asp?id=171280
+# <a href="http://www.thenews.com.pk/daily_detail.asp?post_id=171280">
+# http://www.thenews.com.pk/daily_detail.asp?post_id=171280
 # </a>
 #
 # recent news that instead of May 2009 - Pakistan plan to
@@ -1894,8 +1894,8 @@ Zone	Asia/Muscat	3:54:20 -	LMT	1920
 # FYI: Associated Press Of Pakistan
 # April 08, 2009
 # Cabinet okays proposal to advance clocks by one hour from April 15
-# <a href="http://www.app.com.pk/en_/index.php?option=com_content&task=view&id=73043&Itemid=1">
-# http://www.app.com.pk/en_/index.php?option=com_content&task=view&id=73043&Itemid=1
+# <a href="http://www.app.com.pk/en_/index.php?option=com_content&task=view&post_id=73043&Itemid=1">
+# http://www.app.com.pk/en_/index.php?option=com_content&task=view&post_id=73043&Itemid=1
 # </a>
 #
 # or
@@ -1915,8 +1915,8 @@ Zone	Asia/Muscat	3:54:20 -	LMT	1920
 # clocks backward by one hour from October 1. A formal announcement to
 # this effect will be made after the Prime Minister grants approval in
 # this regard."
-# <a href="http://www.thenews.com.pk/updates.asp?id=87168">
-# http://www.thenews.com.pk/updates.asp?id=87168
+# <a href="http://www.thenews.com.pk/updates.asp?post_id=87168">
+# http://www.thenews.com.pk/updates.asp?post_id=87168
 # </a>
 
 # From Alexander Krivenyshev (2009-09-28):
@@ -1925,8 +1925,8 @@ Zone	Asia/Muscat	3:54:20 -	LMT	1920
 # 1, 2009.
 #
 # "Clocks to go back one hour from 1 Oct"
-# <a href="http://www.app.com.pk/en_/index.php?option=com_content&task=view&id=86715&Itemid=2">
-# http://www.app.com.pk/en_/index.php?option=com_content&task=view&id=86715&Itemid=2
+# <a href="http://www.app.com.pk/en_/index.php?option=com_content&task=view&post_id=86715&Itemid=2">
+# http://www.app.com.pk/en_/index.php?option=com_content&task=view&post_id=86715&Itemid=2
 # </a>
 # or
 # <a href="http://www.worldtimezone.com/dst_news/dst_news_pakistan07.htm">
@@ -1979,8 +1979,8 @@ Zone	Asia/Muscat	3:54:20 -	LMT	1920
 # </a>
 #
 # "People laud PM's announcement to end DST"
-# <a href="http://www.app.com.pk/en_/index.php?option=com_content&task=view&id=99374&Itemid=2">
-# http://www.app.com.pk/en_/index.php?option=com_content&task=view&id=99374&Itemid=2
+# <a href="http://www.app.com.pk/en_/index.php?option=com_content&task=view&post_id=99374&Itemid=2">
+# http://www.app.com.pk/en_/index.php?option=com_content&task=view&post_id=99374&Itemid=2
 # </a>
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
@@ -2091,7 +2091,7 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 
 # From Steffen Thorsen (2006-09-26):
 # according to the Palestine News Network (2006-09-19):
-# http://english.pnn.ps/index.php?option=com_content&task=view&id=596&Itemid=5
+# http://english.pnn.ps/index.php?option=com_content&task=view&post_id=596&Itemid=5
 # > The Council of Ministers announced that this year its winter schedule
 # > will begin early, as of midnight Thursday.  It is also time to turn
 # > back the clocks for winter.  Friday will begin an hour late this week.
@@ -2118,8 +2118,8 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # <a href="http://www.guardian.co.uk/world/feedarticle/7759001">
 # http://www.guardian.co.uk/world/feedarticle/7759001
 # </a>
-# <a href="http://www.abcnews.go.com/International/wireStory?id=5676087">
-# http://www.abcnews.go.com/International/wireStory?id=5676087
+# <a href="http://www.abcnews.go.com/International/wireStory?post_id=5676087">
+# http://www.abcnews.go.com/International/wireStory?post_id=5676087
 # </a>
 # or
 # <a href="http://www.worldtimezone.com/dst_news/dst_news_gazastrip01.html">
@@ -2132,8 +2132,8 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # 26 and continue until the night of 27 September 2009.
 #
 # (in Arabic)
-# <a href="http://arabic.pnn.ps/index.php?option=com_content&task=view&id=50850">
-# http://arabic.pnn.ps/index.php?option=com_content&task=view&id=50850
+# <a href="http://arabic.pnn.ps/index.php?option=com_content&task=view&post_id=50850">
+# http://arabic.pnn.ps/index.php?option=com_content&task=view&post_id=50850
 # </a>
 #
 # or
@@ -2238,8 +2238,8 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # The Hamas government said on Saturday that it won't observe summertime after
 # the Muslim feast of Id al-Fitr, which begins on Tuesday..."
 # ...
-# <a href="http://www.jpost.com/MiddleEast/Article.aspx?id=235650">
-# http://www.jpost.com/MiddleEast/Article.aspx?id=235650
+# <a href="http://www.jpost.com/MiddleEast/Article.aspx?post_id=235650">
+# http://www.jpost.com/MiddleEast/Article.aspx?post_id=235650
 # </a>
 # or
 # <a href="http://www.worldtimezone.com/dst_news/dst_news_gazastrip05.html">
@@ -2261,8 +2261,8 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # Palestinian news sources tell that both Gaza and West Bank will start DST
 # on Friday (Thursday midnight, 2012-03-29 24:00).
 # Some of many sources in Arabic:
-# <a href="http://www.samanews.com/index.php?act=Show&id=122638">
-# http://www.samanews.com/index.php?act=Show&id=122638
+# <a href="http://www.samanews.com/index.php?act=Show&post_id=122638">
+# http://www.samanews.com/index.php?act=Show&post_id=122638
 # </a>
 #
 # <a href="http://safa.ps/details/news/74352/%D8%A8%D8%AF%D8%A1-%D8%A7%D9%84%D8%AA%D9%88%D9%82%D9%8A%D8%AA-%D8%A7%D9%84%D8%B5%D9%8A%D9%81%D9%8A-%D8%A8%D8%A7%D9%84%D8%B6%D9%81%D8%A9-%D9%88%D8%BA%D8%B2%D8%A9-%D9%84%D9%8A%D9%84%D8%A9-%D8%A7%D9%84%D8%AC%D9%85%D8%B9%D8%A9.html">
@@ -2352,7 +2352,7 @@ Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 #
 # From Jesper Norgaard Welen (2006-04-26):
 # ... claims that Philippines had DST last time in 1990:
-# http://story.philippinetimes.com/p.x/ct/9/id/145be20cc6b121c0/cid/3e5bbccc730d258c/
+# http://story.philippinetimes.com/p.x/ct/9/post_id/145be20cc6b121c0/cid/3e5bbccc730d258c/
 # [a story dated 2006-04-25 by Cris Larano of Dow Jones Newswires,
 # but no details]
 
