@@ -1,9 +1,9 @@
-import {ContentElementPresenter} from "./query_post.presenter";
+import {PostContentElement} from "./create_post_data.presenter";
 
-export interface UpdatePostPresenter {
+export interface UpdatePostInputData {
   id: string;
   owner_id: string;
   description: string;
   privacy: string;
-  content_element: ContentElementPresenter[];
+  content_element: PostContentElement[];
 }

@@ -7,8 +7,8 @@ import { EditPostView } from './views/edit-post/edit_post.view'
 export const  post_routing_paths = {
   posts: 'posts',
   create_post: 'create',
-  user_post_collection: ':id',
-  edit_post: 'edit'
+  user_post_collection: 'user/:id',
+  edit_post: 'edit/:post_id',
 };
 
 const routes: Routes = [

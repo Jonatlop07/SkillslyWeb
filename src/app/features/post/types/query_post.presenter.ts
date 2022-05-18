@@ -1,5 +1,3 @@
-import { PostContentData } from './create_post_data.presenter';
-
 export interface QueryPostPresenter {
   owner_id?: string;
   id?: string;
@@ -8,7 +6,7 @@ export interface QueryPostPresenter {
   offset?: number;
 }
 
-export interface ContentElementPresenter {
+export interface PostContentElement {
   description: string;
   media_locator: string;
   media_type: string;
@@ -21,5 +19,5 @@ export interface PermanentPostPresenter {
   description: string;
   created_at: string;
   updated_at?: string;
-  content_element: ContentElementPresenter[];
+  content_element: PostContentElement[];
 }
