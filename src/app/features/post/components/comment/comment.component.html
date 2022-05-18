@@ -13,10 +13,10 @@
         <div class="comment m-2">
           <div class="row">
             <div class="col-xs-12">
-              <span class="mb-0 font-medium p-0">{{ owner_email }}</span>
+              <span class="mb-0 font-medium p-0">{{ comment.name }}</span>
               ·
               <small class="font-weight-lighter" style="font-size: 12px">
-                {{ owner_name }}</small
+                {{ comment.email }}</small
               >
               <div class="dropdown float-end" *ngIf="owns_comment">
                 <a

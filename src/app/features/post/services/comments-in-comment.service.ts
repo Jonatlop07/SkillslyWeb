@@ -32,6 +32,9 @@ export class CommentsInCommentService {
           owner_id
           description
           media_locator
+          media_type
+          name
+          email
           comment_id
           created_at
           _id
@@ -58,13 +61,15 @@ export class CommentsInCommentService {
   public sendInnerComment(
     ancestor_comment_id: string,
     comment: string,
-    media_locator: string
+    media_locator: string,
+    media_type: string
   ): Observable<MutationResult> {
     const CREATE_INNER_COMMENT = gql`
       mutation createInnerComment(
         $comment_id: ID!
         $description: String
         $media_locator: String
+        $media_type: String
         $owner_id: ID!
       ) {
         createInnerComment(
@@ -72,12 +77,14 @@ export class CommentsInCommentService {
           inner_comment_details: {
             description: $description
             media_locator: $media_locator
+            media_type: $media_type
             owner_id: $owner_id
           }
         ) {
           _id
           description
           media_locator
+          media_type
           created_at
           comment_id
           owner_id
@@ -91,6 +98,7 @@ export class CommentsInCommentService {
         comment_id: ancestor_comment_id,
         description: comment,
         media_locator,
+        media_type,
         owner_id: this.jwt_service.getUserId(),
       },
     });
@@ -99,23 +107,27 @@ export class CommentsInCommentService {
   public editInnerComment(
     inner_comment_id: string,
     description: string,
-    media_locator: string
+    media_locator: string,
+    media_type: string
   ): Observable<MutationResult> {
     const UPDATE_INNER_COMMENT = gql`
       mutation updateInnerComment(
         $inner_comment_id: ID!
         $description: String
         $media_locator: String
+        $media_type: String
       ) {
         updateInnerComment(
           inner_comment_id: $inner_comment_id
           new_content: {
             description: $description
             media_locator: $media_locator
+            media_typee: $media_type
           }
         ) {
           description
           media_locator
+          media_type
         }
       }
     `;
@@ -126,6 +138,7 @@ export class CommentsInCommentService {
         inner_comment_id,
         description,
         media_locator,
+        media_type,
       },
     });
   }

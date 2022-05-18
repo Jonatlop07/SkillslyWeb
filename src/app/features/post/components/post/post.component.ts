@@ -92,11 +92,24 @@ export class PostComponent implements OnInit {
     if (this.comment || this.media_locator) {
       this.invalid_comment_content = false;
       this.commentsService
-        .sendComment(this.post.id, this.comment, this.media_locator)
+        .sendComment(
+          this.post.id,
+          this.comment,
+          this.media_locator,
+          this.media_type
+        )
         .subscribe(
           (res) => {
-            const { _id, description, media_locator, owner_id, created_at } =
-              res.data.createComment;
+            const {
+              _id,
+              description,
+              media_locator,
+              media_type,
+              name,
+              email,
+              owner_id,
+              created_at,
+            } = res.data.createComment;
             this.comment = '';
             this.postComments = [
               ...this.postComments,
@@ -105,6 +118,9 @@ export class PostComponent implements OnInit {
                 post_id: this.post.id,
                 description,
                 media_locator,
+                media_type,
+                name,
+                email,
                 owner_id,
                 created_at,
               },
@@ -156,7 +172,7 @@ export class PostComponent implements OnInit {
   public uploadCommentImage(file: File) {
     this.ready_to_send = false;
     this.media_service.uploadImage(file).subscribe((res) => {
-      this.media_locator = `${res.media_locator} ${res.contentType}`;
+      this.media_locator = res.media_locator;
       this.media_type = res.contentType;
       this.comment_media_file = res.media_locator;
       this.loaded_media = true;
@@ -167,7 +183,7 @@ export class PostComponent implements OnInit {
   public uploadCommentVideo(file: File) {
     this.ready_to_send = false;
     this.media_service.uploadImage(file).subscribe((res) => {
-      this.media_locator = `${res.media_locator} ${res.contentType}`;
+      this.media_locator = res.media_locator;
       this.media_type = res.contentType;
       this.comment_media_file = res.media_locator;
       this.loaded_media = true;

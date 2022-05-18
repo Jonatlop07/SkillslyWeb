@@ -2,6 +2,7 @@ export interface InnerComment {
   _id: string;
   description?: string;
   media_locator?: string;
+  media_type?: string;
   comment_id?: string;
   timestamp?: string;
   created_at?: string;

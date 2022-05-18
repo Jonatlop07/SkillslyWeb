@@ -36,19 +36,12 @@ export class CommentInCommentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.owner_data_service
-      .getUserNameAndEmail(this.comment.owner_id)
-      .subscribe(({ data }) => {
-        this.owner_name = data.user.name;
-        this.owner_email = data.user.email;
-      });
     this.inner_comment_media_locator = this.comment.media_locator || '';
     this.owns_inner_comment =
       this.comment.owner_id === this.jwt_service.getUserId();
-    this.inner_comment_description = this.comment.description;
-    this.inner_comment_media_file =
-      this.comment.media_locator?.split(' ')[0] || '';
-    this.media_type = this.comment.media_locator?.split(' ')[1] || '';
+    this.inner_comment_description = this.comment.description || '';
+    this.inner_comment_media_file = this.comment.media_locator || '';
+    this.media_type = this.comment.media_type || '';
   }
 
   transformDate() {
@@ -72,7 +65,8 @@ export class CommentInCommentComponent implements OnInit {
         .editInnerComment(
           this.comment._id,
           this.inner_comment_description,
-          this.inner_comment_media_locator
+          this.inner_comment_media_locator,
+          this.inner_comment_media_file
         )
         .subscribe((res: any) => {
           this.updating_inner_comment = false;
@@ -80,7 +74,8 @@ export class CommentInCommentComponent implements OnInit {
             res.data.updateInnerComment.description;
           this.inner_comment_media_locator =
             res.data.updateInnerComment.media_locator;
-          this.setMedia(this.inner_comment_media_locator);
+          this.media_type = res.data.updateInnerComment.media_type;
+          this.setMedia(this.inner_comment_media_locator, this.media_type);
         });
     } else {
       this.invalid_comment_content = true;
@@ -98,8 +93,9 @@ export class CommentInCommentComponent implements OnInit {
   public uploadCommentImage(file: File) {
     this.ready_to_send = false;
     this.media_service.uploadImage(file).subscribe((res) => {
-      this.inner_comment_media_locator = `${res.media_locator} ${res.contentType}`;
-      this.setMedia(this.inner_comment_media_locator);
+      this.inner_comment_media_locator = res.media_locator;
+      this.media_type = res.contentType;
+      this.setMedia(this.inner_comment_media_locator, res.contentType);
       this.ready_to_send = true;
     });
   }
@@ -107,8 +103,9 @@ export class CommentInCommentComponent implements OnInit {
   public uploadCommentVideo(file: File) {
     this.ready_to_send = false;
     this.media_service.uploadVideo(file).subscribe((res) => {
-      this.inner_comment_media_locator = `${res.media_locator} ${res.contentType}`;
-      this.setMedia(this.inner_comment_media_locator);
+      this.inner_comment_media_locator = res.media_locator;
+      this.media_type = res.contentType;
+      this.setMedia(this.inner_comment_media_locator, this.media_type);
       this.ready_to_send = true;
     });
   }
@@ -122,8 +119,8 @@ export class CommentInCommentComponent implements OnInit {
     }
   }
 
-  public setMedia(media: string) {
-    this.inner_comment_media_file = media.split(' ')[0];
-    this.media_type = media.split(' ')[1];
+  public setMedia(media: string, type: string) {
+    this.inner_comment_media_file = media;
+    this.media_type = type;
   }
 }

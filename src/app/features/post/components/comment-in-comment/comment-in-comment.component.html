@@ -4,9 +4,9 @@
       <div class="comment-element">
         <div *ngIf="!updating_inner_comment">
           <div class="comment m-0">
-            <span class="mb-0 font-medium p-0">{{ owner_name }}</span> ·
+            <span class="mb-0 font-medium p-0">{{ comment.name }}</span> ·
             <small class="font-weight-lighter" style="font-size: 12px">
-              {{ owner_email }}</small
+              {{ comment.email }}</small
             >
             <div class="dropdown float-end" *ngIf="owns_inner_comment">
               <a

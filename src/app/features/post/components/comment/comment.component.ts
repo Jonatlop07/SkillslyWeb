@@ -14,7 +14,6 @@ import { Comment } from '../../types/comment.presenter';
 import { InnerComment } from '../../types/inner_comment.presenter';
 import { JwtService } from 'src/app/core/service/jwt.service';
 import { CommentsService } from '../../services/comments.service';
-import { UserDataService } from 'src/app/features/user-account/services/user_data.service';
 import { FileUploadService } from '../../services/file_upload.service';
 
 @Component({
@@ -54,7 +53,6 @@ export class CommentComponent implements OnInit {
   constructor(
     private comments_in_comment_service: CommentsInCommentService,
     private comment_service: CommentsService,
-    private owner_data_service: UserDataService,
     private media_service: FileUploadService,
     private jwt_service: JwtService
   ) {}
@@ -62,19 +60,13 @@ export class CommentComponent implements OnInit {
   ngOnInit(): void {
     this.description = this.comment.description || '';
     this.media_locator = this.comment.media_locator || '';
-    this.media_locator_image = this.comment.media_locator.split(' ')[0] || '';
-    this.shown_media = this.comment.media_locator.split(' ')[0] || '';
+    this.media_locator_image = this.comment.media_locator || '';
+    this.shown_media = this.comment.media_locator || '';
 
-    this.media_type = this.comment.media_locator.split(' ')[1] || '';
-    this.shown_media_type = this.comment.media_locator.split(' ')[1] || '';
+    this.media_type = this.comment.media_type;
+    this.shown_media_type = this.comment.media_type;
     this.owns_comment = this.comment.owner_id === this.jwt_service.getUserId();
 
-    this.owner_data_service
-      .getUserNameAndEmail(this.comment.owner_id)
-      .subscribe(({ data }) => {
-        this.owner_name = data.user.name;
-        this.owner_email = data.user.email;
-      });
     if (+this.comment.inner_comment_count > 0) {
       this.getComments(false);
     }
@@ -125,7 +117,8 @@ export class CommentComponent implements OnInit {
         .sendInnerComment(
           this.comment._id,
           this.comment_in_comment,
-          this.inner_comment_media_locator
+          this.inner_comment_media_locator,
+          this.inner_comment_creation_media_type
         )
         .subscribe(
           (res) => {
@@ -182,11 +175,19 @@ export class CommentComponent implements OnInit {
     if (this.description || this.media_locator) {
       this.invalid_comment_content = false;
       this.comment_service
-        .editComment(this.comment._id, this.description, this.media_locator)
+        .editComment(
+          this.comment._id,
+          this.description,
+          this.media_locator,
+          this.shown_media_type
+        )
         .subscribe((res: any) => {
           this.comment_updating = false;
           this.description = res.data.updateComment.description;
-          this.setMedia(res.data.updateComment.media_locator);
+          this.setMedia(
+            res.data.updateComment.media_locator,
+            res.data.updateComment.media_type
+          );
         });
     } else {
       this.invalid_comment_content = true;
@@ -204,12 +205,12 @@ export class CommentComponent implements OnInit {
     this.media_service.uploadImage(file).subscribe((res) => {
       console.log(res);
       if (comment_type === 'inner') {
-        this.inner_comment_media_locator = `${res.media_locator} ${res.contentType}`;
+        this.inner_comment_media_locator = res.media_locator;
         this.inner_comment_creation_media_file = res.media_locator;
         this.inner_comment_creation_media_type = res.contentType;
         this.loaded_media = true;
       } else {
-        this.media_locator = `${res.media_locator} ${res.contentType}`;
+        this.media_locator = res.media_locator;
         this.shown_media = res.media_locator;
         this.shown_media_type = res.contentType;
       }
@@ -243,8 +244,8 @@ export class CommentComponent implements OnInit {
     }
   }
 
-  public setMedia(media: string) {
-    this.media_locator_image = media.split(' ')[0];
-    this.media_type = media.split(' ')[1];
+  public setMedia(media: string, type: string) {
+    this.media_locator_image = media;
+    this.media_type = type;
   }
 }

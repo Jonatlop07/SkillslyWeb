@@ -56,14 +56,19 @@ export class PostService {
     const QUERY_POSTS = gql`
       query postsByOwnerId($owner_id: String!) {
         postsByOwnerId(owner_id: $owner_id) {
-          id
-          owner_id
-          created_at
-          updated_at
-          description
-          content_element {
+          posts {
+            id
+            owner_id
+            created_at
+            updated_at
             description
-            media_locator
+            content_element {
+              description
+              media_locator
+            }
+          }
+          owner {
+            name
           }
         }
       }
