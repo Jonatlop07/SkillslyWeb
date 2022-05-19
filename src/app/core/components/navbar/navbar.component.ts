@@ -72,8 +72,8 @@ export class NavbarComponent implements OnInit {
       );*/
   }
 
-  async logout() {
-    await this.authService.logout();
+  logout() {
+    this.authService.logout();
     this.unsubscribe.next();
     this.unsubscribe.complete();
     this.router.navigate([`${auth_routing_paths.auth}/${auth_routing_paths.sign_in}`]);
@@ -93,12 +93,12 @@ export class NavbarComponent implements OnInit {
       this.searchForm = false;
       return;
     }
-    this.router.navigate(['./search', searchInput], {
+    this.router.navigate(['./social/search', searchInput], {
       relativeTo: this.activatedRoute,
     });
   }
   searchPost() {
-    this.router.navigate(['./query', this.authService.getUserId()], {
+    this.router.navigate([`${post_routing_paths.posts}/user`, this.authService.getUserId()], {
       relativeTo: this.activatedRoute,
     });
   }

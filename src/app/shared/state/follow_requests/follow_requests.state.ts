@@ -31,7 +31,7 @@ export class FollowRequestsState {
     const state = ctx.getState();
     ctx.setState({
       received_requests: state.received_requests,
-      sent_requests: state.sent_requests.filter((request) => request.user_id !== action.follow_request.user_id)
+      sent_requests: state.sent_requests.filter((request) => request.user_id !== action.follow_request.id)
     });
   }
 }

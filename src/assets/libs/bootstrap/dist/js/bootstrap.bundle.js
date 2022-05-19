@@ -3116,7 +3116,7 @@
   /*
   given a DOM element, return the list of all scroll parents, up the list of ancesors
   until we get to the top window object. This list is what we attach scroll listeners
-  to, because if any of these parent elements scroll, we'll need to re-calculate the 
+  to, because if any of these parent elements scroll, we'll need to re-calculate the
   reference element's position.
   */
 
@@ -5399,7 +5399,7 @@
       if (this._isBodyOverflowing) {
         // Note: DOMNode.style.paddingRight returns the actual value or '' if not set
         //   while $(DOMNode).css('padding-right') returns the calculated value or 0 if not set
-        // Adjust fixed content padding
+        // Adjust fixed content_element padding
         SelectorEngine.find(SELECTOR_FIXED_CONTENT).forEach(function (element) {
           var actualPadding = element.style.paddingRight;
           var calculatedPadding =
@@ -5409,7 +5409,7 @@
             Number.parseFloat(calculatedPadding) +
             _this11._scrollbarWidth +
             "px";
-        }); // Adjust sticky content margin
+        }); // Adjust sticky content_element margin
 
         SelectorEngine.find(SELECTOR_STICKY_CONTENT).forEach(function (
           element
@@ -5441,7 +5441,7 @@
     };
 
     _proto._resetScrollbar = function _resetScrollbar() {
-      // Restore fixed content padding
+      // Restore fixed content_element padding
       SelectorEngine.find(SELECTOR_FIXED_CONTENT).forEach(function (element) {
         var padding = Manipulator.getDataAttribute(element, "padding-right");
 
@@ -5449,7 +5449,7 @@
           Manipulator.removeDataAttribute(element, "padding-right");
           element.style.paddingRight = padding;
         }
-      }); // Restore sticky content and navbar-toggler margin
+      }); // Restore sticky content_element and navbar-toggler margin
 
       SelectorEngine.find("" + SELECTOR_STICKY_CONTENT).forEach(function (
         element
@@ -6147,7 +6147,7 @@
       if (typeof content === "object" && isElement(content)) {
         if (content.jquery) {
           content = content[0];
-        } // content is a DOM node or a jQuery
+        } // content_element is a DOM node or a jQuery
 
         if (this.config.html) {
           if (content.parentNode !== element) {
@@ -6726,7 +6726,7 @@
 
     _proto._getContent = function _getContent() {
       return (
-        this._element.getAttribute("data-bs-content") || this.config.content
+        this._element.getAttribute("data-bs-content_element") || this.config.content
       );
     };
 

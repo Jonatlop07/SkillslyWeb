@@ -183,20 +183,20 @@ Get current color stop.
 var stop = gradient.getCurrent();
 ```
 
-#### setCurrentById(id)
-Set current color stop by id.
+#### setCurrentById(post_id)
+Set current color stop by post_id.
 ```javascript
 gradient.setCurrentById(2);
 ```
 
-#### getById(id)
+#### getById(post_id)
 Get color stop by index.
 ```javascript
 var stop = gradient.get(2);
 ```
 
-#### removeById(id)
-Remove color stop by id.
+#### removeById(post_id)
+Remove color stop by post_id.
 ```javascript
 gradient.removeById(2);
 ```

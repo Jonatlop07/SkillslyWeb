@@ -175,7 +175,7 @@ $(function () {
     { label: "Germany", color: "#7D0096" },
     { label: "Denmark", color: "#992B00" },
     { label: "Sweden", color: "#DE000F" },
-    { label: "Norway", color: "#ED7B00" }    
+    { label: "Norway", color: "#ED7B00" }
 ];*/
   // hard-code color indices to prevent them from shifting as
   // countries are turned on/off
@@ -191,10 +191,10 @@ $(function () {
     choiceContainer.append(
       '<input type="checkbox" name="' +
         key +
-        '" checked="checked" id="id' +
+        '" checked="checked" post_id="post_id' +
         key +
         '">' +
-        '<label for="id' +
+        '<label for="post_id' +
         key +
         '">' +
         val.label +

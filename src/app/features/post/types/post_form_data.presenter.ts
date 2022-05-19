@@ -1,16 +1,16 @@
 import {
-  PostContentData,
+  PostContentElement,
 } from './create_post_data.presenter';
 
-export function toPostContent(post_content: Array<PostContentData>) {
-  const postsWithoutNullValues: PostContentData[] = [];
+export function toPostContent(post_content: Array<PostContentElement>) {
+  const postsWithoutNullValues: PostContentElement[] = [];
   for (const content of post_content) {
     Object.keys(content).forEach((key) => {
       if (
-        content[key as keyof PostContentData] === null ||
-        content[key as keyof PostContentData] === ''
+        content[key as keyof PostContentElement] === null ||
+        content[key as keyof PostContentElement] === ''
       ) {
-        delete content[key as keyof PostContentData];
+        delete content[key as keyof PostContentElement];
       }
     });
     postsWithoutNullValues.push(content);

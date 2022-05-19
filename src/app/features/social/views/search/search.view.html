@@ -1,32 +1,61 @@
 <div class="bg-feed">
   <div class="w-100">
-    <div class="row d-flex justify-content-center ">
-      <div class="comment-widgets scrollable ps-container ps-theme-default col-5"
-           data-ps-id="5626d95c-2430-cb2f-f343-45fdeb2c69e5">
-        <div *ngFor="let user of foundUsers; let i = index" class="mt-3 d-flex flex-row comment-row m-2 card ">
+    <div class="row d-flex justify-content-center">
+      <div
+        class="comment-widgets scrollable ps-container ps-theme-default col-5"
+        data-ps-id="5626d95c-2430-cb2f-f343-45fdeb2c69e5"
+      >
+        <div
+          *ngFor="let user of foundUsers; let i = index"
+          class="mt-3 d-flex flex-row comment-row m-2 card"
+        >
           <div class="p-2">
-            <img src="src/assets/images/users/user.png" alt="user" width="100" class=""/>
+            <img
+              src="../../../../../assets/images/users/user.png"
+              alt="user"
+              width="100"
+              class=""
+            />
           </div>
           <div class="comment-text p-2 justify-content-center">
             <div class="col d-flex flex-row pt-2">
-              <h6 class="font-medium ">{{ user.name }}</h6>
+              <h6 class="font-medium">{{ user.name }}</h6>
             </div>
-            <span class="text-muted pt-3" *ngIf="isFollowing[i]">Lo sigues</span>
+            <span class="text-muted pt-3" *ngIf="isFollowing[i]"
+              >Lo sigues</span
+            >
             <span class="text-muted pt-3" *ngIf="sameUser[i]">Eres tú</span>
             <span class="d-block pt-3">{{ user.email }}</span>
           </div>
-          <div class="row comment-footer text-center m-auto align-content-center">
-            <p-button (click)="searchPosts(user.user_id)" styleClass="p-button-outlined"
-                      label="Ver publicaciones">
+          <div
+            class="row comment-footer text-center m-auto align-content-center"
+          >
+            <p-button
+              (click)="searchPosts(user.id)"
+              styleClass="p-button-outlined m-2"
+              label="Ver publicaciones"
+            >
             </p-button>
-            <p-button *ngIf="!isFollowing[i] && !isPending[i] && !sameUser[i]" (click)="followUser(user,i)"
-                      styleClass="p-button-outlined" label="Seguir">
+            <p-button
+              *ngIf="!isFollowing[i] && !isPending[i] && !sameUser[i]"
+              (click)="followUser(user,i)"
+              styleClass="p-button-outlined"
+              label="Seguir"
+            >
             </p-button>
-            <p-button *ngIf="isPending[i]" (click)="cancelFollow(user,i,true)" styleClass="danger p-button-outlined"
-                      label="Cancelar solicitud">
+            <p-button
+              *ngIf="isPending[i]"
+              (click)="cancelFollow(user,i,true)"
+              styleClass="danger p-button-outlined"
+              label="Cancelar solicitud"
+            >
             </p-button>
-            <p-button *ngIf="isFollowing[i]" (click)="cancelFollow(user,i,false)" styleClass="danger p-button-outlined "
-                      label="Dejar de seguir">
+            <p-button
+              *ngIf="isFollowing[i]"
+              (click)="cancelFollow(user,i,false)"
+              styleClass="danger p-button-outlined "
+              label="Dejar de seguir"
+            >
             </p-button>
           </div>
         </div>

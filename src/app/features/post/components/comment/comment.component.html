@@ -9,31 +9,152 @@
       />
     </div> -->
     <div class="comment-element">
-      <div class="comment m-1">
-        <span class="mb-0 font-medium p-0">{{ comment.name }}</span> ·
-        <small class="font-weight-lighter" style="font-size: 12px">
-          {{ comment.email }}</small
-        >
-        <p class="mb-0 font-weight-light p-0" style="font-size: 13px">
-          {{ comment.comment }}
-        </p>
-      </div>
-
-      <div class="px-3" style="font-size: 12px">
-        <div class="flex">
-          <small class="font-bold clickable" (click)="handleShowResponse()">
-            Responder
-          </small>
-          ·
-          <small
-            class="text-muted clickable"
-            pTooltip="{{ viewDate() }}"
-            tooltipPosition="bottom"
-            >{{ transformDate() }}
-          </small>
+      <div *ngIf="!comment_updating">
+        <div class="comment m-2">
+          <div class="row">
+            <div class="col-xs-12">
+              <span class="mb-0 font-medium p-0">{{ owner_email }}</span>
+              ·
+              <small class="font-weight-lighter" style="font-size: 12px">
+                {{ owner_name }}</small
+              >
+              <div class="dropdown float-end" *ngIf="owns_comment">
+                <a
+                  class="pi pi-ellipsis-h dropdown"
+                  style="color: grey"
+                  role="button"
+                  id="dropdownMenuLink"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  type="button"
+                  id="dropdownMenuButton1"
+                >
+                </a>
+                <ul
+                  class="dropdown-menu pull-left dropdown-menu-left"
+                  aria-labelledby="dropdownMenuLink"
+                >
+                  <li>
+                    <a class="dropdown-item" (click)="toggleUpdateComment()"
+                      >Editar</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" (click)="deleteComment()"
+                      >Eliminar</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="p-1 row justify-content-center"
+                *ngIf="media_type.includes('image')"
+              >
+                <img [src]="media_locator_image" class="img-fluid" />
+              </div>
+              <div
+                class="p-1 row justify-content-center"
+                *ngIf="media_type.includes('video')"
+              >
+                <video controls>
+                  <source [src]="media_locator_image" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+          <p class="mb-0 font-weight-light p-0" style="font-size: 13px">
+            {{ description }}
+          </p>
+        </div>
+        <div class="px-3" style="font-size: 12px">
+          <div class="flex">
+            <small class="font-bold clickable" (click)="handleShowResponse()">
+              Responder
+            </small>
+            ·
+            <small
+              class="text-muted clickable"
+              pTooltip="{{ viewDate() }}"
+              tooltipPosition="bottom"
+              >{{ transformDate() }}
+            </small>
+          </div>
         </div>
       </div>
-
+      <div *ngIf="comment_updating">
+        <div class="row py-2">
+          <div class="col-auto">
+            <img
+              src="src/assets/images/users/d4.jpg"
+              alt="user"
+              width="30"
+              class="rounded-circle"
+            />
+          </div>
+          <div
+            class="p-1 row justify-content-center"
+            *ngIf="shown_media_type.includes('image')"
+          >
+            <img [src]="shown_media" class="img-fluid" />
+          </div>
+          <div
+            class="p-1 row justify-content-center"
+            *ngIf="shown_media_type.includes('video')"
+          >
+            <video controls>
+              <source [src]="shown_media" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="form-group-row">
+            <div
+              class="d-flex justify-content-center gap-1 my-1"
+              style="height: 30px"
+            >
+              <input
+                type="text"
+                class="form-control w-80"
+                id="description"
+                placeholder="Cambia tu comentario ..."
+                pInputText
+                style="font-size: 13px"
+                [(ngModel)]="description"
+                (keyup.enter)="updateComment()"
+              />
+              <p-button
+                icon="pi pi-camera"
+                styleClass="p-button-outlined"
+                pTooltip="Sube una imagen o video"
+                tooltipPosition="top"
+                (click)="uploader.click()"
+              >
+                <input
+                  type="file"
+                  class="custom-file-input"
+                  hidden
+                  id="media_resource"
+                  #uploader
+                  accept="image/png, image/jpeg, video/*"
+                  (change)="handleFileInput($event)"
+                />
+              </p-button>
+              <p-button
+                icon="pi pi-send"
+                styleClass="p-button-outlined"
+                pTooltip="Enviar comentario"
+                tooltipPosition="top"
+                (click)="updateComment()"
+                [disabled]="!ready_to_send"
+              >
+              </p-button>
+            </div>
+            <div *ngIf="invalid_comment_content" class="text-danger">
+              No puedes crear comentarios sin contenido
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="flex row">
         <small
           *ngIf="commentsInComment.length === 0; else elseBlock"
@@ -46,31 +167,53 @@
         <ng-template #elseBlock>
           <app-comment-in-comment
             class="mx-2"
-            *ngFor="let comment of commentsInComment"
+            *ngFor="let comment of commentsInComment; let i = index"
             [comment]="comment"
+            [index]="i"
+            (deleted_inner_comment)="onDeleteInnerComment($event)"
           >
           </app-comment-in-comment>
         </ng-template>
       </div>
       <div class="mx-4 flex">
         <span
-          *ngIf="commentsInComment.length > 0"
+          *ngIf="commentsInComment.length >= limit"
           class="clickable"
           (click)="handleMoreComments()"
           style="font-size: 11px"
           >Ver más respuestas</span
         >
-        <small
+        <!-- <small
           *ngIf="page > 0"
           class="text-muted clickable mx-2"
           style="font-size: 11px"
           (click)="resetComments()"
           >Inicio</small
-        >
+        > -->
       </div>
     </div>
 
-    <div class="row py-2" *ngIf="showResponse">
+    <div class="row py-2" *ngIf="showResponse" #responseScroll>
+      <div *ngIf="loaded_media">
+        <div
+          class="p-1 row justify-content-center"
+          *ngIf="inner_comment_creation_media_type.includes('image')"
+        >
+          <img [src]="inner_comment_creation_media_file" class="img-fluid" />
+        </div>
+        <div
+          class="p-1 row justify-content-center"
+          *ngIf="inner_comment_creation_media_type.includes('video')"
+        >
+          <video controls>
+            <source
+              [src]="inner_comment_creation_media_file"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
       <div class="col-auto">
         <img
           src="src/assets/images/users/d4.jpg"
@@ -79,17 +222,52 @@
           class="rounded-circle"
         />
       </div>
-      <div class="col-10">
-        <input
-          type="text"
-          class="form-control w-100"
-          id="fname"
-          placeholder="Escribe un comentario ..."
-          pInputText
-          style="font-size: 13px"
-          [(ngModel)]="commentInComment"
-          (keyup.enter)="sendComment()"
-        />
+
+      <div class="form-group-row">
+        <div
+          class="d-flex justify-content-center gap-1 my-1"
+          style="height: 30px"
+        >
+          <input
+            type="text"
+            class="form-control w-80"
+            id="description"
+            placeholder="Responde a un comentario..."
+            pInputText
+            style="font-size: 13px"
+            [(ngModel)]="comment_in_comment"
+            (keyup.enter)="sendComment()"
+          />
+          <p-button
+            icon="pi pi-camera"
+            styleClass="p-button-outlined"
+            pTooltip="Sube una imagen o video"
+            tooltipPosition="top"
+            (click)="uploader.click()"
+          >
+            <input
+              type="file"
+              class="custom-file-input"
+              hidden
+              id="media_resource"
+              #uploader
+              accept="image/png, image/jpeg"
+              (change)="handleFileInput($event, 'inner')"
+            />
+          </p-button>
+          <p-button
+            icon="pi pi-send"
+            styleClass="p-button-outlined"
+            pTooltip="Enviar comentario"
+            tooltipPosition="top"
+            [disabled]="!ready_to_send"
+            (click)="sendComment()"
+          >
+          </p-button>
+        </div>
+        <div *ngIf="invalid_inner_comment_content" class="text-danger">
+          No puedes crear comentarios sin contenido
+        </div>
       </div>
     </div>
   </div>

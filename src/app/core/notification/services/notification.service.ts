@@ -45,7 +45,7 @@ export class NotificationService {
   }
 
   public leave() {
-     this.socket.emit('leave', {
+    return this.socket.emitEvent('leave', {
       user_id: this.jwt_service.getUserId()
     });
     return this.socket.disconnect();

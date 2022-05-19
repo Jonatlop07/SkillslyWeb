@@ -1,80 +1,151 @@
-import { Component } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
-import { UpdatePostPresenter } from '../../types/update_post.presenter'
-import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms'
-import { PostService } from '../../services/posts.service'
-import { PermanentPostPresenter } from '../../types/query_post.presenter'
-import { Location } from '@angular/common'
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UpdatePostInputData } from '../../types/update_post.presenter';
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { PostService } from '../../services/posts.service';
+import { Location } from '@angular/common';
+import {FileUploadService} from "../../services/file_upload.service";
+import {PostContentElement} from "../../types/create_post_data.presenter";
 
 @Component({
   selector: 'skl-edit-post-view',
   templateUrl: './edit_post.view.html',
-  styleUrls: ['./edit_post.view.css']
+  styleUrls: ['./edit_post.view.css'],
 })
 export class EditPostView {
-  public post_id: string;
-  public post: UpdatePostPresenter;
-  public post_to_update: UpdatePostPresenter;
+  //files
+  public file_to_upload: File | null = null;
+  public ready_to_send = true;
+  public media_locator = '';
+  public media_type = '';
+  public media_file = '';
+  public loaded_media = false;
+  public postContentElement: PostContentElement[] = [];
+
+  public id: string;
+  public post: UpdatePostInputData;
+  public post_to_update: UpdatePostInputData;
   public post_form: FormGroup;
 
-  require_one = false;
-  incomplete_reference = false;
-  allowed_types = '^imagen$|^video$';
+  requireOne = false;
+  mediaIncomplete = false;
 
   constructor(
     private readonly activated_route: ActivatedRoute,
     private readonly post_service: PostService,
     private readonly router: Router,
-    private readonly location: Location
-  ) {
-  }
+    private readonly location: Location,
+    private media_service: FileUploadService
+  ) {}
 
   ngOnInit(): void {
-    this.activated_route.params.subscribe(params => {
-      this.post_id = params.post_id;
-      this.post_service
-        .queryPost(this.post_id)
-        .subscribe((post: PermanentPostPresenter) => {
-          this.post = post;
-          this.initForm(this.post);
-        });
-    })
+    this.activated_route.params.subscribe((params) => {
+      this.id = params.post_id;
+      this.post_service.queryPost(this.id).subscribe(({ data }) => {
+        this.post = data.postById;
+        console.log(this.post);
+        this.initForm(this.post);
+      });
+    });
   }
 
-  private initForm(post_form_values: UpdatePostPresenter) {
+  private initForm(post_form_values: UpdatePostInputData) {
     this.post_form = new FormGroup({
+      description: new FormControl(post_form_values.description),
       privacy: new FormControl(post_form_values.privacy, Validators.required),
-      content: new FormArray(post_form_values.content.map(
-        (content_element) =>
-          new FormGroup({
-            description: new FormControl(content_element.description, Validators.maxLength(250)),
-            reference: new FormControl(content_element.reference),
-            reference_type: new FormControl(content_element.reference_type, [
-              Validators.pattern(`${this.allowed_types}`),
-            ]),
-          })
-      )),
+      content_element: new FormArray(
+        post_form_values.content_element.map(
+          (content_element) =>
+            new FormGroup({
+              description: new FormControl(
+                content_element.description,
+                Validators.maxLength(250)
+              ),
+              media_locator: new FormControl(content_element.media_locator),
+              media_type: new FormControl(content_element.media_type),
+            })
+        )
+      ),
     });
   }
 
   get controls() {
-    return (<FormArray> this.post_form.get('content')).controls;
+    return (<FormArray> this.post_form.get('content_element')).controls;
+  }
+
+  public handleFileInput(event: any) {
+    this.file_to_upload = event.target.files[0];
+    if (this.file_to_upload.type.startsWith('video')) {
+      this.uploadContentElementVideo(this.file_to_upload);
+    } else if (this.file_to_upload.type.startsWith('image')) {
+      this.uploadContentElementImage(this.file_to_upload);
+    }
+  }
+  public uploadContentElementVideo(file: File) {
+    this.ready_to_send = false;
+    this.media_service.uploadVideo(file).subscribe((res) => {
+      this.media_locator = `${res.media_locator} ${res.contentType}`;
+      this.media_type = res.contentType;
+      this.media_file = res.media_locator;
+      this.loaded_media = true;
+      this.ready_to_send = true;
+      this.postContentElement.push({
+        description: "Prueba",
+        media_locator: res.media_locator,
+        media_type: res.contentType,
+      });
+    });
+  }
+
+  public uploadContentElementImage(file: File) {
+    this.ready_to_send = false;
+    this.media_service.uploadImage(file).subscribe((res) => {
+      this.media_locator = `${res.media_locator} ${res.contentType}`;
+      this.media_type = res.contentType;
+      this.media_file = res.media_locator;
+      this.loaded_media = true;
+      this.ready_to_send = true;
+      this.postContentElement.push({
+        description: "Prueba",
+        media_locator: res.media_locator,
+        media_type: res.contentType,
+      });
+    });
   }
 
   onSubmit($event: Event) {
-    const controls = (<FormArray> this.post_form.get('content')).controls;
+    const controls = (<FormArray> this.post_form.get('content_element')).controls;
+    const content_element: PostContentElement[] = [];
+    for ( const i in this.postContentElement){
+      content_element.push({
+        description: this.post_form.value.content_element[i].description,
+        media_locator:this.postContentElement[i].media_locator,
+        media_type: this.postContentElement[i].media_type,
+      });
+    }
+    const updatePostInputData : UpdatePostInputData ={
+      post_id: this.id,
+      owner_id: this.post.owner_id,
+      ...this.post_form.value,
+      content_element
+    }
     if (this.validateContent(controls)) {
-      this.incomplete_reference = false;
-      this.require_one = false;
+      this.mediaIncomplete = false;
+      this.requireOne = false;
       this.post_to_update = {
         ...this.post_form.value,
-        post_id: this.post.post_id,
-        owner_id: this.post.owner_id,
-      }
+
+      };
       this.post_service
-        .updatePermanentPost(this.post_to_update)
-        .subscribe((post: UpdatePostPresenter) => {
-          this.post = post;
+        .updatePermanentPost(updatePostInputData)
+        .subscribe(({data}) => {
+          this.post = data.post;
         });
       this.location.back();
       return true;
@@ -85,13 +156,11 @@ export class EditPostView {
   }
 
   onAddContent() {
-    (<FormArray> this.post_form.get('content')).push(
+    (<FormArray> this.post_form.get('content_element')).push(
       new FormGroup({
         description: new FormControl(null, Validators.maxLength(250)),
-        reference: new FormControl(null),
-        reference_type: new FormControl(null, [
-          Validators.pattern(`${this.allowed_types}`),
-        ]),
+        media_locator: new FormControl(null),
+        media_type: new FormControl(null),
       })
     );
   }
@@ -108,19 +177,9 @@ export class EditPostView {
   validateContent(controls: AbstractControl[]) {
     for (const control of controls) {
       if (
-        !control.get('description').value &&
-        !control.get('reference').value &&
-        !control.get('reference_type').value
+        !control.get('description').value
       ) {
-        this.require_one = true;
-        return false;
-      }
-      if (
-        !control.get('reference').value &&
-        control.get('reference_type').value ||
-        control.get('reference').value && !control.get('reference_type').value
-      ) {
-        this.incomplete_reference = true;
+        this.requireOne = true;
         return false;
       }
     }

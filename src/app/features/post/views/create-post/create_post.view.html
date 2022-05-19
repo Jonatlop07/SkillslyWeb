@@ -9,27 +9,26 @@
             class="form-horizontal"
           >
             <div class="card-body posts-card">
-              <h3 class="title card-title">Publicación</h3>
+              <h3 class="title card-title">Editar Publicación</h3>
               <div class="row">
                 <div class="col-xs-12">
                   <button
                     pButton
                     pRipple
                     type="submit"
-                    class="p-button-outlined p-button-rounded post-button p-2"
+                    class="p-button-outlined p-button-rounded post-button p-1"
                     icon="pi pi-envelope"
                     [disabled]="postForm.invalid || !postForm.touched"
                     label="Guardar Publicacion"
                   >
                   </button>
-
                   <button
                     pButton
                     pRipple
                     type="button"
                     icon="pi pi-times"
-                    class="p-button-outlined p-button-rounded p-2"
-                    [style]="{ 'margin-left': '.5em' }"
+                    class="p-button-outlined p-button-rounded p-1"
+                    [style]="{ 'margin-left': '.2em' }"
                     (click)="onCancel()"
                     *ngIf="!this.group_id"
                     label="Cancelar"
@@ -47,73 +46,91 @@
                       Privada (sólo tus seguidores podrán verla)
                     </option>
                   </select>
+                  <textarea
+                    pInputTextarea
+                    type="text"
+                    class="form-control p-2"
+                    formControlName="description"
+                    placeholder="Descripcion general de tu post!"
+                    rows="2"
+                  >
+                  </textarea>
                 </div>
               </div>
               <hr/>
               <div class="form-group-row">
-                <div class="col-xs-12" formArrayName="content">
+                <div class="col-xs-12" formArrayName="content_element">
                   <div
                     class="row"
                     *ngFor="let contentCtrl of controls; let i = index"
                     [formGroupName]="i"
                     style="margin-bottom: 10px"
                   >
-                    <div class="col-xs-12 p-2">
+                    <div class="d-flex justify-content-center gap-1 my-1">
                       <textarea
                         pInputTextarea
                         type="text"
                         class="form-control p-2"
                         formControlName="description"
-                        placeholder="Describe tu post!"
-                        rows="6"
+                        placeholder="Describe tu contenido!"
+                        rows="1"
                       >
                       </textarea>
-                    </div>
-
-                    <div class="col-xs-12 p-2">
-                      <input
-                        pInputText
-                        type="text"
-                        class="form-control p-2"
-                        formControlName="reference"
-                        placeholder="Agrega enlaces a imagenes o videos"
-                      />
-                    </div>
-                    <div class="col-xs-12 p-2">
-                      <input
-                        pInputText
-                        type="text"
-                        class="form-control p-2"
-                        placeholder="Ingresa el tipo de multimedia"
-                        formControlName="reference_type"
-                      />
-                    </div>
-                    <span
-                      class="text-danger p-2"
-                      *ngIf="!contentCtrl.get('reference_type').valid"
-                    >Los tipos aceptados son: imagen o video
-                    </span>
-                    <hr/>
-
-                    <div class="text-end">
-                      <button
-                        pButton
-                        pRipple
-                        type="button"
-                        icon="pi pi-times"
-                        class="p-button-outlined p-button-rounded p-button-primary p-2"
-                        *ngIf="i !== 0"
-                        (click)="onDeleteContent(i)"
+                      <p-button
+                        icon="pi pi-camera"
+                        styleClass="p-button-outlined"
+                        pTooltip="Sube una imagen o video"
+                        tooltipPosition="top"
+                        (click)="uploader.click()"
                       >
-                      </button>
+                        <label for="media_resource"></label>
+                        <input
+                          type="file"
+                          class="custom-file-input"
+                          hidden
+                          #uploader
+                          id="media_resource"
+                          accept="image/png, image/jpeg, video/*"
+                          (change)="handleFileInput($event)"
+                        />
+                      </p-button>
+                      <div class="text-end">
+                        <button
+                          pButton
+                          pRipple
+                          type="button"
+                          icon="pi pi-times"
+                          class="p-button-outlined p-button-rounded p-button-primary p-2"
+                          *ngIf="i !== 0"
+                          (click)="onDeleteContent(i)"
+                        >
+                        </button>
+                      </div>
                     </div>
+                    <div *ngIf="loaded_media && this.postContentElement[i]" >
+                      <div
+                        class="p-1 row justify-content-center"
+                        *ngIf="this.postContentElement[i].media_type.includes('image')"
+                      >
+                        <img [src]="this.postContentElement[i].media_locator" class="img-fluid" />
+                      </div>
+                      <div
+                        class="p-1 row justify-content-center"
+                        *ngIf="this.postContentElement[i].media_type.includes('video')"
+                      >
+                        <video controls>
+                          <source [src]="this.postContentElement[i].media_locator" type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                    </div>
+                    <hr/>
                   </div>
                   <div *ngIf="requireOne" class="text-danger p-2">
                     No puedes crear publicaciones sin contenido!
                   </div>
-                  <div *ngIf="referenceIncomplete" class="text-danger p-2">
-                    Si quieres poner una imagen o video, debes poner el enlace y
-                    el tipo
+                  <div *ngIf="mediaIncomplete" class="text-danger p-2">
+                    Si quieres poner una imagen o video, debes subirlo !
                   </div>
                   <div class="row">
                     <div class="col-xs-12 text-end">

@@ -69,7 +69,7 @@ export class NewConversationComponent {
           .concat(this.follow_service.getFollowers())
           .map((user) =>
             ({
-              member_id: user.user_id,
+              member_id: user.id,
               member_name: user.name
             })
           );

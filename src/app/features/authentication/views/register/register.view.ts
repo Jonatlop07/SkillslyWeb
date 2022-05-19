@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/service/auth.service';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
-import { RegisterForm } from '../../types/register_form.interface'
-import { auth_routing_paths } from '../../auth.routing'
+import { RegisterForm } from '../../types/register_form.interface';
+import { auth_routing_paths } from '../../auth.routing';
 
 @Component({
   selector: 'skl-register',
@@ -74,10 +74,12 @@ export class RegisterView implements OnInit {
     ).format('DD/MM/YYYY');
     this.auth_service.registerUser(this.register_form).subscribe(
       () => {
-        this.router.navigate([`${auth_routing_paths.auth}/${auth_routing_paths.sign_in}`]);
+        this.router.navigate([
+          `${auth_routing_paths.auth}/${auth_routing_paths.sign_in}`,
+        ]);
       },
       (err) => {
-        Swal.fire('Error', err.error.error, 'error');
+        Swal.fire('Error', err, 'error');
       }
     );
   }

@@ -1,12 +1,12 @@
-export interface Comment {
+export interface InnerComment {
   _id: string;
   description?: string;
   media_locator?: string;
-  post_id?: string;
-  created_at?: string;
+  comment_id?: string;
   timestamp?: string;
+  created_at?: string;
+  updated_at?: string;
   email?: string;
   name?: string;
-  inner_comment_count?: string;
   owner_id: string;
 }
