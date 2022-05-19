@@ -11,6 +11,7 @@ import { SessionModel } from '../../features/authentication/model/session.model'
 import { SetSessionData } from '../../shared/state/session/session.actions'
 import { environment } from '../../../environments/environment'
 import { Apollo, gql, MutationResult } from 'apollo-angular'
+//import { NotificationService } from '../notification/services/notification.service'
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class AuthService {
     private readonly http: HttpClient,
     private readonly apollo: Apollo,
     private readonly store: Store,
-    private readonly jwt_service: JwtService
+    private readonly jwt_service: JwtService,
+    //private readonly notification_service: NotificationService
   ) {
   }
 
@@ -137,8 +139,8 @@ export class AuthService {
     return this.store.dispatch(new SetSessionData(session_data));
   }
 
-  public async logout(): Promise<Observable<void>> {
-    const result = this.store.dispatch(
+  public async logout() {
+    this.store.dispatch(
       new SetSessionData({
           user_id: '',
           user_email: '',
@@ -146,9 +148,9 @@ export class AuthService {
           expires_date: '',
           is_two_factor_auth_enabled: null
         }
-      ));
+      )).subscribe();
     await this.apollo.client.resetStore();
-    return result;
+    //this.notification_service.leave();
   }
 
   public isUserAuthenticated() {

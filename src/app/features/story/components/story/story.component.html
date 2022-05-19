@@ -1,15 +1,15 @@
 <p-card styleClass="p-card-shadow" *ngIf="validateDate()">
   <ng-template pTemplate="header">
-    <img alt="Card" src="{{ storiesData[0].reference }}" />
+    <img alt="Card" src="{{ storyElements[0].media_locator }}" />
   </ng-template>
-  <p *ngIf="storiesData[0].description" [style.fontSize]="6">
-    {{ storiesData[0].description }}
+  <p *ngIf="storyElements[0].description" [style.fontSize]="6">
+    {{ storyElements[0].description }}
   </p>
   <div class="story-font">
     <div class="row">
-      <small [style.fontSize]="6">
-        {{ storiesData[0].name }} · {{ storiesData[0].email }}
-      </small>
+      <!-- <small [style.fontSize]="6">
+        {{ storyElements[0].name }} · {{ storyElements[0].email }}
+      </small> -->
     </div>
     <div class="row">
       <div class="d-flex justify-content-between align-items-center">
@@ -17,7 +17,7 @@
         <p-tag
           styleClass="p-mr-2"
           severity="info"
-          value="{{ storiesData.length - 1 }}+"
+          value="{{ storyElements.length - 1 }}+"
           [style.fontSize]="4"
           class="clickable"
           (click)="showModalDialog()"
@@ -25,9 +25,9 @@
       </div>
     </div>
   </div>
-
+  <!--{{ storyElements[0].name }} -->
   <p-dialog
-    header="Historia de {{ storiesData[0].name }}"
+    header="Historia de"
     class="story-font"
     style="font-family: 'Poppins', sans-serif"
     [(visible)]="displayModal"
@@ -37,9 +37,8 @@
     [resizable]="false"
   >
     <div class="flex justify-content-center story-font">
-      <skl-story-gallery [images]="storiesData"></skl-story-gallery>
+      <skl-story-gallery [images]="storyElements"></skl-story-gallery>
     </div>
-
     <ng-template pTemplate="footer">
       <p-button
         icon="pi pi-check"

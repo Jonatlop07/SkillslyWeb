@@ -5,7 +5,6 @@ import { MessageCollectionPresenter } from '../../types/message_collection.prese
 import { MessagePresenter } from '../../types/message.presenter'
 import { ConversationMemberPresenter } from '../../types/conversation_member.presenter'
 import { ConversationService } from '../../services/conversation.service'
-import { ChatService } from '../../services/chat.service'
 import * as moment from 'moment';
 import { Store } from '@ngxs/store'
 import { SetSelectedConversation } from '../../../../shared/state/conversations/selected_conversation.actions'
@@ -33,7 +32,6 @@ export class ConversationListComponent {
   public constructor(
     private readonly conversation_service: ConversationService,
     private readonly follow_service: FollowRequestService,
-    private readonly chat_service: ChatService,
     private readonly store: Store
   ) {
   }
@@ -41,7 +39,7 @@ export class ConversationListComponent {
   public selectConversation(conversation: Conversation) {
     if (this.selected_conversation) {
       if (conversation.conversation_id !== this.selected_conversation.conversation_id) {
-        this.chat_service.leaveConversation(this.selected_conversation.conversation_id);
+        /*this.chat_service.leaveConversation(this.selected_conversation.conversation_id);*/
       }
     }
     this.setSelectedConversation(conversation);
@@ -71,7 +69,7 @@ export class ConversationListComponent {
                 return first_message_date > second_message_date ? 1 : -1;
               }
             );
-          this.chat_service.joinConversation(this.selected_conversation.conversation_id);
+          /*this.chat_service.joinConversation(this.selected_conversation.conversation_id);*/
           this.store.dispatch(new SetSelectedConversation(this.selected_conversation));
         }
       );
