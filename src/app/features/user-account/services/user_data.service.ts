@@ -4,7 +4,7 @@ import { JwtService } from '../../../core/service/jwt.service';
 import { UserDataPresenter } from '../types/user_data.presenter';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApolloQueryResult } from '@apollo/client';
+import { ApolloQueryResult } from '@apollo/client/core';
 import { Apollo, gql } from 'apollo-angular';
 
 @Injectable()

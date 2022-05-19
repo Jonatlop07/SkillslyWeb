@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { Conversation } from '../types/conversation'
-import { Select, Store } from '@ngxs/store'
+import { Select } from '@ngxs/store'
 import { MyConversationsState } from '../../../shared/state/conversations/conversations.state'
 import { FollowersModel } from '../../social/model/followers.model'
 import { ConversationMemberPresenter } from '../types/conversation_member.presenter'
@@ -11,11 +11,11 @@ import { Observable, of, Subject } from 'rxjs'
 import { ConversationService } from '../services/conversation.service'
 import { FollowersState } from '../../../shared/state/followers/followers.state'
 import { mergeAll, takeUntil } from 'rxjs/operators'
-import { MessagePresenter } from '../types/message.presenter'
+//import { MessagePresenter } from '../types/message.presenter'
 import { FollowingUsersState } from '../../../shared/state/following_users/following_users.state'
 import { SelectedConversationState } from '../../../shared/state/conversations/selected_conversation.state'
 import { FollowingUsersModel } from '../../social/model/following_users.model'
-import { ChatService } from '../services/chat.service'
+//import { ChatService } from '../services/chat.service'
 import { FollowRequestService } from '../../social/services/follow_request.service'
 
 
@@ -49,7 +49,7 @@ export default class ChatView implements OnInit, OnDestroy {
   constructor(
     private readonly conversation_service: ConversationService,
     private readonly follow_service: FollowRequestService,
-    private readonly chat_service: ChatService
+    //private readonly chat_service: ChatService
   ) {
   }
 
@@ -73,7 +73,7 @@ export default class ChatView implements OnInit, OnDestroy {
       .subscribe((state: ConversationModel) => {
         this.selected_conversation = state.conversation;
       });
-    this.chat_service
+    /*this.chat_service
       .onMessageSent()
       .pipe(takeUntil(this.unsubscribe))
       .subscribe((message: MessagePresenter) => {
@@ -87,7 +87,7 @@ export default class ChatView implements OnInit, OnDestroy {
         if (message_to_delete_index > -1) {
           this.selected_conversation.messages.splice(message_to_delete_index, 1);
         }
-      });
+      });*/
     of(this.followers$, this.following_users$)
       .pipe(
         takeUntil(this.unsubscribe),
@@ -104,8 +104,8 @@ export default class ChatView implements OnInit, OnDestroy {
   public ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
-    if (this.selected_conversation)
+    /*if (this.selected_conversation)
       this.chat_service.leaveConversation(this.selected_conversation.conversation_id);
-    this.chat_service.stop();
+    this.chat_service.stop();*/
   }
 }

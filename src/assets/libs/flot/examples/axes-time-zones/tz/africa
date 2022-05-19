@@ -275,8 +275,8 @@ Rule	Egypt	2007	only	-	Sep	Thu>=1	23:00s	0	-
 #
 # timeanddate[2] and another site I've found[3] also support that.
 #
-# [1] <a href="https://bugzilla.redhat.com/show_bug.cgi?id=492263">
-# https://bugzilla.redhat.com/show_bug.cgi?id=492263
+# [1] <a href="https://bugzilla.redhat.com/show_bug.cgi?post_id=492263">
+# https://bugzilla.redhat.com/show_bug.cgi?post_id=492263
 # </a>
 # [2] <a href="http://www.timeanddate.com/worldclock/clockchange.html?n=53">
 # http://www.timeanddate.com/worldclock/clockchange.html?n=53
@@ -766,8 +766,8 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 # http://www.yabiladi.com/articles/details/5058/secret-l-heure-d-ete-maroc-lev
 # </a>
 # e.html
-# <a href="http://www.lematin.ma/Actualite/Express/Article.asp?id=148923">
-# http://www.lematin.ma/Actualite/Express/Article.asp?id=148923
+# <a href="http://www.lematin.ma/Actualite/Express/Article.asp?post_id=148923">
+# http://www.lematin.ma/Actualite/Express/Article.asp?post_id=148923
 # </a>
 # <a href="http://www.lavieeco.com/actualite/Le-Maroc-passe-sur-GMT%2B1-a-partir-de-dim">
 # http://www.lavieeco.com/actualite/Le-Maroc-passe-sur-GMT%2B1-a-partir-de-dim
@@ -818,8 +818,8 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 
 # From Milamber Space Network (2012-07-17):
 # The official return to GMT is announced by the Moroccan government:
-# <a href="http://www.mmsp.gov.ma/fr/actualites.aspx?id=288">
-# http://www.mmsp.gov.ma/fr/actualites.aspx?id=288 [in French]
+# <a href="http://www.mmsp.gov.ma/fr/actualites.aspx?post_id=288">
+# http://www.mmsp.gov.ma/fr/actualites.aspx?post_id=288 [in French]
 # </a>
 #
 # Google translation, lightly edited:
@@ -1070,7 +1070,7 @@ Zone	Africa/Lome	0:04:52 -	LMT	1893
 # The daylight saving time will be the same each year:
 # Beginning      : the last Sunday of March at 02:00
 # Ending         : the last Sunday of October at 03:00 ...
-# http://www.tap.info.tn/en/index.php?option=com_content&task=view&id=1188&Itemid=50
+# http://www.tap.info.tn/en/index.php?option=com_content&task=view&post_id=1188&Itemid=50
 
 # From Steffen Thorsen (2009-03-16):
 # According to several news sources, Tunisia will not observe DST this year.
@@ -1094,13 +1094,13 @@ Zone	Africa/Lome	0:04:52 -	LMT	1893
 # Standard time to be kept the whole year long (tap.info.tn):
 #
 # (in English)
-# <a href="http://www.tap.info.tn/en/index.php?option=com_content&task=view&id=26813&Itemid=157">
-# http://www.tap.info.tn/en/index.php?option=com_content&task=view&id=26813&Itemid=157
+# <a href="http://www.tap.info.tn/en/index.php?option=com_content&task=view&post_id=26813&Itemid=157">
+# http://www.tap.info.tn/en/index.php?option=com_content&task=view&post_id=26813&Itemid=157
 # </a>
 #
 # (in Arabic)
-# <a href="http://www.tap.info.tn/ar/index.php?option=com_content&task=view&id=61240&Itemid=1">
-# http://www.tap.info.tn/ar/index.php?option=com_content&task=view&id=61240&Itemid=1
+# <a href="http://www.tap.info.tn/ar/index.php?option=com_content&task=view&post_id=61240&Itemid=1">
+# http://www.tap.info.tn/ar/index.php?option=com_content&task=view&post_id=61240&Itemid=1
 # </a>
 
 # From Arthur David Olson (2009--3-18):
@@ -1121,8 +1121,8 @@ Zone	Africa/Lome	0:04:52 -	LMT	1893
 # (in Arabic)
 # <a href="http://www.moheet.com/show_news.aspx?nid=358861&pg=1">
 # http://www.moheet.com/show_news.aspx?nid=358861&pg=1
-# <a href="http://www.almadenahnews.com/newss/news.php?c=118&id=38036">
-# http://www.almadenahnews.com/newss/news.php?c=118&id=38036
+# <a href="http://www.almadenahnews.com/newss/news.php?c=118&post_id=38036">
+# http://www.almadenahnews.com/newss/news.php?c=118&post_id=38036
 # or
 # <a href="http://www.worldtimezone.com/dst_news/dst_news_tunis02.html">
 # http://www.worldtimezone.com/dst_news/dst_news_tunis02.html

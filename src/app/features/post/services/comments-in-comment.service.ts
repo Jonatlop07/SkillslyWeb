@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JwtService } from '../../../core/service/jwt.service';
 import { environment } from '../../../../environments/environment';
-import { ApolloQueryResult } from '@apollo/client';
+import { ApolloQueryResult } from '@apollo/client/core';
 import { Apollo, gql, MutationResult } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';

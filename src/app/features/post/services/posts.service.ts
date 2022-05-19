@@ -81,9 +81,9 @@ export class PostService {
       );
   }
 
-  // public queryPost(id: string): Observable<PermanentPostPresenter> {
+  // public queryPost(post_id: string): Observable<PermanentPostPresenter> {
   //   return this.http.get<PermanentPostPresenter>(
-  //     `${this.API_URL}/permanent-posts/${encodeURIComponent(id)}`,
+  //     `${this.API_URL}/permanent-posts/${encodeURIComponent(post_id)}`,
   //     this.jwt_service.getHttpOptions()
   //   );
   // }
@@ -160,11 +160,11 @@ export class PostService {
   }
 
   // public deletePost(deletePostInterface: DeletePostInterface) {
-  //   const { id, group_id } = deletePostInterface;
+  //   const { post_id, group_id } = deletePostInterface;
   //   let params = new HttpParams();
-  //   params = params.append('group-id', group_id);
+  //   params = params.append('group-post_id', group_id);
   //   return this.http.delete(
-  //     `${this.API_URL}/permanent-posts/${encodeURIComponent(id)}`,
+  //     `${this.API_URL}/permanent-posts/${encodeURIComponent(post_id)}`,
   //     {
   //       params,
   //       ...this.jwt_service.getHttpOptions()
@@ -193,7 +193,7 @@ export class PostService {
   // ): Observable<UpdatePostInputData> {
   //   return this.http.put<UpdatePostInputData>(
   //     `${this.API_URL}/permanent-posts/${encodeURIComponent(
-  //       post_to_update.id
+  //       post_to_update.post_id
   //     )}`,
   //     {
   //       user_id: this.jwt_service.getUserId(),
@@ -212,7 +212,7 @@ export class PostService {
       ...post_to_update,
     };
     const UPDATE_POST = gql`
-      mutation updatePost($updatePostInputData: NewPostInputData!) {
+      mutation updatePost($updatePostInputData: UpdatePostInputData!) {
         updatePost(post_data: $updatePostInputData) {
           id
           owner_id

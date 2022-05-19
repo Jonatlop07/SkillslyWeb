@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { Select, Store } from '@ngxs/store'
 import { Conversation } from '../../chat/types/conversation'
 import { forkJoin, Observable } from 'rxjs'
-import { HttpClient, HttpParams } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { FollowingUsersState } from '../../../shared/state/following_users/following_users.state'
 import { FollowersState } from '../../../shared/state/followers/followers.state'
 import { FollowersModel } from '../model/followers.model'
@@ -15,8 +15,8 @@ import { FollowingUsersModel } from '../model/following_users.model'
 import { StoreFollowers } from '../../../shared/state/followers/followers.actions'
 import { AppendPrivateConversation } from '../../../shared/state/conversations/conversations.actions'
 import { environment } from '../../../../environments/environment'
-import {Apollo, gql, MutationResult} from "apollo-angular";
-import {ApolloQueryResult} from "@apollo/client";
+import {Apollo, gql } from "apollo-angular";
+import {ApolloQueryResult} from "@apollo/client/core";
 
 @Injectable()
 export class FollowRequestService {
@@ -91,7 +91,7 @@ export class FollowRequestService {
 
   // public createUserFollowRequest(user: SearchUserResponse) {
   //   return this.http.post(
-  //     `${this.API_URL}/users/follow/${user.id}`,
+  //     `${this.API_URL}/users/follow/${user.post_id}`,
   //     {},
   //     this.jtw_service.getHttpOptions()
   //   )
@@ -118,7 +118,7 @@ export class FollowRequestService {
   //   let params = new HttpParams();
   //   params = params.append('isRequest', isRequest.toString());
   //   return this.http.delete(
-  //     `${this.API_URL}/users/follow/${user.id}`,
+  //     `${this.API_URL}/users/follow/${user.post_id}`,
   //     {
   //       params,
   //       ...this.jtw_service.getHttpOptions()
@@ -147,7 +147,7 @@ export class FollowRequestService {
 
   // public updateFollowRequest(user: SearchUserResponse, accept: boolean): Observable<Conversation> {
   //   return this.http.put<Conversation>(
-  //     `${this.API_URL}/users/follow/${user.id}`,
+  //     `${this.API_URL}/users/follow/${user.post_id}`,
   //     {
   //       accept
   //     },

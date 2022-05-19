@@ -76,8 +76,8 @@ export class AccountDetailsComponent implements OnInit {
   public deleteUserAccount(): void {
     this.account_service
       .deleteUserAccount()
-      .subscribe(() => {
-          this.auth_service.logout();
+      .subscribe(async () => {
+          await this.auth_service.logout();
           this.router.navigate([`/${auth_routing_paths.auth}/${auth_routing_paths.sign_in}`]);
         },
         (err) => {

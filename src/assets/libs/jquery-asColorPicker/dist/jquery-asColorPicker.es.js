@@ -1133,7 +1133,7 @@ var Gradient = function (api, options) {
 
       // that.$gradient.on('add', function(e, data) {
       //   if (data.stop) {
-      //     that.active(data.stop.id);
+      //     that.active(data.stop.post_id);
       //     api._trigger('update', data.stop.color, that.value);
       //     api._updateInput();
       //   }
@@ -1352,7 +1352,7 @@ var Gradient = function (api, options) {
         $marker.addClass(that.classes.active);
 
         that.$markers.focus();
-        // that.api._trigger('apply', that.value.getById(id).color);
+        // that.api._trigger('apply', that.value.getById(post_id).color);
       },
       mousedown(marker, e) {
         const self = this;

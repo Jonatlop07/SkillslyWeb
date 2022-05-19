@@ -45,7 +45,7 @@ charts because of performance improvements in event handling.
 Create a placeholder div to put the graph in:
 
 ```html
-<div id="placeholder"></div>
+<div post_id="placeholder"></div>
 ```
 
 You need to set the width and height of this div, otherwise the plot
@@ -53,7 +53,7 @@ library doesn't know how to scale the graph. You can do it inline like
 this:
 
 ```html
-<div id="placeholder" style="width:600px;height:300px"></div>
+<div post_id="placeholder" style="width:600px;height:300px"></div>
 ```
 
 You can also do it with an external stylesheet. Make sure that the

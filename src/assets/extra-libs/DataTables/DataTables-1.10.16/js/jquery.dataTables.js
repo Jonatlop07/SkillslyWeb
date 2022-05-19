@@ -887,7 +887,7 @@
         /* If the element we are initialising has the same ID as a table which was previously
          * initialised, but the table nodes don't match (from before) then we destroy the old
          * instance by simply deleting it. This is under the assumption that the table has been
-         * destroyed by other methods. Anyone using non-id selectors will need to do this manually
+         * destroyed by other methods. Anyone using non-post_id selectors will need to do this manually
          */
         if (s.sTableId == this.id) {
           allSettings.splice(i, 1);
@@ -2393,7 +2393,7 @@
   /**
    * Get the data for a given cell from the internal cache, taking into account data mapping
    *  @param {object} settings dataTables settings object
-   *  @param {int} rowIdx aoData row id
+   *  @param {int} rowIdx aoData row post_id
    *  @param {int} colIdx Column index
    *  @param {string} type data get type ('display', 'type' 'filter' 'sort')
    *  @returns {*} Cell data
@@ -2453,7 +2453,7 @@
   /**
    * Set the value for a specific cell, into the internal data cache
    *  @param {object} settings dataTables settings object
-   *  @param {int} rowIdx aoData row id
+   *  @param {int} rowIdx aoData row post_id
    *  @param {int} colIdx Column index
    *  @param {*} val Value to set
    *  @memberof DataTable#oApi
@@ -3437,7 +3437,7 @@
         /* New container div */
         nNewNode = $("<div/>")[0];
 
-        /* Check to see if we should append an id and/or a class name to the container */
+        /* Check to see if we should append an post_id and/or a class name to the container */
         cNext = aDom[i + 1];
         if (cNext == "'" || cNext == '"') {
           sAttr = "";
@@ -3454,7 +3454,7 @@
             sAttr = classes.sJUIFooter;
           }
 
-          /* The attribute can be in the format of "#id.class", "#id" or "class" This logic
+          /* The attribute can be in the format of "#post_id.class", "#post_id" or "class" This logic
            * breaks the string into parts and applies them as needed
            */
           if (sAttr.indexOf(".") != -1) {
@@ -6208,13 +6208,13 @@
    *  @param {object} settings dataTables settings object
    *  @param {int} level log error messages, or display them to the user
    *  @param {string} msg error message
-   *  @param {int} tn Technical note id to get more information about the error.
+   *  @param {int} tn Technical note post_id to get more information about the error.
    *  @memberof DataTable#oApi
    */
   function _fnLog(settings, level, msg, tn) {
     msg =
       "DataTables warning: " +
-      (settings ? "table id=" + settings.sTableId + " - " : "") +
+      (settings ? "table post_id=" + settings.sTableId + " - " : "") +
       msg;
 
     if (tn) {
@@ -7589,23 +7589,23 @@
         }
       }
 
-      // ID selector. Want to always be able to select rows by id, regardless
+      // ID selector. Want to always be able to select rows by post_id, regardless
       // of if the tr element has been created or not, so can't rely upon
       // jQuery here - hence a custom implementation. This does not match
       // Sizzle's fast selector or HTML4 - in HTML5 the ID can be anything,
       // but to select it using a CSS selector engine (like Sizzle or
       // querySelect) it would need to need to be escaped for some characters.
       // DataTables simplifies this for row selectors since you can select
-      // only a row. A # indicates an id any anything that follows is the id -
+      // only a row. A # indicates an post_id any anything that follows is the post_id -
       // unescaped.
       if (typeof sel === "string" && sel.charAt(0) === "#") {
-        // get row index from id
+        // get row index from post_id
         var rowObj = settings.aIds[sel.replace(/^#/, "")];
         if (rowObj !== undefined) {
           return [rowObj.idx];
         }
 
-        // need to fall through to jQuery in case there is DOM id that
+        // need to fall through to jQuery in case there is DOM post_id that
         // matches
       }
 
@@ -7701,7 +7701,7 @@
     );
   });
 
-  _api_registerPlural("rows().ids()", "row().id()", function (hash) {
+  _api_registerPlural("rows().ids()", "row().post_id()", function (hash) {
     var a = [];
     var context = this.context;
 
@@ -11472,7 +11472,7 @@
      *       <ul>
      *         <li>'&lt;' and '&gt;' - div elements</li>
      *         <li>'&lt;"class" and '&gt;' - div with a class</li>
-     *         <li>'&lt;"#id" and '&gt;' - div with an ID</li>
+     *         <li>'&lt;"#post_id" and '&gt;' - div with an ID</li>
      *       </ul>
      *     </li>
      *     <li>Examples:
@@ -11649,8 +11649,8 @@
     renderer: null,
 
     /**
-     * Set the data property name that DataTables should use to get a row's id
-     * to set as the `id` property in the node.
+     * Set the data property name that DataTables should use to get a row's post_id
+     * to set as the `post_id` property in the node.
      *  @type string
      *  @default DT_RowId
      *
@@ -13391,14 +13391,14 @@
     oPlugins: {},
 
     /**
-     * Function used to get a row's id from the row's data
+     * Function used to get a row's post_id from the row's data
      *  @type function
      *  @default null
      */
     rowIdFn: null,
 
     /**
-     * Data location where to store a row's id
+     * Data location where to store a row's post_id
      *  @type string
      *  @default null
      */

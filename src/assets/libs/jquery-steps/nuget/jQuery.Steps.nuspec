@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
-        <id>jQuery.Steps</id>
+        <post_id>jQuery.Steps</post_id>
         <version>$version$</version>
         <title>jQuery Steps</title>
         <authors>Rafael Staib</authors>
@@ -15,7 +15,7 @@
         <copyright>� Copyright 2014, Rafael Staib</copyright>
         <tags>jQuery, Accessibility, Forms, HTML5, Navigation, Steps, Tabs, UI, Validation, Wizard</tags>
         <dependencies>
-            <dependency id="jQuery" version="1.10.2" />
+            <dependency post_id="jQuery" version="1.10.2" />
         </dependencies>
     </metadata>
     <files>

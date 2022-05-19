@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skillsly-wa-depl
+spec:
+  selector:
+    matchLabels:
+      app: skillsly-wa
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: skillsly-wa
+    spec:
+      containers:
+        - name: skillsly-wa
+          image: jonatlop07/skillsly-wa
+          ports:
+            - containerPort: 4200
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: skillsly-wa-srv
+spec:
+  selector:
+    app: skillsly-wa
+  ports:
+    - name: wa
+      protocol: TCP
+      port: 4200
+      targetPort: 4200
+  type: LoadBalancer

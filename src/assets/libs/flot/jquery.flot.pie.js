@@ -520,7 +520,7 @@ More detail and specific examples can be found in the included HTML file.
                 options.series.pie.tilt;
 
             var html =
-              "<span class='pieLabel' id='pieLabel" +
+              "<span class='pieLabel' post_id='pieLabel" +
               index +
               "' style='position:absolute;top:" +
               y +

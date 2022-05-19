@@ -78,14 +78,14 @@ $(document).ready(function () {
 				end: new Date(y, m, 8)
 			},
 			{
-				id: 999,
+				post_id: 999,
 				title: 'Repeating event',
 				start: new Date(y, m, 2, 16, 0),
 				end: new Date(y, m, 3, 18, 0),
 				allDay: false
 			},
 			{
-				id: 999,
+				post_id: 999,
 				title: 'Repeating event',
 				start: new Date(y, m, 9, 16, 0),
 				end: new Date(y, m, 10, 18, 0),
@@ -156,7 +156,7 @@ maruti = {
 
   // === Tooltip for flot charts === //
   flot_tooltip: function (x, y, contents) {
-    $('<div id="tooltip">' + contents + "</div>")
+    $('<div post_id="tooltip">' + contents + "</div>")
       .css({
         top: y + 5,
         left: x + 5,

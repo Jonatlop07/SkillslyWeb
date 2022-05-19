@@ -3,7 +3,6 @@ import ChatView from './views/chat.view'
 import { ConversationComponent } from './components/conversation/conversation.component'
 import { NewConversationComponent } from './components/new-conversation/new_conversation.component'
 import { ConversationListComponent } from './components/conversation-list/conversation_list.component'
-import { ChatService } from './services/chat.service'
 import { ConversationService } from './services/conversation.service'
 import { SocialModule } from '../social/social.module'
 import { ChatRoutingModule } from './chat.routing'
@@ -29,7 +28,6 @@ import { InputTextareaModule } from 'primeng/inputtextarea'
   ],
   providers: [
     ConversationService,
-    ChatService,
   ]
 })
 export class ChatModule {

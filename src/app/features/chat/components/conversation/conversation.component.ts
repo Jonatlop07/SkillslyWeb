@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core'
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core'
 import { Store } from '@ngxs/store'
 import { Conversation } from '../../types/conversation'
 import { ConversationService } from '../../services/conversation.service'
@@ -7,10 +7,8 @@ import {
 } from '../../../../shared/state/conversations/selected_conversation.actions'
 import { ConversationMemberPresenter } from '../../types/conversation_member.presenter'
 import * as moment from 'moment';
-import { ChatService } from '../../services/chat.service'
 import { AddedMembersPresenter } from '../../types/added_members.presenter'
 import { SelectedConversationPresenter } from '../../types/selected_conversation.presenter'
-import { MessagePresenter } from '../../types/message.presenter'
 import { GroupConversationDetails } from '../../types/group_conversation_details'
 import { showErrorPopup, showSuccessPopup } from '../../../../shared/pop-up/pop_up.utils'
 import { MessageCollectionPresenter } from '../../types/message_collection.presenter'
@@ -40,7 +38,7 @@ export class ConversationComponent implements OnInit {
 
   public is_editing_group_conversation_details = false;
   public is_adding_group_conversation_members = false;
-  public current_message: string = '';
+  public current_message = '';
 
   public message_offset = 0;
   public message_limit = 50;
@@ -53,7 +51,6 @@ export class ConversationComponent implements OnInit {
   public constructor(
     private readonly conversation_service: ConversationService,
     private readonly follow_service: FollowRequestService,
-    private readonly chat_service: ChatService,
     private readonly store: Store
   ) {
   }
@@ -137,7 +134,9 @@ export class ConversationComponent implements OnInit {
   }
 
   public editGroupConversationDetails(conversation_id: string) {
-    if (this.edited_conversation_name === '') return;
+    if (this.edited_conversation_name === '') {
+      return;
+    }
     this.conversation_service
       .editGroupConversationDetails(conversation_id, { conversation_name: this.edited_conversation_name })
       .subscribe((conversation_details: GroupConversationDetails) => {
@@ -180,16 +179,12 @@ export class ConversationComponent implements OnInit {
 
   public sendMessage() {
     if (this.current_message !== '') {
-      this.chat_service.sendMessage({
+      /*this.chat_service.sendMessage({
         message: this.current_message,
         conversation_id: this.selected_conversation.conversation_id
-      });
+      });*/
       this.current_message = '';
     }
-  }
-
-  public deleteMessage(message: MessagePresenter) {
-    this.chat_service.deleteMessage(message);
   }
 
   public getUserName(user_id: string): string {

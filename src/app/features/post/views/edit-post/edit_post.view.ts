@@ -11,6 +11,7 @@ import {
 import { PostService } from '../../services/posts.service';
 import { Location } from '@angular/common';
 import {FileUploadService} from "../../services/file_upload.service";
+import {PostContentElement} from "../../types/create_post_data.presenter";
 
 @Component({
   selector: 'skl-edit-post-view',
@@ -25,6 +26,7 @@ export class EditPostView {
   public media_type = '';
   public media_file = '';
   public loaded_media = false;
+  public postContentElement: PostContentElement[] = [];
 
   public id: string;
   public post: UpdatePostInputData;
@@ -47,6 +49,7 @@ export class EditPostView {
       this.id = params.post_id;
       this.post_service.queryPost(this.id).subscribe(({ data }) => {
         this.post = data.postById;
+        console.log(this.post);
         this.initForm(this.post);
       });
     });
@@ -92,6 +95,11 @@ export class EditPostView {
       this.media_file = res.media_locator;
       this.loaded_media = true;
       this.ready_to_send = true;
+      this.postContentElement.push({
+        description: "Prueba",
+        media_locator: res.media_locator,
+        media_type: res.contentType,
+      });
     });
   }
 
@@ -103,21 +111,39 @@ export class EditPostView {
       this.media_file = res.media_locator;
       this.loaded_media = true;
       this.ready_to_send = true;
+      this.postContentElement.push({
+        description: "Prueba",
+        media_locator: res.media_locator,
+        media_type: res.contentType,
+      });
     });
   }
 
   onSubmit($event: Event) {
-    const controls = (<FormArray> this.post_form.get('content')).controls;
+    const controls = (<FormArray> this.post_form.get('content_element')).controls;
+    const content_element: PostContentElement[] = [];
+    for ( const i in this.postContentElement){
+      content_element.push({
+        description: this.post_form.value.content_element[i].description,
+        media_locator:this.postContentElement[i].media_locator,
+        media_type: this.postContentElement[i].media_type,
+      });
+    }
+    const updatePostInputData : UpdatePostInputData ={
+      post_id: this.id,
+      owner_id: this.post.owner_id,
+      ...this.post_form.value,
+      content_element
+    }
     if (this.validateContent(controls)) {
       this.mediaIncomplete = false;
       this.requireOne = false;
       this.post_to_update = {
         ...this.post_form.value,
-        id: this.post.id,
-        owner_id: this.post.owner_id,
+
       };
       this.post_service
-        .updatePermanentPost(this.post_to_update)
+        .updatePermanentPost(updatePostInputData)
         .subscribe(({data}) => {
           this.post = data.post;
         });
@@ -151,17 +177,9 @@ export class EditPostView {
   validateContent(controls: AbstractControl[]) {
     for (const control of controls) {
       if (
-        !control.get('description').value &&
-        !control.get('media').value
+        !control.get('description').value
       ) {
         this.requireOne = true;
-        return false;
-      }
-      if (
-        !control.get('media').value ||
-        !control.get('media_type').value
-      ){
-        this.mediaIncomplete = true;
         return false;
       }
     }

@@ -4,8 +4,9 @@ import { ApolloClientOptions, ApolloLink, InMemoryCache } from '@apollo/client/c
 import { HttpLink } from 'apollo-angular/http';
 import { setContext } from '@apollo/client/link/context'
 import { JwtService } from './core/service/jwt.service'
+import { environment } from '../environments/environment'
 
-const uri = 'http://localhost:3000/graphql'; // <-- add the URL of the GraphQL server here
+const uri = environment.API_URL; // <-- add the URL of the GraphQL server here
 
 export function createApollo(http_link: HttpLink, jwt_service: JwtService): ApolloClientOptions<any> {
   const basic = setContext(() => ({

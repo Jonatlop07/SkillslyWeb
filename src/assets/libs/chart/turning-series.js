@@ -191,10 +191,10 @@ $(function () {
     choiceContainer.append(
       '<input type="checkbox" name="' +
         key +
-        '" checked="checked" id="id' +
+        '" checked="checked" post_id="post_id' +
         key +
         '">' +
-        '<label for="id' +
+        '<label for="post_id' +
         key +
         '">' +
         val.label +

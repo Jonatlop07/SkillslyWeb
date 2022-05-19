@@ -2295,7 +2295,7 @@
               " " +
               this.pixelHeight +
               '" ' +
-              ' id="jqsshape' +
+              ' post_id="jqsshape' +
               a +
               '" ' +
               i +
@@ -2330,7 +2330,7 @@
                 ? ' filled="false"'
                 : ' fillColor="' + g + '" filled="true" '),
             (k =
-              '<v:oval  id="jqsshape' +
+              '<v:oval  post_id="jqsshape' +
               a +
               '" ' +
               i +
@@ -2376,7 +2376,7 @@
                 " " +
                 this.pixelHeight +
                 '" ' +
-                ' id="jqsshape' +
+                ' post_id="jqsshape' +
                 a +
                 '" ' +
                 p +

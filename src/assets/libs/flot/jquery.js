@@ -44,7 +44,7 @@
     // Make sure we trim BOM and NBSP (here's looking at you, Safari 5.0 and IE)
     rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
     // A simple way to check for HTML strings
-    // Prioritize #id over <tag> to avoid XSS via location.hash (#9521)
+    // Prioritize #post_id over <tag> to avoid XSS via location.hash (#9521)
     rquickExpr = /^(?:[^#<]*(<[\w\W]+>)[^>]*$|#([\w\-]*)$)/,
     // Match a standalone tag
     rsingleTag = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
@@ -110,7 +110,7 @@
           match = rquickExpr.exec(selector);
         }
 
-        // Match html or make sure no context is specified for #id
+        // Match html or make sure no context is specified for #post_id
         if (match && (match[1] || !context)) {
           // HANDLE: $(html) -> $(array)
           if (match[1]) {
@@ -128,7 +128,7 @@
 
             return jQuery.merge(this, selector);
 
-            // HANDLE: $(#id)
+            // HANDLE: $(#post_id)
           } else {
             elem = document.getElementById(match[2]);
 
@@ -5743,7 +5743,7 @@
               } else {
                 context.setAttribute("id", nid);
               }
-              nid = "[id='" + nid + "'] ";
+              nid = "[post_id='" + nid + "'] ";
 
               i = groups.length;
               while (i--) {
@@ -6844,7 +6844,7 @@
 
         // Weird iteration because IE will replace the length property
         // with an element if you are cloning the body and one of the
-        // elements on the page has a name or id of "length"
+        // elements on the page has a name or post_id of "length"
         for (i = 0; srcElements[i]; ++i) {
           // Ensure that the destination node is not null; Fixes #9587
           if (destElements[i]) {

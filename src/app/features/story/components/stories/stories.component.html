@@ -6,7 +6,7 @@
       <div class="row mt-4">
         <div class="col-sm-8 col-md-4 col-lg-2 my-story-card p-3">
           <div class="flex align-items-center">
-            <p>Hola {{ userLogged.name }}, esta es tu historia</p>
+            <p>Hola!, esta es tu historia</p>
             <div class="row">
               <div class="col-12 p-1">
                 <button
@@ -32,16 +32,11 @@
               </div>
             </div>
             <div class="dropdown-divider"></div>
-            <small class="mt-2">
-              Has ingresado como: {{ userLogged.email }}
-            </small>
           </div>
         </div>
-
-        <div *ngFor="let user of users" class="col-sm-5 col-md-4 col-lg-2">
-          <skl-story [storiesData]="dataStories[user]"></skl-story>
+        <div *ngFor="let user_stories of following_users_stories" class="col-sm-5 col-md-4 col-lg-2">
+          <skl-story [storyElements]="user_stories.stories"></skl-story>
         </div>
-
         <p-dialog
           header="Agrega una historia"
           [(visible)]="displayModalAddStory"
@@ -54,7 +49,7 @@
             <div class="p-grid p-fluid">
               <div class="p-field p-col-12">
                 <label for="description">Descripción de tu historia</label>
-                <br />
+                <br/>
                 <input
                   id="description"
                   type="text"
@@ -62,15 +57,15 @@
                   pInputText
                   [(ngModel)]="description"
                 />
-                <br />
+                <br/>
                 <small id="username1-help"
-                  >Breve descripcion de lo que vas a publicar</small
+                >Breve descripcion de lo que vas a publicar</small
                 >
               </div>
-              <br />
+              <br/>
               <div class="p-field p-col-6">
                 <label for="reference">Referencia del recurso</label>
-                <br />
+                <br/>
                 <input
                   id="reference"
                   type="text"
@@ -78,13 +73,13 @@
                   pInputText
                   [(ngModel)]="reference"
                 />
-                <br />
+                <br/>
                 <small id="username1-help">Por ahora solo imagenes :) </small>
               </div>
-              <br />
+              <br/>
               <div class="p-field p-col-6">
                 <label for="referenceType">Tipo de referencia</label>
-                <br />
+                <br/>
                 <input
                   id="referenceType"
                   type="text"
@@ -92,7 +87,7 @@
                   pInputText
                   [(ngModel)]="referenceType"
                 />
-                <br />
+                <br/>
                 <small id="username1-help">jpg o jpeg</small>
               </div>
             </div>
@@ -134,7 +129,7 @@
                 <div class="align-self-center">
                   <p class="mb-0 font-medium p-0">Tu historia</p>
                   <span class="text-muted"
-                    >Publicada el {{ getFormattedDate(story.created_at) }}</span
+                  >Publicada el {{ getFormattedDate(story.created_at) }}</span
                   >
                 </div>
                 <div class="ms-auto align-self-center">
@@ -145,7 +140,7 @@
                       type="button"
                       icon="pi pi-times"
                       class="p-button-sm p-button-rounded p-button-outlined"
-                      (click)="deleteStory(story.temporal_post_id)"
+                      (click)="deleteStory(story.id)"
                     ></button>
                   </div>
                 </div>

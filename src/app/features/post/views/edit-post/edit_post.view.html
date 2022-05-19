@@ -105,19 +105,19 @@
                         </button>
                       </div>
                     </div>
-                    <div *ngIf="loaded_media">
+                    <div *ngIf="loaded_media && this.postContentElement[i]" >
                       <div
                         class="p-1 row justify-content-center"
-                        *ngIf="media_type.includes('image')"
+                        *ngIf="this.postContentElement[i].media_type.includes('image')"
                       >
-                        <img [src]="this.post_form.get('content_element').value" class="img-fluid" />
+                        <img [src]="this.postContentElement[i].media_locator || this.post.content_element[i].media_locator" class="img-fluid" />
                       </div>
                       <div
                         class="p-1 row justify-content-center"
-                        *ngIf="media_type.includes('video')"
+                        *ngIf="this.postContentElement[i].media_type.includes('video')"
                       >
                         <video controls>
-                          <source [src]="media_file" type="video/mp4" />
+                          <source [src]="this.postContentElement[i].media_locator || this.post.content_element[i].media_locator" />
                           Your browser does not support the video tag.
                         </video>
                       </div>
