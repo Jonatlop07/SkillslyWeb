@@ -5,7 +5,7 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin'
 import { NgxsModule } from '@ngxs/store'
 import { ToastrModule } from 'ngx-toastr'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { SocketIoModule } from 'ngx-socket-io'
+//import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io'
 import CoreModule from './core/core.module'
 import { environment } from '../environments/environment'
 import { state_list } from './shared/state/state_list'
@@ -16,6 +16,8 @@ import { NavbarComponent } from './core/components/navbar/navbar.component'
 import { MainPage } from './core/components/page/main.page'
 import { AuthPage } from './core/components/auth-page/auth.page';
 import { GraphQLModule } from './graphql.module'
+
+//const config: SocketIoConfig = { url: environment.SOCKET_URL, options: {} };
 
 @NgModule({
   declarations: [
@@ -28,7 +30,7 @@ import { GraphQLModule } from './graphql.module'
   imports: [
     BrowserAnimationsModule,
     HttpClientModule,
-    SocketIoModule,
+    //SocketIoModule.forRoot(config),
     ToastrModule.forRoot(),
     NgxsModule.forRoot([...state_list], {
       developmentMode: !environment.production

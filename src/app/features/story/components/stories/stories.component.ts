@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core'
 import { showErrorPopup } from '../../../../shared/pop-up/pop_up.utils'
 import Swal from 'sweetalert2'
-import { AccountService } from '../../../user-account/services/account.service'
 import Story from '../../model/story.model'
 import * as moment from 'moment'
 import { StoryService } from '../../services/story.service'
+import StoriesOfFollowingUser from '../../types/stories_of_following_user'
 
 @Component({
   selector: 'skl-stories',
@@ -14,7 +14,7 @@ import { StoryService } from '../../services/story.service'
 export class StoriesComponent implements OnInit {
 
   users: Array<string>;
-  dataStories: any = {};
+  following_users_stories: Array<StoriesOfFollowingUser> = [];
   userStories: any[] = [];
   displayModal: boolean;
   displayModalAddStory: boolean;
@@ -25,18 +25,16 @@ export class StoriesComponent implements OnInit {
   description: string;
 
   constructor(
-    private storyService: StoryService,
-    private accountService: AccountService
+    private storyService: StoryService
   ) {
   }
 
   ngOnInit(): void {
-    this.getLoggedUserInfo();
     this.getUserStories();
-    this.getFriendsStories();
+    this.getFollowingUsersStories();
   }
 
-  sendStory() {
+  public sendStory() {
     const story: Story = {
       description: this.description,
       reference: this.reference,
@@ -61,8 +59,8 @@ export class StoriesComponent implements OnInit {
           }
         });
       },
-      () => {
-        showErrorPopup('Ocurrió un error inesperado, intenta más tarde');
+      async () => {
+        await showErrorPopup('Ocurrió un error al crear tu historia. Por favor, vuelve a intentarlo');
       }
     );
   }
@@ -78,23 +76,16 @@ export class StoriesComponent implements OnInit {
     );
   }
 
-  getFriendsStories() {
-    this.storyService.getFriendsStories().subscribe(
-      (response: any) => {
-        this.users = Object.keys(response);
-        this.dataStories = { ...response };
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
-  }
-
-  getLoggedUserInfo() {
-    this.accountService.getUserAccountData()
-      .subscribe(({ data }) => {
-        this.userLogged = data.user;
-      });
+  getFollowingUsersStories() {
+    this.storyService.getFollowingUsersStories()
+      .subscribe(
+        ({ data }) => {
+          this.following_users_stories = data.storiesOfFollowingUsers as Array<StoriesOfFollowingUser>;
+        },
+        async () => {
+          await showErrorPopup('Ocurrió un error al obtener las historias de los usuarios a los que sigues');
+        }
+      );
   }
 
   getFormattedDate(date: string) {

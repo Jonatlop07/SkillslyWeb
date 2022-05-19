@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core'
 import * as moment from 'moment'
+import StoryResponse from '../../types/story'
 
 @Component({
   selector: 'skl-story',
@@ -11,15 +12,15 @@ export class StoryComponent {
   displayModal: boolean;
 
   @Input()
-  storiesData: any;
+  storyElements: Array<StoryResponse>;
 
   isImageReference() {
-    return this.storiesData[0].referenceType === 'jpg';
+    return true;
   }
 
   getTime() {
     moment.locale('es');
-    return moment(this.storiesData[0].created_at).fromNow();
+    return moment(this.storyElements[0].created_at).fromNow();
   }
 
   showModalDialog() {
@@ -27,9 +28,7 @@ export class StoryComponent {
   }
 
   validateDate() {
-    return moment().isBetween(
-      this.storiesData[0].created_at,
-      this.storiesData[0].expires_at
-    );
+    const expires_date = moment(this.storyElements[0].created_at).add(1, 'days');
+    return moment().isBefore(expires_date);
   }
 }

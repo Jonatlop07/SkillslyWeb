@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  API_URL : "http://localhost:3000/api/v1",
-  SOCKET_SERVER_URL: "http://localhost:3000", 
+  API_URL : "http://localhost:3000/graphql",
+  SOCKET_URL: "http://localhost:3001",
   MAP_BOX_TOKEN: "pk.eyJ1IjoiZmVsaXBlcm9qYXMyNiIsImEiOiJja3g2cXJ3M2IycGplMnF0OWlmOHZ3ZG04In0.rjSKFBrW4c0nvWciQAru6g"
 };
 

@@ -1,12 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { AuthService } from '../../service/auth.service'
-import UserNotification from '../../notification/types/user_notification'
 import { NotificationModel } from '../../notification/model/notification.model'
-import { takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs'
-import { NotificationService } from '../../notification/services/notification.service'
+// import { NotificationService } from '../../notification/services/notification.service'
 import { post_routing_paths } from '../../../features/post/post.routing'
 import { service_request_routing_paths } from '../../../features/service-request/service_request.routing'
 import { chat_routing_paths } from '../../../features/chat/chat.routing'
@@ -14,13 +12,15 @@ import { user_account_routing_paths } from '../../../features/user-account/user_
 import { social_routing_paths } from '../../../features/social/social.routing'
 import { auth_routing_paths } from '../../../features/authentication/auth.routing'
 import { feed_routing_paths } from '../../../features/feed/feed.routing'
+/* import { takeUntil } from 'rxjs/operators'
+import UserNotification from '../../notification/types/user_notification' */
 
 @Component({
   selector: 'skl-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavbarComponent implements OnInit {
   paths = {
     feed: feed_routing_paths,
     post: post_routing_paths,
@@ -38,7 +38,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly notification_service: NotificationService,
+    //private readonly notification_service: NotificationService,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly toastr: ToastrService
@@ -46,6 +46,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    /*this.notification_service.join();
     this.notification_service
       .getNotificationsFromStore()
       .pipe(takeUntil(this.unsubscribe))
@@ -68,18 +69,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
             });
           }
         }
-      );
+      );*/
   }
 
-  ngOnDestroy() {
-    this.notification_service.leave();
-  }
-
-  logout() {
-    this.authService.logout();
+  async logout() {
+    await this.authService.logout();
     this.unsubscribe.next();
     this.unsubscribe.complete();
-    this.notification_service.leave();
     this.router.navigate([`${auth_routing_paths.auth}/${auth_routing_paths.sign_in}`]);
   }
 

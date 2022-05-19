@@ -1,7 +1,7 @@
 import Swal from 'sweetalert2'
 
 async function showSuccessPopup(success_message: string) {
-  Swal.fire({
+  await Swal.fire({
     customClass: {
       container: 'my-swal'
     },
@@ -12,7 +12,7 @@ async function showSuccessPopup(success_message: string) {
 }
 
 async function showErrorPopup(error_message: string) {
-  Swal.fire({
+  await Swal.fire({
     customClass: {
       container: 'my-swal'
     },
