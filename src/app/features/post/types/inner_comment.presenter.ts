@@ -1,3 +1,5 @@
+import { Owner } from './comment.presenter';
+
 export interface InnerComment {
   _id: string;
   description?: string;
@@ -7,7 +9,6 @@ export interface InnerComment {
   timestamp?: string;
   created_at?: string;
   updated_at?: string;
-  email?: string;
-  name?: string;
+  owner: Owner;
   owner_id: string;
 }

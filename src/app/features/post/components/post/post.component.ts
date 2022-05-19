@@ -108,10 +108,9 @@ export class PostComponent implements OnInit {
               description,
               media_locator,
               media_type,
-              name,
-              email,
               owner_id,
               created_at,
+              owner,
             } = res.data.createComment;
             this.comment = '';
             this.postComments = [
@@ -122,8 +121,7 @@ export class PostComponent implements OnInit {
                 description,
                 media_locator,
                 media_type,
-                name,
-                email,
+                owner,
                 owner_id,
                 created_at,
               },

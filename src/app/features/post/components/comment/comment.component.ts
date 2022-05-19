@@ -25,7 +25,7 @@ export class CommentComponent implements OnInit {
   @Input() comment: Comment;
   @Input() index: number;
   @Output() deleted_comment = new EventEmitter<number>();
-  @ViewChild('responseScroll') response_field: ElementRef;
+  @ViewChild('responseScroll') responseScroll: ElementRef;
   public showResponse = false;
   public invalid_comment_content = false;
   public invalid_inner_comment_content = false;
@@ -66,8 +66,7 @@ export class CommentComponent implements OnInit {
     this.media_type = this.comment.media_type;
     this.shown_media_type = this.comment.media_type;
     this.owns_comment = this.comment.owner_id === this.jwt_service.getUserId();
-
-    if (+this.comment.inner_comment_count > 0) {
+    if (this.comment.inner_comment_count) {
       this.getComments(false);
     }
   }
@@ -86,8 +85,8 @@ export class CommentComponent implements OnInit {
     if (!this.showResponse) {
       this.showResponse = true;
       setTimeout(() => {
-        this.response_field.nativeElement.scrollIntoView();
-      }, 500);
+        this.responseScroll.nativeElement.scrollIntoView();
+      }, 200);
     } else {
       this.showResponse = !this.showResponse;
     }
@@ -98,6 +97,7 @@ export class CommentComponent implements OnInit {
       .getInnerComments(this.comment._id, page, limit)
       .subscribe(
         (res: any) => {
+          console.log(res);
           if (reset) {
             this.commentsInComment = [...res.data.queryInnerComments];
           } else {
@@ -123,15 +123,24 @@ export class CommentComponent implements OnInit {
         .subscribe(
           (res) => {
             this.comment_in_comment = '';
-            const { _id, description, media_locator, owner_id, created_at } =
-              res.data.createInnerComment;
+            const {
+              _id,
+              description,
+              media_locator,
+              media_type,
+              owner_id,
+              created_at,
+              owner,
+            } = res.data.createInnerComment;
             this.commentsInComment = [
               ...this.commentsInComment,
               {
                 _id,
                 comment_id: this.comment._id,
+                owner,
                 description,
                 media_locator,
+                media_type,
                 owner_id,
                 created_at,
               },
@@ -178,7 +187,7 @@ export class CommentComponent implements OnInit {
         .editComment(
           this.comment._id,
           this.description,
-          this.media_locator,
+          this.shown_media,
           this.shown_media_type
         )
         .subscribe((res: any) => {

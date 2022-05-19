@@ -33,11 +33,13 @@ export class CommentsInCommentService {
           description
           media_locator
           media_type
-          name
-          email
           comment_id
           created_at
           _id
+          owner {
+            name
+            email
+          }
         }
       }
     `;
@@ -88,6 +90,10 @@ export class CommentsInCommentService {
           created_at
           comment_id
           owner_id
+          owner {
+            name
+            email
+          }
         }
       }
     `;
@@ -122,7 +128,7 @@ export class CommentsInCommentService {
           new_content: {
             description: $description
             media_locator: $media_locator
-            media_typee: $media_type
+            media_type: $media_type
           }
         ) {
           description

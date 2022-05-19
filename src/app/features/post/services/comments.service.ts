@@ -34,13 +34,16 @@ export class CommentsService {
           description
           media_locator
           media_type
-          name
-          email
-          created_at
           inner_comment_count
+          created_at
+          owner {
+            name
+            email
+          }
         }
       }
     `;
+
     this.isChargingComments = true;
     return this.apollo
       .watchQuery({
@@ -87,6 +90,10 @@ export class CommentsService {
           media_type
           created_at
           owner_id
+          owner {
+            name
+            email
+          }
         }
       }
     `;
@@ -109,6 +116,7 @@ export class CommentsService {
     media_locator: string,
     media_type: string
   ): Observable<MutationResult> {
+    console.log(comment_id, description, media_locator, media_type);
     const UPDATE_COMMENT = gql`
       mutation updateComment(
         $comment_id: ID!

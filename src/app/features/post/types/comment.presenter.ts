@@ -6,8 +6,12 @@ export interface Comment {
   post_id?: string;
   created_at?: string;
   timestamp?: string;
-  email?: string;
-  name?: string;
+  owner: Owner;
   inner_comment_count?: string;
   owner_id: string;
+}
+
+export interface Owner {
+  name: string;
+  email: string;
 }

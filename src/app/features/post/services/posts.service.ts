@@ -58,6 +58,7 @@ export class PostService {
             content_element {
               description
               media_locator
+              media_type
             }
           }
           owner {

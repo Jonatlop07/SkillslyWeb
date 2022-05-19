@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as moment from 'moment';
 import { JwtService } from 'src/app/core/service/jwt.service';
-import { UserDataService } from 'src/app/features/user-account/services/user_data.service';
 import { CommentsInCommentService } from '../../services/comments-in-comment.service';
 import { FileUploadService } from '../../services/file_upload.service';
 import { Comment } from '../../types/comment.presenter';
@@ -31,7 +30,6 @@ export class CommentInCommentComponent implements OnInit {
   constructor(
     private readonly jwt_service: JwtService,
     private readonly inner_comment_service: CommentsInCommentService,
-    private readonly owner_data_service: UserDataService,
     private readonly media_service: FileUploadService
   ) {}
 
