@@ -6,6 +6,7 @@ import { post_routing_paths } from './features/post/post.routing'
 import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import { feed_routing_paths } from './features/feed/feed.routing'
+import {lalu_routing_paths} from "./features/lalu/lalu.routing";
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: post_routing_paths.posts,
     loadChildren: () => import('src/app/features/post/post.module')
       .then(m => m.PostModule)
+  },
+  {
+    path: lalu_routing_paths.lalu,
+    loadChildren: () => import('src/app/features/lalu/lalu.module')
+      .then(m => m.LaluModule)
   },
   {
     path: feed_routing_paths.feed,

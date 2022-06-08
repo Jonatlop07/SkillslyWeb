@@ -45,11 +45,10 @@ export class SearchView implements OnInit {
     });
   }
 
-  public searchPosts(user_id: string): void {
-    this.router.navigate(
-      [`../../../${post_routing_paths.posts}`, user_id],
-      { relativeTo: this.activatedRoute }
-    );
+  public searchPosts(user_id: string) {
+    this.router.navigate([`${post_routing_paths.posts}/user`, user_id], {
+      relativeTo: this.activatedRoute,
+    });
   }
 
   public followUser(user: SearchUserResponse, index: number): void {

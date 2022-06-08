@@ -1,0 +1,51 @@
+* {
+  margin:0;
+  padding:0;
+  font:12pt "Poppins";
+}
+
+body {
+  background-color:#34495e;
+}
+
+.field {
+  display:flex;
+  position: center;
+  margin:2em auto;
+  width:40%;
+  flex-direction:row;
+  box-shadow:
+    1px 1px 0 rgb(119, 166, 247),
+    2px 2px 0 rgb(119, 166, 247),
+    3px 3px 0 rgb(119, 166, 247),
+    4px 4px 0 rgb(119, 166, 247),
+    5px 5px 0 rgb(119, 166, 247),
+    6px 6px 0 rgb(119, 166, 247),
+    7px 7px 0 rgb(119, 166, 247)
+;
+}
+
+.result{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.field>input[type=text],
+.field>button {
+  display:block;
+  font:1.2em "Poppins";
+}
+
+.field>input[type=text] {
+  flex:1;
+  padding:0.4em;
+  border:0.1em solid rgb(119, 166, 247);
+}
+
+.field>button {
+  padding:0.2em 0.4em;
+  background-color:rgb(119, 166, 247);
+  color:white;
+  border:none;
+}
