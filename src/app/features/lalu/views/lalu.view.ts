@@ -1,6 +1,5 @@
-import {Component} from "@angular/core";
-import {LaluService} from "../services/lalu.service";
-
+import { Component } from '@angular/core';
+import { LaluService } from '../services/lalu.service';
 
 @Component({
   selector: 'skl-lalu',
@@ -8,14 +7,13 @@ import {LaluService} from "../services/lalu.service";
   styleUrls: ['./lalu.view.css'],
 })
 export class LaluView {
-
-  constructor(
-    private laluService: LaluService,
-  ) {}
+  constructor(private laluService: LaluService) {}
 
   public songs: Array<string>;
-  searchSongsById(searchInput: string){
+  searchSongsById(searchInput: string) {
     searchInput = searchInput.trim();
-    this.songs = this.laluService.getSongsById(searchInput).result;
+    this.laluService.getSongsById(searchInput).subscribe((res: any) => {
+      this.songs = res.result;
+    });
   }
 }

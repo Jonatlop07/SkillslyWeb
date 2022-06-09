@@ -39,7 +39,10 @@ export class UserPostCollectionView {
       this.postService
         .getPostCollection(queryPostParams)
         .subscribe(({ data }) => {
-          this.store.dispatch(new SetMyPosts({ posts: data.postsByOwnerId.posts }));
+          this.store.dispatch(
+            new SetMyPosts({ posts: data.postsByOwnerId.posts })
+          );
+          console.log(data);
           this.my_posts$.subscribe((my_posts) => {
             this.posts = my_posts.posts;
           });

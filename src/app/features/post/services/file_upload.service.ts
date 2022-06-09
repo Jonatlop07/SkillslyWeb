@@ -15,6 +15,7 @@ export class FileUploadService {
   ) {}
 
   uploadImage(file_to_upload: File) {
+    console.log(file_to_upload);
     const form_data = new FormData();
     form_data.append('media', file_to_upload, file_to_upload.name);
     return this.http.post<FileUploadResponse>(
@@ -25,6 +26,7 @@ export class FileUploadService {
   }
 
   uploadVideo(file_to_upload: File) {
+    console.log(file_to_upload);
     const form_data = new FormData();
     form_data.append('media', file_to_upload, file_to_upload.name);
     return this.http.post<FileUploadResponse>(

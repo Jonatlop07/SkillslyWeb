@@ -63,6 +63,7 @@ export class LoginView implements OnInit {
     this.loginForm = this.form.value;
     this.authService.loginUser(this.loginForm).subscribe(
       ({ data }) => {
+        console.log(data.login);
         const result: LoginResponse = data.login;
         if (!result.id) {
           const { access_token } = result;
