@@ -1,0 +1,17 @@
+<div>
+  <div class="field" id="searchform">
+    <input
+      #searchInput
+      type="text"
+      pInputText
+      class="p-inputtext-sm form-control"
+      (keyup.enter)="searchSongsById(searchInput.value)"
+      placeholder="Busca una cancion por su id"
+      style="font-size: 1em"
+    />
+    <button type="button" (click)="searchSongsById(searchInput.value)" id="search">Buscar!</button>
+  </div>
+  <div class="result">
+    <p>{{this.songs}}</p>
+  </div>
+</div>

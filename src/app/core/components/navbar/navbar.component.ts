@@ -4,7 +4,6 @@ import { ToastrService } from 'ngx-toastr'
 import { AuthService } from '../../service/auth.service'
 import { NotificationModel } from '../../notification/model/notification.model'
 import { Subject } from 'rxjs'
-// import { NotificationService } from '../../notification/services/notification.service'
 import { post_routing_paths } from '../../../features/post/post.routing'
 import { service_request_routing_paths } from '../../../features/service-request/service_request.routing'
 import { chat_routing_paths } from '../../../features/chat/chat.routing'
@@ -12,6 +11,8 @@ import { user_account_routing_paths } from '../../../features/user-account/user_
 import { social_routing_paths } from '../../../features/social/social.routing'
 import { auth_routing_paths } from '../../../features/authentication/auth.routing'
 import { feed_routing_paths } from '../../../features/feed/feed.routing'
+import { lalu_routing_paths } from '../../../features/lalu/lalu.routing'
+// import { NotificationService } from '../../notification/services/notification.service'
 /* import { takeUntil } from 'rxjs/operators'
 import UserNotification from '../../notification/types/user_notification' */
 
@@ -27,7 +28,8 @@ export class NavbarComponent implements OnInit {
     service_request: service_request_routing_paths,
     chat: chat_routing_paths,
     user_account: user_account_routing_paths,
-    social: social_routing_paths
+    social: social_routing_paths,
+    lalu: lalu_routing_paths
   };
 
   public searchForm = false;

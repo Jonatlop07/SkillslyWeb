@@ -181,7 +181,7 @@ export class PostComponent implements OnInit {
 
   public uploadCommentVideo(file: File) {
     this.ready_to_send = false;
-    this.media_service.uploadImage(file).subscribe((res) => {
+    this.media_service.uploadVideo(file).subscribe((res) => {
       this.media_locator = res.media_locator;
       this.media_type = res.contentType;
       this.comment_media_file = res.media_locator;

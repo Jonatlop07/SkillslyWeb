@@ -212,7 +212,6 @@ export class CommentComponent implements OnInit {
   public uploadCommentImage(file: File, comment_type: string) {
     this.ready_to_send = false;
     this.media_service.uploadImage(file).subscribe((res) => {
-      console.log(res);
       if (comment_type === 'inner') {
         this.inner_comment_media_locator = res.media_locator;
         this.inner_comment_creation_media_file = res.media_locator;
@@ -231,12 +230,12 @@ export class CommentComponent implements OnInit {
     this.ready_to_send = false;
     this.media_service.uploadVideo(file).subscribe((res) => {
       if (comment_type === 'inner') {
-        this.inner_comment_media_locator = `${res.media_locator} ${res.contentType}`;
+        this.inner_comment_media_locator = res.media_locator;
         this.inner_comment_creation_media_file = res.media_locator;
         this.inner_comment_creation_media_type = res.contentType;
         this.loaded_media = true;
       } else {
-        this.media_locator = `${res.media_locator} ${res.contentType}`;
+        this.media_locator = res.media_locator;
         this.shown_media = res.media_locator;
         this.shown_media_type = res.contentType;
       }
