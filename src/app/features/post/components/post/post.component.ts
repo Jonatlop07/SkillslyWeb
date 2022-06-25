@@ -77,9 +77,7 @@ export class PostComponent implements OnInit {
   }
 
   updatePost(post_id: string) {
-    this.router.navigate([`../../edit/`, post_id], {
-      relativeTo: this.activatedRoute,
-    });
+    this.router.navigate(['/posts/edit/', post_id]);
   }
 
   sharePost(post_id: string) {
