@@ -12,9 +12,9 @@ import { social_routing_paths } from '../../../features/social/social.routing'
 import { auth_routing_paths } from '../../../features/authentication/auth.routing'
 import { feed_routing_paths } from '../../../features/feed/feed.routing'
 import { lalu_routing_paths } from '../../../features/lalu/lalu.routing'
-// import { NotificationService } from '../../notification/services/notification.service'
-/* import { takeUntil } from 'rxjs/operators'
-import UserNotification from '../../notification/types/user_notification' */
+/*import { NotificationService } from '../../notification/services/notification.service'
+import { takeUntil } from 'rxjs/operators'
+import UserNotification from '../../notification/types/user_notification'*/
 
 @Component({
   selector: 'skl-navbar',
