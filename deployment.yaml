@@ -22,7 +22,10 @@ kind: Service
 apiVersion: v1
 metadata:
   name: skillsly-wa-srv
+  annotations:
+    networking.gke.io/load-balancer-type: "Internal"
 spec:
+  type: LoadBalancer
   selector:
     app: skillsly-wa
   ports:
@@ -30,4 +33,3 @@ spec:
       protocol: TCP
       port: 4200
       targetPort: 4200
-  type: LoadBalancer

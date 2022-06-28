@@ -19,7 +19,7 @@ export class FileUploadService {
     const form_data = new FormData();
     form_data.append('media', file_to_upload, file_to_upload.name);
     return this.http.post<FileUploadResponse>(
-      `${this.API_URL}/media/image/`,
+      `https://api.skillsly.app/api/v1/media/image/`,
       form_data,
       this.jwt_service.getHttpOptions()
     );
@@ -30,7 +30,7 @@ export class FileUploadService {
     const form_data = new FormData();
     form_data.append('media', file_to_upload, file_to_upload.name);
     return this.http.post<FileUploadResponse>(
-      `${this.API_URL}/media/video/`,
+      `https://api.skillsly.app/api/v1/media/video/`,
       form_data,
       this.jwt_service.getHttpOptions()
     );
