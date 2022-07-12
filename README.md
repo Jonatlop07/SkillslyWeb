@@ -34,4 +34,4 @@ the different contexts.
 
 ![Layered View](./layered_view.png)
 
-A video showcasing the web and mobile components: [Skillsly Showcase]()
+A video showcasing the web and mobile components: [Skillsly Showcase](https://youtu.be/lTZk6qjDzSU)
