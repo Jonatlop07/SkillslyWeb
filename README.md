@@ -1,27 +1,35 @@
-# SkillslyFrontend
+# Skillsly Web Frontend - Enhanced
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.10.
+Web component that provides a GUI for users to interact with Skillsly (Microservices architecture version).
+This component consumes backend's GraphQL API through the GrahpQL Client provided by Angular.
 
-## Development server
+The layer structure of this component is the following:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- **Core**: Includes the elements available in all layers and defined from the root 
+of the application:
+  - ***Component*** **Segment**: Global Angular components of the interface (navigation bar, page, etc).
+  - ***Constants*** **Segment**: Contains the constants used throughout the application.
+  - ***Guards*** **Segment**: Contains the guards applied to the application routes.
+  - ***Services*** **Segment**: Contains the services that can be used in any part of the application.
+- **Feature**: Includes each context, i.e. the separation of the business domain
+by functionalities. Defines the following segments and exposes some of its
+elements to other contexts via Angular modules:
+  - ***Component*** **Segment**: Angular components specific to the functionality.
+  - ***Types*** **Segment**: Entities, interfaces, presenters, and other types.
+  - ***Services*** **Segment**: GraphQL services specific to the functionality.
+  - ***Views*** **Segment**: Angular components that define the main views or pages of the
+  application.
+  - ***Model*** **Segment**: Interfaces that define the models of the state managers.
+  - ***State*** **Segment**: Classes that handle shared state between components
+  of the same functionality.
+- **Shared**: Includes the common elements that can be used by the different contexts:
+  - ***Components*** **Segment**: Defines components that can be used by the modules of
+the different contexts or functionalities.
+  - ***State*** **Segment**: Defines the global states that can be used by the different
+  contexts or functionalities.
+  - ***Utils*** **Segment**: Defines programmatic utility elements that are available to
+the different contexts.
 
-## Code scaffolding
+![Layered View](./layered_view.png)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+A video showcasing the web and mobile components: [Skillsly Showcase]()
